@@ -5,10 +5,10 @@ import { Item } from './data'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 
-interface SidebarItemProps {
+interface NavItemProps {
   item: Item
 }
-export function SidebarItem({ item }: SidebarItemProps) {
+export function NavItem({ item }: NavItemProps) {
   const pathname = usePathname()
   const IconComponent = item.Icon ? <item.Icon className="size-4" /> : null
 

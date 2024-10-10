@@ -9,15 +9,26 @@ import {
   UnstyledButton
 } from '@mantine/core'
 import { ChevronDown, LogOut, Search } from 'lucide-react'
-import { Sidebar } from './sidebar'
+import { MainNav } from './main-nav'
+import { MobileNav } from './mobile-nav'
+import { useMediaQuery } from '@/hooks/use-media-query'
 
 export function DashboardLayout({ children }: PropsWithChildren) {
+  const isMobile = useMediaQuery('(max-width: 1024px)')
   return (
     <div className="flex min-h-[100dvh]">
-      <Sidebar />
+      {!isMobile && (
+        <div className="w-64">
+          <MainNav />
+        </div>
+      )}
       <div className="flex-1 shadow-sm">
         <header className="flex border-b py-2">
-          <Container className="flex w-full justify-between" size="xl">
+          <Container
+            className="flex w-full justify-between space-x-2"
+            size="xl"
+          >
+            {isMobile && <MobileNav />}
             <TextInput
               className="w-full max-w-96"
               placeholder="Pesquisar"
@@ -33,10 +44,12 @@ export function DashboardLayout({ children }: PropsWithChildren) {
                     name="Usuário"
                     alt="avatar do usuário"
                   />
-                  <span className="text-sm font-semibold text-gray-900">
-                    Usuário
+                  <span className="hidden items-center space-x-2 md:flex">
+                    <span className="text-sm font-semibold text-gray-900">
+                      Usuário
+                    </span>
+                    <ChevronDown className="size-4 text-gray-600" />
                   </span>
-                  <ChevronDown className="size-4 text-gray-600" />
                 </UnstyledButton>
               </Menu.Target>
               <Menu.Dropdown>

@@ -1,10 +1,10 @@
 import { Divider } from '@mantine/core'
 import { items } from './data'
-import { SidebarItem } from './sidebar-item'
+import { NavItem } from './nav-item'
 
-export function Sidebar() {
+export function MainNav() {
   return (
-    <aside className="w-64 border-r bg-gray-50 p-4">
+    <aside className="h-full w-full border-r bg-gray-50 p-4">
       <div className="mb-4 flex items-center space-x-2">
         <span className="text-lg font-semibold">
           GOV<span className="font-bold text-green-900">PI</span>
@@ -19,7 +19,7 @@ export function Sidebar() {
               {section.title}
             </span>
             {section.items.map((item) => (
-              <SidebarItem key={item.label} item={item} />
+              <NavItem key={item.label} item={item} />
             ))}
           </section>
         ))}
