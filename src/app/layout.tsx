@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import { ColorSchemeScript } from '@mantine/core'
 import './globals.css'
-import { Figtree } from 'next/font/google'
+import { Figtree, Montserrat } from 'next/font/google'
 import { Providers } from './providers'
 
 export const metadata: Metadata = {
@@ -9,6 +9,11 @@ export const metadata: Metadata = {
 }
 
 const figtree = Figtree({ subsets: ['latin'] })
+const montserrat = Montserrat({
+  subsets: ['latin'],
+  weight: ['600', '800'],
+  variable: '--font-montserrat'
+})
 
 export default function RootLayout({
   children
@@ -20,7 +25,7 @@ export default function RootLayout({
       <head>
         <ColorSchemeScript />
       </head>
-      <body className={figtree.className}>
+      <body className={`${figtree.className} ${montserrat.variable}`}>
         <Providers>{children}</Providers>
       </body>
     </html>

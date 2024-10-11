@@ -6,8 +6,8 @@ export function MainNav() {
   return (
     <aside className="h-full w-full border-r bg-gray-50 p-4">
       <div className="mb-4 flex items-center space-x-2">
-        <span className="text-lg font-semibold">
-          GOV<span className="font-bold text-green-900">PI</span>
+        <span className="font-montserrat text-xl font-semibold">
+          GOV<span className="font-extrabold text-green-900">PI</span>
         </span>
         <Divider orientation="vertical" />
         <span className="font-medium">Aplicação</span>
