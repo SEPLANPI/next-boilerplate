@@ -12,6 +12,7 @@ import { ChevronDown, LogOut, Search } from 'lucide-react'
 import { MainNav } from './main-nav'
 import { MobileNav } from './mobile-nav'
 import { useMediaQuery } from '@/hooks/use-media-query'
+import { signOut } from 'next-auth/react'
 
 export function DashboardLayout({ children }: PropsWithChildren) {
   const isMobile = useMediaQuery('(max-width: 1024px)')
@@ -56,6 +57,7 @@ export function DashboardLayout({ children }: PropsWithChildren) {
                 <Menu.Item>Ação</Menu.Item>
                 <Menu.Divider />
                 <Menu.Item
+                  onClick={() => signOut()}
                   color="red"
                   rightSection={<LogOut className="size-4" />}
                 >
