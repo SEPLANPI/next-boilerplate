@@ -25,6 +25,7 @@ export function NavItem({ item }: NavItemProps) {
         {item?.items.map((childItem) => (
           <Link href={childItem.href} key={childItem.label}>
             <NavLink
+              component="span"
               active={pathname.endsWith(childItem.href)}
               classNames={{
                 root: '[&:not([data-active])]:text-gray-700 font-medium text-sm w-auto mb-1 -mx-2 p-2 [&:not([data-active])]:hover:bg-gray-200 rounded'
@@ -40,6 +41,7 @@ export function NavItem({ item }: NavItemProps) {
   return (
     <Link href={item.href}>
       <NavLink
+        component="span"
         active={pathname.endsWith(item.href)}
         leftSection={IconComponent}
         classNames={{
