@@ -12,9 +12,16 @@ import { ChevronDown, LogOut, Search } from 'lucide-react'
 import { MainNav } from './main-nav'
 import { MobileNav } from './mobile-nav'
 import { useMediaQuery } from '@/hooks/use-media-query'
+import { useRouter } from 'next/navigation'
 
 export function DashboardLayout({ children }: PropsWithChildren) {
   const isMobile = useMediaQuery('(max-width: 1024px)')
+  const router = useRouter()
+
+  async function handleSignOut() {
+    router.push('/api/auth/sign-out')
+  }
+
   return (
     <div className="flex min-h-[100dvh]">
       {!isMobile && (
@@ -56,6 +63,7 @@ export function DashboardLayout({ children }: PropsWithChildren) {
                 <Menu.Item>Ação</Menu.Item>
                 <Menu.Divider />
                 <Menu.Item
+                  onClick={handleSignOut}
                   color="red"
                   rightSection={<LogOut className="size-4" />}
                 >
