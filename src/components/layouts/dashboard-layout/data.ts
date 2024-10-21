@@ -63,10 +63,6 @@ export const items: Section[] = [
           {
             label: 'Item',
             href: '#'
-          },
-          {
-            label: 'Item',
-            href: '#'
           }
         ]
       }

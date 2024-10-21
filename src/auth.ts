@@ -24,7 +24,8 @@ const refreshAccessToken = async (token: JWT) => {
 
     const formData = formBody.join('&')
 
-    const url = `${process.env.KEYCLOAK_BASE_URL}/token`
+    const url = `${process.env.AUTH_KEYCLOAK_ISSUER}/protocol/openid-connect/token`
+
     const response = await fetch(url, {
       method: 'POST',
       headers: {
@@ -43,8 +44,8 @@ const refreshAccessToken = async (token: JWT) => {
         Date.now() + (refreshedTokens.refresh_expires_in - 15) * 1000,
       idToken: refreshedTokens.id_token
     }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
-    console.log(error)
     return {
       ...token,
       error: 'RefreshAccessTokenError'
@@ -55,7 +56,19 @@ const refreshAccessToken = async (token: JWT) => {
 const keycloakProvider = KeycloakProvider({
   clientId: process.env.AUTH_KEYCLOAK_ID,
   clientSecret: process.env.AUTH_KEYCLOAK_SECRET,
-  issuer: process.env.AUTH_KEYCLOAK_ISSUER
+  issuer: process.env.AUTH_KEYCLOAK_ISSUER,
+  profile(profile) {
+    return {
+      email_verified: profile.email_verified,
+      name: profile.name,
+      preferred_username: profile.preferred_username,
+      given_name: profile.given_name,
+      family_name: profile.family_name,
+      email: profile.email,
+      org_name: profile.org_name,
+      telephone: profile.telephone
+    }
+  }
 })
 
 export const { handlers, signIn, signOut, auth } = NextAuth({

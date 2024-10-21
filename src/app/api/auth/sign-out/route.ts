@@ -13,7 +13,11 @@ export async function GET(req: Request) {
       status: 400
     })
   }
-  const { AUTH_KEYCLOAK_ISSUER, AUTH_KEYCLOAK_ID, APP_URL } = process.env
+  const {
+    AUTH_KEYCLOAK_ISSUER,
+    AUTH_KEYCLOAK_ID,
+    NEXT_PUBLIC_APP_URL: APP_URL
+  } = process.env
 
   const url = `${AUTH_KEYCLOAK_ISSUER}/protocol/openid-connect/logout`
   const params = new URLSearchParams({

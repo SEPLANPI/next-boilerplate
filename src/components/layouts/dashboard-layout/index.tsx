@@ -12,16 +12,12 @@ import { ChevronDown, LogOut, Search } from 'lucide-react'
 import { MainNav } from './main-nav'
 import { MobileNav } from './mobile-nav'
 import { useMediaQuery } from '@/hooks/use-media-query'
-import { useRouter } from 'next/navigation'
+import Link from 'next/link'
+import { useSession } from 'next-auth/react'
 
 export function DashboardLayout({ children }: PropsWithChildren) {
   const isMobile = useMediaQuery('(max-width: 1024px)')
-  const router = useRouter()
-
-  async function handleSignOut() {
-    router.push('/api/auth/sign-out')
-  }
-
+  const { data } = useSession()
   return (
     <div className="flex min-h-[100dvh]">
       {!isMobile && (
@@ -47,13 +43,13 @@ export function DashboardLayout({ children }: PropsWithChildren) {
                   <Avatar
                     radius="xl"
                     color="govBlue"
-                    key="Usuário"
-                    name="Usuário"
-                    alt="avatar do usuário"
+                    key={data?.user.name}
+                    name={data?.user.name}
+                    alt="Avatar do usuário"
                   />
                   <span className="hidden items-center space-x-2 md:flex">
                     <span className="text-sm font-semibold text-gray-900">
-                      Usuário
+                      {data?.user.name}
                     </span>
                     <ChevronDown className="size-4 text-gray-600" />
                   </span>
@@ -63,7 +59,8 @@ export function DashboardLayout({ children }: PropsWithChildren) {
                 <Menu.Item>Ação</Menu.Item>
                 <Menu.Divider />
                 <Menu.Item
-                  onClick={handleSignOut}
+                  component={Link}
+                  href="/api/auth/sign-out"
                   color="red"
                   rightSection={<LogOut className="size-4" />}
                 >

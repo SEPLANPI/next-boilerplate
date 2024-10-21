@@ -37,7 +37,11 @@ export default tseslint.config(...compat.extends('standard', 'next/core-web-vita
     'react-refresh': reactRefresh
   },
   rules: {
-    'space-before-function-paren': ['error', 'never'],
+    'space-before-function-paren': ['error', {
+      anonymous: 'never',
+      named: 'never',
+      asyncArrow: 'always'
+    }],
     ...reactHooks.configs.recommended.rules,
     'react-refresh/only-export-components': [
       'warn',

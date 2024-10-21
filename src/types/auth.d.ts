@@ -1,4 +1,4 @@
-import type { User } from 'next-auth'
+import type { DefaultSession, User } from 'next-auth'
 
 declare module 'next-auth' {
   /**
@@ -16,7 +16,7 @@ declare module 'next-auth' {
       id: string
       org_name?: string
       telephone?: string
-    }
+    } & DefaultSession['user']
     accessToken: string
     refreshToken: string
     error: string
@@ -47,7 +47,7 @@ declare module 'next-auth' {
     type: string
     id: string
     accessToken: string
-    accessTokenExpires?: any
+    accessTokenExpires?: number
     refreshToken: string
     idToken: string
     access_token: string
