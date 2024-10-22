@@ -1,6 +1,5 @@
-# Next App Mantine Tailwind Template
+# Next Boilerplate
 
-This is a minimal template for a Next.js project with Mantine and Tailwind CSS.
 
 ## Development
 
