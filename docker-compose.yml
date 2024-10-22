@@ -6,6 +6,4 @@ services:
       - "3000:3000"
     volumes:
       - .:/app
-    environment:
-      NODE_ENV: development
-    command: pnpm dev
+      - /app/node_modules
