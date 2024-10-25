@@ -1,4 +1,4 @@
-import { LucideProps, Grip, Grid2x2, File, FileText } from 'lucide-react'
+import { LucideProps, CalendarDays } from 'lucide-react'
 import { ComponentType } from 'react'
 
 interface BaseItem {
@@ -34,37 +34,12 @@ export function isNested(item: Item): boolean {
 
 export const items: Section[] = [
   {
-    title: 'Páginas',
+    title: 'Geral',
     items: [
       {
-        label: 'Página Exemplo',
+        label: 'Eventos',
         href: '/',
-        Icon: File
-      },
-      {
-        label: 'Exemplo Form',
-        href: '/exemplo-form',
-        Icon: FileText
-      }
-    ]
-  },
-  {
-    title: 'Exemplos Sidebar',
-    items: [
-      {
-        label: 'Item Simples',
-        href: '#',
-        Icon: Grip
-      },
-      {
-        label: 'Item Aninhado',
-        Icon: Grid2x2,
-        items: [
-          {
-            label: 'Item',
-            href: '#'
-          }
-        ]
+        Icon: CalendarDays
       }
     ]
   }

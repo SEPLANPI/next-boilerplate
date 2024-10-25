@@ -5,7 +5,7 @@ import { Figtree, Montserrat } from 'next/font/google'
 import { Providers } from './providers'
 
 export const metadata: Metadata = {
-  title: 'DITI Next.js Boilerplate'
+  title: 'Piauí 365'
 }
 
 const figtree = Figtree({ subsets: ['latin'] })

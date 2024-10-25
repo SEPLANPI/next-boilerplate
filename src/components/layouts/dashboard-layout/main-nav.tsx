@@ -10,7 +10,7 @@ export function MainNav() {
           GOV<span className="font-extrabold text-green-900">PI</span>
         </span>
         <Divider orientation="vertical" />
-        <span className="font-medium">Aplicação</span>
+        <span className="font-medium">Piauí 365</span>
       </div>
       <nav>
         {items.map((section) => (
