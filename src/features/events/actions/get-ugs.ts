@@ -1,24 +1,14 @@
 'use server'
 
 import { api } from '@/lib/api'
+import { ActionState } from '@/types/actions'
 
 type Ug = {
   number: number
   name: string
   sigla: string
 }
-
-type Response =
-  | {
-      data: Ug[]
-      error?: undefined
-    }
-  | {
-      error: string
-      data?: undefined
-    }
-
-export async function getUgs(): Promise<Response> {
+export async function getUgs(): Promise<ActionState<Ug[]>> {
   const response = await api.get('/ugs')
   if (!response.ok) {
     const error = await response.json()

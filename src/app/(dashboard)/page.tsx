@@ -1,11 +1,12 @@
-import { AsyncFilter } from '@/components/ui/async-filter'
 import { SearchInput } from '@/components/ui/search-input'
+import { EventsFilters } from '@/features/events/components/filters'
 import { EventsTableSkeleton } from '@/features/events/components/table-skeleton'
 import { EventsTable } from '@/hooks/table'
 import { Button, Divider } from '@mantine/core'
 import { ListTree, Plus } from 'lucide-react'
 import {
   createSearchParamsCache,
+  parseAsArrayOf,
   parseAsInteger,
   parseAsString,
   SearchParams
@@ -14,15 +15,16 @@ import { Suspense } from 'react'
 
 export const searchParamsCache = createSearchParamsCache({
   search: parseAsString.withDefault(''),
-  page: parseAsInteger.withDefault(1)
+  page: parseAsInteger.withDefault(1),
+  ugs: parseAsArrayOf(parseAsInteger)
 })
-
 export default async function Eventos({
   searchParams
 }: {
   searchParams: Promise<SearchParams>
 }) {
   const params = searchParamsCache.parse(await searchParams)
+  console.log(params)
   return (
     <div>
       <div className="flex w-full items-end justify-between">
@@ -37,7 +39,7 @@ export default async function Eventos({
           Agrupar
         </Button>
         <Divider orientation="vertical" />
-        <AsyncFilter>Unidade Gestora</AsyncFilter>
+        <EventsFilters />
       </div>
       <Suspense key={JSON.stringify(params)} fallback={<EventsTableSkeleton />}>
         <EventsTable />
