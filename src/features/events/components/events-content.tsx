@@ -22,6 +22,8 @@ type EventsResponse = {
   eventos_percentage: number
   total_valor: number
   total_valor_percentage: number
+  total_empresas: number
+  empresas_percentage: number
   results: Event[]
 }
 
@@ -55,7 +57,8 @@ export async function EventsContent() {
         quantityPercentage={data.eventos_percentage}
         value={data.total_valor}
         valuePercentage={data.total_valor_percentage}
-        empresas="50"
+        empresas={data.total_empresas}
+        empresasPercentage={data.empresas_percentage}
         municipios="100"
       />
       <EventsTable events={data.results} />

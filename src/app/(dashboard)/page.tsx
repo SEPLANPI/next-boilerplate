@@ -9,6 +9,7 @@ import {
   createSearchParamsCache,
   parseAsArrayOf,
   parseAsInteger,
+  parseAsIsoDateTime,
   parseAsString,
   SearchParams
 } from 'nuqs/server'
@@ -17,7 +18,9 @@ import { Suspense } from 'react'
 export const searchParamsCache = createSearchParamsCache({
   search: parseAsString.withDefault(''),
   page: parseAsInteger.withDefault(1),
-  ugs: parseAsArrayOf(parseAsInteger)
+  ugs: parseAsArrayOf(parseAsInteger),
+  fromDate: parseAsIsoDateTime,
+  toDate: parseAsIsoDateTime
 })
 export default async function Eventos({
   searchParams

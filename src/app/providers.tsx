@@ -1,7 +1,9 @@
 'use client'
 
+import 'dayjs/locale/pt-br'
 import { getQueryClient } from '@/lib/react-query'
 import { MantineProvider } from '@mantine/core'
+import { DatesProvider } from '@mantine/dates'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { theme } from '@ui/mantine-config'
 import { SessionProvider } from 'next-auth/react'
@@ -14,9 +16,15 @@ export function Providers({ children }: PropsWithChildren) {
   return (
     <SessionProvider>
       <QueryClientProvider client={queryClient}>
-        <MantineProvider theme={theme}>
-          <NuqsAdapter>{children}</NuqsAdapter>
-        </MantineProvider>
+        <DatesProvider
+          settings={{
+            locale: 'pt-br'
+          }}
+        >
+          <MantineProvider theme={theme}>
+            <NuqsAdapter>{children}</NuqsAdapter>
+          </MantineProvider>
+        </DatesProvider>
       </QueryClientProvider>
     </SessionProvider>
   )
