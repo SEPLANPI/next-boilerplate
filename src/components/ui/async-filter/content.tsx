@@ -12,18 +12,19 @@ export function Content<T>({
   filterId,
   filterFn
 }: ContentProps<T>) {
-  const [search, setSearch] = useDebouncedState('', 500)
+  const [search, setSearch] = useDebouncedState('', 100)
   const { selectedItems, toggleItem, clearItems } = useSelectedItems()
   const { data, error, isFetching } = useQuery({
     queryKey: [`async-filter-${filterId}`],
-    queryFn: () => loadOptions()
+    queryFn: () => loadOptions(),
+    staleTime: 30 * 60 * 1000 // 30m
   })
 
   if (isFetching) {
     return (
       <div className="flex flex-col items-center space-y-4 p-6">
         <Loader size="sm" />
-        <span className="text-sm font-semibold text-muted-foreground">
+        <span className="text-sm font-semibold text-secondary-foreground">
           Carregando...
         </span>
       </div>
@@ -53,7 +54,6 @@ export function Content<T>({
           classNames={{
             input: 'border-none'
           }}
-          value={search}
           onChange={(event) => setSearch(event.target.value)}
           placeholder="Pesquisar"
           rightSection={<Search className="size-4" />}
@@ -62,7 +62,7 @@ export function Content<T>({
       <ul className="max-h-96 w-full overflow-y-auto overflow-x-clip">
         {selectedOptions.length > 0 && (
           <>
-            <span className="block p-2 text-xs font-semibold text-gray-700">
+            <span className="block p-2 text-xs font-semibold text-secondary-foreground">
               Selecinados
             </span>
             {selectedOptions.map((option) => (

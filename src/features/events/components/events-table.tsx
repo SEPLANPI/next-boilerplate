@@ -1,7 +1,3 @@
-import { searchParamsCache } from '@/app/(dashboard)/page'
-import { SearchParamsPagination } from '@/components/ui/search-params-pagination'
-import { EventsEmptyState } from '@/features/events/components/empty-state'
-import { api } from '@/lib/api'
 import {
   Table,
   TableTr,
@@ -12,39 +8,13 @@ import {
   Tooltip,
   Badge
 } from '@mantine/core'
+import type { Event } from './events-content'
 
-type Event = {
-  nome: string
-  municipio?: string
-  data?: string
-  ugs: {
-    name: string
-    sigla: string
-  }[]
-  contratos: number[]
-  valor: string
+type EventsTableProps = {
+  events: Event[]
 }
 
-type EventsResponse = {
-  count: number
-  results: Event[]
-}
-
-export async function EventsTable() {
-  const { page, search } = searchParamsCache.all()
-  const response = await api.get(`/eventos?page=${page}&nome=${search}`)
-
-  if (!response.ok) {
-    return <p>Erro ao buscar dados</p>
-  }
-
-  const data: EventsResponse = await response.json()
-
-  const startItem = (page - 1) * 10 + 1
-  const endItem = Math.min(startItem + data.results.length - 1, data.count)
-
-  if (data.results.length === 0) return <EventsEmptyState />
-
+export async function EventsTable({ events }: EventsTableProps) {
   return (
     <>
       <Table verticalSpacing="xs">
@@ -61,7 +31,7 @@ export async function EventsTable() {
           </TableTr>
         </TableThead>
         <TableTbody>
-          {data.results.map((event) => (
+          {events.map((event) => (
             <TableTr key={event.nome}>
               <TableTd className="max-w-[500px] truncate">{event.nome}</TableTd>
               <TableTd>{event.municipio || 'Não informado'}</TableTd>
@@ -95,15 +65,6 @@ export async function EventsTable() {
           ))}
         </TableTbody>
       </Table>
-      <div className="mt-6 flex items-center justify-between">
-        <span className="text-sm text-secondary-foreground">
-          <span className="font-bold">
-            {startItem} - {endItem}
-          </span>{' '}
-          de {data.count} resultados
-        </span>
-        <SearchParamsPagination totalItems={data.count} perPage={10} />
-      </div>
     </>
   )
 }

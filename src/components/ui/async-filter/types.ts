@@ -38,3 +38,4 @@ export type ContentProps<T> = {
   filterId: string
   filterFn: (option: T, search: string) => boolean
 }
+

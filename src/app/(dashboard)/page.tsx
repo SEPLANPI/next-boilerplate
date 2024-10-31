@@ -1,7 +1,8 @@
 import { SearchInput } from '@/components/ui/search-input'
-import { EventsFilters } from '@/features/events/components/filters'
-import { EventsTableSkeleton } from '@/features/events/components/table-skeleton'
-import { EventsTable } from '@/hooks/table'
+import { ClearFilters } from '@/features/events/components/clear-filters'
+import { EventsContent } from '@/features/events/components/events-content'
+import { EventsContentSkeleton } from '@/features/events/components/events-content-skeleton'
+import { EventsFilters } from '@/features/events/components/events-filters'
 import { Button, Divider } from '@mantine/core'
 import { ListTree, Plus } from 'lucide-react'
 import {
@@ -24,7 +25,6 @@ export default async function Eventos({
   searchParams: Promise<SearchParams>
 }) {
   const params = searchParamsCache.parse(await searchParams)
-  console.log(params)
   return (
     <div>
       <div className="flex w-full items-end justify-between">
@@ -40,9 +40,13 @@ export default async function Eventos({
         </Button>
         <Divider orientation="vertical" />
         <EventsFilters />
+        <ClearFilters />
       </div>
-      <Suspense key={JSON.stringify(params)} fallback={<EventsTableSkeleton />}>
-        <EventsTable />
+      <Suspense
+        key={JSON.stringify(params)}
+        fallback={<EventsContentSkeleton />}
+      >
+        <EventsContent />
       </Suspense>
     </div>
   )

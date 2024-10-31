@@ -73,18 +73,20 @@ export function AsyncFilter<T extends object = DefaultOption>({
 const FilterButton = forwardRef<HTMLButtonElement, PropsWithChildren>(
   ({ children, ...props }, ref) => {
     const { selectedItems } = useSelectedItems()
+    const hasSelectedItems = selectedItems.size > 0
     return (
       <Button
+        data-active={hasSelectedItems}
         ref={ref}
-        variant="default"
+        variant="default-filled"
         classNames={{
-          root: ''
+          root: 'data-[active=true]:bg-govBlue-50 data-[active=true]:text-govBlue-700'
         }}
         rightSection={<ChevronDown className="size-4" />}
         {...props}
       >
         {children}
-        {selectedItems.size > 0 && (
+        {hasSelectedItems && (
           <Badge circle size="sm" variant="filled" className="ml-2">
             {selectedItems.size}
           </Badge>

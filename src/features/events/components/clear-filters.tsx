@@ -1,0 +1,29 @@
+import { searchParamsCache } from '@/app/(dashboard)/page'
+import { Button, Divider } from '@mantine/core'
+import Link from 'next/link'
+
+export function ClearFilters() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { page, ...params } = searchParamsCache.all()
+
+  const hasActiveFilters =
+    params &&
+    Object.values(params).some((value) => {
+      if (Array.isArray(value)) {
+        return value.length > 0
+      }
+
+      return Boolean(value)
+    })
+
+  if (hasActiveFilters) {
+    return (
+      <>
+        <Divider orientation="vertical" />
+        <Link href=".">
+          <Button variant="subtle">Limpar Filtros</Button>
+        </Link>
+      </>
+    )
+  }
+}
