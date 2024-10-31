@@ -4,6 +4,8 @@ import { EventsEmptyState } from '@/features/events/components/empty-state'
 import { api } from '@/lib/api'
 import { EventsTable } from './events-table'
 import { EventsCards } from './events-cards'
+import { Alert } from '@mantine/core'
+import dayjs from 'dayjs'
 
 export type Event = {
   nome: string
@@ -26,12 +28,17 @@ type EventsResponse = {
   empresas_percentage: number
   results: Event[]
 }
-
 export async function EventsContent() {
-  const { page, search, ugs } = searchParamsCache.all()
+  const { page, search, ugs, fromDate, toDate } = searchParamsCache.all()
   const params = new URLSearchParams()
   params.append('page', page.toString())
   params.append('nome', search)
+  if (fromDate) {
+    params.append('data_before', dayjs(fromDate).format('YYYY-MM-DD'))
+  }
+  if (toDate) {
+    params.append('data_after', dayjs(toDate).format('YYYY-MM-DD'))
+  }
 
   if (ugs) {
     ugs.forEach((ug) => params.append('ugs', ug.toString()))
@@ -40,7 +47,16 @@ export async function EventsContent() {
   const response = await api.get(`/eventos?${params.toString()}`)
 
   if (!response.ok) {
-    return <p>Erro ao buscar dados</p>
+    return (
+      <Alert
+        title="Erro inesperado"
+        variant="outline"
+        color="red"
+        className="max-w-xl"
+      >
+        Ocorreu um erro inesperado ao buscar dados no servidor.
+      </Alert>
+    )
   }
 
   const data: EventsResponse = await response.json()

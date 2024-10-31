@@ -1,12 +1,12 @@
 'use client'
 
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import dayjs from 'dayjs'
 import { ChevronDown } from 'lucide-react'
 import { useQueryStates, parseAsIsoDateTime } from 'nuqs'
 import { DateInput } from '@mantine/dates'
-import { Button, Popover } from '@mantine/core'
+import { Button, Divider, Popover } from '@mantine/core'
 
 interface DateRangeFilterProps {
   children?: React.ReactNode
@@ -92,6 +92,16 @@ export function DateRangeFilter({
     setDateRange({ fromDate: null, toDate: null })
   }
 
+  // Resetar inputs quando botão de limpar filtros é utilizado
+  useEffect(() => {
+    if (!dateRange.toDate && !dateRange.fromDate) {
+      setTempRange({
+        fromDate: null,
+        toDate: null
+      })
+    }
+  }, [dateRange])
+
   const formatDateRange = () => {
     if (!dateRange.fromDate || !dateRange.toDate) return ''
     return `${dayjs(dateRange.fromDate).format('DD/MM/YYYY')} - ${dayjs(dateRange.toDate).format('DD/MM/YYYY')}`
@@ -106,16 +116,22 @@ export function DateRangeFilter({
           data-active={hasSelectedDate}
           variant="default-filled"
           classNames={{
-            root: 'data-[active=true]:bg-govBlue- data-[active=true]:text-govBlue-700'
+            root: 'data-[active=true]:bg-govBlue-50 data-[active=true]:text-govBlue-700'
           }}
           rightSection={<ChevronDown className="size-4" />}
         >
           {children}
 
           {dateRange.fromDate && dateRange.toDate && (
-            <p className="ml-1 border-l border-primary pl-1 text-xs font-semibold uppercase">
-              {formatDateRange()}
-            </p>
+            <>
+              <Divider
+                orientation="vertical"
+                className="m-2 border-govBlue-300"
+              />
+              <p className="text-xs font-semibold uppercase">
+                {formatDateRange()}
+              </p>
+            </>
           )}
         </Button>
       </Popover.Target>
@@ -193,4 +209,3 @@ export function DateRangeFilter({
     </Popover>
   )
 }
-

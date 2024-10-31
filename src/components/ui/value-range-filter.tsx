@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { parseAsInteger, useQueryStates } from 'nuqs'
-import { RangeSlider, Button, Popover, TextInput } from '@mantine/core'
-import { ChevronDown } from 'lucide-react'
+import { RangeSlider, Button, Popover, TextInput, Divider } from '@mantine/core'
+import { ChevronDown, Minus } from 'lucide-react'
 
 interface ValueRangeFilterProps {
   min: number
@@ -9,15 +9,6 @@ interface ValueRangeFilterProps {
   data: { value: number; count: number }[]
   children: React.ReactNode
 }
-
-const SHORTCUTS = [
-  { label: '0 - 100', range: [0, 100] },
-  { label: '100 - 500', range: [100, 500] },
-  { label: '500 - 1000', range: [500, 1000] },
-  { label: '1000 - 5000', range: [1000, 5000] },
-
-  { label: '5000 - 10000', range: [5000, 10000] }
-]
 
 export function ValueRangeFilter({
   min,
@@ -42,22 +33,53 @@ export function ValueRangeFilter({
     })
   }
 
-  const handleShortcutClick = (shortcut: (typeof SHORTCUTS)[0]) => {
-    setTempRange({ fromValue: shortcut.range[0], toValue: shortcut.range[1] })
-  }
-
   const handleClear = () => {
     setTempRange({ fromValue: min, toValue: max })
-    setValueRange({ fromValue: min, toValue: max })
+    setValueRange({ fromValue: null, toValue: null })
   }
+  const handleFromValueChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const cleanValue = parseFloat(
+        event.currentTarget.value.replace(/[^0-9.-]+/g, '')
+      )
+      setTempRange((prev) => ({
+        ...prev,
+        fromValue: isNaN(cleanValue) ? min : cleanValue
+      }))
+    },
+    [min]
+  )
+
+  const handleToValueChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const cleanValue = parseFloat(
+        event.currentTarget.value.replace(/[^0-9.-]+/g, '')
+      )
+      setTempRange((prev) => ({
+        ...prev,
+        toValue: isNaN(cleanValue) ? max : cleanValue
+      }))
+    },
+    [max]
+  )
+
+  // Resetar inputs quando botão de limpar filtros é utilizado
+  useEffect(() => {
+    if (!valueRange.toValue && !valueRange.fromValue) {
+      setTempRange({ fromValue: min, toValue: max })
+    }
+  }, [valueRange, min, max])
 
   const formatValueRange = () => {
-    if (valueRange.fromValue === min && valueRange.toValue === max) return ''
-    return `${valueRange.fromValue?.toLocaleString()} - ${valueRange.toValue?.toLocaleString()}`
+    return `R$ ${valueRange.fromValue?.toLocaleString()} - R$ ${valueRange.toValue?.toLocaleString()}`
   }
 
-  const hasSelectedRange =
-    valueRange.fromValue !== min || valueRange.toValue !== max
+  const hasRangeApplied =
+    (!!valueRange.fromValue || !!valueRange.toValue) &&
+    (valueRange.fromValue !== min || valueRange.toValue !== max)
+
+  const isValidRangeSelected =
+    tempRange.fromValue !== min || tempRange.toValue !== max
 
   const maxCount = Math.max(...data.map((item) => item.count))
 
@@ -68,68 +90,40 @@ export function ValueRangeFilter({
     <Popover position="bottom-start" shadow="md">
       <Popover.Target>
         <Button
-          data-active={hasSelectedRange}
+          data-active={hasRangeApplied}
           variant="default-filled"
           className="data-[active=true]:bg-govBlue-50 data-[active=true]:text-govBlue-700"
           rightSection={<ChevronDown className="size-4" />}
         >
-          <div className="flex items-center">
-            {children}
-            {valueRange.fromValue !== min ||
-              (valueRange.toValue !== max && (
-                <p className="ml-1 border-l border-primary pl-1 text-xs font-semibold uppercase">
-                  {formatValueRange()}
-                </p>
-              ))}
-          </div>
+          {children}
+          {hasRangeApplied && (
+            <>
+              <Divider
+                orientation="vertical"
+                className="m-2 border-govBlue-300"
+              />
+              <p className="text-xs font-semibold uppercase">
+                {formatValueRange()}
+              </p>
+            </>
+          )}
         </Button>
       </Popover.Target>
 
       <Popover.Dropdown>
         <div className="flex flex-col space-y-4">
-          <div className="flex items-center justify-between">
-            <TextInput
-              value={tempRange.fromValue?.toLocaleString()}
-              onChange={(event) =>
-                setTempRange((prev) => ({
-                  ...prev,
-
-                  fromValue: parseFloat(
-                    event.currentTarget.value.replace(/[^0-9.-]+/g, '')
-                  )
-                }))
-              }
-              placeholder="From value"
-              className="w-48"
-            />
-            <TextInput
-              value={tempRange.toValue?.toLocaleString()}
-              onChange={(event) =>
-                setTempRange((prev) => ({
-                  ...prev,
-                  toValue: parseFloat(
-                    event.currentTarget.value.replace(/[^0-9.-]+/g, '')
-                  )
-                }))
-              }
-              placeholder="To value"
-              className="w-48"
-            />
-          </div>
           <div className="mb-1 flex h-[100px] items-end justify-between space-x-1">
             {data.map((item) => (
               <div
+                data-in-range={isInRange(item.value)}
                 key={item.value}
-                className={`w-2 flex-1 rounded-sm transition-colors ${
-                  isInRange(item.value) ? 'bg-govBlue-600' : 'bg-gray-300'
-                }`}
+                className="w-2 flex-1 rounded-sm bg-gray-300 transition-colors data-[in-range=true]:bg-govBlue-600"
                 style={{
                   height: `${(item.count / maxCount) * 100}px` // Scale height to max 100px
                 }}
               />
             ))}
           </div>
-
           <RangeSlider
             min={min}
             max={max}
@@ -141,27 +135,40 @@ export function ValueRangeFilter({
               })
             }}
           />
-
-          <div className="flex items-center justify-between">
-            <Button onClick={handleApply}>Apply</Button>
-
-            <Button variant="default" onClick={handleClear}>
-              Clear
-            </Button>
+          <div className="flex items-center space-x-2">
+            <TextInput
+              leftSection={
+                <span className="mt-0.5 block text-sm font-medium text-secondary-foreground">
+                  R$
+                </span>
+              }
+              value={tempRange.fromValue?.toLocaleString()}
+              onChange={handleFromValueChange}
+              className="w-32"
+            />
+            <Minus className="size-3" />
+            <TextInput
+              leftSection={
+                <span className="mt-0.5 block text-sm font-medium text-secondary-foreground">
+                  R$
+                </span>
+              }
+              value={tempRange.toValue?.toLocaleString()}
+              onChange={handleToValueChange}
+              className="w-32"
+            />
           </div>
-
-          <div className="flex flex-wrap gap-2">
-            {SHORTCUTS.map((shortcut) => (
-              <Button
-                key={shortcut.label}
-                variant="light"
-                size="xs"
-                radius="xl"
-                onClick={() => handleShortcutClick(shortcut)}
-              >
-                {shortcut.label}
-              </Button>
-            ))}
+          <div className="flex items-center space-x-2">
+            <Button
+              onClick={handleApply}
+              size="sm"
+              disabled={!isValidRangeSelected}
+            >
+              Aplicar
+            </Button>
+            <Button variant="default" onClick={handleClear} size="sm">
+              Limpar
+            </Button>
           </div>
         </div>
       </Popover.Dropdown>

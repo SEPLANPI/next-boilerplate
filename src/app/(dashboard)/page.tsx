@@ -20,7 +20,9 @@ export const searchParamsCache = createSearchParamsCache({
   page: parseAsInteger.withDefault(1),
   ugs: parseAsArrayOf(parseAsInteger),
   fromDate: parseAsIsoDateTime,
-  toDate: parseAsIsoDateTime
+  toDate: parseAsIsoDateTime,
+  fromValue: parseAsInteger,
+  toValue: parseAsInteger
 })
 export default async function Eventos({
   searchParams
