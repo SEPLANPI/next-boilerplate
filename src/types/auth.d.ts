@@ -1,4 +1,4 @@
-import type { DefaultSession, User } from 'next-auth'
+import { AdapterUser } from '@auth/core/adapters'
 
 declare module 'next-auth' {
   /**
@@ -8,6 +8,7 @@ declare module 'next-auth' {
     user: {
       sub: string
       email_verified: boolean
+      emailVerified: Date | null
       name: string
       preferred_username: string
       given_name: string
@@ -16,7 +17,7 @@ declare module 'next-auth' {
       id: string
       org_name?: string
       telephone?: string
-    } & DefaultSession['user']
+    } & AdapterUser
     accessToken: string
     refreshToken: string
     error: string
@@ -28,15 +29,17 @@ declare module 'next-auth' {
   interface User {
     sub: string
     email_verified: boolean
+    emailVerified: Date | null
     name: string
-    telephone: string
     preferred_username: string
-    org_name: string
     given_name: string
     family_name: string
     email: string
     id: string
+    org_name?: string
+    telephone?: string
   }
+
   /**
    * Usually contains information about the provider being used
    * and also extends `TokenSet`, which is different tokens returned by OAuth Providers.
@@ -62,11 +65,9 @@ declare module 'next-auth' {
   }
   interface Profile {
     sub: string
-
     email_verified: boolean
     name: string
     telephone: string
-
     preferred_username: string
     org_name: string
     given_name: string

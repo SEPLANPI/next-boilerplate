@@ -11,15 +11,12 @@ import {
   Badge
 } from '@mantine/core'
 import type { Event } from './events-content'
-import { DataTableColumnHeader } from '@/components/ui/data-table-column-header'
-import { parseAsString, useQueryState } from 'nuqs'
 
 type EventsTableProps = {
   events: Event[]
 }
 
 export async function EventsTable({ events }: EventsTableProps) {
-  const [sort, setSort] = useQueryState('sort', parseAsString)
   return (
     <>
       <Table verticalSpacing="xs">
@@ -27,14 +24,7 @@ export async function EventsTable({ events }: EventsTableProps) {
           <TableTr>
             <TableTh>Nome</TableTh>
             <TableTh>Município</TableTh>
-            <TableTh>
-              <DataTableColumnHeader
-                column="data"
-                title={'Data'}
-                sortKey={sort}
-                onSort={setSort}
-              />
-            </TableTh>
+            <TableTh>Data</TableTh>
             <TableTh className="w-1 whitespace-nowrap">
               Unidades Gestoras
             </TableTh>

@@ -1,10 +1,10 @@
-import { searchParamsCache } from '@/app/(dashboard)/page'
 import { Button, Divider } from '@mantine/core'
 import Link from 'next/link'
+import { eventsSearchParams } from '../lib/search-params'
 
 export function ClearFilters() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { page, ...params } = searchParamsCache.all()
+  const { page, ...params } = eventsSearchParams.all()
 
   const hasActiveFilters =
     params &&

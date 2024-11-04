@@ -9,18 +9,16 @@ const refreshAccessToken = async (token: JWT) => {
     const details = {
       client_id: process.env.AUTH_KEYCLOAK_ID,
       client_secret: process.env.AUTH_KEYCLOAK_SECRET,
-      grant_type: ['refresh_token'],
+      grant_type: 'refresh_token',
       refresh_token: token.refreshToken
     }
     const formBody: string[] = []
 
-    Object.entries(details).forEach(
-      ([key, value]: [string, string | undefined]) => {
-        const encodedKey = encodeURIComponent(key)
-        const encodedValue = encodeURIComponent(value || '')
-        formBody.push(encodedKey + '=' + encodedValue)
-      }
-    )
+    Object.entries(details).forEach(([key, value]) => {
+      const encodedKey = encodeURIComponent(key)
+      const encodedValue = encodeURIComponent(value || '')
+      formBody.push(encodedKey + '=' + encodedValue)
+    })
 
     const formData = formBody.join('&')
 
@@ -56,19 +54,7 @@ const refreshAccessToken = async (token: JWT) => {
 const keycloakProvider = KeycloakProvider({
   clientId: process.env.AUTH_KEYCLOAK_ID,
   clientSecret: process.env.AUTH_KEYCLOAK_SECRET,
-  issuer: process.env.AUTH_KEYCLOAK_ISSUER,
-  profile(profile) {
-    return {
-      email_verified: profile.email_verified,
-      name: profile.name,
-      preferred_username: profile.preferred_username,
-      given_name: profile.given_name,
-      family_name: profile.family_name,
-      email: profile.email,
-      org_name: profile.org_name,
-      telephone: profile.telephone
-    }
-  }
+  issuer: process.env.AUTH_KEYCLOAK_ISSUER
 })
 
 export const { handlers, signIn, signOut, auth } = NextAuth({

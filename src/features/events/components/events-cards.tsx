@@ -3,9 +3,10 @@ type EventsCardsProps = {
   quantityPercentage: number
   value: number
   valuePercentage: number
-  municipios: string
   empresas: number
   empresasPercentage: number
+  municipios: number
+  municipiosPercentage: number
 }
 
 export function EventsCards({
@@ -13,9 +14,10 @@ export function EventsCards({
   quantityPercentage,
   value,
   valuePercentage,
-  municipios,
   empresas,
-  empresasPercentage
+  empresasPercentage,
+  municipios,
+  municipiosPercentage
 }: EventsCardsProps) {
   return (
     <div className="my-6 flex items-stretch space-x-4">
@@ -49,7 +51,7 @@ export function EventsCards({
         </span>
         <span className="text-2xl font-bold">{municipios}</span>
         <span className="text-sm font-medium text-muted-foreground">
-          % dos municípios
+          {municipiosPercentage}% dos municípios
         </span>
       </div>
       <div className="flex min-w-64 flex-col rounded border p-4 shadow-sm">

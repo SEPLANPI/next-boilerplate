@@ -3,33 +3,18 @@ import { ClearFilters } from '@/features/events/components/clear-filters'
 import { EventsContent } from '@/features/events/components/events-content'
 import { EventsContentSkeleton } from '@/features/events/components/events-content-skeleton'
 import { EventsFilters } from '@/features/events/components/events-filters'
+import { eventsSearchParams } from '@/features/events/lib/search-params'
 import { Button, Divider } from '@mantine/core'
 import { ListTree, Plus } from 'lucide-react'
-import {
-  createSearchParamsCache,
-  parseAsArrayOf,
-  parseAsInteger,
-  parseAsIsoDateTime,
-  parseAsString,
-  SearchParams
-} from 'nuqs/server'
+import { SearchParams } from 'nuqs/server'
 import { Suspense } from 'react'
 
-export const searchParamsCache = createSearchParamsCache({
-  search: parseAsString.withDefault(''),
-  page: parseAsInteger.withDefault(1),
-  ugs: parseAsArrayOf(parseAsInteger),
-  fromDate: parseAsIsoDateTime,
-  toDate: parseAsIsoDateTime,
-  fromValue: parseAsInteger,
-  toValue: parseAsInteger
-})
-export default async function Eventos({
+export default async function Events({
   searchParams
 }: {
   searchParams: Promise<SearchParams>
 }) {
-  const params = searchParamsCache.parse(await searchParams)
+  const params = eventsSearchParams.parse(await searchParams)
   return (
     <div>
       <div className="flex w-full items-end justify-between">

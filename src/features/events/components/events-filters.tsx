@@ -3,7 +3,6 @@
 import { AsyncFilter } from '@/components/ui/async-filter'
 import { getUgs } from '../actions/get-ugs'
 import { DateRangeFilter } from '@/components/ui/date-range-filter'
-import ValueRangeFilter from '@/components/ui/value-range-filter'
 
 export function EventsFilters() {
   return (
@@ -30,35 +29,35 @@ export function EventsFilters() {
         Unidade Gestora
       </AsyncFilter>
       <DateRangeFilter>Data</DateRangeFilter>
-      <ValueRangeFilter
-        min={0}
-        max={2000000}
-        data={[
-          { value: 0, count: 15 },
-          { value: 100000, count: 27 },
-          { value: 200000, count: 36 },
-          { value: 300000, count: 41 },
-          { value: 400000, count: 48 },
-          { value: 500000, count: 54 },
-          { value: 600000, count: 59 },
-          { value: 700000, count: 64 },
-          { value: 800000, count: 68 },
-          { value: 900000, count: 71 },
-          { value: 1000000, count: 73 },
-          { value: 1100000, count: 76 },
-          { value: 1200000, count: 79 },
-          { value: 1300000, count: 81 },
-          { value: 1400000, count: 84 },
-          { value: 1500000, count: 85 },
-          { value: 1600000, count: 87 },
-          { value: 1700000, count: 90 },
-          { value: 1800000, count: 92 },
-          { value: 1900000, count: 93 },
-          { value: 2000000, count: 95 }
-        ]}
-      >
-        Valor
-      </ValueRangeFilter>
+      {/* <ValueRangeFilter */}
+      {/*   min={0} */}
+      {/*   max={2000000} */}
+      {/*   data={[ */}
+      {/*     { value: 0, count: 15 }, */}
+      {/*     { value: 100000, count: 27 }, */}
+      {/*     { value: 200000, count: 36 }, */}
+      {/*     { value: 300000, count: 41 }, */}
+      {/*     { value: 400000, count: 48 }, */}
+      {/*     { value: 500000, count: 54 }, */}
+      {/*     { value: 600000, count: 59 }, */}
+      {/*     { value: 700000, count: 64 }, */}
+      {/*     { value: 800000, count: 68 }, */}
+      {/*     { value: 900000, count: 71 }, */}
+      {/*     { value: 1000000, count: 73 }, */}
+      {/*     { value: 1100000, count: 76 }, */}
+      {/*     { value: 1200000, count: 79 }, */}
+      {/*     { value: 1300000, count: 81 }, */}
+      {/*     { value: 1400000, count: 84 }, */}
+      {/*     { value: 1500000, count: 85 }, */}
+      {/*     { value: 1600000, count: 87 }, */}
+      {/*     { value: 1700000, count: 90 }, */}
+      {/*     { value: 1800000, count: 92 }, */}
+      {/*     { value: 1900000, count: 93 }, */}
+      {/*     { value: 2000000, count: 95 } */}
+      {/*   ]} */}
+      {/* > */}
+      {/*   Valor */}
+      {/* </ValueRangeFilter> */}
     </>
   )
 }
