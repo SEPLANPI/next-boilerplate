@@ -97,5 +97,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     authorized: async ({ auth }) => {
       return !!auth && !auth.error
     }
+  },
+  pages: {
+    signIn: '/api/auth/sign-in'
   }
 })
