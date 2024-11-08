@@ -1,4 +1,3 @@
-import { SearchParamsPagination } from '@/components/ui/search-params-pagination'
 import { EventsEmptyState } from '@/features/events/components/empty-state'
 import { api } from '@/lib/api'
 import { EventsTable } from './events-table'
@@ -40,7 +39,7 @@ export async function EventsContent() {
     params.append('data_inicio', dayjs(fromDate).format('YYYY-MM-DD'))
   }
   if (toDate) {
-    params.append('data_fim', dayjs(toDate).format('YYYY-MM-DD'))
+    params.append('data_after', dayjs(toDate).format('YYYY-MM-DD'))
   }
 
   if (ugs) {
@@ -64,9 +63,6 @@ export async function EventsContent() {
 
   const data: EventsResponse = await response.json()
 
-  const startItem = (page - 1) * 5 + 1
-  const endItem = Math.min(startItem + data.results.length - 1, data.count)
-
   if (data.results.length === 0) return <EventsEmptyState />
 
   return (
@@ -81,16 +77,7 @@ export async function EventsContent() {
         municipios={data.total_municipios}
         municipiosPercentage={data.municipios_percentage}
       />
-      <EventsTable events={data.results} />
-      <div className="mt-6 flex items-center justify-between">
-        <span className="text-sm text-secondary-foreground">
-          <span className="font-bold">
-            {startItem} - {endItem}
-          </span>{' '}
-          de {data.count} resultados
-        </span>
-        <SearchParamsPagination totalItems={data.count} perPage={15} />
-      </div>
+      <EventsTable events={data.results} count={data.count} />
     </>
   )
 }

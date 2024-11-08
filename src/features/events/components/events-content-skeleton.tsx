@@ -9,7 +9,7 @@ import {
 } from '@mantine/core'
 
 export function EventsContentSkeleton() {
-  const skeletonRows = Array.from({ length: 10 })
+  const skeletonRows = Array.from({ length: 15 })
   const skeletonCards = Array.from({ length: 4 })
 
   return (

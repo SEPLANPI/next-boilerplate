@@ -49,7 +49,7 @@ export function AsyncFilter<T extends object = DefaultOption>({
 
   return (
     <SelectedItemsProvider searchParamKey={searchParamKey}>
-      <Popover width={300} position="bottom-start" shadow="xl">
+      <Popover width={300} position="bottom-start" shadow="md">
         <Popover.Target>
           <FilterButton>{children}</FilterButton>
         </Popover.Target>

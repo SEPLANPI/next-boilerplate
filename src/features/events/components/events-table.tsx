@@ -1,5 +1,3 @@
-'use client'
-
 import {
   Table,
   TableTr,
@@ -11,12 +9,18 @@ import {
   Badge
 } from '@mantine/core'
 import type { Event } from './events-content'
+import { eventsSearchParams } from '../lib/search-params'
+import { SearchParamsPagination } from '@/components/ui/search-params-pagination'
 
 type EventsTableProps = {
   events: Event[]
+  count: number
 }
 
-export async function EventsTable({ events }: EventsTableProps) {
+export async function EventsTable({ events, count }: EventsTableProps) {
+  const page = eventsSearchParams.get('page')
+  const startItem = (page - 1) * 5 + 1
+  const endItem = Math.min(startItem + events.length - 1, count)
   return (
     <>
       <Table verticalSpacing="xs">
@@ -67,6 +71,15 @@ export async function EventsTable({ events }: EventsTableProps) {
           ))}
         </TableTbody>
       </Table>
+      <div className="mt-6 flex items-center justify-between">
+        <span className="text-sm text-secondary-foreground">
+          <span className="font-bold">
+            {startItem} - {endItem}
+          </span>{' '}
+          de {count} resultados
+        </span>
+        <SearchParamsPagination totalItems={count} perPage={15} />
+      </div>
     </>
   )
 }

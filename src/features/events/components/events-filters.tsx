@@ -3,10 +3,14 @@
 import { AsyncFilter } from '@/components/ui/async-filter'
 import { getUgs } from '../actions/get-ugs'
 import { DateRangeFilter } from '@/components/ui/date-range-filter'
+import { GroupEvents } from './group-events'
+import { Divider } from '@mantine/core'
 
 export function EventsFilters() {
   return (
     <>
+      <GroupEvents />
+      <Divider orientation="vertical" />
       <AsyncFilter
         loadOptions={getUgs}
         filterFn={(option, search) =>

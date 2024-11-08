@@ -13,5 +13,7 @@ export const eventsSearchParams = createSearchParamsCache({
   fromDate: parseAsIsoDateTime,
   toDate: parseAsIsoDateTime,
   fromValue: parseAsInteger,
-  toValue: parseAsInteger
+  toValue: parseAsInteger,
+  group: parseAsString,
+  groupSort: parseAsString
 })
