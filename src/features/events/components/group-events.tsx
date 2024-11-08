@@ -10,7 +10,7 @@ const groupOptions = [
     label: 'Nenhum'
   },
   {
-    value: 'secretaria',
+    value: 'ugs',
     label: 'Secretaria'
   },
   {

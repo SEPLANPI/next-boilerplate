@@ -3,6 +3,7 @@ import { ClearFilters } from '@/features/events/components/clear-filters'
 import { EventsContent } from '@/features/events/components/events-content'
 import { EventsContentSkeleton } from '@/features/events/components/events-content-skeleton'
 import { EventsFilters } from '@/features/events/components/events-filters'
+import { EventsGroupedContent } from '@/features/events/components/grouped-content'
 import { eventsSearchParams } from '@/features/events/lib/search-params'
 import { Button } from '@mantine/core'
 import { Plus } from 'lucide-react'
@@ -42,7 +43,9 @@ export default async function Events({
         <Suspense
           fallback={<>Carregando</>}
           key={`${params.group}${params.groupSort}`}
-        ></Suspense>
+        >
+          <EventsGroupedContent />
+        </Suspense>
       )}
     </div>
   )

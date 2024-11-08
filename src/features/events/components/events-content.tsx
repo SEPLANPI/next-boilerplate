@@ -1,10 +1,8 @@
 import { EventsEmptyState } from '@/features/events/components/empty-state'
-import { api } from '@/lib/api'
 import { EventsTable } from './events-table'
 import { EventsCards } from './events-cards'
 import { Alert } from '@mantine/core'
-import dayjs from 'dayjs'
-import { eventsSearchParams } from '../lib/search-params'
+import { getEvents } from '../actions/get-events'
 
 export type Event = {
   nome: string
@@ -18,7 +16,7 @@ export type Event = {
   valor: string
 }
 
-type EventsResponse = {
+export type EventsResponse = {
   count: number
   eventos_percentage: number
   total_valor: number
@@ -31,23 +29,7 @@ type EventsResponse = {
 }
 
 export async function EventsContent() {
-  const { page, search, ugs, fromDate, toDate } = eventsSearchParams.all()
-  const params = new URLSearchParams()
-  params.append('page', page.toString())
-  params.append('nome', search)
-  if (fromDate) {
-    params.append('data_inicio', dayjs(fromDate).format('YYYY-MM-DD'))
-  }
-  if (toDate) {
-    params.append('data_after', dayjs(toDate).format('YYYY-MM-DD'))
-  }
-
-  if (ugs) {
-    ugs.forEach((ug) => params.append('ugs', ug.toString()))
-  }
-
-  const response = await api.get(`/eventos?${params.toString()}`)
-
+  const response = await getEvents()
   if (!response.ok) {
     return (
       <Alert

@@ -15,6 +15,8 @@ async function request(
   { body, contentType, ...options }: ApiOptions = {}
 ): Promise<Response> {
   const session = await auth()
+
+  console.log(url)
   const accessToken = session?.accessToken
 
   const headers: HeadersInit = {
