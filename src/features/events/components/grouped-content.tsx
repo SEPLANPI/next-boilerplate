@@ -1,4 +1,3 @@
-import { EventsCards } from './events-cards'
 import { EventsGroupAccordions } from './group-accordions'
 
 export type GroupItem = {
@@ -49,19 +48,5 @@ const data: GroupedEventsResponse = {
 export async function EventsGroupedContent() {
   await new Promise((resolve) => setTimeout(resolve, 2000))
 
-  return (
-    <>
-      <EventsCards
-        quantity={data.count}
-        quantityPercentage={data.eventos_percentage}
-        value={data.total_valor}
-        valuePercentage={data.total_valor_percentage}
-        empresas={data.total_empresas}
-        empresasPercentage={data.empresas_percentage}
-        municipios={data.total_municipios}
-        municipiosPercentage={data.municipios_percentage}
-      />
-      <EventsGroupAccordions items={data.results} count={data.count} />
-    </>
-  )
+  return <EventsGroupAccordions items={data.results} count={data.count} />
 }

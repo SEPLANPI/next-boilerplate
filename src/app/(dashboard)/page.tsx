@@ -1,7 +1,8 @@
 import { SearchInput } from '@/components/ui/search-input'
 import { ClearFilters } from '@/features/events/components/clear-filters'
+import { EventsCards } from '@/features/events/components/events-cards'
 import { EventsContent } from '@/features/events/components/events-content'
-import { EventsContentSkeleton } from '@/features/events/components/events-content-skeleton'
+import { EventsCardsSkeleton } from '@/features/events/components/events-cards-skeleton'
 import { EventsFilters } from '@/features/events/components/events-filters'
 import { EventsGroupedContent } from '@/features/events/components/grouped-content'
 import { eventsSearchParams } from '@/features/events/lib/search-params'
@@ -9,15 +10,20 @@ import { Button } from '@mantine/core'
 import { Plus } from 'lucide-react'
 import { SearchParams } from 'nuqs/server'
 import { Suspense } from 'react'
+import { EventsTableSkeleton } from '@/features/events/components/events-table-skeleton'
 
 export default async function Events({
   searchParams
 }: {
   searchParams: Promise<SearchParams>
 }) {
-  const params = eventsSearchParams.parse(await searchParams)
-
+  const { sort, ...params } = eventsSearchParams.parse(await searchParams)
   const hasGrouping = !!params.group
+
+  const cardsSuspenseKey = JSON.stringify(params) + 'cards'
+  const tableSuspenseKey = JSON.stringify(params) + sort + 'table'
+  const groupSuspenseKey = `${params.group}${params.groupSort}`
+
   return (
     <div>
       <div className="flex w-full items-end justify-between">
@@ -31,19 +37,16 @@ export default async function Events({
         <EventsFilters />
         <ClearFilters />
       </div>
+      <Suspense fallback={<EventsCardsSkeleton />} key={cardsSuspenseKey}>
+        <EventsCards />
+      </Suspense>
       {!hasGrouping && (
-        <Suspense
-          fallback={<EventsContentSkeleton />}
-          key={JSON.stringify(params)}
-        >
+        <Suspense fallback={<EventsTableSkeleton />} key={tableSuspenseKey}>
           <EventsContent />
         </Suspense>
       )}
       {hasGrouping && (
-        <Suspense
-          fallback={<>Carregando</>}
-          key={`${params.group}${params.groupSort}`}
-        >
+        <Suspense fallback={<>Carregando</>} key={groupSuspenseKey}>
           <EventsGroupedContent />
         </Suspense>
       )}

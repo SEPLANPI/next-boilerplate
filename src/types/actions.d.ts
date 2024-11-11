@@ -1,4 +1,3 @@
-export type ActionState<TOutput> = {
-  data?: TOutput
-  error?: string | null
-}
+export type ActionState<TOutput> =
+  | { data: TOutput; error?: never }
+  | { error: string; data?: never }

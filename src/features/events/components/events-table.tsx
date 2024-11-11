@@ -1,3 +1,5 @@
+'use client'
+
 import {
   Table,
   TableTr,
@@ -8,9 +10,11 @@ import {
   Tooltip,
   Badge
 } from '@mantine/core'
-import type { Event } from './events-content'
-import { eventsSearchParams } from '../lib/search-params'
+import { eventsSearchParamsParsers } from '../lib/search-params'
 import { SearchParamsPagination } from '@/components/ui/search-params-pagination'
+import type { Event } from '@/types/events'
+import { parseAsString, useQueryState, useQueryStates } from 'nuqs'
+import { SortableColumnHeader } from '@/components/ui/sortable-column-header'
 
 type EventsTableProps = {
   events: Event[]
@@ -18,22 +22,45 @@ type EventsTableProps = {
 }
 
 export async function EventsTable({ events, count }: EventsTableProps) {
-  const page = eventsSearchParams.get('page')
+  const [sort, setSort] = useQueryState('sort', parseAsString)
+  const [{ page }] = useQueryStates(eventsSearchParamsParsers)
   const startItem = (page - 1) * 5 + 1
   const endItem = Math.min(startItem + events.length - 1, count)
   return (
     <>
-      <Table verticalSpacing="xs">
+      <Table verticalSpacing="xs" classNames={{
+        tr: ''
+      }}>
         <TableThead>
           <TableTr>
-            <TableTh>Nome</TableTh>
-            <TableTh>Município</TableTh>
-            <TableTh>Data</TableTh>
+            <SortableColumnHeader
+              column="nome"
+              title="Nome"
+              sortKey={sort}
+              onSort={setSort}
+            />
+            <SortableColumnHeader
+              column="municipio"
+              title="Município"
+              sortKey={sort}
+              onSort={setSort}
+            />
+            <SortableColumnHeader
+              column="data"
+              title={'Data'}
+              sortKey={sort}
+              onSort={setSort}
+            />
             <TableTh className="w-1 whitespace-nowrap">
               Unidades Gestoras
             </TableTh>
             <TableTh>Contratos</TableTh>
-            <TableTh>Valor</TableTh>
+            <SortableColumnHeader
+              column="valor"
+              title="Valor"
+              sortKey={sort}
+              onSort={setSort}
+            />
           </TableTr>
         </TableThead>
         <TableTbody>

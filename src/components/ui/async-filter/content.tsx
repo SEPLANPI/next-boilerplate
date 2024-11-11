@@ -43,6 +43,7 @@ export function Content<T>({
 
   const filteredOptions =
     data?.data?.filter((option) => filterFn(option, search)) || []
+
   const selectedOptions = filteredOptions.filter((option) =>
     selectedItems.has(getOptionValue(option))
   )

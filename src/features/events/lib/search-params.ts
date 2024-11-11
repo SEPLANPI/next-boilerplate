@@ -15,6 +15,7 @@ export const eventsSearchParamsParsers = {
   toDate: parseAsIsoDateTime,
   fromValue: parseAsInteger,
   toValue: parseAsInteger,
+  sort: parseAsString,
   group: parseAsString,
   groupSort: parseAsString
 }

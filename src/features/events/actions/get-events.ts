@@ -1,9 +1,24 @@
 import dayjs from 'dayjs'
 import { eventsSearchParams } from '../lib/search-params'
 import { api } from '@/lib/api'
+import { ActionState } from '@/types/actions'
 
-export async function getEvents(groupId?: string) {
-  const { page, search, ugs, fromDate, toDate, group } =
+export type EventsResponse = {
+  count: number
+  eventos_percentage: number
+  total_valor: number
+  total_valor_percentage: number
+  total_empresas: number
+  empresas_percentage: number
+  total_municipios: number
+  municipios_percentage: number
+  results: Event[]
+}
+
+export async function getEvents(
+  groupId?: string
+): Promise<ActionState<EventsResponse>> {
+  const { page, search, ugs, fromDate, toDate, group, municipios, sort } =
     eventsSearchParams.all()
   const params = new URLSearchParams()
   params.append('page', page.toString())
@@ -18,10 +33,27 @@ export async function getEvents(groupId?: string) {
   if (ugs && group !== 'ugs') {
     ugs.forEach((ug) => params.append('ugs', ug.toString()))
   }
+  if (municipios && group !== 'municipios') {
+    console.log(municipios)
+    municipios.forEach((municipio) => params.append('municipio', municipio))
+  }
+  if (sort) {
+    params.append('ordering', sort)
+  }
 
   if (groupId && group) {
     params.append(group, groupId)
   }
 
-  return api.get(`/eventos?${params.toString()}`)
+  const response = await api.get(`/eventos?${params.toString()}`)
+
+  if (!response.ok) {
+    const error = await response.json()
+
+    return { error: error.detail }
+  }
+
+  const data: EventsResponse = await response.json()
+
+  return { data }
 }

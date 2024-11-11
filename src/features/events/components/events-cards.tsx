@@ -1,34 +1,26 @@
-type EventsCardsProps = {
-  quantity: number
-  quantityPercentage: number
-  value: number
-  valuePercentage: number
-  empresas: number
-  empresasPercentage: number
-  municipios: number
-  municipiosPercentage: number
-}
+import { getEvents } from '../actions/get-events'
 
-export function EventsCards({
-  quantity,
-  quantityPercentage,
-  value,
-  valuePercentage,
-  empresas,
-  empresasPercentage,
-  municipios,
-  municipiosPercentage
-}: EventsCardsProps) {
+export async function EventsCards() {
+  const { data, error } = await getEvents()
+
+  if (!data || error) {
+    return <>Erro</>
+  }
+
+  if (data.results.length === 0) {
+    return null
+  }
+
   return (
     <div className="my-6 flex items-stretch space-x-4">
       <div className="flex min-w-64 flex-col rounded border p-4 shadow-sm">
         <span className="mb-2 text-sm font-medium text-secondary-foreground">
           Eventos
         </span>
-        <span className="text-2xl font-bold">{quantity}</span>
+        <span className="text-2xl font-bold">{data.count}</span>
 
         <span className="text-sm font-medium text-muted-foreground">
-          {quantityPercentage}% dos eventos
+          {data.eventos_percentage}% dos eventos
         </span>
       </div>
       <div className="flex min-w-64 flex-col rounded border p-4 shadow-sm">
@@ -37,30 +29,30 @@ export function EventsCards({
         </span>
         <span className="text-2xl font-bold">
           R${' '}
-          {parseFloat(value.toString()).toLocaleString('pt-BR', {
+          {parseFloat(data.total_valor.toString()).toLocaleString('pt-BR', {
             minimumFractionDigits: 2
           })}
         </span>
         <span className="text-sm font-medium text-muted-foreground">
-          {valuePercentage}% do investimento
+          {data.total_valor_percentage}% do investimento
         </span>
       </div>
       <div className="flex min-w-64 flex-col rounded border p-4 shadow-sm">
         <span className="mb-2 text-sm font-medium text-secondary-foreground">
           Municipios beneficiados
         </span>
-        <span className="text-2xl font-bold">{municipios}</span>
+        <span className="text-2xl font-bold">{data.total_municipios}</span>
         <span className="text-sm font-medium text-muted-foreground">
-          {municipiosPercentage}% dos municípios
+          {data.municipios_percentage}% dos municípios
         </span>
       </div>
       <div className="flex min-w-64 flex-col rounded border p-4 shadow-sm">
         <span className="mb-2 text-sm font-medium text-secondary-foreground">
           Empresas contratadas
         </span>
-        <span className="text-2xl font-bold">{empresas}</span>
+        <span className="text-2xl font-bold">{data.total_empresas}</span>
         <span className="text-sm font-medium text-muted-foreground">
-          {empresasPercentage}% das empresas
+          {data.empresas_percentage}% das empresas
         </span>
       </div>
     </div>
