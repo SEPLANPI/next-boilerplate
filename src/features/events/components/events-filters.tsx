@@ -5,6 +5,7 @@ import { getUgs } from '../actions/get-ugs'
 import { DateRangeFilter } from '@/components/ui/date-range-filter'
 import { GroupEvents } from './group-events'
 import { Divider } from '@mantine/core'
+import { getMunicipios } from '../actions/get-municipios'
 
 export function EventsFilters() {
   return (
@@ -31,6 +32,15 @@ export function EventsFilters() {
         )}
       >
         Unidade Gestora
+      </AsyncFilter>
+      <AsyncFilter
+        loadOptions={getMunicipios}
+        filterId="municipios"
+        searchParamKey="municipios"
+        getOptionLabel={(option) => option.nome}
+        getOptionValue={(option) => option.nome}
+      >
+        Município
       </AsyncFilter>
       <DateRangeFilter>Data</DateRangeFilter>
       {/* <ValueRangeFilter */}
