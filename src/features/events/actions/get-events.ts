@@ -2,6 +2,7 @@ import dayjs from 'dayjs'
 import { eventsSearchParams } from '../lib/search-params'
 import { api } from '@/lib/api'
 import { ActionState } from '@/types/actions'
+import type { Event } from '@/types/events'
 
 export type EventsResponse = {
   count: number
@@ -18,8 +19,17 @@ export type EventsResponse = {
 export async function getEvents(
   groupId?: string
 ): Promise<ActionState<EventsResponse>> {
-  const { page, search, ugs, fromDate, toDate, group, municipios, sort } =
-    eventsSearchParams.all()
+  const {
+    page,
+    search,
+    ugs,
+    fromDate,
+    toDate,
+    group,
+    municipios,
+    sort,
+    deputados
+  } = eventsSearchParams.all()
   const params = new URLSearchParams()
   params.append('page', page.toString())
   params.append('nome', search)
@@ -34,8 +44,11 @@ export async function getEvents(
     ugs.forEach((ug) => params.append('ugs', ug.toString()))
   }
   if (municipios && group !== 'municipios') {
-    console.log(municipios)
     municipios.forEach((municipio) => params.append('municipio', municipio))
+  }
+
+  if (deputados && group !== 'deputados') {
+    deputados.forEach((deputado) => params.append('autor_emenda', deputado))
   }
   if (sort) {
     params.append('ordering', sort)

@@ -19,8 +19,6 @@ export function EventsTableSkeleton() {
             <TableTh>Município</TableTh>
             <TableTh>Data</TableTh>
             <TableTh>Unidades Gestoras</TableTh>
-
-            <TableTh>Contratos</TableTh>
             <TableTh>Valor</TableTh>
           </TableTr>
         </TableThead>
@@ -36,10 +34,6 @@ export function EventsTableSkeleton() {
               <TableTd>
                 <Skeleton height={22} />
               </TableTd>
-              <TableTd>
-                <Skeleton height={22} />
-              </TableTd>
-
               <TableTd>
                 <Skeleton height={22} />
               </TableTd>

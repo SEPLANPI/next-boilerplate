@@ -1,4 +1,4 @@
-import { EventsGroupAccordions } from './group-accordions'
+import { EventsGroupAccordions } from './events-group-accordions'
 
 export type GroupItem = {
   name: string
@@ -45,7 +45,7 @@ const data: GroupedEventsResponse = {
   ]
 }
 
-export async function EventsGroupedContent() {
+export async function EventsGroupView() {
   await new Promise((resolve) => setTimeout(resolve, 2000))
 
   return <EventsGroupAccordions items={data.results} count={data.count} />

@@ -20,6 +20,7 @@
     "@ui/mantine-config": "github:SEPLANPI/ui-mantine-config",
     "@ui/tailwind-config": "github:SEPLANPI/ui-tailwind-config",
     "axios": "^1.7.7",
+    "clsx": "^2.1.1",
     "dayjs": "^1.11.13",
     "globals": "^15.11.0",
     "js-cookie": "^3.0.5",
@@ -30,6 +31,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "server-only": "^0.0.1",
+    "tailwind-merge": "^2.5.4",
     "tailwind-preset-mantine": "^1.0.5"
   },
   "devDependencies": {

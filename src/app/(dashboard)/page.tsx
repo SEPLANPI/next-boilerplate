@@ -1,28 +1,30 @@
 import { SearchInput } from '@/components/ui/search-input'
-import { ClearFilters } from '@/features/events/components/clear-filters'
 import { EventsCards } from '@/features/events/components/events-cards'
-import { EventsContent } from '@/features/events/components/events-content'
 import { EventsCardsSkeleton } from '@/features/events/components/events-cards-skeleton'
 import { EventsFilters } from '@/features/events/components/events-filters'
-import { EventsGroupedContent } from '@/features/events/components/grouped-content'
 import { eventsSearchParams } from '@/features/events/lib/search-params'
 import { Button } from '@mantine/core'
 import { Plus } from 'lucide-react'
 import { SearchParams } from 'nuqs/server'
 import { Suspense } from 'react'
 import { EventsTableSkeleton } from '@/features/events/components/events-table-skeleton'
+import { EventsResetFilters } from '@/features/events/components/events-reset-filters'
+import { EventsListView } from '@/features/events/components/events-list-view'
+import { EventsGroupView } from '@/features/events/components/events-group-view'
 
 export default async function Events({
   searchParams
 }: {
   searchParams: Promise<SearchParams>
 }) {
-  const { sort, ...params } = eventsSearchParams.parse(await searchParams)
-  const hasGrouping = !!params.group
+  const { sort, groupSort, group, ...params } = eventsSearchParams.parse(
+    await searchParams
+  )
+  const hasGrouping = !!group
 
   const cardsSuspenseKey = JSON.stringify(params) + 'cards'
   const tableSuspenseKey = JSON.stringify(params) + sort + 'table'
-  const groupSuspenseKey = `${params.group}${params.groupSort}`
+  const groupSuspenseKey = `${group}${groupSort}`
 
   return (
     <div>
@@ -35,19 +37,19 @@ export default async function Events({
       <div className="my-6 flex w-full space-x-2">
         <SearchInput placeholder="Pesquisar eventos" />
         <EventsFilters />
-        <ClearFilters />
+        <EventsResetFilters />
       </div>
       <Suspense fallback={<EventsCardsSkeleton />} key={cardsSuspenseKey}>
         <EventsCards />
       </Suspense>
       {!hasGrouping && (
         <Suspense fallback={<EventsTableSkeleton />} key={tableSuspenseKey}>
-          <EventsContent />
+          <EventsListView />
         </Suspense>
       )}
       {hasGrouping && (
         <Suspense fallback={<>Carregando</>} key={groupSuspenseKey}>
-          <EventsGroupedContent />
+          <EventsGroupView />
         </Suspense>
       )}
     </div>

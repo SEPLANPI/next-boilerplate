@@ -3,14 +3,15 @@
 import { AsyncFilter } from '@/components/ui/async-filter'
 import { getUgs } from '../actions/get-ugs'
 import { DateRangeFilter } from '@/components/ui/date-range-filter'
-import { GroupEvents } from './group-events'
+import { EventsGroupFilter } from './events-group-filter'
 import { Divider } from '@mantine/core'
 import { getMunicipios } from '../actions/get-municipios'
+import { getDeputados } from '../actions/get-deputados'
 
 export function EventsFilters() {
   return (
     <>
-      <GroupEvents />
+      <EventsGroupFilter />
       <Divider orientation="vertical" />
       <AsyncFilter
         loadOptions={getUgs}
@@ -41,6 +42,16 @@ export function EventsFilters() {
         getOptionValue={(option) => option.nome}
       >
         Município
+      </AsyncFilter>
+
+      <AsyncFilter
+        loadOptions={getDeputados}
+        filterId="deputados"
+        searchParamKey="deputados"
+        getOptionLabel={(option) => option.nome}
+        getOptionValue={(option) => option.nome}
+      >
+        Deputado
       </AsyncFilter>
       <DateRangeFilter>Data</DateRangeFilter>
       {/* <ValueRangeFilter */}

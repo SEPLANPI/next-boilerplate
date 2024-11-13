@@ -7,30 +7,43 @@ import {
   TableTd,
   TableThead,
   TableTbody,
-  Tooltip,
-  Badge
+  Tooltip
 } from '@mantine/core'
 import { eventsSearchParamsParsers } from '../lib/search-params'
 import { SearchParamsPagination } from '@/components/ui/search-params-pagination'
 import type { Event } from '@/types/events'
 import { parseAsString, useQueryState, useQueryStates } from 'nuqs'
 import { SortableColumnHeader } from '@/components/ui/sortable-column-header'
+import { useRouter } from 'next/navigation'
+import { Info } from 'lucide-react'
 
 type EventsTableProps = {
   events: Event[]
   count: number
 }
 
-export async function EventsTable({ events, count }: EventsTableProps) {
+export function EventsTable({ events, count }: EventsTableProps) {
+  const router = useRouter()
+
   const [sort, setSort] = useQueryState('sort', parseAsString)
   const [{ page }] = useQueryStates(eventsSearchParamsParsers)
-  const startItem = (page - 1) * 5 + 1
+
+  const startItem = (page - 1) * 15 + 1
   const endItem = Math.min(startItem + events.length - 1, count)
+
+  function handleNavigateToEvent(id: number) {
+    router.push(`/${id}`)
+  }
+
   return (
     <>
-      <Table verticalSpacing="xs" classNames={{
-        tr: ''
-      }}>
+      <Table
+        verticalSpacing="xs"
+        highlightOnHover
+        classNames={{
+          tbody: '[&>tr]:cursor-pointer'
+        }}
+      >
         <TableThead>
           <TableTr>
             <SortableColumnHeader
@@ -54,7 +67,6 @@ export async function EventsTable({ events, count }: EventsTableProps) {
             <TableTh className="w-1 whitespace-nowrap">
               Unidades Gestoras
             </TableTh>
-            <TableTh>Contratos</TableTh>
             <SortableColumnHeader
               column="valor"
               title="Valor"
@@ -65,9 +77,16 @@ export async function EventsTable({ events, count }: EventsTableProps) {
         </TableThead>
         <TableTbody>
           {events.map((event) => (
-            <TableTr key={event.nome}>
-              <TableTd className="max-w-[500px] truncate">{event.nome}</TableTd>
-              <TableTd>{event.municipio || 'Não informado'}</TableTd>
+            <TableTr
+              key={event.id}
+              onClick={() => handleNavigateToEvent(event.id)}
+            >
+              <TableTd className="max-w-[500px] truncate" title={event.nome}>
+                {event.nome}
+              </TableTd>
+              <TableTd className="whitespace-nowrap">
+                {event.municipio || 'Não informado'}
+              </TableTd>
               <TableTd>{event.data || 'Não informado'}</TableTd>
               <TableTd className="w-1 whitespace-nowrap">
                 {event.ugs.map(({ name, sigla }) => (
@@ -78,17 +97,14 @@ export async function EventsTable({ events, count }: EventsTableProps) {
                     w={300}
                     multiline
                   >
-                    <div className="flex cursor-pointer items-center justify-between space-x-2">
+                    <div className="flex cursor-pointer items-center space-x-2">
+                      <Info className="size-4 text-muted-foreground" />
                       <span>{sigla}</span>
-                      <Badge circle className="bg-muted text-muted-foreground">
-                        ?
-                      </Badge>
                     </div>
                   </Tooltip>
                 ))}
               </TableTd>
-              <TableTd>{event.contratos.length} contratos</TableTd>
-              <TableTd className="font-semibold">
+              <TableTd className="whitespace-nowrap font-semibold">
                 R${' '}
                 {parseFloat(event.valor).toLocaleString('pt-BR', {
                   minimumFractionDigits: 2

@@ -1,4 +1,5 @@
 export type Event = {
+  id: number
   nome: string
   municipio?: string
   data?: string

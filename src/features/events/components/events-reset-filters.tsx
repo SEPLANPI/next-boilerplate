@@ -2,7 +2,7 @@ import { Button, Divider } from '@mantine/core'
 import Link from 'next/link'
 import { eventsSearchParams } from '../lib/search-params'
 
-export function ClearFilters() {
+export function EventsResetFilters() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { page, ...params } = eventsSearchParams.all()
 

@@ -78,14 +78,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
       return session
     },
-    jwt: async ({ token, user, account, profile }) => {
+    jwt: async ({ token, user, account }) => {
       if (account) {
-        // console.log('token:', token)
-        // console.log('user', user)
-        // console.log('account', account)
-        // console.log('profile: ', profile)
         token.accessToken = account.access_token
-
         try {
           const response = await fetch(
             `${process.env.AUTH_KEYCLOAK_ISSUER}/protocol/openid-connect/userinfo`,
@@ -95,10 +90,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
               }
             }
           )
-
           if (response.ok) {
             const userInfo = await response.json()
-            console.log(userInfo)
+            console.log('userinfo: ' + userInfo)
           }
         } catch (error) {
           console.error('Failed to fetch user info:', error)

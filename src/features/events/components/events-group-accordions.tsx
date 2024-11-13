@@ -1,19 +1,18 @@
 import { SearchParamsPagination } from '@/components/ui/search-params-pagination'
 import { eventsSearchParams } from '../lib/search-params'
-import { GroupItem } from './grouped-content'
+import { GroupItem } from './events-group-view'
 import {
   Accordion,
   AccordionControl,
   AccordionItem,
-  AccordionPanel,
-  Alert
+  AccordionPanel
 } from '@mantine/core'
 import { EventsTableSkeleton } from './events-table-skeleton'
 import { Suspense } from 'react'
 import { getEvents } from '../actions/get-events'
-import { EventsResponse } from './events-content'
-import { EventsEmptyState } from './empty-state'
+import { EventsEmptyState } from './events-empty-state'
 import { EventsTable } from './events-table'
+import { DefaultFetchError } from '@/components/errors/default-fetch-error'
 
 type EventsGroupAccordionsProps = {
   items: GroupItem[]
@@ -25,21 +24,10 @@ type AccordionContentProps = {
 }
 
 async function AccordionContent({ groupId }: AccordionContentProps) {
-  const response = await getEvents(groupId)
-  if (!response.ok) {
-    return (
-      <Alert
-        title="Erro inesperado"
-        variant="outline"
-        color="red"
-        className="max-w-xl"
-      >
-        Ocorreu um erro inesperado ao buscar dados no servidor.
-      </Alert>
-    )
+  const { data, error } = await getEvents(groupId)
+  if (error || !data) {
+    return <DefaultFetchError />
   }
-
-  const data: EventsResponse = await response.json()
 
   if (data.results.length === 0) return <EventsEmptyState />
 

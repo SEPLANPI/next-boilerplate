@@ -26,7 +26,7 @@ const sortOptions = [
   { value: 'value.desc', label: 'Menor Valor' }
 ] as const
 
-export function GroupEvents() {
+export function EventsGroupFilter() {
   const [{ group, sort }, setGrouping] = useQueryStates(
     {
       group: parseAsString.withDefault(''),
