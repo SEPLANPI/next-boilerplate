@@ -22,7 +22,7 @@ export async function GET(req: Request) {
   const url = `${AUTH_KEYCLOAK_ISSUER}/protocol/openid-connect/logout`
   const params = new URLSearchParams({
     client_id: AUTH_KEYCLOAK_ID as string,
-    id_token_hint: token.idToken,
+    id_token_hint: token.idToken as string,
     post_logout_redirect_uri: `${APP_URL}/api/auth/callback-sign-out`
   })
 

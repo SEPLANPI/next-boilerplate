@@ -12,19 +12,26 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "@auth/core": "^0.37.3",
     "@mantine/core": "^7.13.0",
+    "@mantine/dates": "^7.13.4",
     "@mantine/hooks": "^7.13.0",
     "@tanstack/react-query": "^5.59.8",
     "@ui/mantine-config": "github:SEPLANPI/ui-mantine-config",
     "@ui/tailwind-config": "github:SEPLANPI/ui-tailwind-config",
     "axios": "^1.7.7",
+    "clsx": "^2.1.1",
+    "dayjs": "^1.11.13",
     "globals": "^15.11.0",
     "js-cookie": "^3.0.5",
     "lucide-react": "^0.451.0",
     "next": "14.2.13",
     "next-auth": "^5.0.0-beta.22",
+    "nuqs": "^2.0.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "server-only": "^0.0.1",
+    "tailwind-merge": "^2.5.4",
     "tailwind-preset-mantine": "^1.0.5"
   },
   "devDependencies": {

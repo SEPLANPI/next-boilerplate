@@ -47,15 +47,21 @@ Você tem duas opções para configurar o client no Keycloak:
 Certifique-se de configurar as variáveis de ambiente corretamente no arquivo `.env.local` para que a autenticação funcione adequadamente.
 
 ## Variáveis de ambiente
-
+crie um arquivo `.env.local` na raiz do projeto.
+ 
    ```env'
+   # URL base para a aplicação Next.js (ex.: http://localhost:3000)
    NEXT_PUBLIC_APP_URL=""
+  
+   # URL base para a API (ex.: http://localhost:8000)
    NEXT_PUBLIC_API_URL=""
-
-   // pnpx auth secret
+  
+   # Chave secreta usada pelo NextAuth para assinar JWTs.
+   # Pode ser qualquer valor e pode ser gerada usando o comando: pnpx auth secret
    AUTH_SECRET=""
-
+   # ID do cliente Keycloak para autenticação
    AUTH_KEYCLOAK_ID=""
+   # Secret do cliente Keycloak para autenticação
    AUTH_KEYCLOAK_SECRET=""
    AUTH_KEYCLOAK_ISSUER=http://192.168.128.74:8080/realms/seplan
    ```
@@ -96,8 +102,6 @@ Para rodar o projeto localmente, siga  os passos abaixo:
    ```bash
    pnpm dev
    ```
-
-## Desenvolvimento
 
 ## Desenvolvimento
 

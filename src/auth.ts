@@ -9,18 +9,16 @@ const refreshAccessToken = async (token: JWT) => {
     const details = {
       client_id: process.env.AUTH_KEYCLOAK_ID,
       client_secret: process.env.AUTH_KEYCLOAK_SECRET,
-      grant_type: ['refresh_token'],
+      grant_type: 'refresh_token',
       refresh_token: token.refreshToken
     }
     const formBody: string[] = []
 
-    Object.entries(details).forEach(
-      ([key, value]: [string, string | undefined]) => {
-        const encodedKey = encodeURIComponent(key)
-        const encodedValue = encodeURIComponent(value || '')
-        formBody.push(encodedKey + '=' + encodedValue)
-      }
-    )
+    Object.entries(details).forEach(([key, value]) => {
+      const encodedKey = encodeURIComponent(key)
+      const encodedValue = encodeURIComponent(value || '')
+      formBody.push(encodedKey + '=' + encodedValue)
+    })
 
     const formData = formBody.join('&')
 
@@ -56,19 +54,7 @@ const refreshAccessToken = async (token: JWT) => {
 const keycloakProvider = KeycloakProvider({
   clientId: process.env.AUTH_KEYCLOAK_ID,
   clientSecret: process.env.AUTH_KEYCLOAK_SECRET,
-  issuer: process.env.AUTH_KEYCLOAK_ISSUER,
-  profile(profile) {
-    return {
-      email_verified: profile.email_verified,
-      name: profile.name,
-      preferred_username: profile.preferred_username,
-      given_name: profile.given_name,
-      family_name: profile.family_name,
-      email: profile.email,
-      org_name: profile.org_name,
-      telephone: profile.telephone
-    }
-  }
+  issuer: process.env.AUTH_KEYCLOAK_ISSUER
 })
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -88,10 +74,31 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (token) {
         session.user = token.user
         session.error = token.error
+        session.accessToken = token.accessToken
       }
       return session
     },
     jwt: async ({ token, user, account }) => {
+      if (account) {
+        token.accessToken = account.access_token
+        try {
+          const response = await fetch(
+            `${process.env.AUTH_KEYCLOAK_ISSUER}/protocol/openid-connect/userinfo`,
+            {
+              headers: {
+                Authorization: `Bearer ${account.access_token}`
+              }
+            }
+          )
+          if (response.ok) {
+            const userInfo = await response.json()
+            console.log('userinfo: ' + userInfo)
+          }
+        } catch (error) {
+          console.error('Failed to fetch user info:', error)
+        }
+      }
+
       if (account && user) {
         token.idToken = account.id_token
         token.accessToken = account.access_token
@@ -111,5 +118,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     authorized: async ({ auth }) => {
       return !!auth && !auth.error
     }
+  },
+  pages: {
+    signIn: '/api/auth/sign-in'
   }
 })

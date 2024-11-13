@@ -1,13 +1,7 @@
 'use client'
 import { PropsWithChildren } from 'react'
 
-import {
-  Avatar,
-  Container,
-  Menu,
-  TextInput,
-  UnstyledButton
-} from '@mantine/core'
+import { Avatar, Menu, TextInput, UnstyledButton } from '@mantine/core'
 import { ChevronDown, LogOut, Search } from 'lucide-react'
 import { MainNav } from './main-nav'
 import { MobileNav } from './mobile-nav'
