@@ -11,5 +11,5 @@ export async function EventsListView() {
 
   if (data.results.length === 0) return <EventsEmptyState />
 
-  return <EventsTable events={data.results} count={data.count} />
+  return <EventsTable events={data.results} count={data.count} perPage={15} />
 }

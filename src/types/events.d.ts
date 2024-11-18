@@ -10,3 +10,11 @@ export type Event = {
   contratos: number[]
   valor: string
 }
+
+export interface EventGroup {
+  nome: string
+  quantidade: number
+  valor_total: number
+  filtros: Record<string, string | number>
+  subgrupos?: EventGroup[]
+}

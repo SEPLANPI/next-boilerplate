@@ -16,9 +16,15 @@ export type EventsResponse = {
   results: Event[]
 }
 
-export async function getEvents(
-  groupId?: string
-): Promise<ActionState<EventsResponse>> {
+type GetEventsInputType = Partial<{
+  groupId: string
+  perPage: number
+}>
+
+export async function getEvents({
+  groupId,
+  perPage
+}: GetEventsInputType = {}): Promise<ActionState<EventsResponse>> {
   const {
     page,
     search,
@@ -30,43 +36,55 @@ export async function getEvents(
     sort,
     deputados
   } = eventsSearchParams.all()
+
+  const appendParam = (key: string, value?: string | number | null) => {
+    if (value) params.append(key, value.toString())
+  }
+
+  const appendArrayParams = (
+    key: string,
+    array: string[] | number[] | undefined
+  ) => {
+    if (array) array.forEach((item) => params.append(key, item.toString()))
+  }
+
   const params = new URLSearchParams()
-  params.append('page', page.toString())
-  params.append('nome', search)
-  if (fromDate) {
-    params.append('data_inicio', dayjs(fromDate).format('YYYY-MM-DD'))
-  }
-  if (toDate) {
-    params.append('data_after', dayjs(toDate).format('YYYY-MM-DD'))
-  }
+  appendParam('page', page)
+  appendParam('nome', search)
+  appendParam(
+    'data_inicio',
+    fromDate ? dayjs(fromDate).format('YYYY-MM-DD') : undefined
+  )
+  appendParam(
+    'data_after',
+    toDate ? dayjs(toDate).format('YYYY-MM-DD') : undefined
+  )
+  appendArrayParams('ugs', ugs && group !== 'ugs' ? ugs : undefined)
+  appendArrayParams(
+    'municipio',
+    municipios && group !== 'municipios' ? municipios : undefined
+  )
+  appendArrayParams(
+    'autor_emenda',
+    deputados && group !== 'deputados' ? deputados : undefined
+  )
+  appendParam('ordering', sort)
+  if (groupId && group) appendParam(group, groupId)
+  appendParam('page_size', perPage)
 
-  if (ugs && group !== 'ugs') {
-    ugs.forEach((ug) => params.append('ugs', ug.toString()))
+  try {
+    const response = await api.get(`/eventos?${params.toString()}`)
+    if (!response.ok) {
+      const error = await response.json()
+
+      return { error: error.detail }
+    }
+
+    const data: EventsResponse = await response.json()
+    return { data }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (_) {
+    return { error: 'An unexpected error occurred.' }
   }
-  if (municipios && group !== 'municipios') {
-    municipios.forEach((municipio) => params.append('municipio', municipio))
-  }
-
-  if (deputados && group !== 'deputados') {
-    deputados.forEach((deputado) => params.append('autor_emenda', deputado))
-  }
-  if (sort) {
-    params.append('ordering', sort)
-  }
-
-  if (groupId && group) {
-    params.append(group, groupId)
-  }
-
-  const response = await api.get(`/eventos?${params.toString()}`)
-
-  if (!response.ok) {
-    const error = await response.json()
-
-    return { error: error.detail }
-  }
-
-  const data: EventsResponse = await response.json()
-
-  return { data }
 }
+

@@ -9,27 +9,22 @@ import {
   TableTbody,
   Tooltip
 } from '@mantine/core'
-import { eventsSearchParamsParsers } from '../lib/search-params'
-import { SearchParamsPagination } from '@/components/ui/search-params-pagination'
 import type { Event } from '@/types/events'
-import { parseAsString, useQueryState, useQueryStates } from 'nuqs'
+import { parseAsString, useQueryState } from 'nuqs'
 import { SortableColumnHeader } from '@/components/ui/sortable-column-header'
 import { useRouter } from 'next/navigation'
 import { Info } from 'lucide-react'
+import { PaginationFooter } from '@/components/ui/pagination-footer'
 
 type EventsTableProps = {
   events: Event[]
   count: number
+  perPage: number
 }
 
-export function EventsTable({ events, count }: EventsTableProps) {
+export function EventsTable({ events, count, perPage }: EventsTableProps) {
   const router = useRouter()
-
   const [sort, setSort] = useQueryState('sort', parseAsString)
-  const [{ page }] = useQueryStates(eventsSearchParamsParsers)
-
-  const startItem = (page - 1) * 15 + 1
-  const endItem = Math.min(startItem + events.length - 1, count)
 
   function handleNavigateToEvent(id: number) {
     router.push(`/${id}`)
@@ -114,15 +109,7 @@ export function EventsTable({ events, count }: EventsTableProps) {
           ))}
         </TableTbody>
       </Table>
-      <div className="mt-6 flex items-center justify-between">
-        <span className="text-sm text-secondary-foreground">
-          <span className="font-bold">
-            {startItem} - {endItem}
-          </span>{' '}
-          de {count} resultados
-        </span>
-        <SearchParamsPagination totalItems={count} perPage={15} />
-      </div>
+      <PaginationFooter totalItems={count} perPage={perPage} />
     </>
   )
 }

@@ -10,7 +10,7 @@ import { Suspense } from 'react'
 import { EventsTableSkeleton } from '@/features/events/components/events-table-skeleton'
 import { EventsResetFilters } from '@/features/events/components/events-reset-filters'
 import { EventsListView } from '@/features/events/components/events-list-view'
-import { EventsGroupView } from '@/features/events/components/events-group-view'
+import { EventsGroupView } from '@/features/events/components/groups/events-group-view'
 
 export default async function Events({
   searchParams

@@ -6,9 +6,11 @@ import {
   parseAsString
 } from 'nuqs/server'
 
+export const pageParameterParser = parseAsInteger.withDefault(1)
+
 export const eventsSearchParamsParsers = {
   search: parseAsString.withDefault(''),
-  page: parseAsInteger.withDefault(1),
+  page: pageParameterParser,
   ugs: parseAsArrayOf(parseAsInteger),
   municipios: parseAsArrayOf(parseAsString),
   deputados: parseAsArrayOf(parseAsString),
