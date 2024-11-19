@@ -1,5 +1,5 @@
-import { eventsSearchParams } from '../lib/search-params'
-import { api } from '@/lib/api'
+import { eventsSearchParams } from '../search-params'
+import { api } from '@/lib/server-api'
 import { ActionState } from '@/types/actions'
 import { EventGroup } from '@/types/events'
 

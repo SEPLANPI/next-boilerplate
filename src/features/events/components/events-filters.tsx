@@ -1,12 +1,12 @@
 'use client'
 
 import { AsyncFilter } from '@/components/ui/async-filter'
-import { getUgs } from '../actions/get-ugs'
+import { getUgs } from '../lib/fetchers/get-ugs'
 import { DateRangeFilter } from '@/components/ui/date-range-filter'
 import { EventsGroupFilter } from './events-group-filter'
 import { Divider } from '@mantine/core'
-import { getMunicipios } from '../actions/get-municipios'
-import { getDeputados } from '../actions/get-deputados'
+import { getMunicipios } from '../lib/fetchers/get-municipios'
+import { getDeputados } from '../lib/fetchers/get-deputados'
 
 export function EventsFilters() {
   return (

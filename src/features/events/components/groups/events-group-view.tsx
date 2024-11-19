@@ -1,7 +1,7 @@
 import { DefaultFetchError } from '@/components/errors/default-fetch-error'
 
 import { EventsGroupList } from './events-group-list'
-import { getEventGroups } from '../../actions/get-event-groups'
+import { getEventGroups } from '../../lib/fetchers/get-event-groups'
 
 export async function EventsGroupView() {
   const result = await getEventGroups()

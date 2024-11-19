@@ -1,20 +1,23 @@
 'use client'
 
 import { pageParameterParser } from '@/features/events/lib/search-params'
-import { SearchParamsPagination } from './search-params-pagination'
 import { useQueryState } from 'nuqs'
+import { SearchParamsPagination } from './search-params-pagination'
 
-type PaginationFooterProps = {
+interface PaginationFooterProps {
   totalItems: number
   perPage: number
+  instanceId?: string
 }
 
 export function PaginationFooter({
   totalItems,
-  perPage
+  perPage,
+  instanceId
 }: PaginationFooterProps) {
-  const [page] = useQueryState('page', pageParameterParser)
-
+  const pageKey = instanceId ? `page-${instanceId}` : 'page'
+  console.log(instanceId)
+  const [page] = useQueryState(pageKey, pageParameterParser)
   const startItem = (page - 1) * perPage + 1
   const endItem = Math.min(page * perPage, totalItems)
 

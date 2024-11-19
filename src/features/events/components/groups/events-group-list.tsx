@@ -15,7 +15,7 @@ export function EventsGroupList({ groups, totalCount }: EventsGroupListProps) {
         variant="separated"
         classNames={{
           item: 'relative',
-          control: 'sticky top-0'
+          control: 'sticky top-0 bg-white'
         }}
       >
         {groups.map((group) => (

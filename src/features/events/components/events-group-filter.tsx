@@ -1,6 +1,6 @@
 'use client'
 
-import { Button, Popover, Select } from '@mantine/core'
+import { Button, Divider, Popover, Select } from '@mantine/core'
 import { ListTree } from 'lucide-react'
 import { parseAsString, useQueryStates } from 'nuqs'
 
@@ -11,7 +11,7 @@ const groupOptions = [
   },
   {
     value: 'ug',
-    label: 'Secretaria'
+    label: 'Unidade Gestora'
   },
   {
     value: 'municipio',
@@ -26,6 +26,11 @@ const sortOptions = [
   { value: 'value.desc', label: 'Menor Valor' }
 ] as const
 
+function getGroupLabel(value: string): string | null {
+  const option = groupOptions.find((option) => option.value === value)
+  return option ? option.label : null
+}
+
 export function EventsGroupFilter() {
   const [{ group, sort }, setGrouping] = useQueryStates(
     {
@@ -38,17 +43,36 @@ export function EventsGroupFilter() {
       }
     }
   )
+
   return (
-    <Popover width={300} position="bottom-start" shadow="md">
+    <Popover width={320} position="bottom-start" shadow="md">
       <Popover.Target>
-        <Button leftSection={<ListTree className="size-4" />} variant="default">
+        <Button
+          data-active={!!group}
+          variant="default-filled"
+          classNames={{
+            root: 'data-[active=true]:bg-govBlue-50 data-[active=true]:text-govBlue-700'
+          }}
+          leftSection={<ListTree className="size-4" />}
+        >
           Agrupar
+          {group && (
+            <>
+              <Divider
+                orientation="vertical"
+                className="m-2 border-govBlue-300"
+              />
+              <p className="text-xs font-semibold">{getGroupLabel(group)}</p>
+            </>
+          )}
         </Button>
       </Popover.Target>
       <Popover.Dropdown>
         <div className="flex space-x-2">
           <Select
-            className="flex-grow-2"
+            classNames={{
+              root: 'w-full'
+            }}
             comboboxProps={{
               withinPortal: false
             }}
@@ -62,7 +86,9 @@ export function EventsGroupFilter() {
             }
           />
           <Select
-            className="flex-grow-1"
+            classNames={{
+              root: 'w-32'
+            }}
             comboboxProps={{
               withinPortal: false
             }}

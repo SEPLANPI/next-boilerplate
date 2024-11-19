@@ -1,28 +1,52 @@
+'use client'
+
 import { DefaultFetchError } from '@/components/errors/default-fetch-error'
 import { EventsEmptyState } from '../events-empty-state'
 import { EventsTable } from '../events-table'
-import { getEvents } from '../../actions/get-events'
+import { EventGroup } from '@/types/events'
+import { generateGroupIdentifier } from '../../utils/generate-group-identifier'
+import { useQueryStates } from 'nuqs'
+import { eventsSearchParamsParsers } from '../../lib/search-params'
+import { useQuery } from '@tanstack/react-query'
+import { clientGetEvents } from '../../lib/fetchers/client-get-events'
 
 interface EventsListProps {
-  groupId: string
+  group: EventGroup
 }
 
-export async function EventsList({ groupId }: EventsListProps) {
-  const result = await getEvents()
+export function EventsList({ group }: EventsListProps) {
+  const groupId = generateGroupIdentifier(group)
+  const [params] = useQueryStates(eventsSearchParamsParsers)
 
-  if (result.error || !result.data) {
+  const { data, error, isFetching } = useQuery({
+    queryKey: [`group-events-table-${groupId}`],
+    queryFn: () =>
+      clientGetEvents({
+        ...params,
+        groupId,
+        perPage: 10
+      }),
+    staleTime: 30 * 60 * 1000 // 30m
+  })
+
+  if (isFetching) {
+    return <>Carregando ...</>
+  }
+
+  if (error || !data) {
     return <DefaultFetchError />
   }
 
-  if (result.data.results.length === 0) {
+  if (data.results.length === 0) {
     return <EventsEmptyState />
   }
 
   return (
     <EventsTable
-      events={result.data.results}
-      count={result.data.count}
+      events={data.results}
+      count={data.count}
       perPage={10}
+      instanceId={groupId}
     />
   )
 }

@@ -1,10 +1,15 @@
 import { EventsTable } from './events-table'
-import { getEvents } from '../actions/get-events'
+import { getEvents } from '../lib/fetchers/get-events'
 import { DefaultFetchError } from '@/components/errors/default-fetch-error'
 import { EventsEmptyState } from './events-empty-state'
+import { eventsSearchParams } from '../lib/search-params'
 
 export async function EventsListView() {
-  const { data, error } = await getEvents()
+  const page = eventsSearchParams.get('page')
+  const { data, error } = await getEvents({
+    page
+  })
+
   if (!data || error) {
     return <DefaultFetchError />
   }

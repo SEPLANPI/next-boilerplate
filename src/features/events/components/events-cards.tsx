@@ -1,4 +1,4 @@
-import { getEvents } from '../actions/get-events'
+import { getEvents } from '../lib/fetchers/get-events'
 
 export async function EventsCards() {
   const { data, error } = await getEvents()

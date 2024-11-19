@@ -1,5 +1,6 @@
 'use client'
 
+import React from 'react'
 import {
   Table,
   TableTr,
@@ -9,22 +10,30 @@ import {
   TableTbody,
   Tooltip
 } from '@mantine/core'
-import type { Event } from '@/types/events'
-import { parseAsString, useQueryState } from 'nuqs'
-import { SortableColumnHeader } from '@/components/ui/sortable-column-header'
-import { useRouter } from 'next/navigation'
 import { Info } from 'lucide-react'
+import { useRouter } from 'next/navigation'
+import { parseAsString, useQueryState } from 'nuqs'
+import type { Event } from '@/types/events'
+import { SortableColumnHeader } from '@/components/ui/sortable-column-header'
 import { PaginationFooter } from '@/components/ui/pagination-footer'
 
-type EventsTableProps = {
+interface EventsTableProps {
   events: Event[]
   count: number
   perPage: number
+  instanceId?: string
 }
 
-export function EventsTable({ events, count, perPage }: EventsTableProps) {
+export function EventsTable({
+  events,
+  count,
+  perPage,
+  instanceId
+}: EventsTableProps) {
   const router = useRouter()
-  const [sort, setSort] = useQueryState('sort', parseAsString)
+
+  const sortKey = instanceId ? `sort-${instanceId}` : 'sort'
+  const [sort, setSort] = useQueryState(sortKey, parseAsString)
 
   function handleNavigateToEvent(id: number) {
     router.push(`/${id}`)
@@ -55,7 +64,7 @@ export function EventsTable({ events, count, perPage }: EventsTableProps) {
             />
             <SortableColumnHeader
               column="data"
-              title={'Data'}
+              title="Data"
               sortKey={sort}
               onSort={setSort}
             />
@@ -109,7 +118,11 @@ export function EventsTable({ events, count, perPage }: EventsTableProps) {
           ))}
         </TableTbody>
       </Table>
-      <PaginationFooter totalItems={count} perPage={perPage} />
+      <PaginationFooter
+        totalItems={count}
+        perPage={perPage}
+        instanceId={instanceId}
+      />
     </>
   )
 }

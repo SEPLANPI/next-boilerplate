@@ -1,6 +1,6 @@
 'use server'
 
-import { api } from '@/lib/api'
+import { api } from '@/lib/server-api'
 import { ActionState } from '@/types/actions'
 
 type Deputado = {

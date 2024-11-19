@@ -2,8 +2,6 @@ import { AccordionControl, AccordionItem, AccordionPanel } from '@mantine/core'
 import { EventsList } from './events-list'
 import { formatCurrency } from '@/lib/utils'
 import { EventGroup } from '@/types/events'
-import { Suspense } from 'react'
-import { EventsTableSkeleton } from '../events-table-skeleton'
 
 type EventsGroupAccordionProps = {
   group: EventGroup
@@ -11,11 +9,11 @@ type EventsGroupAccordionProps = {
 
 export function EventsGroupAccordion({ group }: EventsGroupAccordionProps) {
   return (
-    <AccordionItem value={group.nome}>
+    <AccordionItem value={group.nome || 'Não informado'}>
       <AccordionControl>
         <div className="flex justify-between pr-2">
           <div className="flex space-x-2">
-            <h3 className="font-semibold">{group.nome}</h3>
+            <h3 className="font-semibold">{group.nome || 'Não informado'}</h3>
             <span className="text-muted-foreground">
               ({group.quantidade} eventos)
             </span>
@@ -25,11 +23,8 @@ export function EventsGroupAccordion({ group }: EventsGroupAccordionProps) {
           </span>
         </div>
       </AccordionControl>
-
       <AccordionPanel>
-        <Suspense fallback={<EventsTableSkeleton />}>
-          <EventsList groupId={group.nome} />
-        </Suspense>
+        <EventsList group={group} />
       </AccordionPanel>
     </AccordionItem>
   )
