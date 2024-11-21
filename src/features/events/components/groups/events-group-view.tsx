@@ -9,7 +9,6 @@ export async function EventsGroupView() {
   if (result.error || !result.data) {
     return <DefaultFetchError />
   }
-
   return (
     <EventsGroupList groups={result.data.data} totalCount={result.data.count} />
   )

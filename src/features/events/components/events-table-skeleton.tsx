@@ -8,8 +8,14 @@ import {
   Skeleton
 } from '@mantine/core'
 
-export function EventsTableSkeleton() {
-  const skeletonRows = Array.from({ length: 15 })
+type EventsTableProps = {
+  rows?: number
+}
+
+export function EventsTableSkeleton({ rows = 15 }: EventsTableProps) {
+  const skeletonRows = Array.from({ length: rows })
+
+  const rowContentHeight = 21.688
   return (
     <>
       <Table verticalSpacing="xs">
@@ -26,32 +32,24 @@ export function EventsTableSkeleton() {
           {skeletonRows.map((_, index) => (
             <TableTr key={index}>
               <TableTd className="w-[500px] truncate">
-                <Skeleton height={22} />
+                <Skeleton height={rowContentHeight} />
               </TableTd>
               <TableTd>
-                <Skeleton height={22} />
+                <Skeleton height={rowContentHeight} />
               </TableTd>
               <TableTd>
-                <Skeleton height={22} />
+                <Skeleton height={rowContentHeight} />
               </TableTd>
               <TableTd>
-                <Skeleton height={22} />
+                <Skeleton height={rowContentHeight} />
               </TableTd>
               <TableTd>
-                <Skeleton height={22} />
+                <Skeleton height={rowContentHeight} />
               </TableTd>
             </TableTr>
           ))}
         </TableTbody>
       </Table>
-      <div className="mt-6 flex items-center justify-between">
-        <Skeleton height={20} width={160} />
-        <div className="flex space-x-2">
-          {Array.from({ length: 10 }).map((_, index) => (
-            <Skeleton height={26} width={26} key={index} />
-          ))}
-        </div>
-      </div>
     </>
   )
 }

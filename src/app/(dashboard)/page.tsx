@@ -11,6 +11,7 @@ import { EventsTableSkeleton } from '@/features/events/components/events-table-s
 import { EventsResetFilters } from '@/features/events/components/events-reset-filters'
 import { EventsListView } from '@/features/events/components/events-list-view'
 import { EventsGroupView } from '@/features/events/components/groups/events-group-view'
+import { EventsAccordionsSkeleton } from '@/features/events/components/groups/events-accordions-skeleton'
 
 export default async function Events({
   searchParams
@@ -48,7 +49,10 @@ export default async function Events({
         </Suspense>
       )}
       {hasGrouping && (
-        <Suspense fallback={<>Carregando</>} key={groupSuspenseKey}>
+        <Suspense
+          fallback={<EventsAccordionsSkeleton />}
+          key={groupSuspenseKey}
+        >
           <EventsGroupView />
         </Suspense>
       )}

@@ -9,6 +9,9 @@ import { useQueryStates } from 'nuqs'
 import { eventsSearchParamsParsers } from '../../lib/search-params'
 import { useQuery } from '@tanstack/react-query'
 import { clientGetEvents } from '../../lib/fetchers/client-get-events'
+import { ControlledPaginationFooter } from '@/components/ui/pagination-footer/controlled-pagination-footer'
+import { useState } from 'react'
+import { EventsTableSkeleton } from '../events-table-skeleton'
 
 interface EventsListProps {
   group: EventGroup
@@ -17,36 +20,41 @@ interface EventsListProps {
 export function EventsList({ group }: EventsListProps) {
   const groupId = generateGroupIdentifier(group)
   const [params] = useQueryStates(eventsSearchParamsParsers)
+  const [page, setPage] = useState(1)
 
   const { data, error, isFetching } = useQuery({
-    queryKey: [`group-events-table-${groupId}`],
+    queryKey: [groupId, page, params.sort],
     queryFn: () =>
       clientGetEvents({
         ...params,
+        page,
         groupId,
         perPage: 10
       }),
-    staleTime: 30 * 60 * 1000 // 30m
+    staleTime: 30 * 60 * 1000, // 30m
+    placeholderData: (previousData) => previousData
   })
 
-  if (isFetching) {
-    return <>Carregando ...</>
-  }
-
-  if (error || !data) {
+  if (error) {
     return <DefaultFetchError />
   }
 
-  if (data.results.length === 0) {
+  if (data && data.results.length === 0) {
     return <EventsEmptyState />
   }
-
   return (
-    <EventsTable
-      events={data.results}
-      count={data.count}
-      perPage={10}
-      instanceId={groupId}
-    />
+    <>
+      {isFetching ? (
+        <EventsTableSkeleton />
+          ) : (
+        <EventsTable events={data?.results || []} shallowSort={true} />
+          )}
+      <ControlledPaginationFooter
+        totalItems={data?.count || 1}
+        itemsPerPage={10}
+        page={page}
+        onPageChange={setPage}
+      />
+    </>
   )
 }

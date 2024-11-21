@@ -87,7 +87,7 @@ export function EventsGroupFilter() {
           />
           <Select
             classNames={{
-              root: 'w-32'
+              root: 'w-36'
             }}
             comboboxProps={{
               withinPortal: false

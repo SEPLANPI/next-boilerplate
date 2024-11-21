@@ -15,25 +15,25 @@ import { useRouter } from 'next/navigation'
 import { parseAsString, useQueryState } from 'nuqs'
 import type { Event } from '@/types/events'
 import { SortableColumnHeader } from '@/components/ui/sortable-column-header'
-import { PaginationFooter } from '@/components/ui/pagination-footer'
 
 interface EventsTableProps {
   events: Event[]
-  count: number
-  perPage: number
-  instanceId?: string
+  queryKey?: string
+  shallowSort?: boolean
 }
 
 export function EventsTable({
   events,
-  count,
-  perPage,
-  instanceId
+  queryKey = 'sort',
+  shallowSort = false
 }: EventsTableProps) {
   const router = useRouter()
-
-  const sortKey = instanceId ? `sort-${instanceId}` : 'sort'
-  const [sort, setSort] = useQueryState(sortKey, parseAsString)
+  const [sort, setSort] = useQueryState(
+    queryKey,
+    parseAsString.withOptions({
+      shallow: shallowSort
+    })
+  )
 
   function handleNavigateToEvent(id: number) {
     router.push(`/${id}`)
@@ -118,11 +118,6 @@ export function EventsTable({
           ))}
         </TableTbody>
       </Table>
-      <PaginationFooter
-        totalItems={count}
-        perPage={perPage}
-        instanceId={instanceId}
-      />
     </>
   )
 }

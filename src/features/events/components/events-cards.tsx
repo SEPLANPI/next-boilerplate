@@ -3,11 +3,7 @@ import { getEvents } from '../lib/fetchers/get-events'
 export async function EventsCards() {
   const { data, error } = await getEvents()
 
-  if (!data || error) {
-    return <>Erro</>
-  }
-
-  if (data.results.length === 0) {
+  if (!data || error || data.results.length === 0) {
     return null
   }
 
