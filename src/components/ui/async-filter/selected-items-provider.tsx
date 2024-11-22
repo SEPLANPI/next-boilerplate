@@ -1,16 +1,16 @@
 import {
   createContext,
   useContext,
-  useState,
-  useEffect,
-  PropsWithChildren
+  PropsWithChildren,
+  useMemo,
+  useCallback
 } from 'react'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useQueryState } from 'nuqs'
 
 type SelectedItemsContextType = {
   selectedItems: Set<string>
-  toggleItem: (value: string) => void
-  clearItems: () => void
+  toggle: (value: string) => void
+  clear: () => void
 }
 
 const SelectedItemsContext = createContext<
@@ -29,49 +29,57 @@ export function useSelectedItems() {
 
 export function SelectedItemsProvider({
   children,
-  searchParamKey
-}: PropsWithChildren<{ searchParamKey: string }>) {
-  const [selectedItems, setSelectedItems] = useState<Set<string>>(new Set())
-  const router = useRouter()
-  const searchParams = useSearchParams()
+  searchParamKey,
+  onSelectionChange
+}: PropsWithChildren<{
+  searchParamKey: string
+  onSelectionChange?: (items: Set<string>) => void
+}>) {
+  const [selectedParam, setSelectedParam] = useQueryState(searchParamKey, {
+    defaultValue: '',
+    parse: (value: string) => value,
+    serialize: (value: string) => value
+  })
 
-  useEffect(() => {
-    const selectedValues =
-      searchParams.get(searchParamKey)?.split(',').filter(Boolean) || []
-    setSelectedItems(new Set(selectedValues))
-  }, [searchParams, searchParamKey])
+  const selectedItems = useMemo(() => {
+    return new Set(selectedParam ? selectedParam.split(',') : [])
+  }, [selectedParam])
 
-  useEffect(() => {
-    const newParams = new URLSearchParams(searchParams.toString())
-    const values = Array.from(selectedItems)
-    if (values.length > 0) {
-      newParams.set(searchParamKey, values.join(','))
-    } else {
-      newParams.delete(searchParamKey)
-    }
-    router.push(`?${newParams.toString()}`)
-  }, [selectedItems, searchParamKey, searchParams, router])
+  const toggle = useCallback(
+    (value: string) => {
+      setSelectedParam((prev) => {
+        const currentSet = new Set(prev ? prev.split(',') : [])
 
-  const toggleItem = (value: string) => {
-    setSelectedItems((prev) => {
-      const newSet = new Set(prev)
-      if (newSet.has(value)) {
-        newSet.delete(value)
-      } else {
-        newSet.add(value)
-      }
-      return newSet
-    })
-  }
+        if (currentSet.has(value)) {
+          currentSet.delete(value)
+        } else {
+          currentSet.add(value)
+        }
 
-  const clearItems = () => {
-    setSelectedItems(new Set())
-  }
+        const newValue = Array.from(currentSet).join(',')
+        onSelectionChange?.(new Set(currentSet))
+        return newValue || null
+      })
+    },
+    [setSelectedParam, onSelectionChange]
+  )
+
+  const clear = useCallback(() => {
+    setSelectedParam(null)
+    onSelectionChange?.(new Set())
+  }, [setSelectedParam, onSelectionChange])
+
+  const contextValue = useMemo(
+    () => ({
+      selectedItems,
+      toggle,
+      clear
+    }),
+    [selectedItems, toggle, clear]
+  )
 
   return (
-    <SelectedItemsContext.Provider
-      value={{ selectedItems, toggleItem, clearItems }}
-    >
+    <SelectedItemsContext.Provider value={contextValue}>
       {children}
     </SelectedItemsContext.Provider>
   )

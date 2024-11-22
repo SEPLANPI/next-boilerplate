@@ -5,7 +5,7 @@ import { EventGroup } from '@/types/events'
 
 export type EventGroupResponse = {
   count: number
-  data: EventGroup[]
+  results: EventGroup[]
 }
 
 export async function getEventGroups(): Promise<

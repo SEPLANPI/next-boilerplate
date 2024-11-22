@@ -18,15 +18,16 @@ export default async function Events({
 }: {
   searchParams: Promise<SearchParams>
 }) {
-  const { sort, groupSort, group, ...params } = eventsSearchParams.parse(
+  const { sort, groupSort, group, page, ...filters } = eventsSearchParams.parse(
     await searchParams
   )
+
+  const filtersParamsString = JSON.stringify(filters)
+  const cardsSuspenseKey = filtersParamsString
+  const tableSuspenseKey = filtersParamsString + sort + page
+  const groupSuspenseKey = filtersParamsString + page + group + groupSort
+
   const hasGrouping = !!group
-
-  const cardsSuspenseKey = JSON.stringify(params) + 'cards'
-  const tableSuspenseKey = JSON.stringify(params) + sort + 'table'
-  const groupSuspenseKey = `${group}${groupSort}`
-
   return (
     <div>
       <div className="flex w-full items-end justify-between">
@@ -56,6 +57,8 @@ export default async function Events({
           <EventsGroupView />
         </Suspense>
       )}
+
+      <div className="h-[800px]"></div>
     </div>
   )
 }

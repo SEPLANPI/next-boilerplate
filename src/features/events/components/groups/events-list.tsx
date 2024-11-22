@@ -42,13 +42,16 @@ export function EventsList({ group }: EventsListProps) {
   if (data && data.results.length === 0) {
     return <EventsEmptyState />
   }
+
   return (
     <>
-      {isFetching ? (
-        <EventsTableSkeleton />
-          ) : (
-        <EventsTable events={data?.results || []} shallowSort={true} />
-          )}
+      {isFetching
+        ? (
+          <EventsTableSkeleton />
+        )
+        : (
+          <EventsTable events={data?.results || []} shallowSort={true} />
+        )}
       <ControlledPaginationFooter
         totalItems={data?.count || 1}
         itemsPerPage={10}
