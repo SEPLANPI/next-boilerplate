@@ -16,6 +16,10 @@ const groupOptions = [
   {
     value: 'municipio',
     label: 'Município'
+  },
+  {
+    value: 'deputado',
+    label: 'Deputado'
   }
 ] as const
 
@@ -35,7 +39,7 @@ export function EventsGroupFilter() {
   const [{ group, sort }, setGrouping] = useQueryStates(
     {
       group: parseAsString.withDefault(''),
-      sort: parseAsString.withDefault('name.asc')
+      sort: parseAsString.withDefault('value.asc')
     },
     {
       urlKeys: {
