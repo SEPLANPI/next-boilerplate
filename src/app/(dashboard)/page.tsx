@@ -22,12 +22,12 @@ export default async function Events({
     await searchParams
   )
 
-  const filtersParamsString = JSON.stringify(filters)
-  const cardsSuspenseKey = filtersParamsString
-  const tableSuspenseKey = filtersParamsString + sort + page
-  const groupSuspenseKey = filtersParamsString + page + group + groupSort
+  const cardsSuspenseKey = JSON.stringify({ filters })
+  const tableSuspenseKey = JSON.stringify({ filters, sort, page })
+  const groupSuspenseKey = JSON.stringify({ filters, group, groupSort, page })
 
   const hasGrouping = !!group
+
   return (
     <div>
       <div className="flex w-full items-end justify-between">
@@ -44,6 +44,7 @@ export default async function Events({
       <Suspense fallback={<EventsCardsSkeleton />} key={cardsSuspenseKey}>
         <EventsCards />
       </Suspense>
+
       {!hasGrouping && (
         <Suspense fallback={<EventsTableSkeleton />} key={tableSuspenseKey}>
           <EventsListView />
@@ -57,8 +58,6 @@ export default async function Events({
           <EventsGroupView />
         </Suspense>
       )}
-
-      <div className="h-[800px]"></div>
     </div>
   )
 }

@@ -1,7 +1,7 @@
 import { Skeleton } from '@mantine/core'
 
 export function EventsAccordionsSkeleton() {
-  const skeletonRows = Array.from({ length: 15 })
+  const skeletonRows = Array.from({ length: 10 })
 
   const rowHeight = 48.8
 

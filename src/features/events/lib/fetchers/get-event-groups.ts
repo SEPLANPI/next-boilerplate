@@ -11,7 +11,7 @@ export type EventGroupResponse = {
 export async function getEventGroups(): Promise<
   ActionState<EventGroupResponse>
 > {
-  const { group } = eventsSearchParams.all()
+  const { group, page } = eventsSearchParams.all()
   const params = new URLSearchParams()
 
   if (!group) {
@@ -19,6 +19,7 @@ export async function getEventGroups(): Promise<
   }
 
   params.append('group_by', group)
+  params.append('page', page.toString())
 
   const response = await api.get(`/eventos/agrupamentos?${params.toString()}`)
 

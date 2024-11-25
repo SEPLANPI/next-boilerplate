@@ -3,6 +3,7 @@
 import { Button, Divider, Popover, Select } from '@mantine/core'
 import { ListTree } from 'lucide-react'
 import { parseAsString, useQueryStates } from 'nuqs'
+import { pageParameterParser } from '../lib/search-params'
 
 const groupOptions = [
   {
@@ -36,15 +37,17 @@ function getGroupLabel(value: string): string | null {
 }
 
 export function EventsGroupFilter() {
-  const [{ group, sort }, setGrouping] = useQueryStates(
+  const [{ group, sort, page }, setGrouping] = useQueryStates(
     {
       group: parseAsString.withDefault(''),
-      sort: parseAsString.withDefault('value.asc')
+      sort: parseAsString.withDefault('value.asc'),
+      page: pageParameterParser
     },
     {
       urlKeys: {
         sort: 'groupSort'
-      }
+      },
+      shallow: false
     }
   )
 
@@ -85,7 +88,8 @@ export function EventsGroupFilter() {
             onChange={(value) =>
               setGrouping({
                 sort,
-                group: value
+                group: value,
+                page: 1
               })
             }
           />

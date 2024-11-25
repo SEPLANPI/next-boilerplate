@@ -5,7 +5,7 @@ import {
   useMemo,
   useCallback
 } from 'react'
-import { useQueryState } from 'nuqs'
+import { parseAsString, useQueryState } from 'nuqs'
 
 type SelectedItemsContextType = {
   selectedItems: Set<string>
@@ -35,11 +35,12 @@ export function SelectedItemsProvider({
   searchParamKey: string
   onSelectionChange?: (items: Set<string>) => void
 }>) {
-  const [selectedParam, setSelectedParam] = useQueryState(searchParamKey, {
-    defaultValue: '',
-    parse: (value: string) => value,
-    serialize: (value: string) => value
-  })
+  const [selectedParam, setSelectedParam] = useQueryState(
+    searchParamKey,
+    parseAsString.withDefault('').withOptions({
+      shallow: false
+    })
+  )
 
   const selectedItems = useMemo(() => {
     return new Set(selectedParam ? selectedParam.split(',') : [])

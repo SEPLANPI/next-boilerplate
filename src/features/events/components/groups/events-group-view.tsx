@@ -18,11 +18,7 @@ export async function EventsGroupView() {
           <EventsGroupAccordion key={group.nome} group={group} />
         ))}
       </Accordion>
-      <UrlPaginationFooter
-        totalItems={data.count}
-        itemsPerPage={10}
-        queryKey="group-page"
-      />
+      <UrlPaginationFooter totalItems={data.count} itemsPerPage={10} />
     </div>
   )
 }
