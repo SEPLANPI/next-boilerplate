@@ -6,28 +6,17 @@ import {
   RouteType
 } from './types'
 
-export function matchRoute(
-  path: string,
-  routes: string[],
-  exact: boolean = false
-): boolean {
+export function matchRoute(path: string, routes: string[]): boolean {
   return routes.some((route) => {
     const normalizedPath = path.replace(/\/$/, '')
     const normalizedRoute = route.replace(/\/$/, '')
-
-    if (exact && normalizedPath === normalizedRoute) {
-      return true
-    }
 
     if (route.endsWith('/*')) {
       const baseRoute = normalizedRoute.replace('/*', '')
       return normalizedPath.startsWith(baseRoute)
     }
 
-    return (
-      normalizedPath === normalizedRoute ||
-      normalizedPath.startsWith(normalizedRoute + '/')
-    )
+    return normalizedPath === normalizedRoute
   })
 }
 
@@ -42,13 +31,13 @@ export function determineRouteAccess(path: string): RouteType {
 
   if ('exceptions' in config && config.exceptions) {
     if (config.type === 'protected' && config.exceptions.public) {
-      if (matchRoute(path, config.exceptions.public, true)) {
+      if (matchRoute(path, config.exceptions.public)) {
         return 'public'
       }
     }
 
     if (config.type === 'public' && config.exceptions.protected) {
-      if (matchRoute(path, config.exceptions.protected, true)) {
+      if (matchRoute(path, config.exceptions.protected)) {
         return 'protected'
       }
     }
