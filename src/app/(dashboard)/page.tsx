@@ -44,18 +44,16 @@ export default async function Events({
       <Suspense fallback={<EventsCardsSkeleton />} key={cardsSuspenseKey}>
         <EventsCards />
       </Suspense>
-
-      {!hasGrouping && (
-        <Suspense fallback={<EventsTableSkeleton />} key={tableSuspenseKey}>
-          <EventsListView />
-        </Suspense>
-      )}
-      {hasGrouping && (
+      {hasGrouping ? (
         <Suspense
           fallback={<EventsAccordionsSkeleton />}
           key={groupSuspenseKey}
         >
           <EventsGroupView />
+        </Suspense>
+      ) : (
+        <Suspense fallback={<EventsTableSkeleton />} key={tableSuspenseKey}>
+          <EventsListView />
         </Suspense>
       )}
     </div>

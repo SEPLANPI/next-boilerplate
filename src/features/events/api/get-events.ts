@@ -1,8 +1,8 @@
-import { eventsSearchParams } from '../search-params'
 import { api } from '@/lib/server-api'
-import { ActionState } from '@/types/actions'
 import { EventsResponse } from './types'
-import { buildEventsParams } from '../../utils/build-events-params'
+import { eventsSearchParams } from '../lib/search-params'
+import { buildEventsParams } from '../utils/build-events-params'
+import { ServerResult } from '@/types/server-result'
 
 type GetEventsInputType = Partial<{
   groupId: string
@@ -14,7 +14,7 @@ export async function getEvents({
   groupId,
   perPage,
   page = 1
-}: GetEventsInputType = {}): Promise<ActionState<EventsResponse>> {
+}: GetEventsInputType = {}): Promise<ServerResult<EventsResponse>> {
   const eventsParams = eventsSearchParams.all()
 
   const params = buildEventsParams({ ...eventsParams, groupId, perPage, page })
@@ -29,7 +29,7 @@ export async function getEvents({
     const data: EventsResponse = await response.json()
     return { data }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  } catch (_) {
+  } catch (error) {
     return { error: 'Ocorreu um erro inesperado.' }
   }
 }

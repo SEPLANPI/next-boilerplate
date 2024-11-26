@@ -31,7 +31,7 @@ export function Content<T>({
     )
   }
 
-  if (error || data?.error) {
+  if (error) {
     return (
       <Alert
         color="red"
@@ -42,7 +42,7 @@ export function Content<T>({
   }
 
   const filteredOptions =
-    data?.data?.filter((option) => filterFn(option, search)) || []
+    data?.filter((option) => filterFn(option, search)) || []
 
   const selectedOptions = filteredOptions.filter((option) =>
     selectedItems.has(getOptionValue(option))

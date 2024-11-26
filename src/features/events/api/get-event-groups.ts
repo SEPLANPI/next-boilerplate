@@ -1,7 +1,7 @@
-import { eventsSearchParams } from '../search-params'
 import { api } from '@/lib/server-api'
-import { ActionState } from '@/types/actions'
 import { EventGroup } from '@/types/events'
+import { eventsSearchParams } from '../lib/search-params'
+import { ServerResult } from '@/types/server-result'
 
 export type EventGroupResponse = {
   count: number
@@ -9,7 +9,7 @@ export type EventGroupResponse = {
 }
 
 export async function getEventGroups(): Promise<
-  ActionState<EventGroupResponse>
+  ServerResult<EventGroupResponse>
 > {
   const { group, page } = eventsSearchParams.all()
   const params = new URLSearchParams()

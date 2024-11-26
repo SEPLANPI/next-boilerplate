@@ -1,4 +1,4 @@
-import { getEvents } from '../lib/fetchers/get-events'
+import { getEvents } from '../api/get-events'
 
 export async function EventsCards() {
   const { data, error } = await getEvents()

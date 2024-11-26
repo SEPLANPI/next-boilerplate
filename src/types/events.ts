@@ -15,6 +15,6 @@ export interface EventGroup {
   nome: string
   quantidade: number
   valor_total: number
-  filtros: Record<string, string | number>
+  eventos_url: string
   subgrupos?: EventGroup[]
 }

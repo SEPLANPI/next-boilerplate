@@ -1,5 +1,5 @@
 import { DefaultFetchError } from '@/components/errors/default-fetch-error'
-import { getEventGroups } from '../../lib/fetchers/get-event-groups'
+import { getEventGroups } from '../../api/get-event-groups'
 import { Accordion } from '@mantine/core'
 import { UrlPaginationFooter } from '@/components/ui/pagination-footer/url-pagination-footer'
 import { EventsGroupAccordion } from './events-group-accordion'

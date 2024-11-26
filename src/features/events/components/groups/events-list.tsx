@@ -8,7 +8,7 @@ import { generateGroupIdentifier } from '../../utils/generate-group-identifier'
 import { useQueryStates } from 'nuqs'
 import { eventsSearchParamsParsers } from '../../lib/search-params'
 import { useQuery } from '@tanstack/react-query'
-import { clientGetEvents } from '../../lib/fetchers/client-get-events'
+import { clientGetEvents } from '../../api/client/client-get-events'
 import { ControlledPaginationFooter } from '@/components/ui/pagination-footer/controlled-pagination-footer'
 import { useState } from 'react'
 import { EventsTableSkeleton } from '../events-table-skeleton'
@@ -25,7 +25,7 @@ export function EventsList({ group }: EventsListProps) {
   const { data, error, isFetching } = useQuery({
     queryKey: [groupId, page, params.sort],
     queryFn: () =>
-      clientGetEvents({
+      clientGetEvents(group.eventos_url, {
         ...params,
         page,
         groupId,
@@ -45,13 +45,11 @@ export function EventsList({ group }: EventsListProps) {
 
   return (
     <>
-      {isFetching
-        ? (
-          <EventsTableSkeleton />
-        )
-        : (
-          <EventsTable events={data?.results || []} shallowSort={true} />
-        )}
+      {isFetching ? (
+        <EventsTableSkeleton />
+      ) : (
+        <EventsTable events={data?.results || []} shallowSort={true} />
+      )}
       <ControlledPaginationFooter
         totalItems={data?.count || 1}
         itemsPerPage={10}

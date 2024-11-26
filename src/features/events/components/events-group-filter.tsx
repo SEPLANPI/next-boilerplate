@@ -25,10 +25,12 @@ const groupOptions = [
 ] as const
 
 const sortOptions = [
-  { value: 'name.asc', label: 'A - Z' },
-  { value: 'name.desc', label: 'Z - A' },
-  { value: 'value.asc', label: 'Maior Valor' },
-  { value: 'value.desc', label: 'Menor Valor' }
+  { value: 'valor_total', label: 'Maior Valor' },
+  { value: '-valor_total', label: 'Menor Valor' },
+  { value: 'quantidade', label: 'Mais Eventos' },
+  { value: '-quantidade', label: 'Menos Eventos' },
+  { value: 'nome', label: 'A - Z' },
+  { value: '-nome', label: 'Z - A' }
 ] as const
 
 function getGroupLabel(value: string): string | null {
@@ -37,10 +39,10 @@ function getGroupLabel(value: string): string | null {
 }
 
 export function EventsGroupFilter() {
-  const [{ group, sort, page }, setGrouping] = useQueryStates(
+  const [{ group, sort }, setGrouping] = useQueryStates(
     {
       group: parseAsString.withDefault(''),
-      sort: parseAsString.withDefault('value.asc'),
+      sort: parseAsString.withDefault('valor_total'),
       page: pageParameterParser
     },
     {
@@ -52,7 +54,7 @@ export function EventsGroupFilter() {
   )
 
   return (
-    <Popover width={320} position="bottom-start" shadow="md">
+    <Popover width={360} position="bottom-start" shadow="md">
       <Popover.Target>
         <Button
           data-active={!!group}
@@ -95,7 +97,7 @@ export function EventsGroupFilter() {
           />
           <Select
             classNames={{
-              root: 'w-36'
+              root: 'w-72'
             }}
             comboboxProps={{
               withinPortal: false
