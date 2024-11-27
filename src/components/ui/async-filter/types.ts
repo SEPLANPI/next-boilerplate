@@ -1,4 +1,3 @@
-import { ActionState } from '@/types/actions'
 import { PropsWithChildren } from 'react'
 
 export type DefaultOption = {
@@ -15,7 +14,7 @@ export type IsDefaultOption<T> = T extends DefaultOption ? true : false
 
 export type AsyncFilterProps<T> = PropsWithChildren<
   {
-    loadOptions: () => Promise<ActionState<T[]>>
+    loadOptions: () => Promise<T[]>
     renderOption?: (option: T) => JSX.Element
     filterId: string
     searchParamKey?: string
@@ -32,10 +31,9 @@ export type AsyncFilterProps<T> = PropsWithChildren<
 >
 export type ContentProps<T> = {
   renderOption: (option: T) => JSX.Element
-  loadOptions: () => Promise<ActionState<T[]>>
+  loadOptions: () => Promise<T[]>
   getOptionValue: (option: T) => string
   getOptionLabel: (option: T) => string
   filterId: string
   filterFn: (option: T, search: string) => boolean
 }
-

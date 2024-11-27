@@ -53,8 +53,11 @@ crie um arquivo `.env.local` na raiz do projeto.
    # URL base para a aplicação Next.js (ex.: http://localhost:3000)
    NEXT_PUBLIC_APP_URL=""
   
-   # URL base para a API (ex.: http://localhost:8000)
-   NEXT_PUBLIC_API_URL=""
+   # URL base para a API Server-Side (Network interna do docker) (ex.: http://web:8000)
+   SERVER_API_URL=""
+  
+   # URL base para a API Client-Side (Acesso externo via Nginx) (ex.: http://localhost:1337/api/v1)
+   NEXT_PUBLIC_CLIENT_API_URL=""
   
    # Chave secreta usada pelo NextAuth para assinar JWTs.
    # Pode ser qualquer valor e pode ser gerada usando o comando: pnpx auth secret

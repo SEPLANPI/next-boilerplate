@@ -1,6 +1,6 @@
 import { getSession } from 'next-auth/react'
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL
+const apiUrl = process.env.NEXT_PUBLIC_CLIENT_API_URL
 
 interface ClientApiOptions extends RequestInit {
   contentType?: 'form-data' | 'json'

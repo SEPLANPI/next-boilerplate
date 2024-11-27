@@ -13,7 +13,7 @@ export function Content<T>({
   filterFn
 }: ContentProps<T>) {
   const [search, setSearch] = useDebouncedState('', 100)
-  const { selectedItems, toggleItem, clearItems } = useSelectedItems()
+  const { selectedItems, toggle, clear } = useSelectedItems()
   const { data, error, isFetching } = useQuery({
     queryKey: [`async-filter-${filterId}`],
     queryFn: () => loadOptions(),
@@ -31,7 +31,7 @@ export function Content<T>({
     )
   }
 
-  if (error || data?.error) {
+  if (error) {
     return (
       <Alert
         color="red"
@@ -42,7 +42,7 @@ export function Content<T>({
   }
 
   const filteredOptions =
-    data?.data?.filter((option) => filterFn(option, search)) || []
+    data?.filter((option) => filterFn(option, search)) || []
 
   const selectedOptions = filteredOptions.filter((option) =>
     selectedItems.has(getOptionValue(option))
@@ -73,7 +73,7 @@ export function Content<T>({
                     className="mt-0.5"
                     size="xs"
                     checked={selectedItems.has(getOptionValue(option))}
-                    onChange={() => toggleItem(getOptionValue(option))}
+                    onChange={() => toggle(getOptionValue(option))}
                   />
                   {renderOption(option)}
                 </label>
@@ -91,7 +91,7 @@ export function Content<T>({
                     className="mt-0.5"
                     size="xs"
                     checked={selectedItems.has(getOptionValue(option))}
-                    onChange={() => toggleItem(getOptionValue(option))}
+                    onChange={() => toggle(getOptionValue(option))}
                   />
                   {renderOption(option)}
                 </label>
@@ -101,7 +101,7 @@ export function Content<T>({
       </ul>
       {selectedOptions.length > 0 && (
         <footer className="border-t">
-          <Button variant="white" size="sm" onClick={() => clearItems()}>
+          <Button variant="white" size="sm" onClick={() => clear()}>
             Limpar
           </Button>
         </footer>
