@@ -28,7 +28,6 @@ export function EventsList({ group }: EventsListProps) {
       clientGetEvents(group.eventos_url, {
         ...params,
         page,
-        groupId,
         perPage: 10
       }),
     staleTime: 30 * 60 * 1000, // 30m

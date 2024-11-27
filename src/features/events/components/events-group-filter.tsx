@@ -25,10 +25,10 @@ const groupOptions = [
 ] as const
 
 const sortOptions = [
-  { value: 'valor_total', label: 'Maior Valor' },
-  { value: '-valor_total', label: 'Menor Valor' },
-  { value: 'quantidade', label: 'Mais Eventos' },
-  { value: '-quantidade', label: 'Menos Eventos' },
+  { value: 'valor', label: 'Maior Valor' },
+  { value: '-valor', label: 'Menor Valor' },
+  { value: 'quantidade', label: 'Menos Eventos' },
+  { value: '-quantidade', label: 'Mais Eventos' },
   { value: 'nome', label: 'A - Z' },
   { value: '-nome', label: 'Z - A' }
 ] as const
@@ -42,7 +42,7 @@ export function EventsGroupFilter() {
   const [{ group, sort }, setGrouping] = useQueryStates(
     {
       group: parseAsString.withDefault(''),
-      sort: parseAsString.withDefault('valor_total'),
+      sort: parseAsString.withDefault(''),
       page: pageParameterParser
     },
     {
@@ -89,13 +89,14 @@ export function EventsGroupFilter() {
             value={group}
             onChange={(value) =>
               setGrouping({
-                sort,
+                sort: sort || 'valor',
                 group: value,
                 page: 1
               })
             }
           />
           <Select
+            disabled={!group}
             classNames={{
               root: 'w-72'
             }}
