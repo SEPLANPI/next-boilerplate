@@ -3,7 +3,7 @@ import 'server-only'
 import { auth } from '@/auth'
 import { RequestInit } from 'next/dist/server/web/spec-extension/request'
 
-const apiUrl = process.env.NEXT_PUBLIC_API_URL
+const apiUrl = process.env.SERVER_API_URL
 
 interface ApiOptions extends RequestInit {
   contentType?: 'form-data' | 'json'

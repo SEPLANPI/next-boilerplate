@@ -92,7 +92,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           )
           if (response.ok) {
             const userInfo = await response.json()
-            console.log('userinfo: ' + userInfo)
+            console.log(userInfo)
           }
         } catch (error) {
           console.error('Failed to fetch user info:', error)
