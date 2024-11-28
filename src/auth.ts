@@ -1,14 +1,15 @@
 import NextAuth from 'next-auth'
 import KeycloakProvider from 'next-auth/providers/keycloak'
-
+import jwt from 'jsonwebtoken'
 import type { JWT } from 'next-auth/jwt'
+import { env } from './config/env'
 
 const refreshAccessToken = async (token: JWT) => {
   try {
     if (Date.now() > token.refreshTokenExpired) throw Error
     const details = {
-      client_id: process.env.AUTH_KEYCLOAK_ID,
-      client_secret: process.env.AUTH_KEYCLOAK_SECRET,
+      client_id: env.AUTH_KEYCLOAK_ID,
+      client_secret: env.AUTH_KEYCLOAK_SECRET,
       grant_type: 'refresh_token',
       refresh_token: token.refreshToken
     }
@@ -22,7 +23,7 @@ const refreshAccessToken = async (token: JWT) => {
 
     const formData = formBody.join('&')
 
-    const url = `${process.env.AUTH_KEYCLOAK_ISSUER}/protocol/openid-connect/token`
+    const url = `${env.AUTH_KEYCLOAK_ISSUER}/protocol/openid-connect/token`
 
     const response = await fetch(url, {
       method: 'POST',
@@ -52,9 +53,9 @@ const refreshAccessToken = async (token: JWT) => {
 }
 
 const keycloakProvider = KeycloakProvider({
-  clientId: process.env.AUTH_KEYCLOAK_ID,
-  clientSecret: process.env.AUTH_KEYCLOAK_SECRET,
-  issuer: process.env.AUTH_KEYCLOAK_ISSUER
+  clientId: env.AUTH_KEYCLOAK_ID,
+  clientSecret: env.AUTH_KEYCLOAK_SECRET,
+  issuer: env.AUTH_KEYCLOAK_ISSUER
 })
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -81,9 +82,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     jwt: async ({ token, user, account }) => {
       if (account) {
         token.accessToken = account.access_token
+        const info = jwt.decode(account.access_token, { complete: true })
+        console.log(info?.payload.resource_access)
         try {
           const response = await fetch(
-            `${process.env.AUTH_KEYCLOAK_ISSUER}/protocol/openid-connect/userinfo`,
+            `${env.AUTH_KEYCLOAK_ISSUER}/protocol/openid-connect/userinfo`,
             {
               headers: {
                 Authorization: `Bearer ${account.access_token}`

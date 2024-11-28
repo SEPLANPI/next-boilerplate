@@ -1,26 +1,33 @@
 import { NextResponse } from 'next/server'
 import { auth } from '@/auth'
 import { determineRouteAccess } from '@/lib/routes/matcher'
-import { getUnauthorizedPath } from '@/lib/routes/unauthorized-matcher'
+import { getUnauthorizedPath } from '@/lib/routes/get-unauthorized-path'
+import { routingConfig } from './config/routing'
 
 export default auth((req) => {
   const path = req.nextUrl.pathname
-  const routeAccess = determineRouteAccess(path)
 
-  if (routeAccess === 'public') {
+  const routeAccess = determineRouteAccess(path, ['admin'])
+
+  if (routeAccess.type === 'public') {
     return NextResponse.next()
   }
 
   if (!req.auth) {
     const unauthorizedPath = getUnauthorizedPath(path)
-
     const newUrl = new URL(unauthorizedPath, req.nextUrl.origin)
     newUrl.searchParams.set('callbackUrl', path)
-
     return NextResponse.redirect(newUrl)
   }
 
-  // Verificar permissões aqui
+  if (!routeAccess.hasPermission) {
+    const accessDeniedPath =
+      routeAccess.accessDeniedPath ||
+      routingConfig.defaults.unauthorized.defaultAccessDeniedPath
+
+    const newUrl = new URL(accessDeniedPath, req.nextUrl.origin)
+    return NextResponse.redirect(newUrl)
+  }
 
   return NextResponse.next()
 })

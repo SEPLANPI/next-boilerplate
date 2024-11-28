@@ -2,8 +2,9 @@ import 'server-only'
 
 import { auth } from '@/auth'
 import { RequestInit } from 'next/dist/server/web/spec-extension/request'
+import { env } from '@/config/env'
 
-const apiUrl = process.env.SERVER_API_URL
+const apiUrl = env.SERVER_API_URL
 
 interface ApiOptions extends RequestInit {
   contentType?: 'form-data' | 'json'
