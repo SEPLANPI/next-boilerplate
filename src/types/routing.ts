@@ -1,10 +1,10 @@
-export type Permission = 'admin'
+import { Role } from './roles'
 
 export interface RouteConfig {
   path: string
   type?: 'public' | 'protected'
   permissions?: {
-    required?: Permission[]
+    required?: Role[]
     accessDeniedPath?: string
     inherit?: boolean
   }
@@ -17,7 +17,7 @@ export interface RouteConfig {
 export interface RoutingConfiguration {
   defaults: {
     protection: 'public' | 'protected'
-    permissions: Permission[]
+    permissions: Role[]
     unauthorized: {
       defaultUnauthenticatedPath: string
       defaultAccessDeniedPath: string

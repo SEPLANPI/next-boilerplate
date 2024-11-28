@@ -13,10 +13,10 @@ O sistema de roteamento é configurado através de dois arquivos principais:
 
 ### 1. Definindo Novas Permissões
 
-Para adicionar novas permissões, primeiro modifique o tipo `Permission` no arquivo `src/types/routing.ts`:
+Para adicionar novas permissões, primeiro modifique o tipo `Role` no arquivo `src/types/roles.ts`:
 
 ```typescript
-export type Permission = 'admin' | 'user' | 'editor' | 'manager'
+export type Role = 'admin' | 'user' | 'editor' | 'manager'
 ```
 
 ## Estrutura Básica

@@ -1,5 +1,7 @@
-import { Lock } from 'lucide-react'
+import { Button } from '@mantine/core'
+import { Lock, LogOut } from 'lucide-react'
 import { Metadata } from 'next'
+import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Acesso Negado'
@@ -19,6 +21,14 @@ export default function AccessDenied() {
           contato com o administrador do sistema.
         </p>
       </div>
+      <Button
+        className="mt-4"
+        component={Link}
+        href="/api/auth/sign-out"
+        leftSection={<LogOut className="size-4" />}
+      >
+        Sair
+      </Button>
     </main>
   )
 }

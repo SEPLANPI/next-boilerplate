@@ -1,5 +1,6 @@
 import { routingConfig } from '@/config/routing'
-import { Permission, RouteConfig } from '@/types/routing'
+import { Role } from '@/types/roles'
+import { RouteConfig } from '@/types/routing'
 
 export function matchRoute(path: string, routes: string[]): boolean {
   return routes.some((route) => {
@@ -16,9 +17,9 @@ export function matchRoute(path: string, routes: string[]): boolean {
 }
 
 export function checkPermissions(
-  userPermissions: Permission[] = [],
+  userPermissions: Role[] = [],
   routePermissions?: RouteConfig['permissions'],
-  defaultPermissions: Permission[] = []
+  defaultPermissions: Role[] = []
 ): boolean {
   const requiredPermissions = routePermissions?.required ?? defaultPermissions
 
@@ -27,7 +28,7 @@ export function checkPermissions(
 
 export function determineRouteAccess(
   path: string,
-  userPermissions: Permission[] = []
+  userPermissions: Role[] = []
 ): {
   type: 'public' | 'protected'
   hasPermission: boolean

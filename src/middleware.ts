@@ -7,7 +7,7 @@ import { routingConfig } from './config/routing'
 export default auth((req) => {
   const path = req.nextUrl.pathname
 
-  const routeAccess = determineRouteAccess(path, [])
+  const routeAccess = determineRouteAccess(path, req?.auth?.user?.roles || [])
 
   if (routeAccess.type === 'public') {
     return NextResponse.next()
