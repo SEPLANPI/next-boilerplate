@@ -6,7 +6,10 @@ import { Figtree, Montserrat } from 'next/font/google'
 import { Providers } from './providers'
 
 export const metadata: Metadata = {
-  title: 'Piauí 365'
+  title: {
+    default: 'Piauí 365',
+    template: '%s | Piauí 365'
+  }
 }
 
 const figtree = Figtree({ subsets: ['latin'] })

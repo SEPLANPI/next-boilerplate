@@ -1,5 +1,5 @@
 import { AdapterUser } from '@auth/core/adapters'
-import BaseUser from './user'
+import BaseUser from './auth'
 
 declare module 'next-auth' {
   interface Session {
