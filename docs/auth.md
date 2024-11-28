@@ -67,6 +67,20 @@ const keycloakProvider = KeycloakProvider({
 
 ## Estrutura de Tipos
 
+### Estrutura do Usuário Base
+
+O sistema define uma interface `BaseUser` em `types/auth.ts` que representa a estrutura fundamental de um usuário autenticado:
+
+```typescript
+interface BaseUser {
+  name: string        
+  email: string       
+  id: string         
+  cpf: string        //(obtido do preferred_username)
+  roles: Role[]      
+}
+```
+
 ### Token JWT
 ```typescript
 interface JWT {
