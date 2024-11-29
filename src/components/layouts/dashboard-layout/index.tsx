@@ -46,8 +46,6 @@ export function DashboardLayout({ children }: PropsWithChildren) {
               </UnstyledButton>
             </Menu.Target>
             <Menu.Dropdown>
-              <Menu.Item>Ação</Menu.Item>
-              <Menu.Divider />
               <Menu.Item
                 component={Link}
                 href="/api/auth/sign-out"

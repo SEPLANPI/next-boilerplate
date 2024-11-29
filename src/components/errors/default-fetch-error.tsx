@@ -1,3 +1,4 @@
+import { API } from '@/constants/messages'
 import { Alert } from '@mantine/core'
 
 export function DefaultFetchError() {
@@ -8,7 +9,7 @@ export function DefaultFetchError() {
       color="red"
       className="max-w-xl"
     >
-      Ocorreu um erro inesperado ao buscar dados no servidor.
+      {API.UNEXPECTED_FETCH_ERROR}
     </Alert>
   )
 }

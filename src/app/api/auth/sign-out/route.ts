@@ -1,10 +1,11 @@
+import { env } from '@/config/env'
 import { getToken } from '@auth/core/jwt'
 import { redirect } from 'next/navigation'
 
 export async function GET(req: Request) {
   const token = await getToken({
     req,
-    secret: process.env.AUTH_SECRET,
+    secret: env.AUTH_SECRET,
     secureCookie: false
   })
 
@@ -13,17 +14,12 @@ export async function GET(req: Request) {
       status: 400
     })
   }
-  const {
-    AUTH_KEYCLOAK_ISSUER,
-    AUTH_KEYCLOAK_ID,
-    NEXT_PUBLIC_APP_URL: APP_URL
-  } = process.env
 
-  const url = `${AUTH_KEYCLOAK_ISSUER}/protocol/openid-connect/logout`
+  const url = `${env.AUTH_KEYCLOAK_ISSUER}/protocol/openid-connect/logout`
   const params = new URLSearchParams({
-    client_id: AUTH_KEYCLOAK_ID as string,
+    client_id: env.AUTH_KEYCLOAK_ID,
     id_token_hint: token.idToken as string,
-    post_logout_redirect_uri: `${APP_URL}/api/auth/callback-sign-out`
+    post_logout_redirect_uri: `${env.APP_URL}/api/auth/callback-sign-out`
   })
 
   const keycloakLogoutUrl = `${url}?${params}`
