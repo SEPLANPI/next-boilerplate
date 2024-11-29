@@ -1,1 +1,1 @@
-export type Role = 'admin-piaui365'
+export type Role = 'admin'
