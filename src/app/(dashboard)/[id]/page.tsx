@@ -14,9 +14,10 @@ import {
   Divider,
   Badge,
   Tooltip,
-  Rating
+  Rating,
+  ActionIcon
 } from '@mantine/core'
-import { ChevronRight, Info } from 'lucide-react'
+import { ArrowLeft, ChevronRight, Info } from 'lucide-react'
 import Link from 'next/link'
 import {
   DataListRoot,
@@ -24,6 +25,7 @@ import {
   DataListLabel,
   DataListValue
 } from '@/components/ui/data-list'
+import BackButton from '@/components/ui/back-button'
 
 type EventDetailProps = {
   params: {
@@ -92,14 +94,13 @@ export default async function EventDetail({
   const ug = event.ugs[0]
   return (
     <div className="container mx-auto">
-      <div className="mb-4 flex items-center space-x-2">
+      <div className="mb-4 flex items-center space-x-3">
+        <BackButton />
         <Breadcrumbs>
-          <Anchor component={Link} href="/" fw={500} size="sm">
+          <Anchor component={Link} href="/">
             Eventos
           </Anchor>
         </Breadcrumbs>
-
-        <ChevronRight className="size-4" />
       </div>
       <h1 className="mb-2 text-2xl font-semibold">{event.nome}</h1>
       <p className="max-w-[75ch] text-sm text-secondary-foreground">
@@ -137,7 +138,7 @@ export default async function EventDetail({
           <DataListItem>
             <DataListLabel>Avaliação</DataListLabel>
             <DataListValue>
-              <Rating />
+              <Rating value={5} readOnly />
             </DataListValue>
           </DataListItem>
           <DataListItem>
