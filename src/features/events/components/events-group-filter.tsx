@@ -25,8 +25,8 @@ const groupOptions = [
 ] as const
 
 const sortOptions = [
-  { value: 'valor', label: 'Maior Valor' },
-  { value: '-valor', label: 'Menor Valor' },
+  { value: '-valor', label: 'Maior Valor' },
+  { value: 'valor', label: 'Menor Valor' },
   { value: 'quantidade', label: 'Menos Eventos' },
   { value: '-quantidade', label: 'Mais Eventos' },
   { value: 'nome', label: 'A - Z' },
@@ -89,7 +89,7 @@ export function EventsGroupFilter() {
             value={group}
             onChange={(value) =>
               setGrouping({
-                sort: sort || 'valor',
+                sort: sort || '-valor',
                 group: value,
                 page: 1
               })
