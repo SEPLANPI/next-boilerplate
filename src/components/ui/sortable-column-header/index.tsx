@@ -4,32 +4,33 @@ import { useSortableColumn } from './use-sortable-column'
 import { SortIcon } from './sort-icon'
 import { ArrowDown, ArrowUp, X } from 'lucide-react'
 
-const SORT_OPTIONS: SortOption[] = [
-  {
-    icon: ArrowUp,
-    label: 'Crescente',
-    key: 'column'
-  },
-  {
-    icon: ArrowDown,
-
-    label: 'Decrescente',
-    key: '-column'
-  },
-  {
-    icon: X,
-    label: 'Sem ordenação',
-    key: null
-  }
-]
-
 export function SortableColumnHeader({
   column,
   title,
   sortKey,
-  onSort
+  onSort,
+  ascendingLabel = 'Crescente',
+  descendingLabel = 'Decrescente'
 }: ColumnHeaderProps) {
   const { isSorted, isDescending } = useSortableColumn(column, sortKey)
+
+  const SORT_OPTIONS: SortOption[] = [
+    {
+      icon: ArrowUp,
+      label: ascendingLabel,
+      key: 'column'
+    },
+    {
+      icon: ArrowDown,
+      label: descendingLabel,
+      key: '-column'
+    },
+    {
+      icon: X,
+      label: 'Sem ordenação',
+      key: null
+    }
+  ]
 
   const handleSort = (optionKey: string | null) => {
     if (optionKey === null) {

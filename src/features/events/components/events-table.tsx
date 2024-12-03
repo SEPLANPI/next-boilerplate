@@ -15,6 +15,7 @@ import { useRouter } from 'next/navigation'
 import { parseAsString, useQueryState } from 'nuqs'
 import type { Event } from '@/types/events'
 import { SortableColumnHeader } from '@/components/ui/sortable-column-header'
+import { SORT_LABELS } from '@/constants/sort-labels'
 
 interface EventsTableProps {
   events: Event[]
@@ -55,18 +56,24 @@ export function EventsTable({
               title="Nome"
               sortKey={sort}
               onSort={setSort}
+              ascendingLabel={SORT_LABELS.ALPHABETICAL.ASC}
+              descendingLabel={SORT_LABELS.ALPHABETICAL.DESC}
             />
             <SortableColumnHeader
-              column="municipio"
+              column="municipio"  
               title="Município"
               sortKey={sort}
               onSort={setSort}
+              ascendingLabel={SORT_LABELS.ALPHABETICAL.ASC}
+              descendingLabel={SORT_LABELS.ALPHABETICAL.DESC}
             />
             <SortableColumnHeader
               column="data"
               title="Data"
               sortKey={sort}
               onSort={setSort}
+              ascendingLabel={SORT_LABELS.DATE.ASC}
+              descendingLabel={SORT_LABELS.DATE.DESC}
             />
             <TableTh className="w-1 whitespace-nowrap">
               Unidades Gestoras
@@ -76,6 +83,8 @@ export function EventsTable({
               title="Valor"
               sortKey={sort}
               onSort={setSort}
+              ascendingLabel={SORT_LABELS.NUMERIC.ASC}
+              descendingLabel={SORT_LABELS.NUMERIC.DESC}
             />
           </TableTr>
         </TableThead>
