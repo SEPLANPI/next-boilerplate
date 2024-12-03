@@ -26,6 +26,7 @@ import {
   DataListValue
 } from '@/components/ui/data-list'
 import BackButton from '@/components/ui/back-button'
+import { FetchError } from '@/components/errors/fetch-error'
 
 type EventDetailProps = {
   params: {
@@ -78,16 +79,8 @@ export default async function EventDetail({
   const response = await api.get(`/eventos/${id}`)
 
   if (!response.ok) {
-    return (
-      <Alert
-        title="Erro inesperado"
-        variant="outline"
-        color="red"
-        className="max-w-xl"
-      >
-        Ocorreu um erro inesperado ao buscar dados no servidor.
-      </Alert>
-    )
+    const error = await response.json()
+    return <FetchError error={error.detail} />
   }
 
   const event: Event = await response.json()

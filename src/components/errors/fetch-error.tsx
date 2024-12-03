@@ -1,7 +1,11 @@
 import { API } from '@/constants/messages'
 import { Alert } from '@mantine/core'
 
-export function DefaultFetchError() {
+interface FetchErrorProps {
+  error?: string
+}
+
+export function FetchError({ error }: FetchErrorProps) {
   return (
     <Alert
       title="Erro inesperado"
@@ -9,7 +13,7 @@ export function DefaultFetchError() {
       color="red"
       className="max-w-xl"
     >
-      {API.UNEXPECTED_FETCH_ERROR}
+      {error || API.UNEXPECTED_FETCH_ERROR}
     </Alert>
   )
 }

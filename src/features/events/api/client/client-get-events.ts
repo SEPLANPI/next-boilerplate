@@ -17,3 +17,4 @@ export async function clientGetEvents(
 
   return (await response.json()) as EventsResponse
 }
+  

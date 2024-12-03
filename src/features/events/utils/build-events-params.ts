@@ -1,4 +1,5 @@
 import dayjs from 'dayjs'
+import { PAGINATION } from '@/constants/pagination'
 
 type Params = Partial<{
   page?: number
@@ -15,7 +16,7 @@ type Params = Partial<{
 
 export function buildEventsParams({
   page = 1,
-  perPage,
+  perPage = PAGINATION.EVENTS_PAGE_SIZE,
   search,
   fromDate,
   toDate,

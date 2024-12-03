@@ -1,15 +1,16 @@
-import { DefaultFetchError } from '@/components/errors/default-fetch-error'
+import { FetchError } from '@/components/errors/fetch-error'
 import { getEventGroups } from '../../api/get-event-groups'
 import { Accordion } from '@mantine/core'
 import { UrlPaginationFooter } from '@/components/ui/pagination-footer/url-pagination-footer'
 import { EventsGroupAccordion } from './events-group-accordion'
 import { EventsEmptyState } from '../events-empty-state'
+import { PAGINATION } from '@/constants/pagination'
 
 export async function EventsGroupView() {
   const { data, error } = await getEventGroups()
 
   if (error || !data) {
-    return <DefaultFetchError />
+    return <FetchError error={error} />
   }
 
   if (data.results.length === 0) {
@@ -23,7 +24,7 @@ export async function EventsGroupView() {
           <EventsGroupAccordion key={group.nome} group={group} />
         ))}
       </Accordion>
-      <UrlPaginationFooter totalItems={data.count} itemsPerPage={10} />
+      <UrlPaginationFooter totalItems={data.count} itemsPerPage={PAGINATION.DEFAULT_PAGE_SIZE} />
     </div>
   )
 }

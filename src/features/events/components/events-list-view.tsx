@@ -1,9 +1,9 @@
 import { EventsTable } from './events-table'
 import { getEvents } from '../api/get-events'
-import { DefaultFetchError } from '@/components/errors/default-fetch-error'
 import { EventsEmptyState } from './events-empty-state'
 import { eventsSearchParams } from '../lib/search-params'
 import { UrlPaginationFooter } from '@/components/ui/pagination-footer/url-pagination-footer'
+import { FetchError } from '@/components/errors/fetch-error'
 
 export async function EventsListView() {
   const page = eventsSearchParams.get('page')
@@ -13,7 +13,7 @@ export async function EventsListView() {
   })
 
   if (!data || error) {
-    return <DefaultFetchError />
+    return <FetchError />
   }
 
   if (data.results.length === 0) return <EventsEmptyState />
