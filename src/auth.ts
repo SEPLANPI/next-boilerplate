@@ -45,5 +45,12 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   pages: {
     signIn: '/api/auth/sign-in'
-  }
+  },
+  cookies: {
+    sessionToken: {
+      options: {
+        secure: false
+      }
+    }
+  },
 })
