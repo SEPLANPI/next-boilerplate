@@ -5,9 +5,10 @@ import { redirect } from 'next/navigation'
 export async function GET(req: Request) {
   const token = await getToken({
     req,
-    secret: env.AUTH_SECRET,
-    secureCookie: false
+    secret: env.AUTH_SECRET
   })
+
+  console.log(token)
 
   if (!token) {
     return new Response('No Token', {

@@ -23,8 +23,6 @@ export async function getEventGroups(): Promise<
     sort: groupSort
   })
 
-  console.log(params.toString())
-
   const response = await api.get(`/eventos/agrupamentos?${params.toString()}`)
 
   if (!response.ok) {
