@@ -17,6 +17,8 @@ interface EventsListProps {
   group: EventGroup
 }
 
+const PAGE_SIZE = 10
+
 export function EventsList({ group }: EventsListProps) {
   const groupId = generateGroupIdentifier(group)
   const [params] = useQueryStates(eventsSearchParamsParsers)
@@ -28,7 +30,7 @@ export function EventsList({ group }: EventsListProps) {
       clientGetEvents(group.eventos_url, {
         ...params,
         page,
-        perPage: 10
+        perPage: PAGE_SIZE
       }),
     staleTime: 30 * 60 * 1000, // 30m
     placeholderData: (previousData) => previousData
@@ -45,13 +47,13 @@ export function EventsList({ group }: EventsListProps) {
   return (
     <>
       {isFetching ? (
-        <EventsTableSkeleton />
+        <EventsTableSkeleton rows={PAGE_SIZE} />
       ) : (
         <EventsTable events={data?.results || []} shallowSort={true} />
       )}
       <ControlledPaginationFooter
         totalItems={data?.count || 1}
-        itemsPerPage={10}
+        itemsPerPage={PAGE_SIZE}
         page={page}
         onPageChange={setPage}
       />

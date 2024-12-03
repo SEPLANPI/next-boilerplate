@@ -18,15 +18,14 @@ export default async function Events({
 }: {
   searchParams: Promise<SearchParams>
 }) {
-  const { sort, groupSort, group, page, ...filters } = eventsSearchParams.parse(
-    await searchParams
-  )
+  const params = eventsSearchParams.parse(await searchParams)
 
-  const cardsSuspenseKey = JSON.stringify({ filters })
-  const tableSuspenseKey = JSON.stringify({ filters, sort, page })
-  const groupSuspenseKey = JSON.stringify({ filters, group, groupSort, page })
+  const suspenseKey = JSON.stringify(params)
+  const cardsKey = 'cards' + suspenseKey
+  const groupKey = 'group' + suspenseKey
+  const tableKey = 'table' + suspenseKey
 
-  const hasGrouping = !!group
+  const hasGrouping = !!params.group
 
   return (
     <div>
@@ -41,18 +40,15 @@ export default async function Events({
         <EventsFilters />
         <EventsResetFilters />
       </div>
-      <Suspense fallback={<EventsCardsSkeleton />} key={cardsSuspenseKey}>
+      <Suspense fallback={<EventsCardsSkeleton />} key={cardsKey}>
         <EventsCards />
       </Suspense>
       {hasGrouping ? (
-        <Suspense
-          fallback={<EventsAccordionsSkeleton />}
-          key={groupSuspenseKey}
-        >
+        <Suspense fallback={<EventsAccordionsSkeleton />} key={groupKey}>
           <EventsGroupView />
         </Suspense>
       ) : (
-        <Suspense fallback={<EventsTableSkeleton />} key={tableSuspenseKey}>
+        <Suspense fallback={<EventsTableSkeleton />} key={tableKey}>
           <EventsListView />
         </Suspense>
       )}

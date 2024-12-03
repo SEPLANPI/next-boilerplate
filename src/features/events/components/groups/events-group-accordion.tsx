@@ -18,9 +18,7 @@ export function EventsGroupAccordion({ group }: EventsGroupAccordionProps) {
               ({group.quantidade} eventos)
             </span>
           </div>
-          <span className="font-semibold">
-            {formatCurrency(group.valor_total)}
-          </span>
+          <span className="font-semibold">{formatCurrency(group.valor)}</span>
         </div>
       </AccordionControl>
       <AccordionPanel>

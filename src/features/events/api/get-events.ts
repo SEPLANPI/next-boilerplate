@@ -3,6 +3,7 @@ import { EventsResponse } from './types'
 import { eventsSearchParams } from '../lib/search-params'
 import { buildEventsParams } from '../utils/build-events-params'
 import { ServerResult } from '@/types/server-result'
+import { API } from '@/constants/messages'
 
 type GetEventsInputType = Partial<{
   groupId: string
@@ -11,19 +12,18 @@ type GetEventsInputType = Partial<{
 }>
 
 export async function getEvents({
-  groupId,
   perPage,
   page = 1
 }: GetEventsInputType = {}): Promise<ServerResult<EventsResponse>> {
   const eventsParams = eventsSearchParams.all()
 
-  const params = buildEventsParams({ ...eventsParams, groupId, perPage, page })
+  const params = buildEventsParams({ ...eventsParams, perPage, page })
   try {
     const response = await api.get(`/eventos?${params.toString()}`)
 
     if (!response.ok) {
       const error = await response.json()
-      return { error: error.detail }
+      return { error: error.detail || API.UNEXPECTED_FETCH_ERROR }
     }
 
     const data: EventsResponse = await response.json()

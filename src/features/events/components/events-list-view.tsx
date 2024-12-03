@@ -7,6 +7,7 @@ import { UrlPaginationFooter } from '@/components/ui/pagination-footer/url-pagin
 
 export async function EventsListView() {
   const page = eventsSearchParams.get('page')
+  
   const { data, error } = await getEvents({
     page
   })

@@ -14,7 +14,7 @@ export type Event = {
 export interface EventGroup {
   nome: string
   quantidade: number
-  valor_total: number
+  valor: number
   eventos_url: string
   subgrupos?: EventGroup[]
 }

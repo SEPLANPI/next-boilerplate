@@ -10,8 +10,7 @@ type Params = Partial<{
   municipios?: string[] | null
   deputados?: string[] | null
   sort?: string | null
-  group: string | null
-  groupId?: string
+  group?: string | null
 }>
 
 export function buildEventsParams({
@@ -24,8 +23,7 @@ export function buildEventsParams({
   municipios,
   deputados,
   sort,
-  group,
-  groupId
+  group
 }: Params) {
   const params = new URLSearchParams()
   const appendParam = (key: string, value?: string | number | null) => {
@@ -48,20 +46,12 @@ export function buildEventsParams({
     'data_fim',
     toDate ? dayjs(toDate).format('YYYY-MM-DD') : undefined
   )
-  appendArrayParams('ugs', group !== 'ugs' ? ugs : undefined)
-
-  appendArrayParams(
-    'municipio',
-    group !== 'municipios' ? municipios : undefined
-  )
-  appendArrayParams(
-    'autor_emenda',
-    group !== 'deputados' ? deputados : undefined
-  )
+  appendArrayParams('ugs', ugs)
+  appendArrayParams('municipio', municipios)
+  appendArrayParams('autor_emenda', deputados)
   appendParam('ordering', sort)
-  if (groupId && group) appendParam(group, groupId)
-
   appendParam('page_size', perPage)
+  appendParam('group_by', group)
 
   return params
 }

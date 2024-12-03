@@ -64,7 +64,7 @@ export function DateRangeFilter({
       toDate: parseAsIsoDateTime
     },
     {
-      history: 'push'
+      shallow: false
     }
   )
 
