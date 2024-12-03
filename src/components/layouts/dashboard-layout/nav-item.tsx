@@ -1,35 +1,37 @@
 'use client'
 
 import { NavLink } from '@mantine/core'
-import { Item } from './data'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
+import { NavigationItem } from '@/types/sidebar'
+import { isNavigationGroup } from '@/config/sidebar'
 
 interface NavItemProps {
-  item: Item
+  item: NavigationItem
 }
+
+const NAV_LINK_STYLES = {
+  root: '[&:not([data-active])]:text-gray-700 font-medium text-sm w-auto mb-1 -mx-2 p-2 [&:not([data-active])]:hover:bg-gray-200 rounded'
+}
+
 export function NavItem({ item }: NavItemProps) {
   const pathname = usePathname()
-  const IconComponent = item.Icon ? <item.Icon className="size-4" /> : null
+  const IconComponent = item.icon ? <item.icon className="size-4" /> : null
 
-  if (item.items) {
+  if (isNavigationGroup(item)) {
     return (
       <NavLink
         label={item.label}
         leftSection={IconComponent}
         childrenOffset={16}
-        classNames={{
-          root: '[&:not([data-active])]:text-gray-700 font-medium text-sm w-auto mb-1 -mx-2 p-2 [&:not([data-active])]:hover:bg-gray-200 rounded'
-        }}
+        classNames={NAV_LINK_STYLES}
       >
-        {item?.items.map((childItem) => (
+        {item.items.map((childItem) => (
           <Link href={childItem.href} key={childItem.label}>
             <NavLink
               component="span"
               active={pathname.endsWith(childItem.href)}
-              classNames={{
-                root: '[&:not([data-active])]:text-gray-700 font-medium text-sm w-auto mb-1 -mx-2 p-2 [&:not([data-active])]:hover:bg-gray-200 rounded'
-              }}
+              classNames={NAV_LINK_STYLES}
               label={childItem.label}
             />
           </Link>
@@ -44,9 +46,7 @@ export function NavItem({ item }: NavItemProps) {
         component="span"
         active={pathname.endsWith(item.href)}
         leftSection={IconComponent}
-        classNames={{
-          root: '[&:not([data-active])]:text-gray-700 font-medium text-sm w-auto mb-1 -mx-2 p-2 [&:not([data-active])]:hover:bg-gray-200 rounded'
-        }}
+        classNames={NAV_LINK_STYLES}
         key={item.label}
         label={item.label}
       />

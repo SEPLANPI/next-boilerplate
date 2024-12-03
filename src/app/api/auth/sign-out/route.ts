@@ -6,7 +6,7 @@ export async function GET(req: Request) {
   const token = await getToken({
     req,
     secret: env.AUTH_SECRET,
-    secureCookie: false
+    secureCookie: process.env.NODE_ENV === 'production'
   })
 
   if (!token) {

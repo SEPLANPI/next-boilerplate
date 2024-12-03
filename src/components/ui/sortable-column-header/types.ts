@@ -3,6 +3,8 @@ export interface ColumnHeaderProps {
   title: string
   sortKey: string | null
   onSort: (key: string | null) => void
+  ascendingLabel?: string
+  descendingLabel?: string
 }
 
 export interface SortOption {

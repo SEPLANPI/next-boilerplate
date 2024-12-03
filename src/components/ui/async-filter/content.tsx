@@ -16,8 +16,7 @@ export function Content<T>({
   const { selectedItems, toggle, clear } = useSelectedItems()
   const { data, error, isFetching } = useQuery({
     queryKey: [`async-filter-${filterId}`],
-    queryFn: () => loadOptions(),
-    staleTime: 30 * 60 * 1000 // 30m
+    queryFn: () => loadOptions()
   })
 
   if (isFetching) {
@@ -35,9 +34,11 @@ export function Content<T>({
     return (
       <Alert
         color="red"
-        title="Não foi possível buscar as opções."
+        title="Erro ao carregar opções"
         className="m-2"
-      />
+      >
+        {error.message}
+      </Alert>
     )
   }
 

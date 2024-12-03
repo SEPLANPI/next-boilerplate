@@ -1,6 +1,6 @@
 import { Divider } from '@mantine/core'
-import { items } from './data'
 import { NavItem } from './nav-item'
+import { sidebarConfig } from '@/config/sidebar'
 
 export function MainNav() {
   return (
@@ -13,7 +13,7 @@ export function MainNav() {
         <span className="font-medium">Aplicação</span>
       </div>
       <nav>
-        {items.map((section) => (
+        {sidebarConfig.map((section) => (
           <section className="mb-4" key={section.title}>
             <span className="mb-2 block text-xs font-semibold uppercase text-muted-foreground">
               {section.title}
