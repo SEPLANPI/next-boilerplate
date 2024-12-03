@@ -145,7 +145,7 @@ function ResourceComponent() {
     queryFn: getResource
   })
 
-  if (error) return <FetchError error={error.message} />
+  if (error) return <FetchError error={error.message} title="Erro ao carregar dados" />
   if (isFetching) return <Loading />
   
   return <div>{data.name}</div>
@@ -165,12 +165,13 @@ import { Alert } from '@mantine/core'
 
 interface FetchErrorProps {
   error?: string
+  title?: string
 }
 
-export function FetchError({ error }: FetchErrorProps) {
+export function FetchError({ error, title = 'Erro inesperado' }: FetchErrorProps) {
   return (
     <Alert
-      title="Erro inesperado"
+      title={title}
       variant="outline"
       color="red"
       className="max-w-xl"
@@ -186,7 +187,7 @@ Este componente pode ser usado facilmente em qualquer lugar da aplicação:
 
 ```typescript
 if (error) {
-  return <FetchError error={error} />
+  return <FetchError error={error} title="Erro ao carregar dados" />
 }
 ```
 
@@ -200,13 +201,13 @@ As mensagens de erro podem ser definidas de duas formas:
 
 1. **Usando constantes**:
    ```typescript
-   return <FetchError error={API.UNEXPECTED_FETCH_ERROR} />
+   return <FetchError error={API.UNEXPECTED_FETCH_ERROR} title="Erro ao carregar dados" />
    ```
    As constantes são centralizadas no arquivo de constantes. Para mais detalhes sobre a estrutura e boas práticas de constantes, consulte [docs/constantes.md](../constantes.md).
 
 2. **Usando strings diretas**:
    ```typescript
-   return <FetchError error="Erro ao carregar os dados" />
+   return <FetchError error="Erro ao carregar dados" title="Erro ao carregar dados" />
    ```
 
 Recomenda-se usar constantes para mensagens que:

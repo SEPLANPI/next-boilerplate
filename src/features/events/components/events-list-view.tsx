@@ -13,7 +13,7 @@ export async function EventsListView() {
   })
 
   if (!data || error) {
-    return <FetchError />
+    return <FetchError title="Erro ao carregar eventos" />
   }
 
   if (data.results.length === 0) return <EventsEmptyState />

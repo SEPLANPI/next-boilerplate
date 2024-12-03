@@ -35,7 +35,7 @@ export function EventsList({ group }: EventsListProps) {
   })
 
   if (error) {
-    return <FetchError error={error.message} />
+    return <FetchError error={error.message} title="Erro ao carregar eventos" />
   }
 
   if (data && data.results.length === 0) {

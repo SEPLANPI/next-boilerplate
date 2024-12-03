@@ -34,9 +34,11 @@ export function Content<T>({
     return (
       <Alert
         color="red"
-        title="Não foi possível buscar as opções."
+        title="Erro ao carregar opções"
         className="m-2"
-      />
+      >
+        {error.message}
+      </Alert>
     )
   }
 

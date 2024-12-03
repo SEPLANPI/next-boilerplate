@@ -3,13 +3,14 @@ import { Alert } from '@mantine/core'
 
 interface FetchErrorProps {
   error?: string
+  title?: string
 }
 
-export function FetchError({ error }: FetchErrorProps) {
+export function FetchError({ error, title = 'Erro inesperado' }: FetchErrorProps) {
   return (
     <Alert
-      title="Erro inesperado"
-      variant="outline"
+      title={title}
+      variant="light"
       color="red"
       className="max-w-xl"
     >

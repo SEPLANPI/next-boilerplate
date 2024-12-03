@@ -10,7 +10,7 @@ export async function EventsGroupView() {
   const { data, error } = await getEventGroups()
 
   if (error || !data) {
-    return <FetchError error={error} />
+    return <FetchError error={error} title="Erro ao carregar grupos de eventos" />
   }
 
   if (data.results.length === 0) {

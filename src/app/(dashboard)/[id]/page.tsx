@@ -80,7 +80,7 @@ export default async function EventDetail({
 
   if (!response.ok) {
     const error = await response.json()
-    return <FetchError error={error.detail} />
+    return <FetchError error={error.detail} title="Erro ao carregar evento" />
   }
 
   const event: Event = await response.json()
