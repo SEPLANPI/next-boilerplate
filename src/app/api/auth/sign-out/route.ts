@@ -9,8 +9,6 @@ export async function GET(req: Request) {
     secureCookie: process.env.NODE_ENV === 'production'
   })
 
-  console.log(token)
-
   if (!token) {
     return new Response('No Token', {
       status: 400
