@@ -32,7 +32,7 @@ export async function EventsCards() {
           })}
         </span>
         <span className="text-sm font-medium text-muted-foreground">
-          {percentages.total_valor_percentage}% do investimento
+          {percentages.valor_percentage}% do investimento
         </span>
       </div>
       <div className="flex min-w-64 flex-col rounded border p-4 shadow-sm">

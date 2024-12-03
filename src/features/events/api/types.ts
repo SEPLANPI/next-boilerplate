@@ -9,7 +9,7 @@ export type EventsResponse = {
   }
   percentages: {
     eventos_percentage: number
-    total_valor_percentage: number
+    valor_percentage: number
     empresas_percentage: number
     municipios_percentage: number
   }
