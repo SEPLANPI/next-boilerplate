@@ -6,10 +6,10 @@ O layout do painel fornece uma barra lateral de navegação responsiva que supor
 
 ## Notas Importantes
 
-1. Ícones devem ser importados de `lucide-react`
-2. Todos os hrefs devem ser caminhos absolutos
-3. Grupos de navegação requerem um ícone, enquanto links simples têm ícones opcionais
-4. A configuração deve ser exportada com `as const` para garantir a inferência de tipo adequada
+2. Ícones devem ser importados de `lucide-react`
+3. Todos os hrefs devem ser caminhos absolutos
+4. Grupos de navegação e links simples requerem um ícone, enquanto links aninhados não têm ícones
+5. A configuração deve ser exportada com `as const` para garantir a inferência de tipo adequada
 
 ## Melhores Práticas
 
@@ -18,6 +18,13 @@ O layout do painel fornece uma barra lateral de navegação responsiva que supor
 3. Mantenha os rótulos de navegação concisos
 4. Limite o aninhamento a um nível para melhor UX
 5. Considere a experiência móvel ao adicionar novos itens
+
+## Localização do Arquivo
+
+O arquivo de configuração da barra lateral deve ser criado em:
+```typescript
+src/config/sidebar.ts
+```
 
 ## Tipos de Navegação
 
