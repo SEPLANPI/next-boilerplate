@@ -7,10 +7,9 @@
     - [Por que Duas Utilidades de API?](#por-que-duas-utilidades-de-api)
     - [Principais Bibliotecas Utilizadas:](#principais-bibliotecas-utilizadas)
   - [Estrutura de Arquivos](#estrutura-de-arquivos)
-  - [Server-Side Fetching](#server-side-fetching)
-    - [Como Usar](#como-usar)
-  - [Client-Side Fetching](#client-side-fetching)
-    - [Como Usar](#como-usar-1)
+  - [Como Usar](#como-usar)
+    - [Server-Side Fetching](#server-side-fetching)
+    - [Client-Side Fetching](#client-side-fetching)
 - [Tratamento de Erros em Requisições API](#tratamento-de-erros-em-requisições-api)
   - [Componente de Erro Padrão](#componente-de-erro-padrão)
   - [Componentes de Erro Personalizados](#componentes-de-erro-personalizados)
@@ -75,10 +74,9 @@ src/
 └── types/
     └── server-result.ts              # Tipos comuns
 ```
+## Como Usar
 
-## Server-Side Fetching
-
-### Como Usar
+### Server-Side Fetching
 
 1. Crie um arquivo na pasta `api` da feature:
 
@@ -109,9 +107,36 @@ export async function getResource(): Promise<ServerResult<ResourceType>> {
 }
 ```
 
-## Client-Side Fetching
+2. Use em um Server Component com tratamento de loading:
 
-### Como Usar
+```typescript
+// page.tsx
+import { Suspense } from 'react'
+import { Loading } from '@/components/loading'
+
+// Server Component que faz a requisição
+async function ResourceServerComponent() {
+  const { data, error } = await getResource()
+  
+  if (error) {
+    return <FetchError error={error} title="Erro ao carregar dados" />
+  }
+  
+  return <div>{data.name}</div>
+}
+
+// Página que usa o Server Component com tratamento de loading
+export default function ResourcePage() {
+  return (
+    <Suspense fallback={<Loading />}>
+      <ResourceServerComponent />
+    </Suspense>
+  )
+}
+```
+
+
+### Client-Side Fetching
 
 1. Crie um arquivo na pasta `api/client`:
 
@@ -182,7 +207,6 @@ export function FetchError({ error, title = 'Erro inesperado' }: FetchErrorProps
 }
 ```
 
-
 Este componente pode ser usado facilmente em qualquer lugar da aplicação:
 
 ```typescript
@@ -226,8 +250,6 @@ interface ServerResult<T> {
   error?: string
 }
 ```
-
-
 
 ## Boas Práticas
 
