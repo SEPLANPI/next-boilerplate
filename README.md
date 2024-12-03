@@ -106,3 +106,5 @@ Baseado em [BulletProof React](https://github.com/alan2207/bulletproof-react/tre
 
 - [Sistema de Roteamento e Permissões](docs/rotas.md)
 - [Configuração de Autenticação](docs/auth.md)
+- [Guia de Constantes](docs/constantes.md)
+- [Guia de Requisições API](docs/requisicoes.md)
