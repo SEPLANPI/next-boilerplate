@@ -23,8 +23,9 @@ export function DashboardLayout({ children }: PropsWithChildren) {
         <header className="flex w-full justify-between border-b px-5 py-2">
           {isMobile && <MobileNav />}
           <TextInput
+            disabled={true}
             className="w-full max-w-96"
-            placeholder="Pesquisar"
+            placeholder="Pesquisar eventos, empresas, deputados"
             leftSection={<Search className="size-4" />}
           />
           <Menu shadow="sm" width={124} position="bottom-end">
