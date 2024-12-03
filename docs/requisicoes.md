@@ -142,8 +142,7 @@ export async function getResource(): Promise<ResourceType> {
 function ResourceComponent() {
   const { data, error, isFetching } = useQuery({
     queryKey: ['resource'],
-    queryFn: getResource,
-    staleTime: 30 * 60 * 1000 // 30m
+    queryFn: getResource
   })
 
   if (error) return <FetchError error={error.message} />
