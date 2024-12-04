@@ -7,14 +7,16 @@ import { useQueryStates, parseAsIsoDateTime } from 'nuqs'
 import { DatePicker } from '@mantine/dates'
 import { Button, Divider, Popover } from '@mantine/core'
 
+type Shortcut = {
+  label: string
+  fn: () => { fromDate: Date; toDate: Date }
+}
+
 interface DateRangeFilterProps {
   children?: React.ReactNode
   minDate?: Date
   maxDate?: Date
-  shortcuts?: Array<{
-    label: string
-    fn: () => { fromDate: Date; toDate: Date }
-  }>
+  shortcuts?: Shortcut[]
 }
 
 export function DateRangeFilter({
@@ -47,7 +49,7 @@ export function DateRangeFilter({
     }
   }
 
-  const handleShortcutClick = (shortcut: (typeof shortcuts)[0]) => {
+  const handleShortcutClick = (shortcut: Shortcut) => {
     const range = shortcut.fn()
     console.log(range)
     setTempRange(range)
@@ -75,7 +77,7 @@ export function DateRangeFilter({
 
   const hasSelectedDate = !!(dateRange.fromDate && dateRange.toDate)
 
-  const isShortcutActive = (shortcut: (typeof shortcuts)[0]) => {
+  const isShortcutActive = (shortcut: Shortcut) => {
     const range = shortcut.fn()
     return (
       dayjs(tempRange.fromDate).isSame(range.fromDate, 'day') &&
