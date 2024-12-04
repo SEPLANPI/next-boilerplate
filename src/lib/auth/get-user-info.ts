@@ -1,7 +1,9 @@
-import { env } from "@/config/env"
-import { UserInfo } from "./types"
+import { env } from '@/config/env'
+import { UserInfo } from './types'
 
-export async function getUserInfo(accessToken: string): Promise<UserInfo | null> {
+export async function getUserInfo(
+  accessToken: string
+): Promise<UserInfo | null> {
   try {
     const response = await fetch(
       `${env.AUTH_KEYCLOAK_ISSUER}/protocol/openid-connect/userinfo`,

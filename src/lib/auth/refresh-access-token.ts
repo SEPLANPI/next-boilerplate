@@ -1,7 +1,7 @@
-import { JWT } from "next-auth/jwt"
-import { TokenRefreshRequest } from "./types"
-import { env } from "@/config/env"
-import { calculateExpiryTime } from "../utils"
+import { JWT } from 'next-auth/jwt'
+import { TokenRefreshRequest } from './types'
+import { env } from '@/config/env'
+import { calculateExpiryTime } from '../utils'
 
 function buildFormData(details: TokenRefreshRequest): string {
   return Object.entries(details)
@@ -13,10 +13,9 @@ function buildFormData(details: TokenRefreshRequest): string {
     .join('&')
 }
 
-
 export async function refreshAccessToken(token: JWT) {
   try {
-    if (Date.now() > token.refreshTokenExpired)
+    if (Date.now() > token.refreshTokenExpires)
       return {
         ...token,
         error: 'RefreshTokenError'
@@ -45,9 +44,11 @@ export async function refreshAccessToken(token: JWT) {
     return {
       ...token,
       accessToken: refreshedTokens.access_token,
-      accessTokenExpired: calculateExpiryTime(refreshedTokens.expires_in),
+      accessTokenExpires: calculateExpiryTime(refreshedTokens.expires_in),
       refreshToken: refreshedTokens.refresh_token ?? token.refreshToken,
-      refreshTokenExpired: calculateExpiryTime(refreshedTokens.refresh_expires_in),
+      refreshTokenExpires: calculateExpiryTime(
+        refreshedTokens.refresh_expires_in
+      ),
       idToken: refreshedTokens.id_token
     }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

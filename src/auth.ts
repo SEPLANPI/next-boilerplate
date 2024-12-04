@@ -36,7 +36,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (account && user) {
         return handleInitialSignIn(token, user, account)
       }
-      if (Date.now() < token.accessTokenExpired) return token
+      if (Date.now() < token.accessTokenExpires) return token
       return refreshAccessToken(token)
     },
     authorized: async ({ auth }) => {

@@ -9,7 +9,7 @@ declare module 'next-auth' {
     error: string
   }
 
-  interface User extends BaseUser {}
+  interface User extends BaseUser { }
 
   interface Account {
     provider: 'keycloak'
@@ -35,8 +35,8 @@ declare module 'next-auth/jwt' {
     accessToken: string
     refreshToken: string
     idToken: string
-    accessTokenExpired: number
-    refreshTokenExpired: number
+    accessTokenExpires: number
+    refreshTokenExpires: number
     user: User
     error: string
   }

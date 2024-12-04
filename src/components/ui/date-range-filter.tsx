@@ -1,62 +1,27 @@
 'use client'
 
 import React, { useEffect } from 'react'
-
-import dayjs from 'dayjs'
-import { ChevronDown } from 'lucide-react'
+import { dayjs } from '@/lib/dayjs'
+import { ChevronDown, Check } from 'lucide-react'
 import { useQueryStates, parseAsIsoDateTime } from 'nuqs'
-import { DateInput } from '@mantine/dates'
+import { DatePicker } from '@mantine/dates'
 import { Button, Divider, Popover } from '@mantine/core'
 
 interface DateRangeFilterProps {
   children?: React.ReactNode
   minDate?: Date
   maxDate?: Date
+  shortcuts?: Array<{
+    label: string
+    fn: () => { fromDate: Date; toDate: Date }
+  }>
 }
-
-const SHORTCUTS = [
-  {
-    label: 'Última semana',
-    fn: () => ({
-      fromDate: dayjs().subtract(7, 'day').startOf('day').toDate(),
-      toDate: dayjs().endOf('day').toDate()
-    })
-  },
-  {
-    label: 'Último mês',
-    fn: () => ({
-      fromDate: dayjs().subtract(1, 'month').startOf('day').toDate(),
-      toDate: dayjs().endOf('day').toDate()
-    })
-  },
-  {
-    label: 'Últimos 3 meses',
-    fn: () => ({
-      fromDate: dayjs().subtract(3, 'month').startOf('day').toDate(),
-      toDate: dayjs().endOf('day').toDate()
-    })
-  },
-  {
-    label: 'Últimos 6 meses',
-    fn: () => ({
-      fromDate: dayjs().subtract(6, 'month').startOf('day').toDate(),
-      toDate: dayjs().endOf('day').toDate()
-    })
-  },
-
-  {
-    label: 'Último ano',
-    fn: () => ({
-      fromDate: dayjs().subtract(1, 'year').startOf('day').toDate(),
-      toDate: dayjs().endOf('day').toDate()
-    })
-  }
-]
 
 export function DateRangeFilter({
   children,
   minDate,
-  maxDate
+  maxDate,
+  shortcuts
 }: DateRangeFilterProps) {
   const [dateRange, setDateRange] = useQueryStates(
     {
@@ -82,8 +47,9 @@ export function DateRangeFilter({
     }
   }
 
-  const handleShortcutClick = (shortcut: (typeof SHORTCUTS)[0]) => {
+  const handleShortcutClick = (shortcut: (typeof shortcuts)[0]) => {
     const range = shortcut.fn()
+    console.log(range)
     setTempRange(range)
   }
 
@@ -109,12 +75,25 @@ export function DateRangeFilter({
 
   const hasSelectedDate = !!(dateRange.fromDate && dateRange.toDate)
 
+  const isShortcutActive = (shortcut: (typeof shortcuts)[0]) => {
+    const range = shortcut.fn()
+    return (
+      dayjs(tempRange.fromDate).isSame(range.fromDate, 'day') &&
+      dayjs(tempRange.toDate).isSame(range.toDate, 'day')
+    )
+  }
+
   return (
-    <Popover position="bottom-start" shadow="md">
+    <Popover
+      position="bottom-start"
+      shadow="md"
+      classNames={{ dropdown: 'p-0' }}
+    >
       <Popover.Target>
         <Button
           data-active={hasSelectedDate}
-          variant="default-filled"
+          variant="secondary"
+          color=""
           classNames={{
             root: 'data-[active=true]:bg-govBlue-50 data-[active=true]:text-govBlue-700'
           }}
@@ -135,74 +114,71 @@ export function DateRangeFilter({
           )}
         </Button>
       </Popover.Target>
-
       <Popover.Dropdown>
-        <div className="flex items-start space-x-4">
-          <div className="border-r pr-4">
-            <div className="flex flex-col space-y-4">
-              <DateInput
-                className="min-w-52"
-                label="Data de início"
-                value={tempRange.fromDate}
-                onChange={(date) =>
-                  setTempRange((prev) => ({ ...prev, fromDate: date }))
-                }
-                minDate={minDate}
-                maxDate={tempRange.toDate || maxDate}
-                clearable
-                valueFormat="DD/MM/YYYY"
-                popoverProps={{
-                  withinPortal: false
-                }}
-              />
-              <DateInput
-                className="min-w-52"
-                label="Data de fim"
-                value={tempRange.toDate}
-                onChange={(date) =>
-                  setTempRange((prev) => ({ ...prev, toDate: date }))
-                }
-                minDate={tempRange.fromDate || minDate}
-                maxDate={maxDate}
-                valueFormat="DD/MM/YYYY"
-                clearable
-                popoverProps={{
-                  withinPortal: false
-                }}
-              />
+        <div className="flex items-stretch">
+          {shortcuts && shortcuts.length > 0 && (
+            <div className="flex w-min flex-col items-start gap-2 border-r p-2">
+              {shortcuts.map((shortcut) => (
+                <Button
+                  key={shortcut.label}
+                  variant="ghost"
+                  size="xs"
+                  color="gray"
+                  onClick={() => handleShortcutClick(shortcut)}
+                  rightSection={
+                    isShortcutActive(shortcut) ? (
+                      <Check className="size-3" strokeWidth={2.5} />
+                    ) : (
+                      <span className="w-3" />
+                    )
+                  }
+                >
+                  {shortcut.label}
+                </Button>
+              ))}
+            </div>
+          )}
+          <div className="flex flex-col">
+            <DatePicker
+              className="px-3 py-2"
+              type="range"
+              numberOfColumns={2}
+              value={[tempRange.fromDate, tempRange.toDate]}
+              onChange={(dates) =>
+                setTempRange({
+                  fromDate: dates[0],
+                  toDate: dates[1]
+                })
+              }
+              minDate={minDate}
+              maxDate={maxDate}
+              size="xs"
+            />
+            <Divider />
+            <div className="flex w-full items-center justify-between px-3 py-2">
               <div className="flex space-x-2">
                 <Button
                   onClick={handleApply}
                   disabled={!tempRange.fromDate || !tempRange.toDate}
                   size="sm"
-                  fullWidth
                 >
                   Aplicar
                 </Button>
-                <Button
-                  variant="default"
-                  size="sm"
-                  onClick={handleClear}
-                  fullWidth
-                >
+                <Button size="sm" onClick={handleClear} variant="transparent">
                   Limpar
                 </Button>
               </div>
+              {tempRange.fromDate && tempRange.toDate ? (
+                <p className="text-xs font-medium text-secondary-foreground">
+                  {dayjs(tempRange.fromDate).format('D [de] MMMM[, ]YYYY')} -{' '}
+                  {dayjs(tempRange.toDate).format('D [de] MMMM[, ]YYYY')}
+                </p>
+              ) : (
+                <p className="text-xs font-medium text-muted-foreground">
+                  Escolha um intervalo de datas
+                </p>
+              )}
             </div>
-          </div>
-
-          <div className="flex w-min max-w-40 flex-wrap items-start gap-2">
-            {SHORTCUTS.map((shortcut) => (
-              <Button
-                key={shortcut.label}
-                variant="light"
-                size="xs"
-                radius="xl"
-                onClick={() => handleShortcutClick(shortcut)}
-              >
-                {shortcut.label}
-              </Button>
-            ))}
           </div>
         </div>
       </Popover.Dropdown>

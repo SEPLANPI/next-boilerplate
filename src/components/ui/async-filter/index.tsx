@@ -78,7 +78,7 @@ const FilterButton = forwardRef<HTMLButtonElement, PropsWithChildren>(
       <Button
         data-active={hasSelectedItems}
         ref={ref}
-        variant="default-filled"
+        variant="secondary"
         classNames={{
           root: 'data-[active=true]:bg-govBlue-50 data-[active=true]:text-govBlue-700'
         }}
