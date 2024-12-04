@@ -1,3 +1,4 @@
+import { signOut } from '@/auth'
 import { env } from '@/config/env'
 import { getToken } from '@auth/core/jwt'
 import { redirect } from 'next/navigation'
@@ -9,10 +10,8 @@ export async function GET(req: Request) {
     secureCookie: process.env.NODE_ENV === 'production'
   })
 
-  if (!token) {
-    return new Response('No Token', {
-      status: 400
-    })
+  if (!token?.idToken) {
+    return await signOut()
   }
 
   const url = `${env.AUTH_KEYCLOAK_ISSUER}/protocol/openid-connect/logout`
