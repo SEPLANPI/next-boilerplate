@@ -9,13 +9,11 @@ export const metadata: Metadata = {
 
 export default function AccessDenied() {
   return (
-    <main className="mx-auto mt-8 flex items-start max-w-2xl flex-col  justify-center px-5 py-12">
+    <main className="mx-auto mt-8 flex max-w-2xl flex-col items-start justify-center px-5 py-12">
       <div className="rounded bg-muted p-4">
-      <Lock className="size-12 text-muted-foreground "/>
+        <Lock className="size-12 text-muted-foreground" />
       </div>
-      <h1 className="mb-4 mt-6 text-4xl font-bold">
-        Acesso Negado
-      </h1>
+      <h1 className="mb-4 mt-6 text-4xl font-bold">Acesso Negado</h1>
       <div className="space-y-2">
         <p>
           Você não possui as permissões necessárias para acessar este sistema.

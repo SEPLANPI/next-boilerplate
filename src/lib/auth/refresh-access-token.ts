@@ -1,58 +1,68 @@
 import { JWT } from 'next-auth/jwt'
-import { TokenRefreshRequest } from './types'
 import { env } from '@/config/env'
 import { calculateExpiryTime } from '../utils'
-
-function buildFormData(details: TokenRefreshRequest): string {
-  return Object.entries(details)
-    .map(([key, value]) => {
-      const encodedKey = encodeURIComponent(key)
-      const encodedValue = encodeURIComponent(value || '')
-      return `${encodedKey}=${encodedValue}`
-    })
-    .join('&')
-}
+import { logger } from '@/lib/logger'
 
 export async function refreshAccessToken(token: JWT) {
   try {
-    if (Date.now() > token.refreshTokenExpires)
+    if (!token.refreshTokenExpires || Date.now() > token.refreshTokenExpires) {
+      logger.error(
+        'Refresh token expirado antes que o refresh pudesse ser completado',
+        {
+          userId: token.user?.id
+        }
+      )
       return {
         ...token,
-        error: 'RefreshTokenError'
+        error: 'TokenExpiredError'
       }
+    }
 
-    const details = {
-      client_id: env.AUTH_KEYCLOAK_ID,
-      client_secret: env.AUTH_KEYCLOAK_SECRET,
-      grant_type: 'refresh_token',
-      refresh_token: token.refreshToken
-    } as const
+    const response = await fetch(
+      `${env.AUTH_KEYCLOAK_ISSUER}/protocol/openid-connect/token`,
+      {
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({
+          client_id: env.AUTH_KEYCLOAK_ID,
+          client_secret: env.AUTH_KEYCLOAK_SECRET,
+          grant_type: 'refresh_token',
+          refresh_token: token.refreshToken
+        }),
+        method: 'POST'
+      }
+    )
 
-    const formData = buildFormData(details)
-
-    const url = `${env.AUTH_KEYCLOAK_ISSUER}/protocol/openid-connect/token`
-
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-      },
-      body: formData
-    })
     const refreshedTokens = await response.json()
-    if (!response.ok) throw refreshedTokens
+
+    if (!response.ok) {
+      logger.error('Falha ao atualizar o token', {
+        userId: token.user?.id,
+        status: response.status,
+        error: refreshedTokens
+      })
+
+      return {
+        ...token,
+        error: 'RefreshAccessTokenError'
+      }
+    }
+
     return {
       ...token,
       accessToken: refreshedTokens.access_token,
-      accessTokenExpires: calculateExpiryTime(refreshedTokens.expires_in),
       refreshToken: refreshedTokens.refresh_token ?? token.refreshToken,
+      accessTokenExpires: calculateExpiryTime(refreshedTokens.expires_in),
       refreshTokenExpires: calculateExpiryTime(
         refreshedTokens.refresh_expires_in
       ),
       idToken: refreshedTokens.id_token
     }
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
+    logger.error('Erro ao atualizar o token', {
+      userId: token.user?.id,
+      error
+    })
+
     return {
       ...token,
       error: 'RefreshAccessTokenError'

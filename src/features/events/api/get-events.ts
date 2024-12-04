@@ -4,6 +4,7 @@ import { eventsSearchParams } from '../lib/search-params'
 import { buildEventsParams } from '../utils/build-events-params'
 import { ServerResult } from '@/types/server-result'
 import { API } from '@/constants/messages'
+import { logger } from '@/lib/logger'
 
 type GetEventsInputType = Partial<{
   groupId: string
@@ -23,6 +24,11 @@ export async function getEvents({
 
     if (!response.ok) {
       const error = await response.json()
+      logger.error('Erro na API em getEvents', {
+        status: response.status,
+        params: params.toString(),
+        error: error.detail
+      })
       return { error: error.detail || API.UNEXPECTED_FETCH_ERROR }
     }
 
@@ -30,6 +36,10 @@ export async function getEvents({
     return { data }
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
+    logger.error('Erro inesperado em getEvents', {
+      error,
+      params: params.toString()
+    })
     return { error: 'Ocorreu um erro inesperado.' }
   }
 }
