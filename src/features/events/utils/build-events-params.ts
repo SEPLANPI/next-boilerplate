@@ -1,4 +1,4 @@
-import dayjs from 'dayjs'
+import { dayjs } from '@/lib/dayjs'
 import { PAGINATION } from '@/constants/pagination'
 
 type Params = Partial<{

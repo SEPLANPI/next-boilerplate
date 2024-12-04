@@ -91,7 +91,7 @@ export function ValueRangeFilter({
       <Popover.Target>
         <Button
           data-active={hasRangeApplied}
-          variant="default-filled"
+          variant="secondary"
           className="data-[active=true]:bg-govBlue-50 data-[active=true]:text-govBlue-700"
           rightSection={<ChevronDown className="size-4" />}
         >

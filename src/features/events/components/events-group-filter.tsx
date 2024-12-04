@@ -58,7 +58,7 @@ export function EventsGroupFilter() {
       <Popover.Target>
         <Button
           data-active={!!group}
-          variant="default-filled"
+          variant="secondary"
           classNames={{
             root: 'data-[active=true]:bg-govBlue-50 data-[active=true]:text-govBlue-700'
           }}

@@ -1,12 +1,16 @@
-import { JWT } from "next-auth/jwt"
-import { getUserInfo } from "./get-user-info"
-import { KeycloakAccessTokenPayload } from "./types"
-import jwt from "jsonwebtoken"
-import { User, Account } from "next-auth"
-import { calculateExpiryTime } from "../utils"
-import { env } from "@/config/env"
+import { JWT } from 'next-auth/jwt'
+import { getUserInfo } from './get-user-info'
+import { KeycloakAccessTokenPayload } from './types'
+import jwt from 'jsonwebtoken'
+import { User, Account } from 'next-auth'
+import { calculateExpiryTime } from '../utils'
+import { env } from '@/config/env'
 
-export async function handleInitialSignIn(token: JWT, user: User, account: Account) {
+export async function handleInitialSignIn(
+  token: JWT,
+  user: User,
+  account: Account
+) {
   const userInfo = await getUserInfo(account.access_token)
   const accessTokenContent = jwt.decode(
     account.access_token
@@ -27,9 +31,9 @@ export async function handleInitialSignIn(token: JWT, user: User, account: Accou
   token.user = {
     ...user,
     cpf: userInfo?.preferred_username,
-    roles: accessTokenContent?.resource_access?.[env.AUTH_KEYCLOAK_ID]?.roles || []
+    roles:
+      accessTokenContent?.resource_access?.[env.AUTH_KEYCLOAK_ID]?.roles || []
   }
-
 
   return token
 }

@@ -60,7 +60,7 @@ export function EventsTable({
               descendingLabel={SORT_LABELS.ALPHABETICAL.DESC}
             />
             <SortableColumnHeader
-              column="municipio"  
+              column="municipio"
               title="Município"
               sortKey={sort}
               onSort={setSort}
