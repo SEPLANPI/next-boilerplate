@@ -7,10 +7,9 @@ import { routingConfig } from './config/routing'
 export default auth((req) => {
   const path = req.nextUrl.pathname
 
-  const routeAccess = determineRouteAccess(path, req?.auth?.user?.roles || [])
-
-  if (routeAccess.type === 'public') {
-    return NextResponse.next()
+  if (req.auth?.error) {
+    const signOutUrl = new URL('/api/auth/sign-out', req.nextUrl.origin)
+    return NextResponse.redirect(signOutUrl)
   }
 
   if (!req.auth) {
@@ -18,6 +17,12 @@ export default auth((req) => {
     const newUrl = new URL(unauthorizedPath, req.nextUrl.origin)
     newUrl.searchParams.set('callbackUrl', path)
     return NextResponse.redirect(newUrl)
+  }
+
+  const routeAccess = determineRouteAccess(path, req?.auth?.user?.roles || [])
+
+  if (routeAccess.type === 'public') {
+    return NextResponse.next()
   }
 
   if (!routeAccess.hasPermission) {
