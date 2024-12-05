@@ -3,7 +3,7 @@
 import React, { useEffect } from 'react'
 import { dayjs } from '@/lib/dayjs'
 import { ChevronDown, Check } from 'lucide-react'
-import { useQueryStates, parseAsIsoDateTime } from 'nuqs'
+import { useQueryStates, parseAsIsoDateTime, parseAsInteger } from 'nuqs'
 import { DatePicker } from '@mantine/dates'
 import { Button, Divider, Popover } from '@mantine/core'
 
@@ -28,7 +28,8 @@ export function DateRangeFilter({
   const [dateRange, setDateRange] = useQueryStates(
     {
       fromDate: parseAsIsoDateTime,
-      toDate: parseAsIsoDateTime
+      toDate: parseAsIsoDateTime,
+      page: parseAsInteger.withDefault(1)
     },
     {
       shallow: false
@@ -44,14 +45,14 @@ export function DateRangeFilter({
     if (tempRange.fromDate && tempRange.toDate) {
       setDateRange({
         fromDate: dayjs(tempRange.fromDate).startOf('day').toDate(),
-        toDate: dayjs(tempRange.toDate).endOf('day').toDate()
+        toDate: dayjs(tempRange.toDate).endOf('day').toDate(),
+        page: 1
       })
     }
   }
 
   const handleShortcutClick = (shortcut: Shortcut) => {
     const range = shortcut.fn()
-    console.log(range)
     setTempRange(range)
   }
 

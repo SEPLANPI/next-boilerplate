@@ -68,6 +68,7 @@ export function EventsFilters() {
         }
         getOptionValue={(option) => option.number.toString()}
         getOptionLabel={(option) => option.name}
+        getOptionDisabled={(option) => !option.has_events}
         filterId="ugs"
         searchParamKey="ugs"
         renderOption={(option) => (
@@ -86,7 +87,7 @@ export function EventsFilters() {
         filterId="municipios"
         searchParamKey="municipios"
         getOptionLabel={(option) => option.nome}
-        getOptionValue={(option) => option.nome}
+        getOptionValue={(option) => option.id?.toString() || 'null'}
       >
         Município
       </AsyncFilter>

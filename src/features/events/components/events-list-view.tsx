@@ -7,13 +7,13 @@ import { FetchError } from '@/components/errors/fetch-error'
 
 export async function EventsListView() {
   const page = eventsSearchParams.get('page')
-  
+
   const { data, error } = await getEvents({
     page
   })
 
   if (!data || error) {
-    return <FetchError title="Erro ao carregar eventos" />
+    return <FetchError title="Erro ao carregar eventos" error={error} />
   }
 
   if (data.results.length === 0) return <EventsEmptyState />

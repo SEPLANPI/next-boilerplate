@@ -3,6 +3,7 @@ import { EventGroup } from '@/types/events'
 import { eventsSearchParams } from '../lib/search-params'
 import { ServerResult } from '@/types/server-result'
 import { buildEventsParams } from '../utils/build-events-params'
+import { API } from '@/constants/messages'
 
 export type EventGroupResponse = {
   count: number
@@ -23,14 +24,19 @@ export async function getEventGroups(): Promise<
     sort: groupSort
   })
 
-  const response = await api.get(`/eventos/agrupamentos?${params.toString()}`)
+  try {
+    const response = await api.get(`/eventos/agrupamentos?${params.toString()}`)
 
-  if (!response.ok) {
-    const error = await response.json()
-    return { error: error.detail || 'Ocorreu um erro inesperado' }
+    if (!response.ok) {
+      const error = await response.json()
+      return { error: error.detail || 'Ocorreu um erro inesperado' }
+    }
+
+    const data: EventGroupResponse = await response.json()
+
+    return { data }
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  } catch (error) {
+    return { error: API.UNEXPECTED_FETCH_ERROR }
   }
-
-  const data: EventGroupResponse = await response.json()
-
-  return { data }
 }

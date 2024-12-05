@@ -18,7 +18,8 @@ export function ValueRangeFilter({
 }: ValueRangeFilterProps) {
   const [valueRange, setValueRange] = useQueryStates({
     fromValue: parseAsInteger,
-    toValue: parseAsInteger
+    toValue: parseAsInteger,
+    page: parseAsInteger.withDefault(1)
   })
 
   const [tempRange, setTempRange] = React.useState({

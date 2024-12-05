@@ -5,6 +5,7 @@ type Ug = {
   number: number
   name: string
   sigla: string
+  has_events: boolean
 }
 export async function getUgs(): Promise<Ug[]> {
   const response = await clientApi.get('/ugs')

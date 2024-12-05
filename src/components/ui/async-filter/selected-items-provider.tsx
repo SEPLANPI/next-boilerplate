@@ -5,7 +5,7 @@ import {
   useMemo,
   useCallback
 } from 'react'
-import { parseAsString, useQueryState } from 'nuqs'
+import { parseAsInteger, parseAsString, useQueryStates } from 'nuqs'
 
 type SelectedItemsContextType = {
   selectedItems: Set<string>
@@ -35,11 +35,17 @@ export function SelectedItemsProvider({
   searchParamKey: string
   onSelectionChange?: (items: Set<string>) => void
 }>) {
-  const [selectedParam, setSelectedParam] = useQueryState(
-    searchParamKey,
-    parseAsString.withDefault('').withOptions({
-      shallow: false
-    })
+  const [{ selectedParam }, setSelectedParam] = useQueryStates(
+    {
+      selectedParam: parseAsString.withDefault(''),
+      page: parseAsInteger.withDefault(1)
+    },
+    {
+      shallow: false,
+      urlKeys: {
+        selectedParam: searchParamKey
+      }
+    }
   )
 
   const selectedItems = useMemo(() => {
@@ -49,7 +55,9 @@ export function SelectedItemsProvider({
   const toggle = useCallback(
     (value: string) => {
       setSelectedParam((prev) => {
-        const currentSet = new Set(prev ? prev.split(',') : [])
+        const currentSet = new Set(
+          prev.selectedParam ? prev.selectedParam.split(',') : []
+        )
 
         if (currentSet.has(value)) {
           currentSet.delete(value)
@@ -59,7 +67,7 @@ export function SelectedItemsProvider({
 
         const newValue = Array.from(currentSet).join(',')
         onSelectionChange?.(new Set(currentSet))
-        return newValue || null
+        return { selectedParam: newValue || null, page: 1 }
       })
     },
     [setSelectedParam, onSelectionChange]

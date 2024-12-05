@@ -1,7 +1,6 @@
 import { api } from '@/lib/server-api'
 
 import {
-  Alert,
   Anchor,
   Breadcrumbs,
   Table,
@@ -14,10 +13,9 @@ import {
   Divider,
   Badge,
   Tooltip,
-  Rating,
-  ActionIcon
+  Rating
 } from '@mantine/core'
-import { ArrowLeft, ChevronRight, Info } from 'lucide-react'
+import { Info } from 'lucide-react'
 import Link from 'next/link'
 import {
   DataListRoot,
@@ -156,33 +154,41 @@ export default async function EventDetail({
           <TableTbody>
             {event.contratos.map((contract) => (
               <TableTr key={contract.numero_contrato}>
-                {contract.contratados.map((contractor) => (
-                  <TableTd key={contractor.cnpj} className="max-w-lg">
-                    <div>
-                      <div className="flex items-center space-x-2">
-                        <span className="font-semibold">
-                          {contractor.nome_da_empresa}
-                        </span>
-                        <Badge
-                          radius="sm"
-                          variant="light"
-                          color={
-                            contract.status === 'STATUS_ASSINADO'
-                              ? 'teal'
-                              : 'gray'
-                          }
-                        >
-                          {contract.status === 'STATUS_ASSINADO'
-                            ? 'Assinado'
-                            : 'Cadastrado'}
-                        </Badge>
+                {contract.contratados?.length ? (
+                  contract.contratados.map((contractor) => (
+                    <TableTd key={contractor.cnpj} className="max-w-lg">
+                      <div>
+                        <div className="flex items-center space-x-2">
+                          <span className="font-semibold">
+                            {contractor.nome_da_empresa}
+                          </span>
+                          <Badge
+                            radius="sm"
+                            variant="light"
+                            color={
+                              contract.status === 'STATUS_ASSINADO'
+                                ? 'teal'
+                                : 'gray'
+                            }
+                          >
+                            {contract.status === 'STATUS_ASSINADO'
+                              ? 'Assinado'
+                              : 'Cadastrado'}
+                          </Badge>
+                        </div>
+                        <div className="text-sm text-secondary-foreground">
+                          {contract.titulo}
+                        </div>
                       </div>
-                      <div className="text-sm text-secondary-foreground">
-                        {contract.titulo}
-                      </div>
+                    </TableTd>
+                  ))
+                ) : (
+                  <TableTd className="max-w-lg">
+                    <div className="font-semibold">
+                      O contrato não possui contratados
                     </div>
                   </TableTd>
-                ))}
+                )}
                 <TableTd className="font-bold">
                   R${' '}
                   {parseFloat(contract.valor_total.toString()).toLocaleString(

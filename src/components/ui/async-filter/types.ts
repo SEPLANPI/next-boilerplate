@@ -19,6 +19,7 @@ export type AsyncFilterProps<T> = PropsWithChildren<
     filterId: string
     searchParamKey?: string
     filterFn?: (option: T, search: string) => boolean
+    getOptionDisabled?: (option: T) => boolean
   } & (IsDefaultOption<T> extends true
     ? {
         getOptionValue?: (option: T) => string
@@ -34,6 +35,7 @@ export type ContentProps<T> = {
   loadOptions: () => Promise<T[]>
   getOptionValue: (option: T) => string
   getOptionLabel: (option: T) => string
+  getOptionDisabled: (option: T) => boolean
   filterId: string
   filterFn: (option: T, search: string) => boolean
 }
