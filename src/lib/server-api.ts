@@ -12,7 +12,7 @@ interface ApiOptions extends RequestInit {
 
 async function request(
   url: string,
-  method: 'GET' | 'POST' | 'PUT' | 'DELETE',
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH',
   { body, contentType, ...options }: ApiOptions = {}
 ): Promise<Response> {
   const session = await auth()
@@ -40,5 +40,6 @@ export const api = {
   get: (url: string, options?: ApiOptions) => request(url, 'GET', options),
   post: (url: string, options?: ApiOptions) => request(url, 'POST', options),
   put: (url: string, options?: ApiOptions) => request(url, 'PUT', options),
-  delete: (url: string, options?: ApiOptions) => request(url, 'DELETE', options)
+  delete: (url: string, options?: ApiOptions) => request(url, 'DELETE', options),
+  patch: (url: string, options?: ApiOptions) => request(url, 'PATCH', options)
 }

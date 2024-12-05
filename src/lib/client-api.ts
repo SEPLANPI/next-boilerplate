@@ -8,14 +8,13 @@ interface ClientApiOptions extends RequestInit {
 
 async function clientRequest(
   url: string,
-  method: 'GET' | 'POST' | 'PUT' | 'DELETE',
+  method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH',
   { body, contentType, ...options }: ClientApiOptions = {}
 ): Promise<Response> {
   const session = await getSession()
   const accessToken = session?.accessToken
   const headers: HeadersInit = {
     ...(!contentType && { 'Content-Type': 'application/json' }),
-
     ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
     ...options.headers
   }
@@ -39,5 +38,7 @@ export const clientApi = {
   put: (url: string, options?: ClientApiOptions) =>
     clientRequest(url, 'PUT', options),
   delete: (url: string, options?: ClientApiOptions) =>
-    clientRequest(url, 'DELETE', options)
+    clientRequest(url, 'DELETE', options),
+  patch: (url: string, options?: ClientApiOptions) =>
+    clientRequest(url, 'PATCH', options)
 }
