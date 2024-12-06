@@ -10,6 +10,7 @@ export async function getEventGroups(): Promise<
   ServerResult<EventGroupResponse>
 > {
   const {
+    group,
     groupSort,
     search,
     fromDate,
@@ -19,12 +20,13 @@ export async function getEventGroups(): Promise<
     ...eventsParams
   } = eventsSearchParams.all()
 
-  if (!eventsParams.group) {
+  if (!group) {
     return { error: 'Query param "group" não está definido' }
   }
 
   const params = buildParams({
     ...eventsParams,
+    group_by: group,
     nome: search,
     data_inicio: fromDate ? dayjs(fromDate).format('YYYY-MM-DD') : undefined,
     data_fim: toDate ? dayjs(toDate).format('YYYY-MM-DD') : undefined,
