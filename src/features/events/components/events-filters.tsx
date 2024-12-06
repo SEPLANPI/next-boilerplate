@@ -1,38 +1,38 @@
 'use client'
 
 import { AsyncFilter } from '@/components/ui/async-filter'
-import { getUgs } from '../api/client/get-ugs'
+import { getUnitFilterOptions } from '../api/client/get-unit-options'
 import { DateRangeFilter } from '@/components/ui/date-range-filter'
 import { EventsGroupFilter } from './events-group-filter'
 import { Divider } from '@mantine/core'
-import { getMunicipios } from '../api/client/get-municipios'
-import { getDeputados } from '../api/client/get-deputados'
+import { getCityFilterOptions } from '../api/client/get-city-options'
+import { getDeputyFilterOptions } from '../api/client/get-deputy-options'
 import { dayjs } from '@/lib/dayjs'
 
 const dateShortcuts = [
   {
-    label: 'Última semana',
+    label: 'Last week',
     fn: () => ({
       fromDate: dayjs().subtract(7, 'day').startOf('day').toDate(),
       toDate: dayjs().endOf('day').toDate()
     })
   },
   {
-    label: 'Último mês',
+    label: 'Last month',
     fn: () => ({
       fromDate: dayjs().subtract(1, 'month').startOf('day').toDate(),
       toDate: dayjs().endOf('day').toDate()
     })
   },
   {
-    label: 'Últimos 3 meses',
+    label: 'Last 3 months',
     fn: () => ({
       fromDate: dayjs().subtract(3, 'month').startOf('day').toDate(),
       toDate: dayjs().endOf('day').toDate()
     })
   },
   {
-    label: 'Últimos 6 meses',
+    label: 'Last 6 months',
     fn: () => ({
       fromDate: dayjs().subtract(6, 'month').startOf('day').toDate(),
       toDate: dayjs().endOf('day').toDate()
@@ -40,14 +40,14 @@ const dateShortcuts = [
   },
 
   {
-    label: 'Último 12 meses',
+    label: 'Last 12 months',
     fn: () => ({
       fromDate: dayjs().subtract(1, 'year').startOf('day').toDate(),
       toDate: dayjs().endOf('day').toDate()
     })
   },
   {
-    label: 'Este ano',
+    label: 'This year',
     fn: () => ({
       fromDate: dayjs().startOf('year').toDate(),
       toDate: dayjs().endOf('day').toDate()
@@ -61,7 +61,7 @@ export function EventsFilters() {
       <EventsGroupFilter />
       <Divider orientation="vertical" />
       <AsyncFilter
-        loadOptions={getUgs}
+        loadOptions={getUnitFilterOptions}
         filterFn={(option, search) =>
           option.name.toLowerCase().includes(search) ||
           option.sigla.toLowerCase().includes(search)
@@ -83,7 +83,7 @@ export function EventsFilters() {
         Unidade Gestora
       </AsyncFilter>
       <AsyncFilter
-        loadOptions={getMunicipios}
+        loadOptions={getCityFilterOptions}
         filterId="municipios"
         searchParamKey="municipios"
         getOptionLabel={(option) => option.nome}
@@ -93,7 +93,7 @@ export function EventsFilters() {
       </AsyncFilter>
 
       <AsyncFilter
-        loadOptions={getDeputados}
+        loadOptions={getDeputyFilterOptions}
         filterId="deputados"
         searchParamKey="deputados"
         getOptionLabel={(option) => option.nome}

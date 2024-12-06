@@ -6,13 +6,13 @@ export const routingConfig: RoutingConfiguration = {
     permissions: ['admin-piaui365'],
     unauthorized: {
       defaultUnauthenticatedPath: '/api/auth/sign-in',
-      defaultAccessDeniedPath: '/access-denied'
+      defaultAccessDeniedPath: '/acesso-negado'
     }
   },
 
   routes: [
     {
-      path: '/access-denied',
+      path: '/acesso-negado',
       type: 'public'
     }
   ]

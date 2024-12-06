@@ -1,19 +1,16 @@
 import { API } from '@/constants/messages'
 import { clientApi } from '@/lib/client-api'
+import { FilterOptionCity } from '../../types'
 
-type Municipio = {
-  id: number
-  nome: string
-}
-export async function getMunicipios(): Promise<Municipio[]> {
-  const response = await clientApi.get('/municipios')
+export async function getCityFilterOptions(): Promise<FilterOptionCity[]> {
+  const response = await clientApi.get('/municipios/filtro')
   if (!response.ok) {
     const error = await response.json()
     throw Error(error.detail || API.UNEXPECTED_FETCH_ERROR)
   }
 
   const data = await response.json()
-  const municipios: Municipio[] = data.results
+  const cities: FilterOptionCity[] = data.results
 
-  return municipios
+  return cities
 }

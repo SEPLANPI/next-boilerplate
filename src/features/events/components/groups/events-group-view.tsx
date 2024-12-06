@@ -10,7 +10,9 @@ export async function EventsGroupView() {
   const { data, error } = await getEventGroups()
 
   if (error || !data) {
-    return <FetchError error={error} title="Erro ao carregar grupos de eventos" />
+    return (
+      <FetchError error={error} title="Erro ao carregar grupos de eventos" />
+    )
   }
 
   if (data.results.length === 0) {
@@ -24,7 +26,10 @@ export async function EventsGroupView() {
           <EventsGroupAccordion key={group.nome} group={group} />
         ))}
       </Accordion>
-      <UrlPaginationFooter totalItems={data.count} itemsPerPage={PAGINATION.DEFAULT_PAGE_SIZE} />
+      <UrlPaginationFooter
+        totalItems={data.count}
+        itemsPerPage={PAGINATION.EVENTS_GROUPS_PAGE_SIZE}
+      />
     </div>
   )
 }

@@ -36,7 +36,7 @@ export default async function Events({
         </Button>
       </div>
       <div className="my-6 flex flex-wrap items-start gap-2">
-        <SearchInput placeholder="Pesquisar eventos" />
+        <SearchInput placeholder="Pesquisar eventos" className="max-w-64" />
         <EventsFilters />
         <EventsResetFilters />
       </div>

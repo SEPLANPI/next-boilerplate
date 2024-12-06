@@ -7,12 +7,15 @@ import {
   TableTr,
   Skeleton
 } from '@mantine/core'
+import { PAGINATION } from '@/constants/pagination'
 
 type EventsTableProps = {
   rows?: number
 }
 
-export function EventsTableSkeleton({ rows = 15 }: EventsTableProps) {
+export function EventsTableSkeleton({
+  rows = PAGINATION.DEFAULT_PAGE_SIZE
+}: EventsTableProps) {
   const skeletonRows = Array.from({ length: rows })
 
   const rowContentHeight = 21.688

@@ -4,6 +4,7 @@ import { EventsEmptyState } from './events-empty-state'
 import { eventsSearchParams } from '../lib/search-params'
 import { UrlPaginationFooter } from '@/components/ui/pagination-footer/url-pagination-footer'
 import { FetchError } from '@/components/errors/fetch-error'
+import { PAGINATION } from '@/constants/pagination'
 
 export async function EventsListView() {
   const page = eventsSearchParams.get('page')
@@ -21,7 +22,10 @@ export async function EventsListView() {
   return (
     <>
       <EventsTable events={data.results} />
-      <UrlPaginationFooter totalItems={data.count} itemsPerPage={15} />
+      <UrlPaginationFooter
+        totalItems={data.count}
+        itemsPerPage={PAGINATION.DEFAULT_PAGE_SIZE}
+      />
     </>
   )
 }

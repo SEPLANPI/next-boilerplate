@@ -1,7 +1,7 @@
 import { AccordionControl, AccordionItem, AccordionPanel } from '@mantine/core'
 import { EventsList } from './events-list'
 import { formatCurrency } from '@/lib/utils'
-import { EventGroup } from '@/types/events'
+import { EventGroup } from '../../types'
 
 type EventsGroupAccordionProps = {
   group: EventGroup

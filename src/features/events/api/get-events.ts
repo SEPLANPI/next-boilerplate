@@ -1,10 +1,11 @@
 import { api } from '@/lib/server-api'
-import { EventsResponse } from './types'
+import { EventsResponse } from '../types'
 import { eventsSearchParams } from '../lib/search-params'
-import { buildEventsParams } from '../utils/build-events-params'
 import { ServerResult } from '@/types/server-result'
 import { API } from '@/constants/messages'
 import { logger } from '@/lib/logger'
+import { buildParams } from '@/lib/api-utils'
+import { dayjs } from '@/lib/dayjs'
 
 type GetEventsInputType = Partial<{
   groupId: string
@@ -16,9 +17,28 @@ export async function getEvents({
   perPage,
   page = 1
 }: GetEventsInputType = {}): Promise<ServerResult<EventsResponse>> {
-  const eventsParams = eventsSearchParams.all()
+  const {
+    search,
+    fromDate,
+    toDate,
+    sort,
+    municipios,
+    deputados,
+    ...eventsParams
+  } = eventsSearchParams.all()
 
-  const params = buildEventsParams({ ...eventsParams, perPage, page })
+  const params = buildParams({
+    ...eventsParams,
+    page,
+    page_size: perPage,
+    nome: search,
+    data_inicio: fromDate ? dayjs(fromDate).format('YYYY-MM-DD') : undefined,
+    data_fim: toDate ? dayjs(toDate).format('YYYY-MM-DD') : undefined,
+    ordering: sort,
+    municipio: municipios,
+    autor_emenda: deputados
+  })
+
   try {
     const response = await api.get(`/eventos?${params.toString()}`)
 
@@ -34,7 +54,6 @@ export async function getEvents({
 
     const data: EventsResponse = await response.json()
     return { data }
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
     logger.error('Erro inesperado em getEvents', {
       error,

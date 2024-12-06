@@ -13,10 +13,9 @@ import {
 import { Info } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { parseAsString, useQueryState } from 'nuqs'
-import type { Event } from '@/types/events'
 import { SortableColumnHeader } from '@/components/ui/sortable-column-header'
 import { SORT_LABELS } from '@/constants/sort-labels'
-
+import { Event } from '../types'
 interface EventsTableProps {
   events: Event[]
   queryKey?: string
