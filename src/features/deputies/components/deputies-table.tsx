@@ -20,7 +20,7 @@ export function DeputiesTable({ deputies }: DeputiesTableProps) {
   )
 
   return (
-    <Table verticalSpacing="xs" highlightOnHover>
+    <Table verticalSpacing="xs">
       <TableThead>
         <TableTr>
           <SortableColumnHeader
