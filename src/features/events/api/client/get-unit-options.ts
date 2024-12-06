@@ -9,8 +9,6 @@ export async function getUnitFilterOptions(): Promise<FilterOptionUnit[]> {
     throw Error(error.detail || API.UNEXPECTED_FETCH_ERROR)
   }
 
-  const data = await response.json()
-  const units: FilterOptionUnit[] = data.results
-
-  return units
+  const data = (await response.json()) as FilterOptionUnit[]
+  return data
 }

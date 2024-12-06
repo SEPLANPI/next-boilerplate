@@ -3,7 +3,7 @@ import { clientApi } from '@/lib/client-api'
 import { FilterOptionCity } from '../../types'
 
 export async function getCityFilterOptions(): Promise<FilterOptionCity[]> {
-  const response = await clientApi.get('/municipios/filtro')
+  const response = await clientApi.get('/municipios')
   if (!response.ok) {
     const error = await response.json()
     throw Error(error.detail || API.UNEXPECTED_FETCH_ERROR)

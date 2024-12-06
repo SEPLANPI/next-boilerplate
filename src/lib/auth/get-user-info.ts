@@ -1,5 +1,6 @@
 import { env } from '@/config/env'
 import { UserInfo } from './types'
+import { logger } from '../logger'
 
 export async function getUserInfo(
   accessToken: string
@@ -18,7 +19,10 @@ export async function getUserInfo(
     }
     return null
   } catch (error) {
-    console.error('Falha ao buscar userinfo: ', error)
+    logger.error(error as Error, {
+      message: 'Falha ao buscar userinfo'
+    })
+
     return null
   }
 }
