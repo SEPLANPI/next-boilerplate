@@ -11,28 +11,28 @@ import { dayjs } from '@/lib/dayjs'
 
 const dateShortcuts = [
   {
-    label: 'Last week',
+    label: 'Última semana',
     fn: () => ({
       fromDate: dayjs().subtract(7, 'day').startOf('day').toDate(),
       toDate: dayjs().endOf('day').toDate()
     })
   },
   {
-    label: 'Last month',
+    label: 'Último mês',
     fn: () => ({
       fromDate: dayjs().subtract(1, 'month').startOf('day').toDate(),
       toDate: dayjs().endOf('day').toDate()
     })
   },
   {
-    label: 'Last 3 months',
+    label: 'Últimos 3 meses',
     fn: () => ({
       fromDate: dayjs().subtract(3, 'month').startOf('day').toDate(),
       toDate: dayjs().endOf('day').toDate()
     })
   },
   {
-    label: 'Last 6 months',
+    label: 'Últimos 6 meses',
     fn: () => ({
       fromDate: dayjs().subtract(6, 'month').startOf('day').toDate(),
       toDate: dayjs().endOf('day').toDate()
@@ -40,14 +40,14 @@ const dateShortcuts = [
   },
 
   {
-    label: 'Last 12 months',
+    label: 'Últimos 12 meses',
     fn: () => ({
       fromDate: dayjs().subtract(1, 'year').startOf('day').toDate(),
       toDate: dayjs().endOf('day').toDate()
     })
   },
   {
-    label: 'This year',
+    label: 'Este ano',
     fn: () => ({
       fromDate: dayjs().startOf('year').toDate(),
       toDate: dayjs().endOf('day').toDate()
