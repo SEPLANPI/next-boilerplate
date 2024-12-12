@@ -1,0 +1,43 @@
+'use client'
+import React from 'react'
+import { Drawer, Button } from '@mantine/core'
+import { EventForm } from './event-form'
+import { useEventEditDrawer } from '../stores/edit-event-drawer-store'
+
+export function EditEventDrawer() {
+  const { isOpen, eventToEdit, closeEditDrawer } = useEventEditDrawer()
+
+  const formId = 'edit-event-form'
+
+  return (
+    <Drawer.Root
+      opened={isOpen}
+      onClose={closeEditDrawer}
+      position="right"
+      size="lg"
+    >
+      <Drawer.Overlay />
+      <Drawer.Content>
+        <div className="flex h-full flex-col">
+          <Drawer.Header className="border-b px-5 py-4">
+            <Drawer.Title className="text-lg font-semibold">
+              Editar Evento
+            </Drawer.Title>
+            <Drawer.CloseButton />
+          </Drawer.Header>
+          <Drawer.Body className="flex flex-1 flex-col p-5">
+            <EventForm event={eventToEdit} id={formId} />
+          </Drawer.Body>
+          <footer className="sticky bottom-0 border-t bg-white p-5">
+            <div className="flex justify-end space-x-2">
+              <Button variant="default" onClick={closeEditDrawer}>
+                Cancelar
+              </Button>
+              <Button form={formId}>Salvar Alterações</Button>
+            </div>
+          </footer>
+        </div>
+      </Drawer.Content>
+    </Drawer.Root>
+  )
+}

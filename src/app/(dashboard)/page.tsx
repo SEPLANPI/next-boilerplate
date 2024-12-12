@@ -12,6 +12,7 @@ import { EventsResetFilters } from '@/features/events/components/events-reset-fi
 import { EventsListView } from '@/features/events/components/events-list-view'
 import { EventsGroupView } from '@/features/events/components/groups/events-group-view'
 import { EventsAccordionsSkeleton } from '@/features/events/components/groups/events-accordions-skeleton'
+import { EditEventDrawer } from '@/features/events/components/edit-event-drawer'
 
 export default async function Events({
   searchParams
@@ -28,30 +29,33 @@ export default async function Events({
   const hasGrouping = !!params.group
 
   return (
-    <div>
-      <div className="flex w-full items-end justify-between">
-        <h1 className="text-2xl font-semibold text-gray-900">Eventos</h1>
-        <Button leftSection={<Plus className="size-4" />} disabled>
-          Novo evento
-        </Button>
-      </div>
-      <div className="my-6 flex flex-wrap items-start gap-2">
-        <SearchInput placeholder="Pesquisar eventos" className="max-w-64" />
-        <EventsFilters />
-        <EventsResetFilters />
-      </div>
-      <Suspense fallback={<EventsCardsSkeleton />} key={cardsKey}>
-        <EventsCards />
-      </Suspense>
-      {hasGrouping ? (
-        <Suspense fallback={<EventsAccordionsSkeleton />} key={groupKey}>
-          <EventsGroupView />
+    <>
+      <div>
+        <div className="flex w-full items-end justify-between">
+          <h1 className="text-2xl font-semibold text-gray-900">Eventos</h1>
+          <Button leftSection={<Plus className="size-4" />} disabled>
+            Novo evento
+          </Button>
+        </div>
+        <div className="my-6 flex flex-wrap items-start gap-2">
+          <SearchInput placeholder="Pesquisar eventos" className="max-w-64" />
+          <EventsFilters />
+          <EventsResetFilters />
+        </div>
+        <Suspense fallback={<EventsCardsSkeleton />} key={cardsKey}>
+          <EventsCards />
         </Suspense>
-      ) : (
-        <Suspense fallback={<EventsTableSkeleton />} key={tableKey}>
-          <EventsListView />
-        </Suspense>
-      )}
-    </div>
+        {hasGrouping ? (
+          <Suspense fallback={<EventsAccordionsSkeleton />} key={groupKey}>
+            <EventsGroupView />
+          </Suspense>
+        ) : (
+          <Suspense fallback={<EventsTableSkeleton />} key={tableKey}>
+            <EventsListView />
+          </Suspense>
+        )}
+      </div>
+      <EditEventDrawer />
+    </>
   )
 }

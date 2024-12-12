@@ -8,14 +8,17 @@ import {
   TableTd,
   TableThead,
   TableTbody,
-  Tooltip
+  Tooltip,
+  ActionIcon
 } from '@mantine/core'
-import { Info } from 'lucide-react'
+import { Info, PencilLine } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { parseAsString, useQueryState } from 'nuqs'
 import { SortableColumnHeader } from '@/components/ui/sortable-column-header'
 import { SORT_LABELS } from '@/constants/sort-labels'
 import { Event } from '../types'
+import { useEventEditDrawer } from '../stores/edit-event-drawer-store'
+
 interface EventsTableProps {
   events: Event[]
   queryKey?: string
@@ -35,8 +38,16 @@ export function EventsTable({
     })
   )
 
+  // Use the custom hook for managing the edit drawer
+  const { openEditDrawer } = useEventEditDrawer()
+
   function handleNavigateToEvent(id: number) {
     router.push(`/${id}`)
+  }
+
+  function handleEditEvent(event: Event, e: React.MouseEvent) {
+    e.stopPropagation()
+    openEditDrawer(event)
   }
 
   return (
@@ -85,6 +96,7 @@ export function EventsTable({
               ascendingLabel={SORT_LABELS.NUMERIC.ASC}
               descendingLabel={SORT_LABELS.NUMERIC.DESC}
             />
+            <TableTh className="w-[26px]" />
           </TableTr>
         </TableThead>
         <TableTbody>
@@ -121,6 +133,16 @@ export function EventsTable({
                 {parseFloat(event.valor).toLocaleString('pt-BR', {
                   minimumFractionDigits: 2
                 })}
+              </TableTd>
+              <TableTd className="relative w-[26px]">
+                <ActionIcon
+                  variant="default"
+                  size="md"
+                  className="absolute right-2 top-1/2 -translate-y-1/2"
+                  onClick={(e) => handleEditEvent(event, e)}
+                >
+                  <PencilLine className="size-4" />
+                </ActionIcon>
               </TableTd>
             </TableTr>
           ))}
