@@ -9,6 +9,7 @@ import { theme } from '@ui/mantine-config'
 import { SessionProvider } from 'next-auth/react'
 import { NuqsAdapter } from 'nuqs/adapters/next'
 import { PropsWithChildren } from 'react'
+import { Notifications } from '@mantine/notifications'
 
 export function Providers({ children }: PropsWithChildren) {
   const queryClient = getQueryClient()
@@ -22,6 +23,7 @@ export function Providers({ children }: PropsWithChildren) {
           }}
         >
           <MantineProvider theme={theme}>
+            <Notifications position="top-center" autoClose={2000} />
             <NuqsAdapter>{children}</NuqsAdapter>
           </MantineProvider>
         </DatesProvider>

@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { ColorSchemeScript } from '@mantine/core'
 import './globals.css'
 import '@mantine/dates/styles.css'
+import '@mantine/notifications/styles.css'
 import { Figtree, Montserrat } from 'next/font/google'
 import { Providers } from './providers'
 
