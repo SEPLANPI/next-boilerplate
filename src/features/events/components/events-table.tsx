@@ -18,6 +18,7 @@ import { SortableColumnHeader } from '@/components/ui/sortable-column-header'
 import { SORT_LABELS } from '@/constants/sort-labels'
 import { Event } from '../types'
 import { useEventEditDrawer } from '../stores/edit-event-drawer-store'
+import { formatDate } from '@/utils/format-date'
 
 interface EventsTableProps {
   events: Event[]
@@ -111,8 +112,8 @@ export function EventsTable({
               <TableTd className="whitespace-nowrap">
                 {event.municipio || 'Não informado'}
               </TableTd>
-              <TableTd>{event.data || 'Não informado'}</TableTd>
-              <TableTd className="w-1 whitespace-nowrap">
+              <TableTd>{formatDate(event.data)}</TableTd>
+              <TableTd className="w-1 whitespace-nowrap"> 
                 {event.ugs.map(({ name, sigla }) => (
                   <Tooltip
                     key={sigla}
