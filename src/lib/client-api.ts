@@ -2,8 +2,9 @@ import { getSession } from 'next-auth/react'
 
 const apiUrl = process.env.NEXT_PUBLIC_CLIENT_API_URL
 
-interface ClientApiOptions extends RequestInit {
+interface ClientApiOptions extends Omit<RequestInit, 'body'> {
   contentType?: 'form-data' | 'json'
+  body?: any
 }
 
 async function clientRequest(
