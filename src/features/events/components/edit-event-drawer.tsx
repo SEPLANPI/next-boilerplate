@@ -1,13 +1,26 @@
 'use client'
-import React from 'react'
+import React, { useState } from 'react'
 import { Drawer, Button } from '@mantine/core'
 import { EventForm } from './event-form'
 import { useEventEditDrawer } from '../stores/edit-event-drawer-store'
 
 export function EditEventDrawer() {
   const { isOpen, eventToEdit, closeEditDrawer } = useEventEditDrawer()
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const formId = 'edit-event-form'
+
+  const handleSubmit = () => {
+    setIsSubmitting(true)
+  }
+
+  const handleComplete = (success?: boolean) => {
+    setIsSubmitting(false)
+
+    if (success) {
+      closeEditDrawer()
+    }
+  }
 
   return (
     <Drawer.Root
@@ -23,17 +36,28 @@ export function EditEventDrawer() {
             <Drawer.Title className="text-lg font-semibold">
               Editar Evento
             </Drawer.Title>
-            <Drawer.CloseButton />
+            <Drawer.CloseButton disabled={isSubmitting} />
           </Drawer.Header>
           <Drawer.Body className="flex flex-1 flex-col p-5">
-            <EventForm event={eventToEdit} id={formId} />
+            <EventForm
+              event={eventToEdit}
+              id={formId}
+              onSubmit={handleSubmit}
+              onComplete={handleComplete}
+            />
           </Drawer.Body>
           <footer className="sticky bottom-0 border-t bg-white p-5">
             <div className="flex justify-end space-x-2">
-              <Button variant="default" onClick={closeEditDrawer}>
+              <Button
+                variant="default"
+                onClick={closeEditDrawer}
+                disabled={isSubmitting}
+              >
                 Cancelar
               </Button>
-              <Button form={formId}>Salvar Alterações</Button>
+              <Button form={formId} type="submit" loading={isSubmitting}>
+                Salvar Alterações
+              </Button>
             </div>
           </footer>
         </div>

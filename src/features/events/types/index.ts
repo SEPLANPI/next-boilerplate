@@ -3,6 +3,7 @@ export interface Event {
   nome: string
   descricao?: string
   municipio?: string
+  municipio_id?: number
   local?: string
   data?: string
   ugs: {
