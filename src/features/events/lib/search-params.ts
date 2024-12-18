@@ -20,7 +20,8 @@ export const eventsSearchParamsParsers = {
   toValue: parseAsInteger,
   sort: parseAsString,
   group: parseAsString,
-  groupSort: parseAsString
+  groupSort: parseAsString,
+  status: parseAsString.withDefault('reviewed')
 }
 
 export const eventsSearchParams = createSearchParamsCache(

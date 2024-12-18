@@ -1,6 +1,13 @@
 'use client'
 
-import { Alert, Divider, Select, Textarea, TextInput } from '@mantine/core'
+import {
+  Alert,
+  Divider,
+  Select,
+  Switch,
+  Textarea,
+  TextInput
+} from '@mantine/core'
 import { DateInput, DateInputProps } from '@mantine/dates'
 import { useForm } from '@mantine/form'
 import { dayjs } from '@/lib/dayjs'
@@ -16,7 +23,7 @@ interface EventFormProps {
   event: Event | null
   id: string
   onSubmit?: () => void
-  onComplete?: (success?: boolean) => void
+  onComplete?: (success?: boolean, action?: 'view' | 'continue') => void
 }
 
 const dateParser: DateInputProps['dateParser'] = (input) => {
@@ -44,6 +51,7 @@ export function EventForm({ event, id, onSubmit, onComplete }: EventFormProps) {
 
   const form = useForm({
     initialValues: {
+      editado: event?.editado || false,
       nome: event?.nome || '',
       descricao: event?.descricao || '',
       data: event?.data ? dayjs(event.data, 'DD-MM-YYYY').toDate() : null,
@@ -57,14 +65,21 @@ export function EventForm({ event, id, onSubmit, onComplete }: EventFormProps) {
 
   const [error, setError] = useState<string | null>(null)
 
-  async function handleSubmit(values: typeof form.values) {
+  async function handleSubmit(
+    values: typeof form.values,
+    formEvent: React.FormEvent<HTMLFormElement> | undefined
+  ) {
     if (!event?.id) return
+
+    const action = (formEvent?.nativeEvent as SubmitEvent).submitter?.dataset
+      .action as 'view' | 'continue'
 
     try {
       onSubmit?.()
 
       const { error } = await updateEvent({
         id: event.id,
+        editado: values.editado,
         nome: values.nome,
         descricao: values.descricao,
         data: values.data ? dayjs(values.data).format('YYYY-MM-DD') : undefined,
@@ -84,7 +99,7 @@ export function EventForm({ event, id, onSubmit, onComplete }: EventFormProps) {
         color: 'green'
       })
 
-      onComplete?.(true)
+      onComplete?.(true, action)
       setError(null)
 
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -101,7 +116,7 @@ export function EventForm({ event, id, onSubmit, onComplete }: EventFormProps) {
       className="flex flex-col space-y-6"
     >
       {error && <Alert color="red" title={error}></Alert>}
-
+      <h2 className="text-md font-semibold">Informações gerais</h2>
       <TextInput
         label="Nome"
         placeholder="Nome do evento"
@@ -112,6 +127,14 @@ export function EventForm({ event, id, onSubmit, onComplete }: EventFormProps) {
         placeholder="Descrição do evento"
         {...form.getInputProps('descricao')}
       />
+      <Textarea
+        label="Objetivo"
+        placeholder="Objetivo do contrato, campo vindo do SIAFE"
+        disabled
+        value={event?.objetivo}
+        autosize
+        maxRows={4}
+      />
       <DateInput
         dateParser={dateParser}
         valueFormat="DD/MM/YYYY"
@@ -120,15 +143,8 @@ export function EventForm({ event, id, onSubmit, onComplete }: EventFormProps) {
         className="max-w-32"
         {...form.getInputProps('data')}
       />
-
       <Divider className="my-12" />
-
       <h2 className="text-md mb-2 font-semibold">Localização</h2>
-      <TextInput
-        label="Endereço"
-        placeholder="Endereço do evento"
-        {...form.getInputProps('local')}
-      />
       <Select
         className="max-w-64"
         searchable
@@ -139,6 +155,18 @@ export function EventForm({ event, id, onSubmit, onComplete }: EventFormProps) {
         {...form.getInputProps('municipio')}
         filter={filterOptions}
         clearable
+      />
+      <TextInput
+        label="Endereço"
+        placeholder="Endereço do evento"
+        {...form.getInputProps('local')}
+      />
+      <Divider className="my-12" />
+      <Switch
+        defaultChecked={form.values.editado}
+        color="teal"
+        label="Revisado"
+        {...form.getInputProps('editado')}
       />
     </form>
   )

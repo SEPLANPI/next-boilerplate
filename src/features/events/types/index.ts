@@ -6,12 +6,14 @@ export interface Event {
   municipio_id?: number
   local?: string
   data?: string
+  objetivo: string
   ugs: {
     name: string
     sigla: string
   }[]
   contratos: number[]
   valor: string
+  editado: boolean
 }
 
 export interface EventGroup {

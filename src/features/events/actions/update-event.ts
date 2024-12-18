@@ -8,6 +8,7 @@ import { Event } from '../types'
 
 type UpdateEventInput = {
   id: number
+  editado: boolean
   nome: string
   descricao?: string
   data?: string
@@ -25,17 +26,16 @@ export async function updateEvent(
 
     if (!response.ok) {
       const error = await response.json()
-      console.log(error)
       return { error: error.detail || API.UNEXPECTED_FETCH_ERROR }
     }
 
     const data: Event = await response.json()
     revalidatePath('/')
+    revalidatePath(`/${input.id}`)
     return { data }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (error) {
-    console.log(error)
     return { error: API.UNEXPECTED_FETCH_ERROR }
   }
 }

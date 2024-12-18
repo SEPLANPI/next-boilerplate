@@ -3,8 +3,10 @@ import React, { useState } from 'react'
 import { Drawer, Button } from '@mantine/core'
 import { EventForm } from './event-form'
 import { useEventEditDrawer } from '../stores/edit-event-drawer-store'
+import { useRouter } from 'next/navigation'
 
 export function EditEventDrawer() {
+  const router = useRouter()
   const { isOpen, eventToEdit, closeEditDrawer } = useEventEditDrawer()
   const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -14,10 +16,13 @@ export function EditEventDrawer() {
     setIsSubmitting(true)
   }
 
-  const handleComplete = (success?: boolean) => {
+  const handleComplete = (success?: boolean, action?: 'view' | 'continue') => {
     setIsSubmitting(false)
 
     if (success) {
+      if (action === 'view' && eventToEdit?.id) {
+        router.push(`/${eventToEdit.id}`)
+      }
       closeEditDrawer()
     }
   }
@@ -55,8 +60,22 @@ export function EditEventDrawer() {
               >
                 Cancelar
               </Button>
-              <Button form={formId} type="submit" loading={isSubmitting}>
-                Salvar Alterações
+              <Button
+                form={formId}
+                type="submit"
+                loading={isSubmitting}
+                variant="light"
+                data-action="view"
+              >
+                Salvar e visualizar
+              </Button>
+              <Button
+                form={formId}
+                type="submit"
+                loading={isSubmitting}
+                data-action="continue"
+              >
+                Salvar
               </Button>
             </div>
           </footer>

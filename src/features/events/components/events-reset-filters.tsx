@@ -3,18 +3,18 @@ import Link from 'next/link'
 import { eventsSearchParams } from '../lib/search-params'
 
 export function EventsResetFilters() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { page, ...params } = eventsSearchParams.all()
+  const { group, groupSort, ugs, deputados, municipios, fromDate, toDate } =
+    eventsSearchParams.all()
 
-  const hasActiveFilters =
-    params &&
-    Object.values(params).some((value) => {
-      if (Array.isArray(value)) {
-        return value.length > 0
-      }
-
-      return Boolean(value)
-    })
+  const hasActiveFilters = Boolean(
+    (group && group.length > 0) ||
+      (groupSort && groupSort.length > 0) ||
+      (ugs && ugs.length > 0) ||
+      (deputados && deputados.length > 0) ||
+      (municipios && municipios.length > 0) ||
+      fromDate ||
+      toDate
+  )
 
   if (hasActiveFilters) {
     return (

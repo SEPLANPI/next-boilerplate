@@ -24,6 +24,7 @@ export async function getEvents({
     sort,
     municipios,
     deputados,
+    status,
     ...eventsParams
   } = eventsSearchParams.all()
 
@@ -36,7 +37,12 @@ export async function getEvents({
     data_fim: toDate ? dayjs(toDate).format('YYYY-MM-DD') : undefined,
     ordering: sort,
     municipio: municipios,
-    autor_emenda: deputados
+    autor_emenda: deputados,
+    ...(status === 'reviewed'
+      ? { editado: true }
+      : status === 'pending'
+        ? { editado: false }
+        : {})
   })
 
   try {
