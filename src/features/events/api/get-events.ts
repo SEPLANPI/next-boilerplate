@@ -28,6 +28,13 @@ export async function getEvents({
     ...eventsParams
   } = eventsSearchParams.all()
 
+  const editadoFilter =
+    status === 'reviewed'
+      ? { editado: true }
+      : status === 'pending'
+        ? { editado: false }
+        : {}
+
   const params = buildParams({
     ...eventsParams,
     page,
@@ -38,11 +45,7 @@ export async function getEvents({
     ordering: sort,
     municipio: municipios,
     autor_emenda: deputados,
-    ...(status === 'reviewed'
-      ? { editado: true }
-      : status === 'pending'
-        ? { editado: false }
-        : {})
+    ...editadoFilter
   })
 
   try {

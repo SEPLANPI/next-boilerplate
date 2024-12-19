@@ -14,6 +14,7 @@ import { EventsGroupView } from '@/features/events/components/groups/events-grou
 import { EventsAccordionsSkeleton } from '@/features/events/components/groups/events-accordions-skeleton'
 import { EditEventDrawer } from '@/features/events/components/edit-event-drawer'
 import { EventsTabs } from '@/features/events/components/events-tabs'
+import { getEventsQuantities } from '@/features/events/api/get-events-quantities'
 
 export default async function Events({
   searchParams
@@ -21,6 +22,7 @@ export default async function Events({
   searchParams: Promise<SearchParams>
 }) {
   const params = eventsSearchParams.parse(await searchParams)
+  const { data: quantities } = await getEventsQuantities()
 
   const suspenseKey = JSON.stringify(params)
   const cardsKey = 'cards' + suspenseKey
@@ -39,7 +41,13 @@ export default async function Events({
               Novo evento
             </Button>
           </div>
-          <EventsTabs />
+          <EventsTabs
+            quantities={{
+              all: quantities?.total_eventos,
+              pending: quantities?.eventos_pendentes,
+              reviewed: quantities?.eventos_revisados
+            }}
+          />
         </div>
         <div className="mb-6 flex flex-wrap items-start gap-2">
           <SearchInput placeholder="Pesquisar eventos" className="max-w-64" />

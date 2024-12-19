@@ -2,7 +2,7 @@
 
 import { API } from '@/constants/messages'
 import { api } from '@/lib/server-api'
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 import { ActionState } from '@/types/actions'
 import { Event } from '../types'
 
@@ -32,6 +32,7 @@ export async function updateEvent(
     const data: Event = await response.json()
     revalidatePath('/')
     revalidatePath(`/${input.id}`)
+    revalidateTag('events-quantities')
     return { data }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
