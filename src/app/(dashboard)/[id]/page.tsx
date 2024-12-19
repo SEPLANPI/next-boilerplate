@@ -24,6 +24,7 @@ import { formatDate } from '@/utils/format-date'
 import { EditEventButton } from '@/features/events/components/edit-event-button'
 import { EventDetail } from '@/features/events/types'
 import { EventDetailEditDrawer } from '@/features/events/components/event-detail-edit-drawer'
+import { formatCurrency } from '@/lib/utils'
 
 type EventDetailProps = {
   params: {
@@ -69,10 +70,7 @@ export default async function EventDetails({
           <DataListItem>
             <DataListLabel>Valor</DataListLabel>
             <DataListValue className="font-bold">
-              R${' '}
-              {parseFloat(event.valor.toString()).toLocaleString('pt-BR', {
-                minimumFractionDigits: 2
-              })}
+              {formatCurrency(event.valor)}
             </DataListValue>
           </DataListItem>
           <DataListItem>
@@ -141,11 +139,7 @@ export default async function EventDetails({
                     </TableTd>
                   )}
                   <TableTd className="font-bold">
-                    R${' '}
-                    {parseFloat(contract.valor_total.toString()).toLocaleString(
-                      'pt-BR',
-                      { minimumFractionDigits: 2 }
-                    )}
+                    {formatCurrency(contract.valor)}
                   </TableTd>
                   <TableTd>
                     {contract.autor_emenda === 'SEM AUTOR'

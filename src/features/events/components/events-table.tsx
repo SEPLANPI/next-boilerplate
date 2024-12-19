@@ -19,6 +19,7 @@ import { SORT_LABELS } from '@/constants/sort-labels'
 import { Event } from '../types'
 import { useEventEditDrawer } from '../stores/edit-event-drawer-store'
 import { formatDate } from '@/utils/format-date'
+import { formatCurrency } from '@/lib/utils'
 
 interface EventsTableProps {
   events: Event[]
@@ -113,7 +114,7 @@ export function EventsTable({
                 {event.municipio || 'Não informado'}
               </TableTd>
               <TableTd>{formatDate(event.data)}</TableTd>
-              <TableTd className="w-1 whitespace-nowrap"> 
+              <TableTd className="w-1 whitespace-nowrap">
                 {event.ugs.map(({ name, sigla }) => (
                   <Tooltip
                     key={sigla}
@@ -130,10 +131,7 @@ export function EventsTable({
                 ))}
               </TableTd>
               <TableTd className="whitespace-nowrap font-semibold">
-                R${' '}
-                {parseFloat(event.valor).toLocaleString('pt-BR', {
-                  minimumFractionDigits: 2
-                })}
+                {formatCurrency(event.valor)}
               </TableTd>
               <TableTd className="relative w-[26px]">
                 <ActionIcon
