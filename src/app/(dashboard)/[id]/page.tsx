@@ -1,8 +1,6 @@
 import { api } from '@/lib/server-api'
 
 import {
-  Anchor,
-  Breadcrumbs,
   Table,
   TableTr,
   TableTh,
@@ -16,7 +14,6 @@ import {
   Rating
 } from '@mantine/core'
 import { Info } from 'lucide-react'
-import Link from 'next/link'
 import {
   DataListRoot,
   DataListItem,
@@ -25,6 +22,7 @@ import {
 } from '@/components/ui/data-list'
 import BackButton from '@/components/ui/back-button'
 import { FetchError } from '@/components/errors/fetch-error'
+import { formatDate } from '@/utils/format-date'
 
 type EventDetailProps = {
   params: {
@@ -35,6 +33,7 @@ type EventDetailProps = {
 type Event = {
   id: number
   nome: string
+  editado: boolean
   data: string
   local: string | null
   valor: number
@@ -63,7 +62,7 @@ type Contract = {
 type Contractor = {
   cnpj: string
   descricao_servico: string
-  nome_da_empresa: string
+  nome: string
 }
 
 type AdministrativeUnit = {
@@ -83,68 +82,57 @@ export default async function EventDetail({
 
   const event: Event = await response.json()
   const ug = event.ugs[0]
+
   return (
     <div className="container mx-auto">
-      <div className="mb-4 flex items-center space-x-3">
-        <BackButton />
-        <Breadcrumbs>
-          <Anchor component={Link} href="/">
-            Eventos
-          </Anchor>
-        </Breadcrumbs>
+      <div className="mb-2 flex items-end space-x-2">
+        <h1 className="text-2xl font-semibold">{event.nome}</h1>
+        <Badge
+          radius="sm"
+          variant="light"
+          color={event.editado ? 'blue' : 'yellow'}
+          className="mb-2"
+        >
+          {event.editado ? 'Revisado' : 'Pendente'}
+        </Badge>
       </div>
-      <h1 className="mb-2 text-2xl font-semibold">{event.nome}</h1>
+
       <p className="max-w-[75ch] text-sm text-secondary-foreground">
         {event.objetivo}
       </p>
-      <div className="mt-4 flex space-x-32">
-        <DataListRoot>
-          <DataListItem>
-            <DataListLabel>Data</DataListLabel>
-            <DataListValue>{event.data || ''}</DataListValue>
-          </DataListItem>
-          <DataListItem>
-            <DataListLabel>Município</DataListLabel>
-            <DataListValue>{event.municipio || 'Não informado'}</DataListValue>
-          </DataListItem>
-          <DataListItem>
-            <DataListLabel>Valor</DataListLabel>
-            <DataListValue className="font-bold">
-              R${' '}
-              {parseFloat(event.valor.toString()).toLocaleString('pt-BR', {
-                minimumFractionDigits: 2
-              })}
-            </DataListValue>
-          </DataListItem>
-          <DataListItem>
-            <DataListLabel>Endereço</DataListLabel>
-            <DataListValue>{event.local || 'Não informado'}</DataListValue>
-          </DataListItem>
-        </DataListRoot>
-        <DataListRoot>
-          <DataListItem>
-            <DataListLabel>Público</DataListLabel>
-            <DataListValue>Não informado</DataListValue>
-          </DataListItem>
-          <DataListItem>
-            <DataListLabel>Avaliação</DataListLabel>
-            <DataListValue>
-              <Rating value={5} readOnly />
-            </DataListValue>
-          </DataListItem>
-          <DataListItem>
-            <DataListLabel>Categoria</DataListLabel>
-            <DataListValue>Não informado</DataListValue>
-          </DataListItem>
-        </DataListRoot>
-      </div>
-      <Divider className="my-4" />
-      <h2 className="mb-4 mt-6 text-lg font-semibold">Contratos</h2>
+      <DataListRoot layout="column" size="lg" className="mt-6">
+        <DataListItem>
+          <DataListLabel>Valor</DataListLabel>
+          <DataListValue className="font-bold">
+            R${' '}
+            {parseFloat(event.valor.toString()).toLocaleString('pt-BR', {
+              minimumFractionDigits: 2
+            })}
+          </DataListValue>
+        </DataListItem>
+        <DataListItem>
+          <DataListLabel>Data</DataListLabel>
+          <DataListValue>
+            {event.data ? formatDate(event.data) : 'Não informado'}
+          </DataListValue>
+        </DataListItem>
+        <DataListItem>
+          <DataListLabel>Município</DataListLabel>
+          <DataListValue>{event.municipio || 'Não informado'}</DataListValue>
+        </DataListItem>
+        <DataListItem>
+          <DataListLabel>Endereço</DataListLabel>
+          <DataListValue>{event.local || 'Não informado'}</DataListValue>
+        </DataListItem>
+      </DataListRoot>
+      <Divider className="my-6" />
+      <h2 className="mb-4 text-lg font-semibold">Contratos</h2>
       <Paper withBorder>
         <Table verticalSpacing="xs">
           <TableThead>
             <TableTr>
-              <TableTh>Contratado</TableTh>
+              <TableTh>N° do Contrato</TableTh>
+              <TableTh>Empresa</TableTh>
               <TableTh>Valor</TableTh>
               <TableTh>Autor</TableTh>
               <TableTh>Situação</TableTh>
@@ -154,13 +142,14 @@ export default async function EventDetail({
           <TableTbody>
             {event.contratos.map((contract) => (
               <TableTr key={contract.numero_contrato}>
+                <TableTd>{contract.numero_contrato}</TableTd>
                 {contract.contratados?.length ? (
                   contract.contratados.map((contractor) => (
                     <TableTd key={contractor.cnpj} className="max-w-lg">
                       <div>
                         <div className="flex items-center space-x-2">
                           <span className="font-semibold">
-                            {contractor.nome_da_empresa}
+                            {contractor.nome}
                           </span>
                           <Badge
                             radius="sm"
@@ -175,9 +164,6 @@ export default async function EventDetail({
                               ? 'Assinado'
                               : 'Cadastrado'}
                           </Badge>
-                        </div>
-                        <div className="text-sm text-secondary-foreground">
-                          {contract.titulo}
                         </div>
                       </div>
                     </TableTd>

@@ -98,7 +98,6 @@ export function EventForm({ event, id, onSubmit, onComplete }: EventFormProps) {
         message: 'As alterações foram salvas com sucesso',
         color: 'green'
       })
-
       onComplete?.(true, action)
       setError(null)
 

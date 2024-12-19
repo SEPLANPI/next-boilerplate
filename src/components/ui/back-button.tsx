@@ -1,6 +1,6 @@
 'use client'
 import { ActionIcon } from '@mantine/core'
-import { ArrowLeft } from 'lucide-react'
+import { ChevronLeft } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
 export default function BackButton() {
@@ -8,7 +8,7 @@ export default function BackButton() {
 
   return (
     <ActionIcon variant="default" onClick={() => router.back()}>
-      <ArrowLeft className="size-4" />
+      <ChevronLeft className="size-4" />
     </ActionIcon>
   )
 }
