@@ -1,20 +1,4 @@
-export interface Event {
-  id: number
-  nome: string
-  descricao?: string
-  municipio?: string
-  municipio_id?: number
-  local?: string
-  data?: string
-  objetivo: string
-  ugs: {
-    name: string
-    sigla: string
-  }[]
-  contratos: number[]
-  valor: string
-  editado: boolean
-}
+import { AdministrativeUnit } from '@/features/administrative-units/types'
 
 export interface EventGroup {
   nome: string
@@ -22,6 +6,24 @@ export interface EventGroup {
   valor: number
   eventos_url: string
   subgrupos?: EventGroup[]
+}
+
+export interface Event {
+  id: number
+  nome: string
+  descricao: string | null
+  municipio: string | null
+  municipio_id: number | null
+  local: string | null
+  data: string | null
+  objetivo: string
+  ugs: {
+    name: string
+    sigla: string
+  }[]
+  contratos: number[]
+  valor: number
+  editado: boolean
 }
 
 export interface EventsResponse {
@@ -75,4 +77,40 @@ export interface FilterOptionUnit {
   name: string
   sigla: string
   has_events: boolean
+}
+
+export interface Contractor {
+  cnpj: string
+  descricao_servico: string
+  nome: string
+}
+
+export interface Contract {
+  numero_contrato: number
+  contratados: Contractor[]
+  eventos: string[]
+  titulo: string
+  valor: number
+  valor_total: number
+  status: 'STATUS_ASSINADO' | 'STATUS_CADASTRADO'
+  situacao: 'A_CONTRATAR' | 'EM_VIGOR' | 'ENCERRADO' | 'LICITADO' | 'LICITADO_E'
+  autor_emenda: string | null
+  ug: number
+}
+
+export interface EventDetail {
+  id: number
+  nome: string
+  editado: boolean
+  data: string | null
+  local: string | null
+  valor: number
+  descricao: string | null
+  objetivo: string
+  municipio: string | null
+  municipio_id: number | null
+  avalia: string | null
+  publico: string | null
+  contratos: Contract[]
+  ugs: AdministrativeUnit[]
 }

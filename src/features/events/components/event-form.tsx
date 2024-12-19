@@ -20,7 +20,7 @@ import { notifications } from '@mantine/notifications'
 import { updateEvent } from '../actions/update-event'
 
 interface EventFormProps {
-  event: Event | null
+  event: Pick<Event, 'id' | 'nome' | 'editado' | 'data' | 'local' | 'municipio_id' | 'descricao' | 'objetivo'>| null
   id: string
   onSubmit?: () => void
   onComplete?: (success?: boolean, action?: 'view' | 'continue') => void

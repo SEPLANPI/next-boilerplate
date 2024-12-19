@@ -5,7 +5,7 @@ import { EventForm } from './event-form'
 import { useEventEditDrawer } from '../stores/edit-event-drawer-store'
 import { useRouter } from 'next/navigation'
 
-export function EditEventDrawer() {
+export function EventListEditDrawer() {
   const router = useRouter()
   const { isOpen, eventToEdit, closeEditDrawer } = useEventEditDrawer()
   const [isSubmitting, setIsSubmitting] = useState(false)

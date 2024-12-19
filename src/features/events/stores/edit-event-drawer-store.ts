@@ -3,8 +3,8 @@ import { Event } from '../types'
 
 interface EventEditDrawerState {
   isOpen: boolean
-  eventToEdit: Event | null
-  openEditDrawer: (event: Event) => void
+  eventToEdit: Pick<Event, 'id' | 'nome' | 'editado' | 'data' | 'local' | 'municipio_id'| 'descricao' | 'objetivo'> | null
+  openEditDrawer: (event: Pick<Event, 'id' | 'nome' | 'editado' | 'data' | 'local' | 'municipio_id'| 'descricao' | 'objetivo'>) => void
   closeEditDrawer: () => void
 }
 
@@ -17,7 +17,7 @@ export const useEventEditDrawer = create<EventEditDrawerState>((set) => ({
       eventToEdit: event
     }),
   closeEditDrawer: () =>
-    set({
+    set({ 
       isOpen: false,
       eventToEdit: null
     })

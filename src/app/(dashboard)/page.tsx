@@ -12,7 +12,7 @@ import { EventsResetFilters } from '@/features/events/components/events-reset-fi
 import { EventsListView } from '@/features/events/components/events-list-view'
 import { EventsGroupView } from '@/features/events/components/groups/events-group-view'
 import { EventsAccordionsSkeleton } from '@/features/events/components/groups/events-accordions-skeleton'
-import { EditEventDrawer } from '@/features/events/components/edit-event-drawer'
+import { EventListEditDrawer } from '@/features/events/components/event-list-edit-drawer'
 import { EventsTabs } from '@/features/events/components/events-tabs'
 import { getEventsQuantities } from '@/features/events/api/get-events-quantities'
 
@@ -67,7 +67,7 @@ export default async function Events({
           </Suspense>
         )}
       </div>
-      <EditEventDrawer />
+      <EventListEditDrawer />
     </>
   )
 }
