@@ -6,13 +6,8 @@ import {
   Select,
   Switch,
   Textarea,
-  TextInput,
-  Button,
-  Radio,
-  Stack,
-  ActionIcon
+  TextInput
 } from '@mantine/core'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { DateInput, DateInputProps } from '@mantine/dates'
 import { useForm, zodResolver } from '@mantine/form'
 import { dayjs } from '@/lib/dayjs'
@@ -24,6 +19,7 @@ import { Event } from '../types'
 import { notifications } from '@mantine/notifications'
 import { updateEvent } from '../actions/update-event'
 import { z } from 'zod'
+import { getCategoryFilterOptions } from '../api/client/get-category-options'
 
 interface EventFormProps {
   event: Pick<
@@ -36,6 +32,8 @@ interface EventFormProps {
     | 'municipio_id'
     | 'descricao'
     | 'objetivo'
+    | 'categoria'
+    | 'subcategoria'
   > | null
   id: string
   onSubmit?: () => void
@@ -45,74 +43,6 @@ interface EventFormProps {
 const dateParser: DateInputProps['dateParser'] = (input) => {
   return dayjs(input, 'DD/MM/YYYY').toDate()
 }
-
-const categories = {
-  Cultural: [
-    'Shows/Festas',
-    'Carnaval',
-    'Festejos Religiosos',
-    'Festivais',
-    'Exposições',
-    'Literatura',
-    'Teatro e Arte',
-    'Patrimônio Cultural'
-  ],
-  Esportivo: [
-    'Vaquejadas',
-    'Competições',
-    'Corridas',
-    'Lutas',
-    'Futebol',
-    'Esportes de Praia',
-    'Torneios'
-  ],
-  Educacional: [
-    'Congressos',
-    'Seminários',
-    'Cursos',
-    'Workshops',
-    'Capacitações',
-    'Palestras'
-  ],
-  Institucional: [
-    'Inaugurações',
-    'Aniversários Municipais',
-    'Conferências Governamentais',
-    'Solenidades',
-    'Eventos Públicos'
-  ],
-  Agronegócio: [
-    'Feiras Agropecuárias',
-    'Exposições Rurais',
-    'Agricultura',
-    'Pecuária',
-    'Desenvolvimento Rural'
-  ],
-  Social: [
-    'Ações Comunitárias',
-    'Saúde e Bem-estar',
-    'Inclusão Social',
-    'Prevenção',
-    'Cidadania'
-  ],
-  Turismo: [
-    'Eventos Regionais',
-    'Promoção Turística',
-    'Festas Tradicionais',
-    'Gastronomia',
-    'Artesanato'
-  ]
-} as const
-
-// Add this constant with the options
-const naturezaGastoOptions = [
-  'Estrutura e Logística',
-  'Contratações Artísticas',
-  'Serviços Técnicos',
-  'Material e Equipamentos',
-  'Divulgação e Marketing',
-  'Alimentação e Hospedagem'
-] as const
 
 const eventFormSchema = z.object({
   editado: z.boolean(),
@@ -128,7 +58,7 @@ const eventFormSchema = z.object({
   municipio: z.string().min(1, 'Município é obrigatório'),
   categoria: z.string().min(1, 'Categoria é obrigatória'),
   subcategoria: z.string().min(1, 'Selecione a categoria e subcategoria'),
-  naturezaGasto: z.string().min(1, 'Natureza do Gasto é obrigatória')
+  naturezaGasto: z.string()
 })
 
 type EventFormValues = z.infer<typeof eventFormSchema>
@@ -137,6 +67,13 @@ export function EventForm({ event, id, onSubmit, onComplete }: EventFormProps) {
   const { data: cities, isLoading: isCitiesLoading } = useQuery({
     queryKey: ['cities'],
     queryFn: getCityFilterOptions,
+    staleTime: 24 * 60 * 60 * 1000,
+    gcTime: 7 * 24 * 60 * 60 * 1000
+  })
+
+  const { data: categories, isLoading: isCategoriesLoading } = useQuery({
+    queryKey: ['categories'],
+    queryFn: getCategoryFilterOptions,
     staleTime: 24 * 60 * 60 * 1000,
     gcTime: 7 * 24 * 60 * 60 * 1000
   })
@@ -152,7 +89,14 @@ export function EventForm({ event, id, onSubmit, onComplete }: EventFormProps) {
     [cities]
   )
 
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+  const categoryOptions = useMemo(
+    () =>
+      categories?.map((category) => ({
+        value: category.id.toString(),
+        label: category.nome
+    })) || [],
+    [categories]
+  )
 
   const form = useForm<EventFormValues>({
     mode: 'uncontrolled',
@@ -164,23 +108,39 @@ export function EventForm({ event, id, onSubmit, onComplete }: EventFormProps) {
       data: event?.data ? dayjs(event.data, 'DD-MM-YYYY').toDate() : null,
       local: event?.local || '',
       municipio: event?.municipio_id?.toString() || '',
-      categoria: '',
-      subcategoria: '',
+      categoria: event?.categoria?.toString() || '',
+      subcategoria: event?.subcategoria?.toString() || '',
       naturezaGasto: ''
     }
   })
 
-  // Add this check to determine if a category has a selected subcategory
-  const isCategorySelected = (category: string) => {
-    return (
-      form.values.subcategoria &&
-      categories[category as keyof typeof categories].includes(
-        form.values.subcategoria
-      )
-    )
-  }
-
   const [error, setError] = useState<string | null>(null)
+  const [subcategories, setSubcategories] = useState<{ value: string; label: string }[]>(
+    event?.categoria
+      ? categories?.find((cat) => cat.id === Number(event.categoria))?.subcategorias.map((subcat) => ({
+          value: subcat.id.toString(),
+          label: subcat.nome
+        })) || []
+      : []
+  )
+
+  form.watch('categoria', ({value:categoria}) => {
+    if (categoria) {
+      const selectedCategory = categories?.find(
+        (cat) => cat.id === Number(categoria)
+      )
+      setSubcategories(
+        selectedCategory?.subcategorias.map((subcat) => ({
+          value: subcat.id.toString(),
+          label: subcat.nome
+        })) || []
+      )
+    } else {
+      setSubcategories([])
+    }
+
+    form.setFieldValue('subcategoria', '')
+  })
 
   async function handleSubmit(
     values: typeof form.values,
@@ -192,7 +152,6 @@ export function EventForm({ event, id, onSubmit, onComplete }: EventFormProps) {
       .action as 'view' | 'continue'
 
     try {
-      console.log(values)
       onSubmit?.()
 
       const { error } = await updateEvent({
@@ -202,7 +161,9 @@ export function EventForm({ event, id, onSubmit, onComplete }: EventFormProps) {
         descricao: values.descricao,
         data: values.data ? dayjs(values.data).format('YYYY-MM-DD') : undefined,
         local: values.local,
-        municipio_id: values.municipio
+        municipio_id: values.municipio,
+        categoria: values.categoria,
+        subcategoria: values.subcategoria
       })
 
       if (error) {
@@ -244,6 +205,7 @@ export function EventForm({ event, id, onSubmit, onComplete }: EventFormProps) {
       <Textarea
         label="Descrição"
         placeholder="Descrição do evento"
+        key={form.key('descricao')}
         {...form.getInputProps('descricao')}
       />
       <Textarea
@@ -253,6 +215,7 @@ export function EventForm({ event, id, onSubmit, onComplete }: EventFormProps) {
         value={event?.objetivo}
         autosize
         maxRows={4}
+        key="objetivo"
       />
       <DateInput
         dateParser={dateParser}
@@ -261,6 +224,7 @@ export function EventForm({ event, id, onSubmit, onComplete }: EventFormProps) {
         placeholder="Selecione a data do evento"
         className="max-w-32"
         withAsterisk
+        key={form.key('data')}
         {...form.getInputProps('data')}
       />
       <Divider />
@@ -272,6 +236,7 @@ export function EventForm({ event, id, onSubmit, onComplete }: EventFormProps) {
         placeholder="Selecione o município"
         data={cityOptions}
         disabled={isCitiesLoading}
+        key={form.key('municipio')}
         {...form.getInputProps('municipio')}
         filter={filterOptions}
         clearable
@@ -280,81 +245,39 @@ export function EventForm({ event, id, onSubmit, onComplete }: EventFormProps) {
       <TextInput
         label="Endereço"
         placeholder="Endereço do evento"
+        key={form.key('local')}
         {...form.getInputProps('local')}
       />
       <Divider />
       <h2 className="text-md font-semibold">Categorização</h2>
-      <div className="relative overflow-hidden">
-        <div
-          className={`transition-transform duration-300 ${
-            selectedCategory ? '-translate-x-full' : 'translate-x-0'
-          }`}
-        >
-          <div className="flex flex-col space-y-2">
-            {Object.keys(categories).map((category) => (
-              <Button
-                key={category}
-                variant={isCategorySelected(category) ? 'outline' : 'default'}
-                justify="space-between"
-                rightSection={<ChevronRight className="size-4" />}
-                onClick={() => {
-                  setSelectedCategory(category)
-                  form.setFieldValue('categoria', category)
-                }}
-              >
-                {category}
-              </Button>
-            ))}
-          </div>
-        </div>
-
-        <div
-          className={`absolute top-0 w-full transition-transform duration-300 ${
-            selectedCategory ? 'translate-x-0' : 'translate-x-full'
-          }`}
-        >
-          {selectedCategory && (
-            <div className="flex flex-col">
-              <div className="mb-2 flex items-center gap-2">
-                <ActionIcon
-                  variant="subtle"
-                  onClick={() => {
-                    setSelectedCategory(null)
-                    form.setFieldValue('categoria', '')
-                  }}
-                >
-                  <ChevronLeft className="size-4" />
-                </ActionIcon>
-                <p className="font-medium">{selectedCategory}</p>
-              </div>
-
-              <Radio.Group
-                value={form.values.subcategoria}
-                {...form.getInputProps('subcategoria')}
-              >
-                <div className="flex flex-col space-y-0.5">
-                  {categories[selectedCategory as keyof typeof categories].map(
-                    (subcategory) => (
-                      <Radio
-                        key={subcategory}
-                        value={subcategory}
-                        label={subcategory}
-                        className="rounded-md p-2 hover:bg-gray-50"
-                      />
-                    )
-                  )}
-                </div>
-              </Radio.Group>
-            </div>
-          )}
-        </div>
-        <p className="mt-1 text-xs text-red-500">{form.errors.subcategoria}</p>
+      <div className="flex space-x-4">
+        <Select
+          label="Categoria"
+          placeholder="Selecione a categoria"
+          disabled={isCategoriesLoading}
+          data={categoryOptions}
+          className="w-1/2"
+          key={form.key('categoria')}
+          {...form.getInputProps('categoria')}
+          withAsterisk
+        />
+        <Select
+          label="Subcategoria"
+          placeholder="Selecione a subcategoria"
+          data={subcategories}
+          className="w-1/2"
+          key={form.key('subcategoria')}
+          {...form.getInputProps('subcategoria')}
+          disabled={subcategories.length <= 0 || isCategoriesLoading}
+          withAsterisk
+        />
       </div>
       <Select
         label="Natureza do Gasto"
         placeholder="Selecione a natureza do gasto"
-        data={naturezaGastoOptions}
+        data={[]}
         className="max-w-64"
+        key={form.key('naturezaGasto')}
         {...form.getInputProps('naturezaGasto')}
         required
       />
@@ -363,6 +286,7 @@ export function EventForm({ event, id, onSubmit, onComplete }: EventFormProps) {
         defaultChecked={form.values.editado}
         color="teal"
         label="Revisado"
+        key={form.key('editado')}
         {...form.getInputProps('editado')}
       />
     </form>

@@ -24,6 +24,8 @@ export interface Event {
   contratos: number[]
   valor: number
   editado: boolean
+  categoria: string,
+  subcategoria: string,
 }
 
 export interface EventsResponse {
@@ -70,6 +72,12 @@ export interface FilterOptionDeputy {
 export interface FilterOptionCity {
   id: number
   nome: string
+}
+
+export interface FilterOptionCategory {
+  id: number
+  nome: string
+  subcategorias: FilterOptionCategory[]
 }
 
 export interface FilterOptionUnit {

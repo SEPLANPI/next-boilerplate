@@ -29,6 +29,7 @@ export function EventsTableSkeleton({
             <TableTh>Data</TableTh>
             <TableTh>Unidades Gestoras</TableTh>
             <TableTh>Valor</TableTh>
+            <TableTh className='w-[28px]'/>
           </TableTr>
         </TableThead>
         <TableTbody>

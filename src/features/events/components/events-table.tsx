@@ -98,7 +98,7 @@ export function EventsTable({
               ascendingLabel={SORT_LABELS.NUMERIC.ASC}
               descendingLabel={SORT_LABELS.NUMERIC.DESC}
             />
-            <TableTh className="w-[26px]" />
+            <TableTh className="w-[48px]" />
           </TableTr>
         </TableThead>
         <TableTbody>

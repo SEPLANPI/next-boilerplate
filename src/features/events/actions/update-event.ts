@@ -24,6 +24,8 @@ export async function updateEvent(
       body: input
     })
 
+    console.log(input)
+
     if (!response.ok) {
       const error = await response.json()
       return { error: error.detail || API.UNEXPECTED_FETCH_ERROR }
