@@ -58,8 +58,20 @@ const eventFormSchema = z.object({
       message: 'Data é obrigatória'
     }),
   local: z.string().nullable(),
-  municipio: z.string().min(1, 'Município é obrigatório'),
-  categoria: z.string().min(1, 'Categoria é obrigatória'),
+  municipio: z
+    .string()
+    .min(1, 'Município é obrigatório')
+    .nullable()
+    .refine((value) => value !== null, {
+      message: 'Município é obrigatório'
+    }),
+  categoria: z
+    .string()
+    .min(1, 'Categoria é obrigatória')
+    .nullable()
+    .refine((value) => value !== null, {
+      message: 'Categoria é obrigatória'
+    }),
   naturezaGasto: z.array(z.string()).min(1, 'Natureza do gasto é obrigatória')
 })
 
@@ -69,8 +81,8 @@ type EventFormValues = {
   descricao: string
   data: Date | null
   local: string | null
-  municipio: string
-  categoria: string
+  municipio: string | null
+  categoria: string | null
   naturezaGasto: string[]
 }
 
@@ -137,8 +149,8 @@ export function EventForm({ event, id, onSubmit, onComplete }: EventFormProps) {
       descricao: event?.descricao || '',
       data: event?.data ? dayjs(event.data, 'DD-MM-YYYY').toDate() : null,
       local: event?.local || '',
-      municipio: '',
-      categoria: '',
+      municipio: null,
+      categoria: null,
       naturezaGasto: []
     }
   })
@@ -191,8 +203,8 @@ export function EventForm({ event, id, onSubmit, onComplete }: EventFormProps) {
 
   useEffect(() => {
     if (event && cities && categories && expenseNatureData) {
-      form.setFieldValue('municipio', String(event.municipio_id))
-      form.setFieldValue('categoria', String(event.categoria))
+      form.setFieldValue('municipio', String(event.municipio_id || ''))
+      form.setFieldValue('categoria', String(event.categoria || ''))
       form.setFieldValue('naturezaGasto', event.natureza_gasto.map(String))
     }
   }, [cities, categories, expenseNatureData, event])
