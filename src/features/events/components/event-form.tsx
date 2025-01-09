@@ -3,6 +3,7 @@
 import {
   Alert,
   Divider,
+  MultiSelect,
   Select,
   Switch,
   Textarea,
@@ -13,13 +14,14 @@ import { useForm, zodResolver } from '@mantine/form'
 import { dayjs } from '@/lib/dayjs'
 import { useQuery } from '@tanstack/react-query'
 import { getCityFilterOptions } from '../api/client/get-city-options'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { filterOptions } from '@/utils/filter-options'
 import { Event } from '../types'
 import { notifications } from '@mantine/notifications'
 import { updateEvent } from '../actions/update-event'
 import { z } from 'zod'
 import { getCategoryFilterOptions } from '../api/client/get-category-options'
+import { getExpenseNatureFilterOptions } from '../api/client/get-expense-nature-options'
 
 interface EventFormProps {
   event: Pick<
@@ -34,6 +36,7 @@ interface EventFormProps {
     | 'objetivo'
     | 'categoria'
     | 'subcategoria'
+    | 'natureza_gasto'
   > | null
   id: string
   onSubmit?: () => void
@@ -57,11 +60,19 @@ const eventFormSchema = z.object({
   local: z.string().nullable(),
   municipio: z.string().min(1, 'Município é obrigatório'),
   categoria: z.string().min(1, 'Categoria é obrigatória'),
-  subcategoria: z.string().min(1, 'Selecione a categoria e subcategoria'),
-  naturezaGasto: z.string()
+  naturezaGasto: z.array(z.string()).min(1, 'Natureza do gasto é obrigatória')
 })
 
-type EventFormValues = z.infer<typeof eventFormSchema>
+type EventFormValues = {
+  editado: boolean
+  nome: string
+  descricao: string
+  data: Date | null
+  local: string | null
+  municipio: string
+  categoria: string
+  naturezaGasto: string[]
+}
 
 export function EventForm({ event, id, onSubmit, onComplete }: EventFormProps) {
   const { data: cities, isLoading: isCitiesLoading } = useQuery({
@@ -77,6 +88,14 @@ export function EventForm({ event, id, onSubmit, onComplete }: EventFormProps) {
     staleTime: 24 * 60 * 60 * 1000,
     gcTime: 7 * 24 * 60 * 60 * 1000
   })
+
+  const { data: expenseNatureData, isLoading: isExpenseNatureLoading } =
+    useQuery({
+      queryKey: ['expense-nature'],
+      queryFn: getExpenseNatureFilterOptions,
+      staleTime: 24 * 60 * 60 * 1000,
+      gcTime: 7 * 24 * 60 * 60 * 1000
+    })
 
   const cityOptions = useMemo(
     () =>
@@ -94,9 +113,20 @@ export function EventForm({ event, id, onSubmit, onComplete }: EventFormProps) {
       categories?.map((category) => ({
         value: category.id.toString(),
         label: category.nome
-    })) || [],
+      })) || [],
     [categories]
   )
+
+  const expenseNatureOptions = useMemo(
+    () =>
+      expenseNatureData?.map((nature) => ({
+        value: nature.id.toString(),
+        label: nature.nome
+      })) || [],
+    [expenseNatureData]
+  )
+
+  console.log(event)
 
   const form = useForm<EventFormValues>({
     mode: 'uncontrolled',
@@ -107,40 +137,13 @@ export function EventForm({ event, id, onSubmit, onComplete }: EventFormProps) {
       descricao: event?.descricao || '',
       data: event?.data ? dayjs(event.data, 'DD-MM-YYYY').toDate() : null,
       local: event?.local || '',
-      municipio: event?.municipio_id?.toString() || '',
-      categoria: event?.categoria?.toString() || '',
-      subcategoria: event?.subcategoria?.toString() || '',
-      naturezaGasto: ''
+      municipio: '',
+      categoria: '',
+      naturezaGasto: []
     }
   })
 
   const [error, setError] = useState<string | null>(null)
-  const [subcategories, setSubcategories] = useState<{ value: string; label: string }[]>(
-    event?.categoria
-      ? categories?.find((cat) => cat.id === Number(event.categoria))?.subcategorias.map((subcat) => ({
-          value: subcat.id.toString(),
-          label: subcat.nome
-        })) || []
-      : []
-  )
-
-  form.watch('categoria', ({value:categoria}) => {
-    if (categoria) {
-      const selectedCategory = categories?.find(
-        (cat) => cat.id === Number(categoria)
-      )
-      setSubcategories(
-        selectedCategory?.subcategorias.map((subcat) => ({
-          value: subcat.id.toString(),
-          label: subcat.nome
-        })) || []
-      )
-    } else {
-      setSubcategories([])
-    }
-
-    form.setFieldValue('subcategoria', '')
-  })
 
   async function handleSubmit(
     values: typeof form.values,
@@ -163,7 +166,7 @@ export function EventForm({ event, id, onSubmit, onComplete }: EventFormProps) {
         local: values.local,
         municipio_id: values.municipio,
         categoria: values.categoria,
-        subcategoria: values.subcategoria
+        natureza_gasto: values.naturezaGasto
       })
 
       if (error) {
@@ -171,7 +174,6 @@ export function EventForm({ event, id, onSubmit, onComplete }: EventFormProps) {
         onComplete?.(false)
         return
       }
-
       notifications.show({
         title: 'Evento atualizado',
         message: 'As alterações foram salvas com sucesso',
@@ -186,6 +188,14 @@ export function EventForm({ event, id, onSubmit, onComplete }: EventFormProps) {
       onComplete?.(false)
     }
   }
+
+  useEffect(() => {
+    if (event && cities && categories && expenseNatureData) {
+      form.setFieldValue('municipio', String(event.municipio_id))
+      form.setFieldValue('categoria', String(event.categoria))
+      form.setFieldValue('naturezaGasto', event.natureza_gasto.map(String))
+    }
+  }, [cities, categories, expenseNatureData, event])
 
   return (
     <form
@@ -250,33 +260,22 @@ export function EventForm({ event, id, onSubmit, onComplete }: EventFormProps) {
       />
       <Divider />
       <h2 className="text-md font-semibold">Categorização</h2>
-      <div className="flex space-x-4">
-        <Select
-          label="Categoria"
-          placeholder="Selecione a categoria"
-          disabled={isCategoriesLoading}
-          data={categoryOptions}
-          className="w-1/2"
-          key={form.key('categoria')}
-          {...form.getInputProps('categoria')}
-          withAsterisk
-        />
-        <Select
-          label="Subcategoria"
-          placeholder="Selecione a subcategoria"
-          data={subcategories}
-          className="w-1/2"
-          key={form.key('subcategoria')}
-          {...form.getInputProps('subcategoria')}
-          disabled={subcategories.length <= 0 || isCategoriesLoading}
-          withAsterisk
-        />
-      </div>
       <Select
+        label="Categoria"
+        placeholder="Selecione a categoria"
+        disabled={isCategoriesLoading}
+        data={categoryOptions}
+        className="w-full max-w-96"
+        key={form.key('categoria')}
+        {...form.getInputProps('categoria')}
+        withAsterisk
+      />
+      <MultiSelect
         label="Natureza do Gasto"
         placeholder="Selecione a natureza do gasto"
-        data={[]}
-        className="max-w-64"
+        disabled={isExpenseNatureLoading}
+        data={expenseNatureOptions}
+        className="w-full max-w-96"
         key={form.key('naturezaGasto')}
         {...form.getInputProps('naturezaGasto')}
         required

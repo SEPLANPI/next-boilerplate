@@ -20,15 +20,16 @@ export type AsyncFilterProps<T> = PropsWithChildren<
     searchParamKey?: string
     filterFn?: (option: T, search: string) => boolean
     getOptionDisabled?: (option: T) => boolean
+    showSearch?: boolean
   } & (IsDefaultOption<T> extends true
     ? {
-        getOptionValue?: (option: T) => string
-        getOptionLabel?: (option: T) => string
-      }
+      getOptionValue?: (option: T) => string
+      getOptionLabel?: (option: T) => string
+    }
     : {
-        getOptionValue: (option: T) => string
-        getOptionLabel: (option: T) => string
-      })
+      getOptionValue: (option: T) => string
+      getOptionLabel: (option: T) => string
+    })
 >
 export type ContentProps<T> = {
   renderOption: (option: T) => JSX.Element
@@ -38,4 +39,5 @@ export type ContentProps<T> = {
   getOptionDisabled: (option: T) => boolean
   filterId: string
   filterFn: (option: T, search: string) => boolean
+  showSearch?: boolean // Add this prop
 }

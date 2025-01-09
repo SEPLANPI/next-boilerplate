@@ -12,8 +12,10 @@ type UpdateEventInput = {
   nome: string
   descricao?: string
   data?: string
-  local?: string
+  local: string | null
   municipio_id?: string | null
+  categoria?: string | null
+  natureza_gasto?: string[]
 }
 
 export async function updateEvent(

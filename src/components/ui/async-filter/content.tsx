@@ -11,7 +11,8 @@ export function Content<T>({
   getOptionValue,
   getOptionDisabled,
   filterId,
-  filterFn
+  filterFn,
+  showSearch = true
 }: ContentProps<T>) {
   const [search, setSearch] = useDebouncedState('', 100)
   const { selectedItems, toggle, clear } = useSelectedItems()
@@ -71,16 +72,18 @@ export function Content<T>({
 
   return (
     <>
-      <header className="border-b p-1">
-        <Input
-          classNames={{
-            input: 'border-none'
-          }}
-          onChange={(event) => setSearch(event.target.value)}
-          placeholder="Pesquisar"
-          rightSection={<Search className="size-4" />}
-        />
-      </header>
+      {showSearch && (
+        <header className="border-b p-1">
+          <Input
+            classNames={{
+              input: 'border-none'
+            }}
+            onChange={(event) => setSearch(event.target.value)}
+            placeholder="Pesquisar"
+            rightSection={<Search className="size-4" />}
+          />
+        </header>
+      )}
       <ul className="max-h-96 w-full overflow-y-auto overflow-x-clip">
         {selectedOptions.length > 0 && (
           <>

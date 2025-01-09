@@ -21,7 +21,9 @@ export const eventsSearchParamsParsers = {
   sort: parseAsString,
   group: parseAsString,
   groupSort: parseAsString,
-  status: parseAsString.withDefault('reviewed')
+  status: parseAsString.withDefault('reviewed'),
+  categories: parseAsArrayOf(parseAsInteger),
+  expenseNature: parseAsArrayOf(parseAsInteger)
 }
 
 export const eventsSearchParams = createSearchParamsCache(

@@ -19,7 +19,8 @@ export function AsyncFilter<T extends object = DefaultOption>({
   getOptionDisabled,
   filterId,
   searchParamKey = 'selectedItems',
-  filterFn
+  filterFn,
+  showSearch = true
 }: AsyncFilterProps<T>) {
   const isDefaultOption = (option: T): option is T & DefaultOption =>
     'id' in option && 'label' in option
@@ -71,7 +72,8 @@ export function AsyncFilter<T extends object = DefaultOption>({
               getOptionLabel: handlers.getLabel,
               getOptionDisabled: finalGetOptionDisabled,
               filterId,
-              filterFn: finalFilterFn
+              filterFn: finalFilterFn,
+              showSearch // Pass the prop
             }}
           />
         </Popover.Dropdown>

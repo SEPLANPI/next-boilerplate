@@ -24,8 +24,9 @@ export interface Event {
   contratos: number[]
   valor: number
   editado: boolean
-  categoria: string,
-  subcategoria: string,
+  categoria: string | null
+  subcategoria: string | null
+  natureza_gasto: number[]
 }
 
 export interface EventsResponse {
@@ -80,6 +81,11 @@ export interface FilterOptionCategory {
   subcategorias: FilterOptionCategory[]
 }
 
+export interface FilterOptionExpenseNature {
+  id: number
+  nome: string
+}
+
 export interface FilterOptionUnit {
   number: number
   name: string
@@ -121,4 +127,9 @@ export interface EventDetail {
   publico: string | null
   contratos: Contract[]
   ugs: AdministrativeUnit[]
+  categoria: string | null
+  categoria_nome?: string | null
+  subcategoria: string | null
+  natureza_gasto: number[]
+  natureza_gasto_nomes?: string[]
 }

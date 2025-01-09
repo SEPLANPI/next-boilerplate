@@ -87,6 +87,18 @@ export default async function EventDetails({
             <DataListLabel>Endereço</DataListLabel>
             <DataListValue>{event.local || 'Não informado'}</DataListValue>
           </DataListItem>
+          <DataListItem>
+            <DataListLabel>Categoria</DataListLabel>
+            <DataListValue>
+              {event.categoria_nome || 'Não informado'}
+            </DataListValue>
+          </DataListItem>
+          <DataListItem>
+            <DataListLabel>Natureza do Gasto</DataListLabel>
+            <DataListValue>
+              {event.natureza_gasto_nomes?.join(', ') || 'Não informado'}
+            </DataListValue>
+          </DataListItem>
         </DataListRoot>
         <Divider className="my-6" />
         <h2 className="mb-4 text-lg font-semibold">Contratos</h2>

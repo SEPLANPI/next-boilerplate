@@ -1,6 +1,4 @@
 import { SearchInput } from '@/components/ui/search-input'
-import { EventsCards } from '@/features/events/components/events-cards'
-import { EventsCardsSkeleton } from '@/features/events/components/events-cards-skeleton'
 import { EventsFilters } from '@/features/events/components/events-filters'
 import { eventsSearchParams } from '@/features/events/lib/search-params'
 import { Button } from '@mantine/core'
@@ -25,7 +23,6 @@ export default async function Events({
   const { data: quantities } = await getEventsQuantities()
 
   const suspenseKey = JSON.stringify(params)
-  const cardsKey = 'cards' + suspenseKey
   const groupKey = 'group' + suspenseKey
   const tableKey = 'table' + suspenseKey
 
@@ -54,9 +51,6 @@ export default async function Events({
           <EventsFilters />
           <EventsResetFilters />
         </div>
-        <Suspense fallback={<EventsCardsSkeleton />} key={cardsKey}>
-          <EventsCards />
-        </Suspense>
         {hasGrouping ? (
           <Suspense fallback={<EventsAccordionsSkeleton />} key={groupKey}>
             <EventsGroupView />

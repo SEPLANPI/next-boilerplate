@@ -8,6 +8,8 @@ import { Divider } from '@mantine/core'
 import { getCityFilterOptions } from '../api/client/get-city-options'
 import { getDeputyFilterOptions } from '../api/client/get-deputy-options'
 import { dayjs } from '@/lib/dayjs'
+import { getCategoryFilterOptions } from '../api/client/get-category-options'
+import { getExpenseNatureFilterOptions } from '../api/client/get-expense-nature-options'
 
 const dateShortcuts = [
   {
@@ -104,6 +106,26 @@ export function EventsFilters() {
       <DateRangeFilter shortcuts={dateShortcuts} maxDate={dayjs().toDate()}>
         Data
       </DateRangeFilter>
+      <AsyncFilter
+        showSearch={false}
+        loadOptions={getCategoryFilterOptions}
+        filterId="categories"
+        searchParamKey="categories"
+        getOptionLabel={(option) => option.nome}
+        getOptionValue={(option) => option.id.toString()}
+      >
+        Categorias
+      </AsyncFilter>
+      <AsyncFilter
+        showSearch={false}
+        loadOptions={getExpenseNatureFilterOptions}
+        filterId="expense-nature"
+        searchParamKey="expenseNature"
+        getOptionLabel={(option) => option.nome}
+        getOptionValue={(option) => option.id.toString()}
+      >
+        Natureza do Gasto
+      </AsyncFilter>
     </>
   )
 }

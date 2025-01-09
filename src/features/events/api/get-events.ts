@@ -25,6 +25,8 @@ export async function getEvents({
     municipios,
     deputados,
     status,
+    categories,
+    expenseNature,
     ...eventsParams
   } = eventsSearchParams.all()
 
@@ -45,6 +47,8 @@ export async function getEvents({
     ordering: sort,
     municipio: municipios,
     autor_emenda: deputados,
+    categoria: categories,
+    natureza_gasto: expenseNature,
     ...editadoFilter
   })
 
