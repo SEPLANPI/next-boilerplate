@@ -16,6 +16,9 @@ type EditEventButtonProps = {
     | 'municipio_id'
     | 'descricao'
     | 'objetivo'
+    | 'categoria'
+    | 'subcategoria'
+    | 'natureza_gasto'
   >
 }
 
