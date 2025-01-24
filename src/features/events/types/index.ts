@@ -18,7 +18,8 @@ export interface Event {
   data: string | null
   objetivo: string
   ugs: {
-    name: string
+    numero: number
+    nome: string
     sigla: string
   }[]
   contratos: {
@@ -70,24 +71,45 @@ export interface UnidadeGestora {
   has_events: boolean
 }
 
-export interface Contractor {
-  cnpj: string
-  descricao_servico: string
-  nome: string
-}
-
 export interface Contract {
-  numero_contrato: number
-  contratados: Contractor[]
-  eventos: string[]
+  id: number
+  numero: number
+  empresa: {
+    cnpj: string
+    nome: string
+  }
   titulo: string
   valor: number
-  valor_total: number
-  status: 'STATUS_ASSINADO' | 'STATUS_CADASTRADO'
-  situacao: 'A_CONTRATAR' | 'EM_VIGOR' | 'ENCERRADO' | 'LICITADO' | 'LICITADO_E'
+  valor_empenhado: number
+  valor_liquidado: number
+  valor_pago: number
+  status: 'ASSINADO' | 'CADASTRADO'
+  situacao: 'A_CONTRATAR' | 'EM_VIGOR' | 'ENCERRADO' | 'LICITADO'
   autor_emenda: string | null
-  ug: number
+  ug_nome: number
   naturezas_gasto: { id: number }[]
+  naturezas_gasto_nomes: string[]
+  execucoes: (
+    | {
+      id: number
+      ano: number
+      mes: number
+      valor_empenhado: number
+      valor_liquidado: number
+      valor_pago: number
+      fonte: 'GOVERNO'
+    }
+    | {
+      id: number
+      ano: number
+      mes: number
+      valor_empenhado: number
+      valor_liquidado: number
+      valor_pago: number
+      fonte: 'EMENDA'
+      deputado: { nome: string; id: number; partido: string; foto: string }
+    }
+  )[]
 }
 
 export interface EventDetail {
@@ -108,4 +130,8 @@ export interface EventDetail {
   categoria: string | null
   categoria_nome?: string | null
   natureza_gasto_nomes?: string[]
+  valor_empenhado: number
+  valor_liquidado: number
+  valor_pago: number
+  deputados: { nome: string }[]
 }

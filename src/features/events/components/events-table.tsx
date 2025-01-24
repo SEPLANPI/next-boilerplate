@@ -115,10 +115,10 @@ export function EventsTable({
               </TableTd>
               <TableTd>{formatDate(event.data)}</TableTd>
               <TableTd className="w-1 whitespace-nowrap">
-                {event.ugs.map(({ name, sigla }) => (
+                {event.ugs.map(({ nome, sigla }) => (
                   <Tooltip
                     key={sigla}
-                    label={name}
+                    label={nome}
                     openDelay={200}
                     w={300}
                     multiline

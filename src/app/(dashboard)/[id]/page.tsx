@@ -8,11 +8,12 @@ import {
   TableThead,
   TableTbody,
   Paper,
-  Divider,
   Badge,
-  Tooltip
+  Accordion,
+  AccordionItem,
+  AccordionControl,
+  AccordionPanel
 } from '@mantine/core'
-import { Info } from 'lucide-react'
 import {
   DataListRoot,
   DataListItem,
@@ -32,6 +33,23 @@ type EventDetailProps = {
   }
 }
 
+function ContractAccordionLabel({ numero, titulo, empresa }: any) {
+  return (
+    <div className="flex items-center justify-between">
+      <div className="space-y-1">
+        <div className="font-medium">{numero}</div>
+        <div className="text-sm text-muted-foreground">{titulo}</div>
+      </div>
+      <div className="text-sm">
+        <div>
+          <div>{empresa.nome}</div>
+          <div className="text-muted-foreground">{empresa.cnpj}</div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
 export default async function EventDetails({
   params: { id }
 }: EventDetailProps) {
@@ -47,137 +65,197 @@ export default async function EventDetails({
 
   return (
     <>
-      <div className="container mx-auto">
-        <div className="flex justify-between">
-          <div className="mb-2 flex items-end space-x-2">
-            <h1 className="text-2xl font-semibold">{event.nome}</h1>
-            <Badge
-              radius="sm"
-              variant="light"
-              color={event.editado ? 'blue' : 'yellow'}
-              className="mb-2"
-            >
-              {event.editado ? 'Revisado' : 'Pendente'}
-            </Badge>
+      <div className="container mx-auto space-y-8">
+        <section>
+          <div className="flex justify-between">
+            <div className="mb-2 flex items-end space-x-2">
+              <h1 className="text-2xl font-semibold">{event.nome}</h1>
+              <Badge
+                radius="sm"
+                variant="light"
+                color={event.editado ? 'blue' : 'yellow'}
+                className="mb-2"
+              >
+                {event.editado ? 'Revisado' : 'Pendente'}
+              </Badge>
+            </div>
+            <EditEventButton event={event} />
           </div>
-          <EditEventButton event={event} />
-        </div>
+          <p className="max-w-[75ch] text-sm text-secondary-foreground">
+            {event.objetivo}
+          </p>
+          <div className="mt-6 space-y-6">
+            <div>
+              <h2 className="text-md mb-4 font-semibold">Informações</h2>
+              <DataListRoot size="lg" layout="column">
+                <DataListItem>
+                  <DataListLabel>Data</DataListLabel>
+                  <DataListValue>
+                    {event.data ? formatDate(event.data) : 'Não informado'}
+                  </DataListValue>
+                </DataListItem>
+                <DataListItem>
+                  <DataListLabel>Município</DataListLabel>
+                  <DataListValue>
+                    {event.municipio || 'Não informado'}
+                  </DataListValue>
+                </DataListItem>
+                <DataListItem>
+                  <DataListLabel>Endereço</DataListLabel>
+                  <DataListValue>
+                    {event.local || 'Não informado'}
+                  </DataListValue>
+                </DataListItem>
+                <DataListItem>
+                  <DataListLabel>Categoria</DataListLabel>
+                  <DataListValue>
+                    {event.categoria_nome || 'Não informado'}
+                  </DataListValue>
+                </DataListItem>
+                <DataListItem>
+                  <DataListLabel>Natureza do Gasto</DataListLabel>
+                  <DataListValue>
+                    {event.natureza_gasto_nomes?.join(', ') || 'Não informado'}
+                  </DataListValue>
+                </DataListItem>
+              </DataListRoot>
+            </div>
 
-        <p className="max-w-[75ch] text-sm text-secondary-foreground">
-          {event.objetivo}
-        </p>
-        <DataListRoot layout="column" size="lg" className="mt-6">
-          <DataListItem>
-            <DataListLabel>Valor</DataListLabel>
-            <DataListValue className="font-bold">
-              {formatCurrency(event.valor)}
-            </DataListValue>
-          </DataListItem>
-          <DataListItem>
-            <DataListLabel>Data</DataListLabel>
-            <DataListValue>
-              {event.data ? formatDate(event.data) : 'Não informado'}
-            </DataListValue>
-          </DataListItem>
-          <DataListItem>
-            <DataListLabel>Município</DataListLabel>
-            <DataListValue>{event.municipio || 'Não informado'}</DataListValue>
-          </DataListItem>
-          <DataListItem>
-            <DataListLabel>Endereço</DataListLabel>
-            <DataListValue>{event.local || 'Não informado'}</DataListValue>
-          </DataListItem>
-          <DataListItem>
-            <DataListLabel>Categoria</DataListLabel>
-            <DataListValue>
-              {event.categoria_nome || 'Não informado'}
-            </DataListValue>
-          </DataListItem>
-          <DataListItem>
-            <DataListLabel>Natureza do Gasto</DataListLabel>
-            <DataListValue>
-              {event.natureza_gasto_nomes?.join(', ') || 'Não informado'}
-            </DataListValue>
-          </DataListItem>
-        </DataListRoot>
-        <Divider className="my-6" />
-        <h2 className="mb-4 text-lg font-semibold">Contratos</h2>
-        <Paper withBorder>
-          <Table verticalSpacing="xs">
-            <TableThead>
-              <TableTr>
-                <TableTh>N° do Contrato</TableTh>
-                <TableTh>Empresa</TableTh>
-                <TableTh>Valor</TableTh>
-                <TableTh>Autor</TableTh>
-                <TableTh>Situação</TableTh>
-                <TableTh>Unidade Gestora</TableTh>
-              </TableTr>
-            </TableThead>
-            <TableTbody>
+            <div>
+              <h2 className="text-md mb-4 font-semibold">Patrocinadores</h2>
+              <DataListRoot size="lg" layout="column">
+                <DataListItem>
+                  <DataListLabel>Unidades Gestoras</DataListLabel>
+                  <DataListValue>
+                    {event.ugs.map(({ nome, sigla }) => (
+                      <span key={sigla}>{sigla}</span>
+                    ))}
+                  </DataListValue>
+                </DataListItem>
+                <DataListItem>
+                  <DataListLabel>Autores</DataListLabel>
+                  <DataListValue>
+                    {event.deputados.map(({ nome }) => nome).join(', ')}
+                  </DataListValue>
+                </DataListItem>
+              </DataListRoot>
+            </div>
+            <div>
+              <h2 className="text-md mb-4 font-semibold">Valores</h2>
+              <DataListRoot layout="column" size="lg">
+                <DataListItem>
+                  <DataListLabel>Valor do Contrato</DataListLabel>
+                  <DataListValue className="font-semibold">
+                    {formatCurrency(event.valor)}
+                  </DataListValue>
+                </DataListItem>
+                <DataListItem>
+                  <DataListLabel>Empenhado</DataListLabel>
+                  <DataListValue className="font-semibold">
+                    {formatCurrency(event.valor_empenhado)}
+                  </DataListValue>
+                </DataListItem>
+                <DataListItem className="font-semibold">
+                  <DataListLabel>Liquidado</DataListLabel>
+                  <DataListValue>
+                    {formatCurrency(event.valor_liquidado)}
+                  </DataListValue>
+                </DataListItem>
+                <DataListItem>
+                  <DataListLabel>Pago</DataListLabel>
+                  <DataListValue className="font-semibold">
+                    {formatCurrency(event.valor_pago)}
+                  </DataListValue>
+                </DataListItem>
+              </DataListRoot>
+            </div>
+          </div>
+        </section>
+        <section>
+          <h2 className="mb-4 text-lg font-semibold">Contratos</h2>
+          <Paper withBorder>
+            <Accordion chevronPosition="right" variant="outlined">
               {event.contratos.map((contract) => (
-                <TableTr key={contract.numero_contrato}>
-                  <TableTd>{contract.numero_contrato}</TableTd>
-                  {contract.contratados?.length ? (
-                    contract.contratados.map((contractor) => (
-                      <TableTd key={contractor.cnpj} className="max-w-lg">
-                        <div>
-                          <div className="flex items-center space-x-2">
-                            <span className="font-semibold">
-                              {contractor.nome}
-                            </span>
+                <AccordionItem
+                  key={contract.numero}
+                  value={contract.numero.toString()}
+                >
+                  <AccordionControl>
+                    <ContractAccordionLabel
+                      numero={contract.numero}
+                      titulo={contract.titulo}
+                      empresa={contract.empresa}
+                    />
+                  </AccordionControl>
+                  <AccordionPanel>
+                    <div className="space-y-4">
+                      <DataListRoot size="sm">
+                        <DataListItem>
+                          <DataListLabel>Situação</DataListLabel>
+                          <DataListValue>
                             <Badge
                               radius="sm"
                               variant="light"
                               color={
-                                contract.status === 'STATUS_ASSINADO'
-                                  ? 'teal'
-                                  : 'gray'
+                                contract.status === 'ASSINADO' ? 'teal' : 'gray'
                               }
                             >
-                              {contract.status === 'STATUS_ASSINADO'
+                              {contract.status === 'ASSINADO'
                                 ? 'Assinado'
                                 : 'Cadastrado'}
-                            </Badge>
-                          </div>
+                            </Badge>{' '}
+                            {contract.situacao}
+                          </DataListValue>
+                        </DataListItem>
+                        <DataListItem>
+                          <DataListLabel>Valor do Contrato</DataListLabel>
+                          <DataListValue>
+                            {formatCurrency(contract.valor)}
+                          </DataListValue>
+                        </DataListItem>
+                      </DataListRoot>
+                      {contract.execucoes?.length > 0 && (
+                        <div>
+                          <h3 className="mb-2 text-sm font-semibold">
+                            Execuções
+                          </h3>
+                          <Table verticalSpacing="xs" striped>
+                            <TableThead>
+                              <TableTr>
+                                <TableTh>Mês/Ano</TableTh>
+                                <TableTh>Empenhado</TableTh>
+                                <TableTh>Liquidado</TableTh>
+                                <TableTh>Pago</TableTh>
+                              </TableTr>
+                            </TableThead>
+                            <TableTbody>
+                              {contract.execucoes.map((exec) => (
+                                <TableTr key={exec.id}>
+                                  <TableTd>
+                                    {exec.mes}/{exec.ano}
+                                  </TableTd>
+                                  <TableTd>
+                                    {formatCurrency(exec.valor_empenhado)}
+                                  </TableTd>
+                                  <TableTd>
+                                    {formatCurrency(exec.valor_liquidado)}
+                                  </TableTd>
+                                  <TableTd>
+                                    {formatCurrency(exec.valor_pago)}
+                                  </TableTd>
+                                </TableTr>
+                              ))}
+                            </TableTbody>
+                          </Table>
                         </div>
-                      </TableTd>
-                    ))
-                  ) : (
-                    <TableTd className="max-w-lg">
-                      <div className="font-semibold">
-                        O contrato não possui contratados
-                      </div>
-                    </TableTd>
-                  )}
-                  <TableTd className="font-bold">
-                    {formatCurrency(contract.valor)}
-                  </TableTd>
-                  <TableTd>
-                    {contract.autor_emenda === 'SEM AUTOR'
-                      ? 'Governo do Estado'
-                      : contract.autor_emenda}
-                  </TableTd>
-                  <TableTd>{contract.situacao}</TableTd>
-                  <TableTd>
-                    <Tooltip
-                      key={ug.sigla}
-                      label={ug.name}
-                      openDelay={200}
-                      w={300}
-                      multiline
-                    >
-                      <div className="flex cursor-pointer items-center space-x-2">
-                        <Info className="size-4 text-muted-foreground" />
-                        <span>{ug.sigla}</span>
-                      </div>
-                    </Tooltip>
-                  </TableTd>
-                </TableTr>
+                      )}
+                    </div>
+                  </AccordionPanel>
+                </AccordionItem>
               ))}
-            </TableTbody>
-          </Table>
-        </Paper>
+            </Accordion>
+          </Paper>
+        </section>
       </div>
       <EventDetailEditDrawer />
     </>

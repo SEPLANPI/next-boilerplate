@@ -30,7 +30,9 @@ export default function RootLayout({
       <head>
         <ColorSchemeScript />
       </head>
-      <body className={`${figtree.className} ${montserrat.variable}`}>
+      <body
+        className={`${figtree.className} ${montserrat.variable} antialised`}
+      >
         <Providers>{children}</Providers>
       </body>
     </html>

@@ -11,6 +11,7 @@ import React, {
 
 interface DataListContextType {
   layout: 'row' | 'column'
+  minWidth: string
 }
 
 const DataListContext = createContext<DataListContextType | undefined>(
@@ -23,19 +24,19 @@ const sizeToSpace = {
     column: 'space-x-2'
   },
   sm: {
-    row: 'space-y-4',
+    row: 'space-y-3',
     column: 'space-x-4'
   },
   md: {
-    row: 'space-y-6',
+    row: 'space-y-4',
     column: 'space-x-6'
   },
   lg: {
-    row: 'space-y-10',
+    row: 'space-y-6',
     column: 'space-x-10'
   },
   xl: {
-    row: 'space-y-14',
+    row: 'space-y-8',
     column: 'space-x-14'
   }
 } as const
@@ -44,6 +45,7 @@ interface DataListRootProps extends HTMLAttributes<HTMLElement> {
   children: ReactNode
   layout?: 'row' | 'column'
   size?: keyof typeof sizeToSpace
+  minWidth?: string
 }
 
 interface DataListItemProps extends HTMLAttributes<HTMLDivElement> {
@@ -64,13 +66,14 @@ export function DataListRoot({
   className,
   layout = 'row',
   size = 'md',
+  minWidth = '88px',
   ...props
 }: DataListRootProps) {
   const spaceClass =
     layout === 'row' ? sizeToSpace[size].row : sizeToSpace[size].column
 
   return (
-    <DataListContext.Provider value={{ layout }}>
+    <DataListContext.Provider value={{ layout, minWidth }}>
       <dl
         className={cn(
           'flex',
@@ -97,7 +100,7 @@ export function DataListItem({
   return (
     <div
       className={cn(
-        `flex justify-start`,
+        `flex justify-start gap-2`,
         layout === 'column' ? 'flex-col' : '',
         className
       )}
@@ -110,10 +113,11 @@ export function DataListItem({
 
 export function DataListLabel({
   children,
-  minWidth = '88px',
   className,
   ...props
 }: DataListLabelProps) {
+  const context = useContext(DataListContext)
+  const minWidth = context?.minWidth ?? '88px'
   return (
     <span
       className={cn('text-sm font-medium text-muted-foreground', className)}

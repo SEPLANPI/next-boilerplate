@@ -1,6 +1,6 @@
 export interface AdministrativeUnit {
-  number: string
-  name: string
+  numero: string
+  nome: string
   sigla: string
 }
 
