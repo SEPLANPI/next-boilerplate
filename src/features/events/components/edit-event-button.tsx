@@ -1,25 +1,12 @@
 'use client'
 
 import { Button } from '@mantine/core'
-import { Event } from '../types'
 import { Pencil } from 'lucide-react'
 import { useEventEditDrawer } from '../stores/edit-event-drawer-store'
+import { EditEvent } from '../types/edit-event'
 
 type EditEventButtonProps = {
-  event: Pick<
-    Event,
-    | 'id'
-    | 'nome'
-    | 'editado'
-    | 'data'
-    | 'local'
-    | 'municipio_id'
-    | 'descricao'
-    | 'objetivo'
-    | 'categoria'
-    | 'subcategoria'
-    | 'natureza_gasto'
-  >
+  event: EditEvent
 }
 
 export function EditEventButton({ event }: EditEventButtonProps) {

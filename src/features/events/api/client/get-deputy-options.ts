@@ -1,6 +1,9 @@
 import { API } from '@/constants/messages'
 import { clientApi } from '@/lib/client-api'
-import { FilterOptionDeputy } from '../../types'
+
+interface FilterOptionDeputy {
+  nome: string
+}
 
 export async function getDeputyFilterOptions(): Promise<FilterOptionDeputy[]> {
   const response = await clientApi.get('/deputados/filtro')

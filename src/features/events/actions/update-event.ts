@@ -15,21 +15,24 @@ type UpdateEventInput = {
   local: string | null
   municipio_id?: string | null
   categoria?: string | null
-  natureza_gasto?: string[]
+  contratos_naturezas: {
+    id: number
+    naturezas_gasto: string[]
+  }[]
 }
 
 export async function updateEvent(
   input: UpdateEventInput
 ): Promise<ActionState<Event>> {
+  console.log(input)
   try {
     const response = await api.patch(`/eventos/${input.id}/`, {
       body: input
     })
 
-    console.log(input)
-
     if (!response.ok) {
       const error = await response.json()
+      console.log(error)
       return { error: error.detail || API.UNEXPECTED_FETCH_ERROR }
     }
 

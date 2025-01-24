@@ -1,6 +1,10 @@
 import { API } from '@/constants/messages'
 import { clientApi } from '@/lib/client-api'
-import { FilterOptionExpenseNature } from '../../types'
+
+interface FilterOptionExpenseNature {
+  id: number
+  nome: string
+}
 
 export async function getExpenseNatureFilterOptions(): Promise<
   FilterOptionExpenseNature[]

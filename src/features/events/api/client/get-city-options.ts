@@ -1,6 +1,10 @@
 import { API } from '@/constants/messages'
 import { clientApi } from '@/lib/client-api'
-import { FilterOptionCity } from '../../types'
+
+interface FilterOptionCity {
+  id: number
+  nome: string
+}
 
 export async function getCityFilterOptions(): Promise<FilterOptionCity[]> {
   const response = await clientApi.get('/municipios')

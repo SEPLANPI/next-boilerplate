@@ -34,4 +34,3 @@ export function isNavigationGroup(
 ): item is NavigationGroup {
   return 'items' in item && Array.isArray(item.items) && item.items.length > 0
 }
-

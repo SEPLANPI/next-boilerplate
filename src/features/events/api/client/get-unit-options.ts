@@ -1,6 +1,12 @@
 import { API } from '@/constants/messages'
 import { clientApi } from '@/lib/client-api'
-import { FilterOptionUnit } from '../../types'
+
+export interface FilterOptionUnit {
+  numero: number
+  nome: string
+  sigla: string
+  has_events: boolean
+}
 
 export async function getUnitFilterOptions(): Promise<FilterOptionUnit[]> {
   const response = await clientApi.get('/ugs/filtro')

@@ -10,6 +10,7 @@ import { getDeputyFilterOptions } from '../api/client/get-deputy-options'
 import { dayjs } from '@/lib/dayjs'
 import { getCategoryFilterOptions } from '../api/client/get-category-options'
 import { getExpenseNatureFilterOptions } from '../api/client/get-expense-nature-options'
+import { getPeriodOptions } from '../api/client/get-periods-options'
 
 const dateShortcuts = [
   {
@@ -65,11 +66,11 @@ export function EventsFilters() {
       <AsyncFilter
         loadOptions={getUnitFilterOptions}
         filterFn={(option, search) =>
-          option.name.toLowerCase().includes(search) ||
+          option.nome.toLowerCase().includes(search) ||
           option.sigla.toLowerCase().includes(search)
         }
-        getOptionValue={(option) => option.number.toString()}
-        getOptionLabel={(option) => option.name}
+        getOptionValue={(option) => option.numero.toString()}
+        getOptionLabel={(option) => option.nome}
         getOptionDisabled={(option) => !option.has_events}
         filterId="ugs"
         searchParamKey="ugs"
@@ -77,7 +78,7 @@ export function EventsFilters() {
           <span className="flex min-w-0 flex-col space-y-1 text-xs">
             <span className="font-semibold">{option.sigla}</span>
             <span className="min-w-0 truncate font-medium text-muted-foreground">
-              {option.name}
+              {option.nome}
             </span>
           </span>
         )}
@@ -125,6 +126,16 @@ export function EventsFilters() {
         getOptionValue={(option) => option.id.toString()}
       >
         Natureza do Gasto
+      </AsyncFilter>
+      <AsyncFilter
+        loadOptions={getPeriodOptions}
+        showSearch={false}
+        filterId="period"
+        searchParamKey="period"
+        getOptionValue={(option) => option.id.toString()}
+        getOptionLabel={(option) => option.ano.toString()}
+      >
+        Exercício
       </AsyncFilter>
     </>
   )

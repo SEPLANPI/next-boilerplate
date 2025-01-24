@@ -21,12 +21,16 @@ export interface Event {
     name: string
     sigla: string
   }[]
-  contratos: number[]
+  contratos: {
+    id: number
+    numero: number
+    titulo: string
+    valor: number
+    naturezas_gasto: { id: number }[]
+  }[]
   valor: number
   editado: boolean
   categoria: string | null
-  subcategoria: string | null
-  natureza_gasto: number[]
 }
 
 export interface EventsResponse {
@@ -66,33 +70,6 @@ export interface UnidadeGestora {
   has_events: boolean
 }
 
-export interface FilterOptionDeputy {
-  nome: string
-}
-
-export interface FilterOptionCity {
-  id: number
-  nome: string
-}
-
-export interface FilterOptionCategory {
-  id: number
-  nome: string
-  subcategorias: FilterOptionCategory[]
-}
-
-export interface FilterOptionExpenseNature {
-  id: number
-  nome: string
-}
-
-export interface FilterOptionUnit {
-  number: number
-  name: string
-  sigla: string
-  has_events: boolean
-}
-
 export interface Contractor {
   cnpj: string
   descricao_servico: string
@@ -110,6 +87,7 @@ export interface Contract {
   situacao: 'A_CONTRATAR' | 'EM_VIGOR' | 'ENCERRADO' | 'LICITADO' | 'LICITADO_E'
   autor_emenda: string | null
   ug: number
+  naturezas_gasto: { id: number }[]
 }
 
 export interface EventDetail {
@@ -129,7 +107,5 @@ export interface EventDetail {
   ugs: AdministrativeUnit[]
   categoria: string | null
   categoria_nome?: string | null
-  subcategoria: string | null
-  natureza_gasto: number[]
   natureza_gasto_nomes?: string[]
 }

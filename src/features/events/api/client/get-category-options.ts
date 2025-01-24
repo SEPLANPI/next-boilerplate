@@ -1,6 +1,11 @@
 import { API } from '@/constants/messages'
 import { clientApi } from '@/lib/client-api'
-import { FilterOptionCategory } from '../../types'
+
+interface FilterOptionCategory {
+  id: number
+  nome: string
+  subcategorias: FilterOptionCategory[]
+}
 
 export async function getCategoryFilterOptions(): Promise<
   FilterOptionCategory[]

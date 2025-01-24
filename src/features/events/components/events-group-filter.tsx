@@ -19,8 +19,8 @@ const groupOptions = [
     label: 'Município'
   },
   {
-    value: 'deputado',
-    label: 'Deputado'
+    value: 'fonte',
+    label: 'Fonte'
   }
 ] as const
 
