@@ -283,7 +283,7 @@ export function EventForm({ event, id, onSubmit, onComplete }: EventFormProps) {
           {form.getValues().contratos.map((item, index) => (
             <>
               <div className="space-y-2" key={item.id}>
-                <DataListRoot size="xs">
+                <DataListRoot>
                   <DataListItem>
                     <DataListLabel>Número</DataListLabel>
                     <DataListValue>
