@@ -1,51 +1,40 @@
 'use client'
 
 import { cn } from '@/lib/utils'
+
 import React, {
   ReactNode,
-  CSSProperties,
   HTMLAttributes,
   createContext,
   useContext
 } from 'react'
 
 interface DataListContextType {
-  layout: 'row' | 'column'
-  minWidth: string
+  orientation: 'vertical' | 'horizontal'
+  minWidth?: string
+  maxWidth?: string
 }
 
 const DataListContext = createContext<DataListContextType | undefined>(
   undefined
 )
 
-const sizeToSpace = {
-  xs: {
-    row: 'space-y-2',
-    column: 'space-x-2'
-  },
-  sm: {
-    row: 'space-y-3',
-    column: 'space-x-4'
-  },
-  md: {
-    row: 'space-y-4',
-    column: 'space-x-6'
-  },
-  lg: {
-    row: 'space-y-6',
-    column: 'space-x-10'
-  },
-  xl: {
-    row: 'space-y-8',
-    column: 'space-x-14'
-  }
+const spacingMap = {
+  xs: 2, // 0.5rem
+  sm: 3, // 0.75rem
+  md: 4, // 1rem
+  lg: 6, // 1.5rem
+  xl: 8 // 2rem
 } as const
+
+type SpacingSize = keyof typeof spacingMap
 
 interface DataListRootProps extends HTMLAttributes<HTMLElement> {
   children: ReactNode
-  layout?: 'row' | 'column'
-  size?: keyof typeof sizeToSpace
+  orientation?: 'vertical' | 'horizontal'
+  spacing?: SpacingSize
   minWidth?: string
+  maxWidth?: string
 }
 
 interface DataListItemProps extends HTMLAttributes<HTMLDivElement> {
@@ -54,7 +43,6 @@ interface DataListItemProps extends HTMLAttributes<HTMLDivElement> {
 
 interface DataListLabelProps extends HTMLAttributes<HTMLSpanElement> {
   children: ReactNode
-  minWidth?: string
 }
 
 interface DataListValueProps extends HTMLAttributes<HTMLSpanElement> {
@@ -64,21 +52,19 @@ interface DataListValueProps extends HTMLAttributes<HTMLSpanElement> {
 export function DataListRoot({
   children,
   className,
-  layout = 'row',
-  size = 'md',
-  minWidth = '88px',
+  orientation = 'horizontal',
+  spacing = 'md',
+  minWidth,
+  maxWidth,
   ...props
 }: DataListRootProps) {
-  const spaceClass =
-    layout === 'row' ? sizeToSpace[size].row : sizeToSpace[size].column
+  const spacingValue = spacingMap[spacing]
 
   return (
-    <DataListContext.Provider value={{ layout, minWidth }}>
+    <DataListContext.Provider value={{ orientation, minWidth, maxWidth }}>
       <dl
         className={cn(
-          'flex',
-          layout === 'row' ? 'flex-col' : 'flex-row',
-          spaceClass,
+          `overflow-wrap-anywhere flex flex-col space-y-${spacingValue}`,
           className
         )}
         {...props}
@@ -95,15 +81,30 @@ export function DataListItem({
   ...props
 }: DataListItemProps) {
   const context = useContext(DataListContext)
-  const layout = context?.layout ?? 'row'
+  const orientation = context?.orientation ?? 'horizontal'
+
+  const gridTemplateColumns =
+    context?.minWidth && context?.maxWidth
+      ? `minmax(${context.minWidth}, ${context.maxWidth}) 2fr`
+      : context?.minWidth
+        ? `minmax(${context.minWidth}, 1fr) 2fr`
+        : context?.maxWidth
+          ? `minmax(0, ${context.maxWidth}) 2fr`
+          : '1fr 2fr'
+
+  const style =
+    orientation === 'horizontal' ? { gridTemplateColumns } : undefined
 
   return (
     <div
       className={cn(
-        `flex justify-start gap-2`,
-        layout === 'column' ? 'flex-col' : '',
+        orientation === 'vertical'
+          ? 'flex flex-col gap-2'
+          : 'grid items-baseline',
+
         className
       )}
+      style={style}
       {...props}
     >
       {children}
@@ -116,12 +117,9 @@ export function DataListLabel({
   className,
   ...props
 }: DataListLabelProps) {
-  const context = useContext(DataListContext)
-  const minWidth = context?.minWidth ?? '88px'
   return (
     <span
       className={cn('text-sm font-medium text-muted-foreground', className)}
-      style={{ minWidth } as CSSProperties}
       {...props}
     >
       {children}
@@ -135,7 +133,7 @@ export function DataListValue({
   ...props
 }: DataListValueProps) {
   return (
-    <span className={cn('text-sm', className)} {...props}>
+    <span className={cn('min-w-0 text-sm', className)} {...props}>
       {children}
     </span>
   )

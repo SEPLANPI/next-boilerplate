@@ -69,7 +69,7 @@ export function EventsFilters() {
           option.nome.toLowerCase().includes(search) ||
           option.sigla.toLowerCase().includes(search)
         }
-        getOptionValue={(option) => option.numero.toString()}
+        getOptionValue={(option) => option.id.toString()}
         getOptionLabel={(option) => option.nome}
         getOptionDisabled={(option) => !option.has_events}
         filterId="ugs"
@@ -100,7 +100,7 @@ export function EventsFilters() {
         filterId="deputados"
         searchParamKey="deputados"
         getOptionLabel={(option) => option.nome}
-        getOptionValue={(option) => option.nome}
+        getOptionValue={(option) => option.id.toString()}
       >
         Deputado
       </AsyncFilter>

@@ -17,12 +17,20 @@ export async function getEventGroups(): Promise<
     toDate,
     municipios,
     deputados,
+    status,
     ...eventsParams
   } = eventsSearchParams.all()
 
   if (!group) {
     return { error: 'Query param "group" não está definido' }
   }
+
+  const editadoFilter =
+    status === 'reviewed'
+      ? { editado: true }
+      : status === 'pending'
+        ? { editado: false }
+        : {}
 
   const params = buildParams({
     ...eventsParams,
@@ -32,7 +40,8 @@ export async function getEventGroups(): Promise<
     data_fim: toDate ? dayjs(toDate).format('YYYY-MM-DD') : undefined,
     ordering: groupSort,
     municipio: municipios,
-    autor_emenda: deputados
+    deputado: deputados,
+    ...editadoFilter
   })
 
   try {
@@ -44,6 +53,7 @@ export async function getEventGroups(): Promise<
     }
 
     const data: EventGroupResponse = await response.json()
+    console.log(data)
     return { data }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

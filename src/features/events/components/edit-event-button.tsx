@@ -16,6 +16,7 @@ export function EditEventButton({ event }: EditEventButtonProps) {
       variant="default"
       leftSection={<Pencil className="size-4" />}
       onClick={() => openEditDrawer(event)}
+      className="flex-shrink-0"
     >
       Editar
     </Button>

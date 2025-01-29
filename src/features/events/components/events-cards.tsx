@@ -23,7 +23,7 @@ export async function EventsCards() {
       </div>
       <div className="flex min-w-64 flex-col rounded border p-4 shadow-sm">
         <span className="mb-2 text-sm font-medium text-secondary-foreground">
-          Valor investido
+          Valor dos Contratos
         </span>
         <span className="text-2xl font-bold">
           R${' '}

@@ -3,6 +3,9 @@ import { clientApi } from '@/lib/client-api'
 
 interface FilterOptionDeputy {
   nome: string
+  id: number
+  foto: string
+  partido: string
 }
 
 export async function getDeputyFilterOptions(): Promise<FilterOptionDeputy[]> {

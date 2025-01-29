@@ -53,10 +53,10 @@ export function AdministrativeUnitsTable({
       </TableThead>
       <TableTbody>
         {units.map((unit) => (
-          <TableTr key={unit.number}>
-            <TableTd className="w-min">{unit.number}</TableTd>
+          <TableTr key={unit.numero}>
+            <TableTd className="w-min">{unit.numero}</TableTd>
             <TableTd className="w-min">{unit.sigla}</TableTd>
-            <TableTd>{unit.name}</TableTd>
+            <TableTd>{unit.nome}</TableTd>
           </TableTr>
         ))}
       </TableTbody>

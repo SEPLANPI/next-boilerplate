@@ -13,6 +13,7 @@ import { EventsAccordionsSkeleton } from '@/features/events/components/groups/ev
 import { EventListEditDrawer } from '@/features/events/components/event-list-edit-drawer'
 import { EventsTabs } from '@/features/events/components/events-tabs'
 import { getEventsQuantities } from '@/features/events/api/get-events-quantities'
+import { EventsCards } from '@/features/events/components/events-cards'
 
 export default async function Events({
   searchParams
@@ -51,6 +52,7 @@ export default async function Events({
           <EventsFilters />
           <EventsResetFilters />
         </div>
+        <EventsCards />
         {hasGrouping ? (
           <Suspense fallback={<EventsAccordionsSkeleton />} key={groupKey}>
             <EventsGroupView />

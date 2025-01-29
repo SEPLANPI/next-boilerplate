@@ -1,4 +1,5 @@
 import { AdministrativeUnit } from '@/features/administrative-units/types'
+import { Deputy } from '@/features/deputies/types'
 
 export interface EventGroup {
   nome: string
@@ -133,5 +134,5 @@ export interface EventDetail {
   valor_empenhado: number
   valor_liquidado: number
   valor_pago: number
-  deputados: { nome: string }[]
+  deputados: Deputy[]
 }

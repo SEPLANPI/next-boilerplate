@@ -3,6 +3,7 @@ import { clientApi } from '@/lib/client-api'
 
 export interface FilterOptionUnit {
   numero: number
+  id: number
   nome: string
   sigla: string
   has_events: boolean

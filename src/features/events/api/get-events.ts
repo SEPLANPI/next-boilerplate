@@ -47,7 +47,7 @@ export async function getEvents({
     data_fim: toDate ? dayjs(toDate).format('YYYY-MM-DD') : undefined,
     ordering: sort,
     municipio: municipios,
-    autor_emenda: deputados,
+    deputado: deputados,
     categoria: categories,
     natureza_gasto: expenseNature,
     exercicio: period,
@@ -64,6 +64,8 @@ export async function getEvents({
         params: params.toString(),
         error: error.detail
       })
+
+      console.log(error)
       return { error: error.detail || API.UNEXPECTED_FETCH_ERROR }
     }
 
