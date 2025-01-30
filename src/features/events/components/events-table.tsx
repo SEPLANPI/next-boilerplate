@@ -9,7 +9,8 @@ import {
   TableThead,
   TableTbody,
   Tooltip,
-  ActionIcon
+  ActionIcon,
+  Checkbox
 } from '@mantine/core'
 import { Info, PencilLine } from 'lucide-react'
 import { useRouter } from 'next/navigation'
@@ -20,6 +21,8 @@ import { Event } from '../types'
 import { useEventEditDrawer } from '../stores/edit-event-drawer-store'
 import { formatDate } from '@/utils/format-date'
 import { formatCurrency } from '@/lib/utils'
+import { useEditModeStore } from '../stores/edit-mode-store'
+import { EditModeFloatingBar } from './edit-mode-floating-bar'
 
 interface EventsTableProps {
   events: Event[]
@@ -39,8 +42,7 @@ export function EventsTable({
       shallow: shallowSort
     })
   )
-
-  // Use the custom hook for managing the edit drawer
+  const { isEditMode, isSelected, toggleEventSelection } = useEditModeStore()
   const { openEditDrawer } = useEventEditDrawer()
 
   function handleNavigateToEvent(id: number) {
@@ -63,6 +65,7 @@ export function EventsTable({
       >
         <TableThead>
           <TableTr>
+            {isEditMode && <TableTh style={{ width: 40 }} />}
             <SortableColumnHeader
               column="nome"
               title="Nome"
@@ -98,15 +101,25 @@ export function EventsTable({
               ascendingLabel={SORT_LABELS.NUMERIC.ASC}
               descendingLabel={SORT_LABELS.NUMERIC.DESC}
             />
-            <TableTh className="w-[48px]" />
+            {isEditMode && <TableTh className="w-[48px]" />}
           </TableTr>
         </TableThead>
         <TableTbody>
           {events.map((event) => (
             <TableTr
               key={event.id}
-              onClick={() => handleNavigateToEvent(event.id)}
+              onClick={() => !isEditMode && handleNavigateToEvent(event.id)}
             >
+              {isEditMode && (
+                <TableTd onClick={(e) => e.stopPropagation()}>
+                  <Checkbox
+                    checked={isSelected(event.id)}
+                    onChange={() =>
+                      toggleEventSelection({ id: event.id, name: event.nome })
+                    }
+                  />
+                </TableTd>
+              )}
               <TableTd className="max-w-[500px] truncate" title={event.nome}>
                 {event.nome}
               </TableTd>
@@ -133,20 +146,23 @@ export function EventsTable({
               <TableTd className="whitespace-nowrap font-semibold">
                 {formatCurrency(event.valor)}
               </TableTd>
-              <TableTd className="relative w-[26px]">
-                <ActionIcon
-                  variant="default"
-                  size="md"
-                  className="absolute right-2 top-1/2 -translate-y-1/2"
-                  onClick={(e) => handleEditEvent(event, e)}
-                >
-                  <PencilLine className="size-4" />
-                </ActionIcon>
-              </TableTd>
+              {isEditMode && (
+                <TableTd className="relative w-[26px]">
+                  <ActionIcon
+                    variant="default"
+                    size="md"
+                    className="absolute right-2 top-1/2 -translate-y-1/2"
+                    onClick={(e) => handleEditEvent(event, e)}
+                  >
+                    <PencilLine className="size-4" />
+                  </ActionIcon>
+                </TableTd>
+              )}
             </TableTr>
           ))}
         </TableTbody>
       </Table>
+      <EditModeFloatingBar />
     </>
   )
 }

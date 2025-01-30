@@ -14,6 +14,7 @@ import { EventListEditDrawer } from '@/features/events/components/event-list-edi
 import { EventsTabs } from '@/features/events/components/events-tabs'
 import { getEventsQuantities } from '@/features/events/api/get-events-quantities'
 import { EventsCards } from '@/features/events/components/events-cards'
+import { EditModeToggle } from '@/features/events/components/edit-mode-toggle'
 
 export default async function Events({
   searchParams
@@ -35,9 +36,12 @@ export default async function Events({
         <div className="mb-6">
           <div className="mb-1 flex w-full items-end justify-between">
             <h1 className="text-2xl font-semibold text-gray-900">Eventos</h1>
-            <Button leftSection={<Plus className="size-4" />} disabled>
-              Novo evento
-            </Button>
+            <div className="space-x-2">
+              <EditModeToggle />
+              <Button leftSection={<Plus className="size-4" />} disabled>
+                Novo evento
+              </Button>
+            </div>
           </div>
           <EventsTabs
             quantities={{

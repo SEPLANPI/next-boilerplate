@@ -30,3 +30,7 @@ export const eventsSearchParamsParsers = {
 export const eventsSearchParams = createSearchParamsCache(
   eventsSearchParamsParsers
 )
+
+export const mergeEventsSearchParams = createSearchParamsCache({
+  ids: parseAsArrayOf(parseAsInteger)
+})

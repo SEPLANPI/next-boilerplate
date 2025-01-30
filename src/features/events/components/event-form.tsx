@@ -13,7 +13,14 @@ import { useForm, zodResolver } from '@mantine/form'
 import { dayjs } from '@/lib/dayjs'
 import { useQuery } from '@tanstack/react-query'
 import { getCityFilterOptions } from '../api/client/get-city-options'
-import { PropsWithChildren, useEffect, useMemo, useState } from 'react'
+import {
+  PropsWithChildren,
+  useEffect,
+  useMemo,
+  useState,
+  forwardRef,
+  useImperativeHandle
+} from 'react'
 import { filterOptions } from '@/utils/filter-options'
 import { notifications } from '@mantine/notifications'
 import { updateEvent } from '../actions/update-event'
@@ -75,7 +82,13 @@ function FormSection({ children }: PropsWithChildren) {
   )
 }
 
-export function EventForm({ event, id, onSubmit, onComplete }: EventFormProps) {
+export const EventForm = forwardRef<
+  {
+    setFieldValue: (field: string, value: any) => void
+    setValues: (values: any) => void
+  },
+  EventFormProps
+>(({ event, id, onSubmit, onComplete }: EventFormProps, ref) => {
   const { data: cities, isLoading: isCitiesLoading } = useQuery({
     queryKey: ['cities'],
     queryFn: getCityFilterOptions,
@@ -147,6 +160,15 @@ export function EventForm({ event, id, onSubmit, onComplete }: EventFormProps) {
         })) || []
     }
   })
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      setFieldValue: form.setFieldValue,
+      setValues: form.setValues
+    }),
+    [form]
+  )
 
   const [error, setError] = useState<string | null>(null)
 
@@ -223,6 +245,8 @@ export function EventForm({ event, id, onSubmit, onComplete }: EventFormProps) {
           placeholder="Descrição do evento"
           key={form.key('descricao')}
           {...form.getInputProps('descricao')}
+          autosize
+          maxRows={4}
         />
         <Textarea
           label="Objetivo"
@@ -330,4 +354,6 @@ export function EventForm({ event, id, onSubmit, onComplete }: EventFormProps) {
       </FormSection>
     </form>
   )
-}
+})
+
+EventForm.displayName = 'EventForm'
