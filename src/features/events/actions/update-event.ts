@@ -13,7 +13,7 @@ type UpdateEventInput = {
   descricao?: string
   data?: string
   local: string | null
-  municipio_id?: string | null
+  municipio?: string | null
   categoria?: string | null
   contratos_naturezas: {
     id: number

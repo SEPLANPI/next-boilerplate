@@ -49,6 +49,7 @@ export function EventDetailEditDrawer() {
               id={formId}
               onSubmit={handleSubmit}
               onComplete={handleComplete}
+              mode="edit"
             />
           </Drawer.Body>
           <footer className="sticky bottom-0 border-t bg-white p-5">

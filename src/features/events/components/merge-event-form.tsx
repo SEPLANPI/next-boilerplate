@@ -5,7 +5,7 @@ import { EventForm } from './event-form'
 import { MergeEventList } from './merge-event-list'
 import { MergeEventDetails } from './merge-event-details'
 import { dayjs } from '@/lib/dayjs'
-import { EventDetail } from '../types'
+import { Contract, EventDetail } from '../types'
 
 interface MergeEventFormProps {
   events: EventDetail[]
@@ -23,9 +23,9 @@ export function MergeEventForm({ events }: MergeEventFormProps) {
   )
 
   const allContracts = useMemo(() => {
-    const contractMap = new Map()
-    events.forEach(event => {
-      event.contratos.forEach(contract => {
+    const contractMap = new Map<number, Contract>()
+    events.forEach((event) => {
+      event.contratos.forEach((contract: Contract) => {
         contractMap.set(contract.id, contract)
       })
     })
@@ -58,9 +58,11 @@ export function MergeEventForm({ events }: MergeEventFormProps) {
         local: selectedEvent.local,
         municipio: selectedEvent.municipio_id?.toString(),
         categoria: selectedEvent.categoria,
-        contratos: allContracts.map((c) => ({
+        contratos: allContracts.map((c: Contract) => ({
           id: c.id,
-          naturezas_gasto: c.naturezas_gasto.map((n) => n.id.toString())
+          naturezas_gasto: c.naturezas_gasto.map((n: { id: number }) =>
+            n.id.toString()
+          )
         }))
       })
     }
@@ -83,7 +85,13 @@ export function MergeEventForm({ events }: MergeEventFormProps) {
         />
       </div>
       <div className="p-5">
-        <EventForm event={baseEvent} id="merge-form" ref={formRef} />
+        <EventForm
+          event={baseEvent}
+          id="merge-form"
+          ref={formRef}
+          mode="merge"
+          eventIds={events.map((e) => e.id)}
+        />
       </div>
     </div>
   )

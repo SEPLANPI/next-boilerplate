@@ -10,18 +10,28 @@ import {
 import { EventDetail } from '../types'
 import { ArrowRight } from 'lucide-react'
 import { dayjs } from '@/lib/dayjs'
-import { formatCurrency } from '@/lib/utils'
 import { formatDate } from '@/utils/format-date'
+
+type CopyableValue = string | Date | null
 
 interface EventDetailsProps {
   event: EventDetail | null
-  onCopyField: (field: string, value: any) => void
+  onCopyField: (
+    field: keyof EventDetail,
+    value: NonNullable<CopyableValue>
+  ) => void
   onCopyAll: () => void
 }
 
+interface FieldValue<T = any> {
+  display: string
+  value: T
+  field: keyof EventDetail
+}
+
 interface ValueWithCopyProps {
-  value: { display: string; value: any } | string | null
-  field: string
+  field: FieldValue
+  onCopy: (field: keyof EventDetail, value: any) => void
 }
 
 export function MergeEventDetails({
@@ -31,17 +41,14 @@ export function MergeEventDetails({
 }: EventDetailsProps) {
   if (!event) return null
 
-  function ValueWithCopyButton({ value, field }: ValueWithCopyProps) {
-    const display = typeof value === 'object' ? value?.display : value
-    const copyValue = typeof value === 'object' ? value?.value : value
-
+  function ValueWithCopyButton({ field, onCopy }: ValueWithCopyProps) {
     return (
       <DataListValue className="flex items-start justify-between gap-2">
-        <span>{display || '-'}</span>
-        {copyValue && (
+        <span>{field.display || '-'}</span>
+        {field.value && (
           <Tooltip label="Usar este valor" position="left">
             <ActionIcon
-              onClick={() => onCopyField(field, copyValue)}
+              onClick={() => onCopy(field.field, field.value)}
               size="sm"
               variant="light"
             >
@@ -53,60 +60,56 @@ export function MergeEventDetails({
     )
   }
 
+  const fields: FieldValue[] = [
+    {
+      display: event.nome || '-',
+      value: event.nome,
+      field: 'nome'
+    },
+    {
+      display: event.descricao || '-',
+      value: event.descricao,
+      field: 'descricao'
+    },
+    {
+      display: event.data ? formatDate(event.data) : '-',
+      value: event.data ? dayjs(event.data, 'DD-MM-YYYY').toDate() : null,
+      field: 'data'
+    },
+    {
+      display: event.categoria_nome || '-',
+      value: event.categoria_nome,
+      field: 'categoria'
+    },
+    {
+      display: event.municipio || '-',
+      value: event.municipio_id?.toString(),
+      field: 'municipio'
+    },
+    {
+      display: event.local || '-',
+      value: event.local,
+      field: 'local'
+    }
+  ]
+
   return (
     <div className="space-y-6">
       <Button onClick={onCopyAll} variant="light">
         Preencher formulário com este evento
       </Button>
       <DataListRoot>
-        <DataListItem>
-          <DataListLabel>Nome</DataListLabel>
-          <ValueWithCopyButton value={event.nome} field="nome" />
-        </DataListItem>
-        <DataListItem>
-          <DataListLabel>Descrição</DataListLabel>
-          <ValueWithCopyButton value={event.descricao} field="descricao" />
-        </DataListItem>
+        {fields.map((field) => (
+          <DataListItem key={field.field}>
+            <DataListLabel>
+              {field.field.charAt(0).toUpperCase() + field.field.slice(1)}
+            </DataListLabel>
+            <ValueWithCopyButton field={field} onCopy={onCopyField} />
+          </DataListItem>
+        ))}
         <DataListItem>
           <DataListLabel>Objetivo</DataListLabel>
           <DataListValue>{event.objetivo || '-'}</DataListValue>
-        </DataListItem>
-        <DataListItem>
-          <DataListLabel>Data</DataListLabel>
-          <ValueWithCopyButton
-            value={
-              event.data
-                ? {
-                    display: formatDate(event.data),
-                    value: dayjs(event.data, 'DD-MM-YYYY').toDate()
-                  }
-                : null
-            }
-            field="data"
-          />
-        </DataListItem>
-      
-        <DataListItem>
-          <DataListLabel>Município</DataListLabel>
-          <ValueWithCopyButton
-            value={
-              event.municipio_id
-                ? {
-                    display: event.municipio,
-                    value: event.municipio_id.toString()
-                  }
-                : null
-            }
-            field="municipio"
-          />
-        </DataListItem>
-        <DataListItem>
-          <DataListLabel>Endereço</DataListLabel>
-          <ValueWithCopyButton value={event.local} field="local" />
-        </DataListItem>
-        <DataListItem>
-          <DataListLabel>Categoria</DataListLabel>
-          <ValueWithCopyButton value={event.categoria_nome} field="categoria" />
         </DataListItem>
       </DataListRoot>
     </div>

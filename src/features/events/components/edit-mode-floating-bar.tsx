@@ -1,7 +1,7 @@
 'use client'
 
 import { ActionIcon, Button, Transition } from '@mantine/core'
-import { X } from 'lucide-react'
+import { X, Combine } from 'lucide-react'
 import Link from 'next/link'
 import { useEditModeStore } from '../stores/edit-mode-store'
 
@@ -49,6 +49,7 @@ export function EditModeFloatingBar() {
                 query: { ids: selectedEvents.map((e) => e.id).join(',') }
               }}
               disabled={selectedEvents.length < 2}
+              leftSection={<Combine className="size-4" />}
             >
               Mesclar eventos
             </Button>

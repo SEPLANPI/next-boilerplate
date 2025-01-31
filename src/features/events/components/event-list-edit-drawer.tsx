@@ -47,6 +47,7 @@ export function EventListEditDrawer() {
             <EventForm
               event={eventToEdit}
               id={formId}
+              mode="edit"
               onSubmit={handleSubmit}
               onComplete={handleComplete}
             />

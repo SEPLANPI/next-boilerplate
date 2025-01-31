@@ -10,7 +10,6 @@ interface EventListProps {
 }
 
 export function MergeEventList({ events, selected, onSelect }: EventListProps) {
-  console.log(events)
   return (
     <div className="flex flex-col gap-2">
       {events.map((event) => (

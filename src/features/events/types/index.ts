@@ -23,13 +23,7 @@ export interface Event {
     nome: string
     sigla: string
   }[]
-  contratos: {
-    id: number
-    numero: number
-    titulo: string
-    valor: number
-    naturezas_gasto: { id: number }[]
-  }[]
+  contratos: Contract[]
   valor: number
   editado: boolean
   categoria: string | null

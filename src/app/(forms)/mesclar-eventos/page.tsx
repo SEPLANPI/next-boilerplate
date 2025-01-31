@@ -9,7 +9,7 @@ import { SearchParams } from 'nuqs/server'
 import { MergeEventForm } from '@/features/events/components/merge-event-form'
 import { Button } from '@mantine/core'
 import { EventDetail } from '@/features/events/types'
-import {  Combine } from 'lucide-react' 
+import { redirect } from 'next/navigation'
 
 export default async function MergeEvents({
   searchParams
@@ -22,6 +22,11 @@ export default async function MergeEvents({
     ? await Promise.all(params.ids.map((id) => getEvent(id.toString())))
     : []
 
+  const failedEvents = events.filter((result) => result.error)
+  if (failedEvents.length > 0) {
+    redirect('/')
+  }
+
   const validEvents = events
     .filter((result) => !result.error)
     .map((result) => result.data)
@@ -31,7 +36,7 @@ export default async function MergeEvents({
     <>
       <FormLayoutHeader>
         <FormLayoutTitle>Mesclar eventos</FormLayoutTitle>
-        <Button type="submit" form="merge-form" leftSection={<Combine className='size-4' />}>
+        <Button type="submit" form="merge-form">
           Finalizar mesclagem
         </Button>
       </FormLayoutHeader>
