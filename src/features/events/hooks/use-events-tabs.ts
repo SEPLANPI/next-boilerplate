@@ -1,36 +1,36 @@
 import { useLocalStorage } from '@mantine/hooks'
-import { useSearchParams, useRouter } from 'next/navigation'
+import { parseAsInteger, parseAsString, useQueryStates } from 'nuqs'
 import { useEffect } from 'react'
 
 type TabValue = 'reviewed' | 'pending' | 'all'
 
 export function useEventTabs() {
-  const router = useRouter()
-  const searchParams = useSearchParams()
+  const [{ status }, setParams] = useQueryStates({
+    status: parseAsString.withDefault('reviewed'),
+    page: parseAsInteger.withDefault(1)
+  })
 
   const [savedTab, setSavedTab] = useLocalStorage<TabValue>({
     key: 'event-tab',
     defaultValue: 'reviewed'
   })
 
-  const urlTab = searchParams.get('status') as TabValue | null
-  const currentTab = urlTab || savedTab || 'reviewed'
+  const currentTab = status || savedTab || 'reviewed'
 
   useEffect(() => {
-    if (!urlTab && savedTab) {
-      const params = new URLSearchParams(searchParams)
-      params.set('status', savedTab)
-      router.push(`?${params.toString()}`)
+    if (!status && savedTab) {
+      setParams({ status: savedTab })
     }
-  }, [urlTab, savedTab, searchParams, router])
+  }, [status, savedTab, setParams])
 
   const handleTabChange = (value: string | null) => {
     const newValue = (value || 'reviewed') as TabValue
     setSavedTab(newValue)
 
-    const params = new URLSearchParams(searchParams)
-    params.set('status', newValue)
-    router.push(`?${params.toString()}`)
+    setParams({
+      status: newValue,
+      page: 1
+    })
   }
 
   return { currentTab, handleTabChange }

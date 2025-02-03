@@ -15,6 +15,7 @@ import { EventsTabs } from '@/features/events/components/events-tabs'
 import { getEventsQuantities } from '@/features/events/api/get-events-quantities'
 import { EventsCards } from '@/features/events/components/events-cards'
 import { EditModeToggle } from '@/features/events/components/edit-mode-toggle'
+import { EventsCardsSkeleton } from '@/features/events/components/events-cards-skeleton'
 
 export default async function Events({
   searchParams
@@ -27,6 +28,7 @@ export default async function Events({
   const suspenseKey = JSON.stringify(params)
   const groupKey = 'group' + suspenseKey
   const tableKey = 'table' + suspenseKey
+  const cardsKey = 'cards' + suspenseKey
 
   const hasGrouping = !!params.group
 
@@ -56,7 +58,9 @@ export default async function Events({
           <EventsFilters />
           <EventsResetFilters />
         </div>
-        <EventsCards />
+        <Suspense fallback={<EventsCardsSkeleton />} key={cardsKey}>
+          <EventsCards />
+        </Suspense>
         {hasGrouping ? (
           <Suspense fallback={<EventsAccordionsSkeleton />} key={groupKey}>
             <EventsGroupView />
