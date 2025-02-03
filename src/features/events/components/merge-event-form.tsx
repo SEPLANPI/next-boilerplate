@@ -34,9 +34,16 @@ export function MergeEventForm({ events }: MergeEventFormProps) {
 
   const baseEvent = useMemo(() => {
     if (!events.length) return null
+
+    const combinedObjetivos = events
+      .filter((e) => e.objetivo)
+      .map((e) => e.objetivo)
+      .join('\n\n')
+
     return {
       ...events[0],
-      contratos: allContracts
+      contratos: allContracts,
+      objetivo: combinedObjetivos
     }
   }, [events, allContracts])
 
