@@ -5,10 +5,15 @@ import { useEffect } from 'react'
 type TabValue = 'reviewed' | 'pending' | 'all'
 
 export function useEventTabs() {
-  const [{ status }, setParams] = useQueryStates({
-    status: parseAsString.withDefault('reviewed'),
-    page: parseAsInteger.withDefault(1)
-  })
+  const [{ status }, setParams] = useQueryStates(
+    {
+      status: parseAsString.withDefault('reviewed'),
+      page: parseAsInteger.withDefault(1)
+    },
+    {
+      shallow: false
+    }
+  )
 
   const [savedTab, setSavedTab] = useLocalStorage<TabValue>({
     key: 'event-tab',
