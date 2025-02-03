@@ -78,7 +78,7 @@ export function MergeEventDetails({
     },
     {
       display: event.categoria_nome || '-',
-      value: event.categoria_nome,
+      value: event.categoria?.toString(),
       field: 'categoria'
     },
     {
