@@ -43,7 +43,7 @@ export function PoliticalPartiesTable({ parties }: PoliticalPartiesTableProps) {
       <Table verticalSpacing="xs">
         <TableThead>
           <TableTr>
-            <TableTh className="w-8"></TableTh>
+            <TableTh className="w-[52px]"></TableTh>
             <SortableColumnHeader
               column="sigla"
               title="Sigla"
@@ -67,7 +67,7 @@ export function PoliticalPartiesTable({ parties }: PoliticalPartiesTableProps) {
         <TableTbody>
           {parties.map((party) => (
             <TableTr key={party.id} className="cursor-pointer">
-              <TableTd className="size-8">
+              <TableTd>
                 {party.foto ? (
                   <Image
                     className="size-8 rounded"
