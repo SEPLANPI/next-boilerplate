@@ -14,7 +14,7 @@ export default async function Companies({
   const suspenseKey = JSON.stringify(params)
 
   return (
-    <div>
+    <div className='container mx-auto'>
       <div className="flex w-full items-end justify-between">
         <h1 className="text-2xl font-semibold text-gray-900">Empresas</h1>
       </div>

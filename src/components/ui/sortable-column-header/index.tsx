@@ -69,7 +69,7 @@ export function SortableColumnHeader({
 
             <SortIcon
               isSorted={isSorted}
-              isDescending={isDescending}
+              isDescending={isDescending} 
               className="ml-2 h-4 w-4 transition-colors group-hover:text-gray-700"
             />
           </button>
