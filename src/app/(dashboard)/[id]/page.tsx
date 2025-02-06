@@ -53,12 +53,14 @@ function ContractAccordionLabel({ numero, titulo, empresa }: any) {
   )
 }
 
-function DeputyCard({ deputy }: { deputy: Deputy }) {
+function DeputyCard({ deputy }: { deputy: EventDetail['deputados'][0] }) {
   return (
     <div className="flex items-center space-x-2">
       <Avatar src={deputy.foto} alt={deputy.nome} />
-      <span>{deputy.nome}</span>
-      <span>{deputy.partido}</span>
+      <div className="flex flex-col text-sm">
+        <span className="font-medium">{deputy.nome}</span>
+        <span className="text-xs">{deputy.partido_sigla || 'Sem partido'}</span>
+      </div>
     </div>
   )
 }
@@ -67,6 +69,12 @@ function Subtitle({ children }: PropsWithChildren) {
   return (
     <h2 className="mb-4 border-b pb-2 text-lg font-semibold">{children}</h2>
   )
+}
+
+function getContractDeputies(contract: Contract) {
+  return contract.execucoes
+    .flatMap(({ deputado }) => deputado)
+    .filter((deputado) => !!deputado)
 }
 
 export default async function EventDetails({
@@ -136,14 +144,12 @@ export default async function EventDetails({
                 <DataListItem>
                   <DataListLabel>Unidades Gestoras</DataListLabel>
                   <DataListValue>
-                    {event.ugs.map(({ nome, sigla }) => (
-                      <span key={sigla}>{sigla}</span>
-                    ))}
+                    {event.ugs.map(({ nome }) => nome).join(', ')}
                   </DataListValue>
                 </DataListItem>
                 <DataListItem>
                   <DataListLabel>Autores</DataListLabel>
-                  <DataListValue>
+                  <DataListValue className="flex flex-col space-y-2">
                     {event.deputados.map((deputy) => (
                       <DeputyCard key={deputy.id} deputy={deputy} />
                     ))}
@@ -236,7 +242,7 @@ export default async function EventDetails({
                             <DataListItem>
                               <DataListLabel>Autores</DataListLabel>
                               <DataListValue>
-                                {event.deputados.map((deputy) => (
+                                {getContractDeputies(contract).map((deputy) => (
                                   <DeputyCard key={deputy.id} deputy={deputy} />
                                 ))}
                                 {contractHasFonteGoverno(
