@@ -119,7 +119,6 @@ export function BaseDeputyForm({
         placeholder="Selecione um partido"
         data={partyOptions}
         disabled={isPartiesLoading}
-        withAsterisk
         {...form.getInputProps('partido')}
       />
     </form>
