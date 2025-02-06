@@ -5,6 +5,7 @@ import { politicalPartiesSearchParams } from '@/features/political-party/lib/sea
 import { SearchParams } from 'nuqs/server'
 import { Suspense } from 'react'
 import { CreatePoliticalPartyButton } from '@/features/political-party/components/create-political-party-button'
+import { CreatePoliticalPartyDrawer } from '@/features/political-party/components/create-political-party-drawer'
 
 export default async function PoliticalParties({
   searchParams
@@ -26,6 +27,7 @@ export default async function PoliticalParties({
       <Suspense fallback={<PoliticalPartiesTableSkeleton />} key={suspenseKey}>
         <PoliticalPartiesListView />
       </Suspense>
+      <CreatePoliticalPartyDrawer />
     </div>
   )
 }

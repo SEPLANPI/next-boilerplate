@@ -12,7 +12,6 @@ import {
 import { PencilLine } from 'lucide-react'
 import { PoliticalParty } from '../types'
 import { useEditPoliticalPartyDrawer } from '../stores/edit-political-party-drawer-store'
-import { CreatePoliticalPartyDrawer } from './create-political-party-drawer'
 import { EditPoliticalPartyDrawer } from './edit-political-party-drawer'
 import { SortableColumnHeader } from '@/components/ui/sortable-column-header'
 import { SORT_LABELS } from '@/constants/sort-labels'
@@ -96,7 +95,6 @@ export function PoliticalPartiesTable({ parties }: PoliticalPartiesTableProps) {
           ))}
         </TableTbody>
       </Table>
-      <CreatePoliticalPartyDrawer />
       <EditPoliticalPartyDrawer />
     </>
   )
