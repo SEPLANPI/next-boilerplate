@@ -8,7 +8,7 @@ import { Upload } from 'lucide-react'
 
 const politicalPartySchema = z.object({
   nome: z.string().min(1, 'Nome é obrigatório'),
-  sigla: z.string().min(2, 'Sigla é obrigatória').max(10, 'Sigla muito longa'),
+  sigla: z.string().min(2, 'Sigla é obrigatória').max(20, 'Sigla muito longa'),
   foto: z.instanceof(File).nullable()
 })
 
