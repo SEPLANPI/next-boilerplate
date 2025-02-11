@@ -48,8 +48,17 @@ export function CitiesTable({ cities }: CitiesTableProps) {
           <TableTr key={city.id}>
             <TableTd>{city.nome}</TableTd>
             <TableTd>{city.territorio_nome}</TableTd>
-            <TableTd>{city.polulacao}</TableTd>
-            <TableTd>{city.area_territorial}</TableTd>
+            <TableTd>
+              {city.populacao.toLocaleString('pt-br', {
+                minimumFractionDigits: 0
+              })}
+            </TableTd>
+            <TableTd>
+              {city.area_territorial.toLocaleString('pt-br', {
+                minimumFractionDigits: 2
+              })}{' '}
+              km<sup>2</sup>
+            </TableTd>
           </TableTr>
         ))}
       </TableTbody>

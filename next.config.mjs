@@ -9,12 +9,11 @@ const nextConfig = {
         protocol: process.env.IMAGE_HOST_PROTOCOL,
         hostname: process.env.IMAGE_HOST_HOSTNAME,
         port: process.env.IMAGE_HOST_PORT
-      },
-
+      }
     ]
   },
   // Habilitar Streaming e Suspense com Nginx
-  async headers() {
+  async headers () {
     return [
       {
         source: '/:path*{/}?',

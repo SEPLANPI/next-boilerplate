@@ -1,9 +1,17 @@
 import { SidebarConfig, NavigationItem, NavigationGroup } from '@/types/sidebar'
-import { Building, CalendarDays, Flag, Landmark, MapPinHouse, Users } from 'lucide-react'
+import {
+  Building,
+  CalendarDays,
+  Flag,
+  Landmark,
+  MapPinHouse,
+  Users,
+  Map
+} from 'lucide-react'
 
 export const sidebarConfig: SidebarConfig = [
   {
-    title: 'Geral',
+    title: 'Eventos',
     items: [
       {
         label: 'Eventos',
@@ -19,7 +27,12 @@ export const sidebarConfig: SidebarConfig = [
         label: 'Unidades Gestoras',
         href: '/ugs',
         icon: Landmark
-      },
+      }
+    ]
+  },
+  {
+    title: 'Política',
+    items: [
       {
         label: 'Partidos',
         href: '/partidos',
@@ -29,6 +42,16 @@ export const sidebarConfig: SidebarConfig = [
         label: 'Deputados',
         href: '/deputados',
         icon: Users
+      }
+    ]
+  },
+  {
+    title: 'Localidades',
+    items: [
+      {
+        label: 'Territórios',
+        href: '/territorios',
+        icon: Map
       },
       {
         label: 'Municípios',

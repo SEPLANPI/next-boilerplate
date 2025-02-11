@@ -15,14 +15,15 @@ type GetCitiesInput = {
   page?: number
 }
 
-export async function getCities({
-  page = 1
-}: GetCitiesInput = {}): Promise<ServerResult<CitiesResponse>> {
+export async function getCities({ page = 1 }: GetCitiesInput = {}): Promise<
+  ServerResult<CitiesResponse>
+> {
   const searchParams = citiesSearchParams.all()
   const params = buildParams({
-    page,
     search: searchParams.search,
     ordering: searchParams.sort,
+    territorio: searchParams.territories,
+    page,
     page_size: 15
   })
 

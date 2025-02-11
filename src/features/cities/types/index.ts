@@ -1,8 +1,9 @@
 export interface City {
-  id: number;
+  id: number
   nome: string
   territorio: number
   territorio_nome: string
-  polulacao: number
+  populacao: number
   area_territorial: number
 }
+

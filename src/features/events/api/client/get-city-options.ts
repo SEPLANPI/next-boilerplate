@@ -7,7 +7,7 @@ interface FilterOptionCity {
 }
 
 export async function getCityFilterOptions(): Promise<FilterOptionCity[]> {
-  const response = await clientApi.get('/municipios')
+  const response = await clientApi.get('/municipios/filtro')
   if (!response.ok) {
     const error = await response.json()
     throw Error(error.detail || API.UNEXPECTED_FETCH_ERROR)

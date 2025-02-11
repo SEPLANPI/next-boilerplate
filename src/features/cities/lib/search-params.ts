@@ -1,8 +1,11 @@
+import { baseSearchParamsParsers } from '@/lib/search-params'
+import {
+  createSearchParamsCache,
+  parseAsArrayOf,
+  parseAsString
+} from 'nuqs/server'
 
-import { createParser } from 'nuqs/server'
-
-export const citiesSearchParams = createParser({
-  page: { type: 'number', default: 1 },
-  search: { type: 'string' },
-  sort: { type: 'string' }
+export const citiesSearchParams = createSearchParamsCache({
+  territories: parseAsArrayOf(parseAsString),
+  ...baseSearchParamsParsers
 })
