@@ -1,5 +1,5 @@
 import { SidebarConfig, NavigationItem, NavigationGroup } from '@/types/sidebar'
-import { Building, CalendarDays, Flag, Landmark, Users } from 'lucide-react'
+import { Building, CalendarDays, Flag, Landmark, MapPinHouse, Users } from 'lucide-react'
 
 export const sidebarConfig: SidebarConfig = [
   {
@@ -29,6 +29,11 @@ export const sidebarConfig: SidebarConfig = [
         label: 'Deputados',
         href: '/deputados',
         icon: Users
+      },
+      {
+        label: 'Municípios',
+        href: '/municipios',
+        icon: MapPinHouse
       }
     ]
   }
