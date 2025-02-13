@@ -16,7 +16,6 @@ export async function getExpenseNatureFilterOptions(): Promise<
   }
 
   const data = await response.json()
-  console.log(data)
 
   return data
 }

@@ -103,7 +103,7 @@ export interface Contract {
       valor_liquidado: number
       valor_pago: number
       fonte: 'EMENDA'
-      deputado: (Pick<Deputy, 'nome' | 'foto' | 'id'> & {
+      deputado: (Pick<Deputy, 'nome' | 'foto' | 'id' | 'mandato_atual'> & {
         partido_sigla?: string
       })[]
     }
@@ -131,7 +131,7 @@ export interface EventDetail {
   valor_empenhado: number
   valor_liquidado: number
   valor_pago: number
-  deputados: (Pick<Deputy, 'nome' | 'foto' | 'id'> & {
+  deputados: (Pick<Deputy, 'nome' | 'foto' | 'id' | 'mandato_atual'> & {
     partido_sigla?: string
   })[]
 }

@@ -24,14 +24,21 @@ export function EditDeputyForm({
     nome: string
     partido: string
     foto: File | null
+    cpf: string
+    vigencias: string[]
   }) {
     onSubmit?.()
     try {
       const formData = new FormData()
       formData.append('nome', values.nome)
       formData.append('partido_id', values.partido)
-      if (values.foto) {
-        formData.append('foto', values.foto)
+      formData.append('foto', values.foto ?? '')
+
+      if (values.cpf) {
+        formData.append('cpf', values.cpf)
+      }
+      for (const vigencia of values.vigencias) {
+        formData.append('vigencias_ids', vigencia)
       }
 
       const { error } = await updateDeputy(deputy.id, formData)
@@ -62,7 +69,9 @@ export function EditDeputyForm({
       initialValues={{
         nome: deputy.nome,
         partido: deputy.partido?.id.toString(),
-        foto: deputy.foto
+        foto: deputy.foto,
+        cpf: deputy.cpf,
+        vigencias: deputy.vigencias.map(({ id }) => id.toString())
       }}
       onSubmit={handleSubmit}
       error={error}

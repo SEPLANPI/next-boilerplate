@@ -1,16 +1,24 @@
 'use client'
 
-import { Alert, TextInput, FileInput, Select } from '@mantine/core'
+import { Alert, TextInput, FileInput, Select, MultiSelect } from '@mantine/core'
 import { useForm, zodResolver } from '@mantine/form'
 import { useEffect, useMemo } from 'react'
 import { z } from 'zod'
 import { useQuery } from '@tanstack/react-query'
 import { getPoliticalParties } from '@/features/deputies/api/client/get-political-parties'
+import { CPF } from '@/utils/cpf'
+import { getTermsOptions } from '../api/client/get-terms-options'
 
 const deputySchema = z.object({
   nome: z.string().min(1, 'Nome é obrigatório'),
   partido: z.string(),
-  foto: z.instanceof(File).nullable()
+  foto: z.instanceof(File).nullable(),
+  cpf: z
+    .string()
+    .length(11, 'CPF deve ter 11 dígitos')
+    .refine(CPF.isValid, 'CPF inválido')
+    .or(z.literal('')),
+  vigencias: z.array(z.string().min(1))
 })
 
 type DeputyFormValues = z.infer<typeof deputySchema>
@@ -19,6 +27,8 @@ type DeputyInitialValues = {
   nome?: string
   partido?: string
   foto?: string
+  cpf?: string
+  vigencias: string[]
 }
 
 interface BaseDeputyFormProps {
@@ -54,6 +64,13 @@ export function BaseDeputyForm({
     gcTime: 7 * 24 * 60 * 60 * 1000
   })
 
+  const { data: terms, isLoading: isTermsLoading } = useQuery({
+    queryKey: ['terms'],
+    queryFn: getTermsOptions,
+    staleTime: 24 * 60 * 60 * 1000,
+    gcTime: 7 * 24 * 60 * 60 * 1000
+  })
+
   const partyOptions = useMemo(
     () =>
       parties?.map((party) => ({
@@ -63,13 +80,28 @@ export function BaseDeputyForm({
     [parties]
   )
 
+  const termOptions = useMemo(
+    () =>
+      terms?.map((term) => ({
+        value: term.id.toString(),
+        label: `${term.data_inicio.split('-')[0]} - ${term.data_fim.split('-')[0]}`
+      })) || [],
+    [terms]
+  )
+
   const form = useForm<DeputyFormValues>({
     validate: zodResolver(deputySchema),
     initialValues: {
       nome: initialValues?.nome ?? '',
-      partido: '', // Will be set by useEffect
-      foto: null
-    }
+      foto: null,
+      cpf: initialValues?.cpf ?? '',
+      partido: '', // Será setado pelo useEffect
+      vigencias: [] // Será setado pelo useEffect
+    },
+    transformValues: (values) => ({
+      ...values,
+      cpf: CPF.hide(values.cpf)
+    })
   })
 
   useEffect(() => {
@@ -81,15 +113,19 @@ export function BaseDeputyForm({
   }, [initialValues?.foto])
 
   useEffect(() => {
-    if (initialValues?.partido && parties) {
-      const party = parties.find(
-        (p) => p.id.toString() === initialValues.partido
-      )
-      if (party) {
-        form.setFieldValue('partido', initialValues.partido)
-      }
+    form.setFieldValue('partido', initialValues?.partido ?? '')
+  }, [parties])
+
+  useEffect(() => {
+    if (terms) {
+      form.setFieldValue('vigencias', initialValues?.vigencias ?? [])
     }
-  }, [parties, initialValues?.partido])
+  }, [terms])
+
+  function handleCpfChange(event: React.ChangeEvent<HTMLInputElement>) {
+    const rawValue = event.target.value.replace(/\D/g, '').slice(0, 11)
+    form.setFieldValue('cpf', rawValue)
+  }
 
   return (
     <form
@@ -120,6 +156,20 @@ export function BaseDeputyForm({
         data={partyOptions}
         disabled={isPartiesLoading}
         {...form.getInputProps('partido')}
+      />
+      <TextInput
+        label="CPF"
+        {...form.getInputProps('cpf')}
+        value={CPF.mask(form.getValues().cpf)}
+        onChange={handleCpfChange}
+      />
+      <MultiSelect
+        label="Mandatos"
+        placeholder="Selecione os mandatos"
+        className="w-full max-w-96"
+        data={termOptions}
+        disabled={isTermsLoading}
+        {...form.getInputProps('vigencias')}
       />
     </form>
   )

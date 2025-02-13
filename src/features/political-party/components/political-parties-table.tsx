@@ -37,8 +37,6 @@ export function PoliticalPartiesTable({ parties }: PoliticalPartiesTableProps) {
     openEditDrawer(party)
   }
 
-  console.log(parties)
-
   return (
     <>
       <Table verticalSpacing="xs">

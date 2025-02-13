@@ -8,7 +8,8 @@ import {
   TableThead,
   TableTbody,
   ActionIcon,
-  Avatar
+  Avatar,
+  Badge
 } from '@mantine/core'
 import { parseAsString, useQueryState } from 'nuqs'
 import { SortableColumnHeader } from '@/components/ui/sortable-column-header'
@@ -76,6 +77,14 @@ export function DeputiesTable({ deputies }: DeputiesTableProps) {
               ascendingLabel={SORT_LABELS.ALPHABETICAL.ASC}
               descendingLabel={SORT_LABELS.ALPHABETICAL.DESC}
             />
+            <SortableColumnHeader
+              column="ultimo_mandato"
+              title="Último mandato"
+              sortKey={sort}
+              onSort={setSort}
+              ascendingLabel={SORT_LABELS.ALPHABETICAL.ASC}
+              descendingLabel={SORT_LABELS.ALPHABETICAL.DESC}
+            />
             <TableTh>Partido</TableTh>
             <TableTh style={{ width: 40 }} />
           </TableTr>
@@ -87,6 +96,23 @@ export function DeputiesTable({ deputies }: DeputiesTableProps) {
                 <Avatar src={deputy.foto} size="md" />
               </TableTd>
               <TableTd>{deputy.nome}</TableTd>
+              <TableTd>
+                {deputy.ultimo_mandato ? (
+                  <div className="flex items-center space-x-2">
+                    <span>
+                      {deputy.ultimo_mandato?.data_inicio.split('-')[0]} -{' '}
+                      {deputy.ultimo_mandato?.data_fim.split('-')[0]}
+                    </span>
+                    {deputy.mandato_atual && (
+                      <Badge color="teal" variant="light" size="sm" radius="sm">
+                        Atual
+                      </Badge>
+                    )}
+                  </div>
+                ) : (
+                  'Não informado'
+                )}
+              </TableTd>
               <TableTd>
                 {deputy.partido ? (
                   <PartyColumn party={deputy.partido} />

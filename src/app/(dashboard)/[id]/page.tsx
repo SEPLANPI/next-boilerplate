@@ -14,7 +14,8 @@ import {
   AccordionControl,
   AccordionPanel,
   Alert,
-  Avatar
+  Avatar,
+  Indicator
 } from '@mantine/core'
 import {
   DataListRoot,
@@ -28,7 +29,6 @@ import { EditEventButton } from '@/features/events/components/edit-event-button'
 import { Contract, EventDetail } from '@/features/events/types'
 import { EventDetailEditDrawer } from '@/features/events/components/event-detail-edit-drawer'
 import { formatCurrency } from '@/lib/utils'
-import { Deputy } from '@/features/deputies/types'
 import { formatCNPJ } from '@/utils/format-cnpj'
 import { PropsWithChildren } from 'react'
 
@@ -56,7 +56,16 @@ function ContractAccordionLabel({ numero, titulo, empresa }: any) {
 function DeputyCard({ deputy }: { deputy: EventDetail['deputados'][0] }) {
   return (
     <div className="flex items-center space-x-2">
-      <Avatar src={deputy.foto} alt={deputy.nome} />
+      <Indicator
+        color="teal"
+        withBorder
+        radius="xl"
+        offset={6}
+        size={12}
+        disabled={!deputy.mandato_atual}
+      >
+        <Avatar src={deputy.foto} alt={deputy.nome} />
+      </Indicator>
       <div className="flex flex-col text-sm">
         <span className="font-medium">{deputy.nome}</span>
         <span className="text-xs">{deputy.partido_sigla || 'Sem partido'}</span>

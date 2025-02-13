@@ -17,7 +17,6 @@ export async function createPoliticalParty(
 
     if (!response.ok) {
       const error = await response.json()
-      console.log(error)
       return { error: error.detail || API.UNEXPECTED_FETCH_ERROR }
     }
 

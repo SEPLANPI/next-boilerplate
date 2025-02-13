@@ -53,7 +53,6 @@ export async function getEventGroups(): Promise<
     }
 
     const data: EventGroupResponse = await response.json()
-    console.log(data)
     return { data }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

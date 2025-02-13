@@ -65,7 +65,6 @@ export async function getEvents({
         error: error.detail
       })
 
-      console.log(error)
       return { error: error.detail || API.UNEXPECTED_FETCH_ERROR }
     }
 

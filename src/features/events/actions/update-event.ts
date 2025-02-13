@@ -24,7 +24,6 @@ type UpdateEventInput = {
 export async function updateEvent(
   input: UpdateEventInput
 ): Promise<ActionState<Event>> {
-  console.log(input)
   try {
     const response = await api.patch(`/eventos/${input.id}/`, {
       body: input
@@ -32,7 +31,6 @@ export async function updateEvent(
 
     if (!response.ok) {
       const error = await response.json()
-      console.log(error)
       return { error: error.detail || API.UNEXPECTED_FETCH_ERROR }
     }
 
