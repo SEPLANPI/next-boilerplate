@@ -3,7 +3,7 @@ import { RoutingConfiguration } from '@/types/routing'
 export const routingConfig: RoutingConfiguration = {
   defaults: {
     protection: 'protected',
-    permissions: [],
+    permissions: ['admin-piaui365'],
     redirectPath: '/',
     unauthorized: {
       defaultUnauthenticatedPath: '/api/auth/sign-in',
