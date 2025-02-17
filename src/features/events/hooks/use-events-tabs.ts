@@ -1,8 +1,9 @@
-import { useLocalStorage } from '@mantine/hooks'
 import { parseAsInteger, parseAsString, useQueryStates } from 'nuqs'
 import { useEffect } from 'react'
+import Cookies from 'js-cookie'
 
 type TabValue = 'reviewed' | 'pending' | 'all'
+const COOKIE_KEY = 'event-tab'
 
 export function useEventTabs() {
   const [{ status }, setParams] = useQueryStates(
@@ -15,20 +16,19 @@ export function useEventTabs() {
     }
   )
 
-  const [savedTab, setSavedTab] = useLocalStorage<TabValue>({
-    key: 'event-tab',
-    defaultValue: 'reviewed'
-  })
-
   useEffect(() => {
-    if (!status && savedTab) {
-      setParams({ status: savedTab })
+    if (!status) {
+      const savedTab = Cookies.get(COOKIE_KEY) as TabValue | undefined
+      if (savedTab) {
+        setParams({ status: savedTab })
+      }
     }
-  }, [status, savedTab, setParams])
+  }, [status, setParams])
 
   const handleTabChange = (value: string | null) => {
     const newValue = (value || 'reviewed') as TabValue
-    setSavedTab(newValue)
+
+    Cookies.set(COOKIE_KEY, newValue, { expires: 365 })
 
     setParams({
       status: newValue,
@@ -36,7 +36,8 @@ export function useEventTabs() {
     })
   }
 
-  const currentTab = status || savedTab || 'reviewed'
+  const currentTab = status || Cookies.get(COOKIE_KEY) || 'reviewed'
+  console.table({ currentTab, status })
 
   return { currentTab, handleTabChange }
 }

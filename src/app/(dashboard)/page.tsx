@@ -16,6 +16,8 @@ import { getEventsQuantities } from '@/features/events/api/get-events-quantities
 import { EventsCards } from '@/features/events/components/events-cards'
 import { EditModeToggle } from '@/features/events/components/edit-mode-toggle'
 import { EventsCardsSkeleton } from '@/features/events/components/events-cards-skeleton'
+import { cookies } from 'next/headers'
+import { redirect } from 'next/navigation'
 
 export default async function Events({
   searchParams
@@ -24,6 +26,11 @@ export default async function Events({
 }) {
   const params = eventsSearchParams.parse(await searchParams)
   const { data: quantities } = await getEventsQuantities()
+
+  const savedTab = cookies().get('event-tab')?.value
+  if (!params.status && savedTab && savedTab !== 'reviewed') {
+    redirect(`/?status=${savedTab}`)
+  }
 
   const suspenseKey = JSON.stringify(params)
   const groupKey = 'group' + suspenseKey

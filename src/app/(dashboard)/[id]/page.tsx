@@ -46,8 +46,10 @@ function ContractAccordionLabel({ numero, titulo, empresa }: any) {
         <div className="truncate text-sm text-muted-foreground">{titulo}</div>
       </div>
       <div className="flex items-center space-x-1 text-sm">
-        <div className="font-medium">{formatCNPJ(empresa.cnpj)} - </div>
-        <div className="truncate text-muted-foreground">{empresa.nome}</div>
+        <div className="font-medium">
+          {empresa?.cnpj ? formatCNPJ(empresa.cnpj) : 'Sem CNPJ'} -{' '}
+        </div>
+        <div className="truncate text-muted-foreground">{empresa?.nome}</div>
       </div>
     </div>
   )
