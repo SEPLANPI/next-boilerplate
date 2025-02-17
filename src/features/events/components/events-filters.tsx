@@ -127,16 +127,6 @@ export function EventsFilters() {
       >
         Natureza do Gasto
       </AsyncFilter>
-      <AsyncFilter
-        loadOptions={getPeriodOptions}
-        showSearch={false}
-        filterId="period"
-        searchParamKey="period"
-        getOptionValue={(option) => option.id.toString()}
-        getOptionLabel={(option) => option.ano.toString()}
-      >
-        Exercício
-      </AsyncFilter>
     </>
   )
 }

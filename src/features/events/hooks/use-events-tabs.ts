@@ -37,7 +37,6 @@ export function useEventTabs() {
   }
 
   const currentTab = status || Cookies.get(COOKIE_KEY) || 'reviewed'
-  console.table({ currentTab, status })
 
   return { currentTab, handleTabChange }
 }

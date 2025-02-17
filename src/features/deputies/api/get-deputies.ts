@@ -16,9 +16,11 @@ export async function getDeputies({ page = 1 }: GetDeputiesInput = {}): Promise<
   const searchParams = deputiesSearchParams.all()
   const params = buildParams({
     page,
+    page_size: 15,
     search: searchParams.search,
     ordering: searchParams.sort,
-    page_size: 15
+    mandato: searchParams.mandatos,
+    partido: searchParams.partidos
   })
 
   try {

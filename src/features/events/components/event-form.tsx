@@ -384,8 +384,10 @@ export const EventForm = forwardRef<
                     <DataListItem>
                       <DataListLabel>Empresa</DataListLabel>
                       <DataListValue>
-                        {formatCNPJ(event?.contratos[index].empresa.cnpj || '')}{' '}
-                        - {event?.contratos[index].empresa.nome}
+                        {formatCNPJ(
+                          event?.contratos[index].empresa?.cnpj || 'Sem CNPj'
+                        )}{' '}
+                        - {event?.contratos[index].empresa?.nome || ''}
                       </DataListValue>
                     </DataListItem>
                   </DataListRoot>
