@@ -7,7 +7,7 @@ type TabValue = 'reviewed' | 'pending' | 'all'
 export function useEventTabs() {
   const [{ status }, setParams] = useQueryStates(
     {
-      status: parseAsString.withDefault('reviewed'),
+      status: parseAsString,
       page: parseAsInteger.withDefault(1)
     },
     {
@@ -19,8 +19,6 @@ export function useEventTabs() {
     key: 'event-tab',
     defaultValue: 'reviewed'
   })
-
-  const currentTab = status || savedTab || 'reviewed'
 
   useEffect(() => {
     if (!status && savedTab) {
@@ -37,6 +35,8 @@ export function useEventTabs() {
       page: 1
     })
   }
+
+  const currentTab = status || savedTab || 'reviewed'
 
   return { currentTab, handleTabChange }
 }

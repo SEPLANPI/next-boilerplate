@@ -55,7 +55,7 @@ export function CitiesTable({ cities }: CitiesTableProps) {
             </TableTd>
             <TableTd>
               {city.area_territorial.toLocaleString('pt-br', {
-                minimumFractionDigits: 2
+                maximumFractionDigits: 2
               })}{' '}
               km<sup>2</sup>
             </TableTd>

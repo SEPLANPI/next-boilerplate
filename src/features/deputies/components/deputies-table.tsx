@@ -91,7 +91,7 @@ export function DeputiesTable({ deputies }: DeputiesTableProps) {
         </TableThead>
         <TableTbody>
           {deputies.map((deputy) => (
-            <TableTr key={deputy.id} className="cursor-pointer">
+            <TableTr key={deputy.id}>
               <TableTd>
                 <Avatar src={deputy.foto} size="md" />
               </TableTd>

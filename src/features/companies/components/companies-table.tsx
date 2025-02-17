@@ -13,6 +13,7 @@ import { parseAsString, useQueryState } from 'nuqs'
 import { SortableColumnHeader } from '@/components/ui/sortable-column-header'
 import { SORT_LABELS } from '@/constants/sort-labels'
 import { Company } from '../types'
+import { formatCNPJ } from '@/utils/format-cnpj'
 
 interface CompaniesTableProps {
   companies: Company[]
@@ -44,7 +45,7 @@ export function CompaniesTable({ companies }: CompaniesTableProps) {
       <TableTbody>
         {companies.map((company) => (
           <TableTr key={company.cnpj}>
-            <TableTd>{company.cnpj}</TableTd>
+            <TableTd>{formatCNPJ(company.cnpj)}</TableTd>
             <TableTd>{company.nome}</TableTd>
           </TableTr>
         ))}

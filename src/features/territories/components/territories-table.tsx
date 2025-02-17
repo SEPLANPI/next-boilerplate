@@ -16,6 +16,7 @@ interface TerritoriesTableProps {
 }
 
 export function TerritoriesTable({ territories }: TerritoriesTableProps) {
+  console.log(territories)
   return (
     <Table verticalSpacing="xs">
       <TableThead>
@@ -36,7 +37,7 @@ export function TerritoriesTable({ territories }: TerritoriesTableProps) {
             </TableTd>
             <TableTd>
               {territory.area_territorial.toLocaleString('pt-br', {
-                minimumFractionDigits: 2
+                maximumFractionDigits: 2
               })}{' '}
               km<sup>2</sup>
             </TableTd>
