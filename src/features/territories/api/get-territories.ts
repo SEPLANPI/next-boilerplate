@@ -3,6 +3,7 @@ import { api } from '@/lib/server-api'
 import { ServerResult } from '@/types/server-result'
 import { Territory } from '../types'
 import { buildParams } from '@/lib/api-utils'
+import { territoriesSearchParams } from '../lib/search-params'
 
 interface TerritoriesResponse {
   count: number
@@ -16,9 +17,11 @@ type GetTerritoriesInput = {
 export async function getTeritories({
   page = 1
 }: GetTerritoriesInput = {}): Promise<ServerResult<TerritoriesResponse>> {
+  const { sort } = territoriesSearchParams.all()
   const params = buildParams({
     page,
-    page_size: 15
+    page_size: 15,
+    ordering: sort
   })
 
   try {

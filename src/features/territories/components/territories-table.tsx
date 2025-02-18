@@ -10,20 +10,42 @@ import {
   TableTh
 } from '@mantine/core'
 import { Territory } from '../types'
+import { SortableColumnHeader } from '@/components/ui/sortable-column-header'
+import { useQueryState, parseAsString } from 'nuqs'
 
 interface TerritoriesTableProps {
   territories: Territory[]
 }
 
 export function TerritoriesTable({ territories }: TerritoriesTableProps) {
-  console.log(territories)
+  const [sort, setSort] = useQueryState(
+    'sort',
+    parseAsString.withOptions({
+      shallow: false
+    })
+  )
+
   return (
     <Table verticalSpacing="xs">
       <TableThead>
         <TableTr>
           <TableTh>Nome</TableTh>
-          <TableTh>População</TableTh>
-          <TableTh>Área Territorial</TableTh>
+          <SortableColumnHeader
+            column="populacao"
+            title="População"
+            sortKey={sort}
+            onSort={setSort}
+            ascendingLabel={'Menor população'}
+            descendingLabel={'Maior população'}
+          />{' '}
+          <SortableColumnHeader
+            column="area_territorial"
+            title="Área Territorial"
+            sortKey={sort}
+            onSort={setSort}
+            ascendingLabel={'Menor área'}
+            descendingLabel={'Maior área'}
+          />
         </TableTr>
       </TableThead>
       <TableTbody>

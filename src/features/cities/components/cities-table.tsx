@@ -39,8 +39,22 @@ export function CitiesTable({ cities }: CitiesTableProps) {
             descendingLabel={SORT_LABELS.ALPHABETICAL.DESC}
           />
           <TableTh>Território</TableTh>
-          <TableTh>População</TableTh>
-          <TableTh>Área Territorial</TableTh>
+          <SortableColumnHeader
+            column="populacao"
+            title="População"
+            sortKey={sort}
+            onSort={setSort}
+            ascendingLabel={'Menor população'}
+            descendingLabel={'Maior população'}
+          />{' '}
+          <SortableColumnHeader
+            column="area_territorial"
+            title="Área Territorial"
+            sortKey={sort}
+            onSort={setSort}
+            ascendingLabel={'Menor área'}
+            descendingLabel={'Maior área'}
+          />
         </TableTr>
       </TableThead>
       <TableTbody>
