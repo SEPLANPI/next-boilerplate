@@ -2,6 +2,8 @@
 
 Este é um boilerplate para iniciar rapidamente o desenvolvimento de aplicações utilizando Next.js e outras tecnologias para evitar a escrita de código boilerplate e padronizar as aplicações da SEPLAN.
 
+> 📚 [Clique aqui para acessar a documentação completa do projeto](docs/README.md)
+
 ## Tabela de Conteúdos
 - [Next.js Boilerplate](#nextjs-boilerplate)
   - [Tabela de Conteúdos](#tabela-de-conteúdos)
@@ -102,9 +104,4 @@ pnpm dev
 
 Baseado em [BulletProof React](https://github.com/alan2207/bulletproof-react/tree/master/apps/nextjs-app)
 
-## Documentação Adicional
-
-- [Sistema de Roteamento e Permissões](docs/rotas.md)
-- [Configuração de Autenticação](docs/auth.md)
-- [Guia de Constantes](docs/constantes.md)
-- [Guia de Requisições API](docs/requisicoes.md)
+Para mais detalhes, consulte nossa [documentação completa](docs/README.md).
