@@ -1,15 +1,15 @@
 import { AdapterUser } from '@auth/core/adapters'
-import BaseUser from './auth'
+import { BaseUser } from './auth'
 
 declare module 'next-auth' {
   interface Session {
-    user: BaseUser & AdapterUser
+    user: BaseUser
     accessToken: string
     refreshToken: string
     error: string
   }
 
-  interface User extends BaseUser { }
+  interface User extends BaseUser, AdapterUser { }
 
   interface Account {
     provider: 'keycloak'
@@ -37,7 +37,7 @@ declare module 'next-auth/jwt' {
     idToken: string
     accessTokenExpires: number
     refreshTokenExpires: number
-    user: User
+    user: BaseUser
     error: string
   }
 }
