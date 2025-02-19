@@ -2,14 +2,15 @@
 
 ## Visão Geral
 
-O layout do painel fornece uma barra lateral de navegação responsiva que suporta links únicos e grupos de navegação aninhados. O layout lida automaticamente com a responsividade móvel e inclui um menu de usuário.
+O layout do painel fornece uma barra lateral de navegação responsiva e colapsável que pode ser configurada através de um objeto de configuração. A barra lateral suporta múltiplas seções com títulos opcionais e itens de navegação com ícones.
 
 ## Notas Importantes
 
-1. Ícones devem ser importados de `lucide-react`
+1. Todos os ícones devem ser importados de `lucide-react`
 2. Todos os hrefs devem ser caminhos absolutos
-3. Grupos de navegação e links simples requerem um ícone, enquanto links aninhados não têm ícones
-4. A configuração deve ser exportada com `as const` para garantir a inferência de tipo adequada
+3. A configuração deve ser exportada com `as const`
+4. O estado colapsado da barra lateral é persistido no localStorage
+5. As seções podem ter títulos opcionais que se adaptam ao estado colapsado
 
 ## Melhores Práticas
 
@@ -64,91 +65,125 @@ Existem dois tipos de itens de navegação:
 
 ### Estrutura Básica
 
-A barra lateral é configurada através de um array `sidebarConfig` no seu arquivo de configuração. Cada item no array representa uma seção que pode conter vários itens de navegação.
+A barra lateral é configurada através de um objeto `sidebarConfig` que contém configurações do aplicativo e seções de navegação:
 
 ```typescript
-export const sidebarConfig: SidebarConfig = [
-  {
-    title: 'Título da Seção',
-    items: [
-      // Itens de navegação vão aqui
-    ]
-  }
-] as const
-```
-
-### Exemplo de Implementação Completa
-
-```typescript
-import { SidebarConfig } from '@/types/sidebar'
-import { Home, Settings, Users } from 'lucide-react'
-
-export const sidebarConfig: SidebarConfig = [
-  {
-    title: 'Principal',
-    items: [
-      {
-        label: 'Painel',
-        href: '/',
-        icon: Home
-      }
-    ]
+export const sidebarConfig: SidebarConfig = {
+  app: {
+    name: 'Nome do App',
+    logo: '/caminho/do/logo.png' // opcional
   },
-  {
-    title: 'Administração',
-    items: [
-      {
-        label: 'Configurações',
-        icon: Settings,
-        items: [
-          {
-            label: 'Usuários',
-            href: '/configuracoes/usuarios'
-          },
-          {
-            label: 'Permissões',
-            href: '/configuracoes/permissoes'
-          }
-        ]
-      }
-    ]
-  }
-] as const
+  sections: [
+    {
+      title: 'Título da Seção', // opcional
+      items: [
+        {
+          label: 'Item',
+          href: '/caminho',
+          icon: IconComponent
+        }
+      ]
+    }
+  ]
+} as const
 ```
 
-## Definições de Tipo
-
-A configuração da barra lateral é estritamente tipada usando TypeScript. Os principais tipos são definidos em:
+### Tipos
 
 ```typescript
-import { LucideProps } from 'lucide-react'
-import { ComponentType } from 'react'
+interface AppConfig {
+  name: string
+  logo?: string
+}
 
-export interface BaseNavigationItem {
+interface NavigationItem {
   label: string
-}
-
-export interface NavigationLink extends BaseNavigationItem {
   href: string
-  items?: never
-  icon?: ComponentType<LucideProps>
-}
-
-export interface NavigationChild extends BaseNavigationItem {
-  href: string
-}
-
-export interface NavigationGroup extends BaseNavigationItem {
-  items: readonly NavigationChild[]
-  href?: never
   icon: ComponentType<LucideProps>
 }
 
-export type NavigationItem = NavigationLink | NavigationGroup
-
-export interface NavigationSection {
-  title: string
+interface NavigationSection {
+  title?: string
   items: NavigationItem[]
+}
+
+interface SidebarConfig {
+  app: AppConfig
+  sections: NavigationSection[]
+}
+```
+
+## Funcionalidades
+
+### Barra Lateral Colapsável
+
+A barra lateral pode ser alternada entre os estados expandido e colapsado:
+- Expandida: 256px de largura (w-64)
+- Colapsada: 80px de largura (w-20)
+
+O estado é persistido localmente usando o hook `useLocalStorage` do Mantine.
+
+### Suporte a Logo
+
+- Aceita uma imagem de logo através da propriedade `app.logo`
+- Fallback para um texto estilizado quando nenhum logo é fornecido
+- Logo é redimensionado automaticamente quando a barra está colapsada
+
+### Seções de Navegação
+
+- Suporta múltiplas seções
+- Títulos de seção são opcionais
+- Seções são separadas por divisores quando colapsadas
+- Cada item requer um ícone do Lucide React
+
+## Exemplo de Implementação
+
+```typescript
+import { SidebarConfig } from '@/types/sidebar'
+import { Home, Users, Settings } from 'lucide-react'
+
+export const sidebarConfig: SidebarConfig = {
+  app: {
+    name: 'Meu App',
+    logo: '/logo.png'
+  },
+  sections: [
+    {
+      items: [
+        {
+          label: 'Dashboard',
+          href: '/',
+          icon: Home
+        }
+      ]
+    },
+    {
+      title: 'Gerenciamento',
+      items: [
+        {
+          label: 'Usuários',
+          href: '/usuarios',
+          icon: Users
+        },
+        {
+          label: 'Configurações',
+          href: '/configuracoes',
+          icon: Settings
+        }
+      ]
+    }
+  ]
+} as const
+```
+
+## Uso no Layout
+
+```typescript
+import { DashboardLayout } from '@/components/layouts/dashboard-layout'
+import { sidebarConfig } from '@/config/sidebar'
+
+export default function Dashboard({ children }) {
+  return <DashboardLayout config={sidebarConfig}>{children}</DashboardLayout>
 }
 ```
 
@@ -174,11 +209,13 @@ export function MainNav() {
         <span className="font-medium">Piauí 365</span>
       </div>
       <nav>
-        {sidebarConfig.map((section) => (
+        {sidebarConfig.sections.map((section) => (
           <section className="mb-4" key={section.title}>
-            <span className="mb-2 block text-xs font-semibold uppercase text-muted-foreground">
-              {section.title}
-            </span>
+            {section.title && (
+              <span className="mb-2 block text-xs font-semibold uppercase text-muted-foreground">
+                {section.title}
+              </span>
+            )}
             {section.items.map((item) => (
               <NavItem key={item.label} item={item} />
             ))}
@@ -192,99 +229,57 @@ export function MainNav() {
 
 ### Componente NavItem
 
-O componente `NavItem` lida com a renderização de itens de navegação individuais:
+O componente `NavItem` lida com a renderização de itens de navegação individuais e suporta o estado colapsado:
 
 ```typescript
-'use client'
-
-import { NavLink } from '@mantine/core'
-import { usePathname } from 'next/navigation'
-import Link from 'next/link'
-import { NavigationItem } from '@/types/sidebar'
-import { isNavigationGroup } from '@/config/sidebar'
-
 interface NavItemProps {
   item: NavigationItem
+  collapsed: boolean
 }
+
+const NAV_LINK_BASE_STYLES =
+  'rounded flex items-center text-gray-700 [&:not([data-active=true])]:hover:bg-gray-200 data-[active=true]:text-govBlue-600 data-[active=true]:bg-govBlue-50'
 
 const NAV_LINK_STYLES = {
-  root: '[&:not([data-active])]:text-gray-700 font-medium text-sm w-auto mb-1 -mx-2 p-2 [&:not([data-active])]:hover:bg-gray-200 rounded'
+  root: `${NAV_LINK_BASE_STYLES} block whitespace-nowrap no-underline space-x-2 font-medium text-sm w-full px-3 py-2 font-normal data-[active=true]:font-semibold`
 }
 
-export function NavItem({ item }: NavItemProps) {
+const NAV_LINK_COLLAPSED_STYLES = {
+  root: `${NAV_LINK_BASE_STYLES} justify-center size-9`
+}
+
+export function NavItem({ item, collapsed }: NavItemProps) {
   const pathname = usePathname()
+  const isActive = pathname.endsWith(item.href)
   const IconComponent = item.icon ? <item.icon className="size-4" /> : null
 
-  if (isNavigationGroup(item)) {
+  if (collapsed) {
     return (
-      <NavLink
-        label={item.label}
-        leftSection={IconComponent}
-        childrenOffset={16}
-        classNames={NAV_LINK_STYLES}
-      >
-        {item.items.map((childItem) => (
-          <Link href={childItem.href} key={childItem.label}>
-            <NavLink
-              component="span"
-              active={pathname.endsWith(childItem.href)}
-              classNames={NAV_LINK_STYLES}
-              label={childItem.label}
-            />
-          </Link>
-        ))}
-      </NavLink>
+      <Tooltip label={item.label} position="right" withArrow openDelay={300}>
+        <Anchor
+          href={item.href}
+          component={Link}
+          data-active={isActive}
+          classNames={NAV_LINK_COLLAPSED_STYLES}
+          key={item.label}
+        >
+          {IconComponent}
+        </Anchor>
+      </Tooltip>
     )
   }
 
   return (
-    <Link href={item.href}>
-      <NavLink
-        component="span"
-        active={pathname.endsWith(item.href)}
-        leftSection={IconComponent}
-        classNames={NAV_LINK_STYLES}
-        key={item.label}
-        label={item.label}
-      />
-    </Link>
+    <Anchor
+      href={item.href}
+      component={Link}
+      data-active={isActive}
+      classNames={NAV_LINK_STYLES}
+      key={item.label}
+    >
+      {IconComponent}
+      <span>{item.label}</span>
+    </Anchor>
   )
 }
-```
-
-## Suporte Móvel
-
-O layout lida automaticamente com visualizações móveis através do componente MobileNav:
-
-```typescript
-'use client'
-import { useDisclosure } from '@mantine/hooks'
-import { Drawer, UnstyledButton } from '@mantine/core'
-import { Menu } from 'lucide-react'
-import { MainNav } from './main-nav'
-
-export function MobileNav() {
-  const [opened, { open, close }] = useDisclosure(false)
-
-  return (
-    <>
-      <Drawer.Root size="xs" opened={opened} onClose={close}>
-        <Drawer.Overlay />
-        <Drawer.Content>
-          <Drawer.Body className="h-full p-0">
-            <MainNav />
-          </Drawer.Body>
-        </Drawer.Content>
-      </Drawer.Root>
-      <UnstyledButton onClick={open}>
-        <Menu className="size-5" />
-      </UnstyledButton>
-    </>
-  )
-}
-```
-
-## Estilização
-
-A navegação usa uma combinação do componente `NavLink` do Mantine e classes CSS personalizadas do Tailwind. Os estilos padrão podem ser personalizados modificando o objeto `NAV_LINK_STYLES` no componente NavItem.
 ```

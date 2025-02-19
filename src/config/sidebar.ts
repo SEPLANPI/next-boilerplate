@@ -1,4 +1,6 @@
-import { SidebarConfig, NavigationItem, NavigationGroup } from '@/types/sidebar'
+'use client'
+
+import { SidebarConfig } from '@/types/sidebar'
 import {
   Building,
   CalendarDays,
@@ -9,61 +11,59 @@ import {
   Map
 } from 'lucide-react'
 
-export const sidebarConfig: SidebarConfig = [
-  {
-    title: 'Eventos',
-    items: [
-      {
-        label: 'Eventos',
-        href: '/',
-        icon: CalendarDays
-      },
-      {
-        label: 'Empresas',
-        href: '/empresas',
-        icon: Building
-      },
-      {
-        label: 'Unidades Gestoras',
-        href: '/ugs',
-        icon: Landmark
-      }
-    ]
+export const sidebarConfig: SidebarConfig = {
+  app: {
+    name: 'Piauí365'
   },
-  {
-    title: 'Política',
-    items: [
-      {
-        label: 'Partidos',
-        href: '/partidos',
-        icon: Flag
-      },
-      {
-        label: 'Deputados',
-        href: '/deputados',
-        icon: Users
-      }
-    ]
-  },
-  {
-    title: 'Localidades',
-    items: [
-      {
-        label: 'Territórios',
-        href: '/territorios',
-        icon: Map
-      },
-      {
-        label: 'Municípios',
-        href: '/municipios',
-        icon: MapPinHouse
-      }
-    ]
-  }
-] as const
-
-export function isNavigationGroup(
-  item: NavigationItem
-): item is NavigationGroup {
-  return 'items' in item && Array.isArray(item.items) && item.items.length > 0
-}
+  sections: [
+    {
+      items: [
+        {
+          label: 'Eventos',
+          href: '/',
+          icon: CalendarDays
+        },
+        {
+          label: 'Empresas',
+          href: '/empresas',
+          icon: Building
+        },
+        {
+          label: 'Unidades Gestoras',
+          href: '/ugs',
+          icon: Landmark
+        }
+      ]
+    },
+    {
+      title: 'Política',
+      items: [
+        {
+          label: 'Partidos',
+          href: '/partidos',
+          icon: Flag
+        },
+        {
+          label: 'Deputados',
+          href: '/deputados',
+          icon: Users
+        }
+      ]
+    },
+    {
+      title: 'Localidades',
+      items: [
+        {
+          label: 'Territórios',
+          href: '/territorios',
+          icon: Map
+        },
+        {
+          label: 'Municípios',
+          href: '/municipios',
+          icon: MapPinHouse
+        }
+      ]
+    }
+  ]
+} as const

@@ -5,7 +5,12 @@ import {
   useMemo,
   useCallback
 } from 'react'
-import { parseAsInteger, parseAsString, useQueryStates } from 'nuqs'
+import {
+  parseAsInteger,
+  parseAsString,
+  parseAsArrayOf,
+  useQueryStates
+} from 'nuqs'
 
 type SelectedItemsContextType = {
   selectedItems: Set<string>
@@ -37,7 +42,7 @@ export function SelectedItemsProvider({
 }>) {
   const [{ selectedParam }, setSelectedParam] = useQueryStates(
     {
-      selectedParam: parseAsString.withDefault(''),
+      selectedParam: parseAsArrayOf(parseAsString).withDefault([]),
       page: parseAsInteger.withDefault(1)
     },
     {
@@ -49,15 +54,13 @@ export function SelectedItemsProvider({
   )
 
   const selectedItems = useMemo(() => {
-    return new Set(selectedParam ? selectedParam.split(',') : [])
+    return new Set(selectedParam)
   }, [selectedParam])
 
   const toggle = useCallback(
     (value: string) => {
       setSelectedParam((prev) => {
-        const currentSet = new Set(
-          prev.selectedParam ? prev.selectedParam.split(',') : []
-        )
+        const currentSet = new Set(prev.selectedParam)
 
         if (currentSet.has(value)) {
           currentSet.delete(value)
@@ -65,9 +68,9 @@ export function SelectedItemsProvider({
           currentSet.add(value)
         }
 
-        const newValue = Array.from(currentSet).join(',')
-        onSelectionChange?.(new Set(currentSet))
-        return { selectedParam: newValue || null, page: 1 }
+        const newArray = Array.from(currentSet)
+        onSelectionChange?.(currentSet)
+        return { selectedParam: newArray.length ? newArray : null, page: 1 }
       })
     },
     [setSelectedParam, onSelectionChange]
