@@ -53,10 +53,18 @@ NEXT_PUBLIC_CLIENT_API_URL=""
 # Pode ser gerada usando o comando: pnpx auth secret
 AUTH_SECRET=""
 
+# URL redirect do next-auth (geralmente igual a NEXT_PUBLIC_APP_URL)
+AUTH_URL=""
+
 # Configurações Keycloak
 AUTH_KEYCLOAK_ID=""
 AUTH_KEYCLOAK_SECRET=""
 AUTH_KEYCLOAK_ISSUER=http://192.168.128.74:8080/realms/seplan
+
+# Configurações do Host de Imagens (valores de exemplo)
+IMAGE_HOST_PROTOCOL=http
+IMAGE_HOST_HOSTNAME=localhost
+IMAGE_HOST_PORT=8000
 ```
 
 ## Iniciando o Projeto
