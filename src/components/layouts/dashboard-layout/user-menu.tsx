@@ -11,7 +11,6 @@ export function UserMenu() {
   const [open, setOpen] = useState(false)
   const { collapsed } = useSidebar()
 
-  console.log(data)
   const getShortName = (fullName?: string) => {
     if (!fullName) return ''
     const names = fullName.split(' ')
@@ -60,9 +59,8 @@ export function UserMenu() {
         >
           <Menu.Target>
             <UnstyledButton
-              className={`${
-                open ? 'ring-4' : ''
-              } h-min rounded-full ring-gray-300 hover:ring-4`}
+              className={`${open ? 'ring-4' : ''
+                } h-min rounded-full ring-gray-300 hover:ring-4`}
             >
               <Avatar
                 radius="xl"
