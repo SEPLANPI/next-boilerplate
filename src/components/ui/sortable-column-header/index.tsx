@@ -3,6 +3,7 @@ import { ColumnHeaderProps, SortOption } from './types'
 import { useSortableColumn } from './use-sortable-column'
 import { SortIcon } from './sort-icon'
 import { ArrowDown, ArrowUp, X } from 'lucide-react'
+import { cn } from '@/lib/utils'
 
 export function SortableColumnHeader({
   column,
@@ -10,7 +11,8 @@ export function SortableColumnHeader({
   sortKey,
   onSort,
   ascendingLabel = 'Crescente',
-  descendingLabel = 'Decrescente'
+  descendingLabel = 'Decrescente',
+  className
 }: ColumnHeaderProps) {
   const { isSorted, isDescending } = useSortableColumn(column, sortKey)
 
@@ -56,7 +58,7 @@ export function SortableColumnHeader({
   }
 
   return (
-    <TableTh className="p-0">
+    <TableTh className={cn('p-0', className)}>
       <Menu position="bottom-start">
         <Menu.Target>
           <button
@@ -67,7 +69,7 @@ export function SortableColumnHeader({
 
             <SortIcon
               isSorted={isSorted}
-              isDescending={isDescending}
+              isDescending={isDescending} 
               className="ml-2 h-4 w-4 transition-colors group-hover:text-gray-700"
             />
           </button>

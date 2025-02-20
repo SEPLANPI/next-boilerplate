@@ -227,7 +227,7 @@ As mensagens de erro podem ser definidas de duas formas:
    ```typescript
    return <FetchError error={API.UNEXPECTED_FETCH_ERROR} title="Erro ao carregar dados" />
    ```
-   As constantes são centralizadas no arquivo de constantes. Para mais detalhes sobre a estrutura e boas práticas de constantes, consulte [docs/constantes.md](../constantes.md).
+   As constantes são centralizadas no arquivo de constantes. Para mais detalhes sobre a estrutura e boas práticas de constantes, consulte [docs/constantes.md](./constantes.md).
 
 2. **Usando strings diretas**:
    ```typescript

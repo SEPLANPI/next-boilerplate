@@ -29,4 +29,4 @@ export const SORT_LABELS = {
   }
 } as const
 
-export type SortLabelsType = typeof SORT_LABELS 
+export type SortLabelsType = typeof SORT_LABELS

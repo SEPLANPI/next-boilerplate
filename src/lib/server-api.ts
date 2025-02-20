@@ -6,8 +6,9 @@ import { env } from '@/config/env'
 
 const apiUrl = env.SERVER_API_URL
 
-interface ApiOptions extends RequestInit {
+interface ApiOptions extends Omit<RequestInit, 'body'> {
   contentType?: 'form-data' | 'json'
+  body?: any
 }
 
 async function request(
@@ -40,6 +41,7 @@ export const api = {
   get: (url: string, options?: ApiOptions) => request(url, 'GET', options),
   post: (url: string, options?: ApiOptions) => request(url, 'POST', options),
   put: (url: string, options?: ApiOptions) => request(url, 'PUT', options),
-  delete: (url: string, options?: ApiOptions) => request(url, 'DELETE', options),
+  delete: (url: string, options?: ApiOptions) =>
+    request(url, 'DELETE', options),
   patch: (url: string, options?: ApiOptions) => request(url, 'PATCH', options)
 }

@@ -1,16 +1,23 @@
 'use client'
 
-import { Input } from '@mantine/core'
+import { CloseButton, Input } from '@mantine/core'
 import { useDebouncedCallback } from '@mantine/hooks'
 import { Search } from 'lucide-react'
 import { parseAsInteger, parseAsString, useQueryStates } from 'nuqs'
 import { ChangeEvent, useEffect, useRef } from 'react'
+import { cn } from '@/lib/utils'
 
 type SearchInputProps = {
   placeholder?: string
+  className?: string
+  inputClassName?: string
 }
 
-export function SearchInput({ placeholder }: SearchInputProps) {
+export function SearchInput({
+  placeholder,
+  className,
+  inputClassName
+}: SearchInputProps) {
   const inputRef = useRef<HTMLInputElement | null>(null)
   const [{ search }, setQuery] = useQueryStates(
     {
@@ -36,14 +43,34 @@ export function SearchInput({ placeholder }: SearchInputProps) {
     if (inputRef.current && search === '') inputRef.current.value = ''
   }, [search])
 
+  const clearSearch = () => {
+    if (inputRef.current) {
+      inputRef.current.value = ''
+      setQuery({
+        search: '',
+        page: 1
+      })
+    }
+  }
+
   return (
     <Input
       defaultValue={search}
       ref={inputRef}
       onChange={handleSearch}
-      className="max-w-96"
+      className={cn('w-full max-w-xs', className)}
+      classNames={{
+        input: inputClassName
+      }}
       placeholder={placeholder || 'Pesquisar'}
-      rightSection={<Search className="size-4" />}
+      rightSectionPointerEvents="all"
+      rightSection={
+        search ? (
+          <CloseButton aria-label="Limpar pesquisa" onClick={clearSearch} />
+        ) : (
+          <Search className="size-4" />
+        )
+      }
     />
   )
 }

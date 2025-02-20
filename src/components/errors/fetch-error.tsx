@@ -6,14 +6,12 @@ interface FetchErrorProps {
   title?: string
 }
 
-export function FetchError({ error, title = 'Erro inesperado' }: FetchErrorProps) {
+export function FetchError({
+  error,
+  title = 'Erro inesperado'
+}: FetchErrorProps) {
   return (
-    <Alert
-      title={title}
-      variant="light"
-      color="red"
-      className="max-w-xl"
-    >
+    <Alert title={title} variant="light" color="red" className="max-w-xl">
       {error || API.UNEXPECTED_FETCH_ERROR}
     </Alert>
   )

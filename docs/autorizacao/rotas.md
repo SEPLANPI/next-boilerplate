@@ -28,6 +28,7 @@ interface RoutingConfiguration {
   defaults: {
     protection: 'public' | 'protected'
     permissions: Permission[]
+    redirectPath: string // Rota padrão após autenticação
     unauthorized: {
       defaultUnauthenticatedPath: string
       defaultAccessDeniedPath: string
@@ -50,6 +51,8 @@ interface RoutingConfiguration {
 
 - `permissions`: Array de permissões padrão requeridas para rotas protegidas
 
+- `redirectPath`: Rota padrão para redirecionamento após autenticação bem-sucedida
+
 - `unauthorized`: Configurações para redirecionamento de usuários não autorizados
   - `defaultUnauthenticatedPath`: Rota padrão para usuários não autenticados
   - `defaultAccessDeniedPath`: Rota padrão para acesso negado
@@ -63,6 +66,7 @@ Cada rota pode ser configurada usando a interface `RouteConfig`:
 interface RouteConfig {
   path: string
   type?: 'public' | 'protected'
+  redirectPath?: string // Sobrescreve o redirectPath padrão
   permissions?: {
     required?: Permission[]
     accessDeniedPath?: string
@@ -80,6 +84,7 @@ interface RouteConfig {
 
 - `path`: Caminho da rota (suporta wildcard com `/*`)
 - `type`: Tipo de proteção específico para a rota
+- `redirectPath`: Rota específica para redirecionamento após autenticação (sobrescreve o padrão)
 - `permissions`: Configurações de permissões
   - `required`: Array de permissões necessárias
   - `accessDeniedPath`: Rota de redirecionamento para acesso negado

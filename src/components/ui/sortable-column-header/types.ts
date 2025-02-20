@@ -5,6 +5,7 @@ export interface ColumnHeaderProps {
   onSort: (key: string | null) => void
   ascendingLabel?: string
   descendingLabel?: string
+  className?: string
 }
 
 export interface SortOption {

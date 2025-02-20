@@ -1,6 +1,8 @@
 import type { Metadata } from 'next'
 import { ColorSchemeScript } from '@mantine/core'
 import './globals.css'
+import '@mantine/dates/styles.css'
+import '@mantine/notifications/styles.css'
 import { Figtree, Montserrat } from 'next/font/google'
 import { Providers } from './providers'
 
@@ -25,7 +27,9 @@ export default function RootLayout({
       <head>
         <ColorSchemeScript />
       </head>
-      <body className={`${figtree.className} ${montserrat.variable}`}>
+      <body
+        className={`${figtree.className} ${montserrat.variable} antialised`}
+      >
         <Providers>{children}</Providers>
       </body>
     </html>

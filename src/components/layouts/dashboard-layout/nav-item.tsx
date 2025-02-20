@@ -1,55 +1,57 @@
 'use client'
 
-import { NavLink } from '@mantine/core'
+import { Tooltip, Anchor } from '@mantine/core'
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { NavigationItem } from '@/types/sidebar'
-import { isNavigationGroup } from '@/config/sidebar'
 
 interface NavItemProps {
   item: NavigationItem
+  collapsed: boolean
 }
+
+const NAV_LINK_BASE_STYLES =
+  'rounded flex items-center text-gray-700 [&:not([data-active=true])]:hover:bg-gray-200 data-[active=true]:text-govBlue-600 data-[active=true]:bg-govBlue-50 '
 
 const NAV_LINK_STYLES = {
-  root: '[&:not([data-active])]:text-gray-700 font-medium text-sm w-auto mb-1 -mx-2 p-2 [&:not([data-active])]:hover:bg-gray-200 rounded'
+  root: `${NAV_LINK_BASE_STYLES} block whitespace-nowrap no-underline space-x-2 font-medium text-sm w-full px-3 py-2 font-normal data-[active=true]:font-semibold `
 }
 
-export function NavItem({ item }: NavItemProps) {
+const NAV_LINK_COLLAPSED_STYLES = {
+  root: `${NAV_LINK_BASE_STYLES} justify-center size-9`
+}
+
+export function NavItem({ item, collapsed }: NavItemProps) {
   const pathname = usePathname()
+  const isActive = pathname.endsWith(item.href)
   const IconComponent = item.icon ? <item.icon className="size-4" /> : null
 
-  if (isNavigationGroup(item)) {
+  if (collapsed) {
     return (
-      <NavLink
-        label={item.label}
-        leftSection={IconComponent}
-        childrenOffset={16}
-        classNames={NAV_LINK_STYLES}
-      >
-        {item.items.map((childItem) => (
-          <Link href={childItem.href} key={childItem.label}>
-            <NavLink
-              component="span"
-              active={pathname.endsWith(childItem.href)}
-              classNames={NAV_LINK_STYLES}
-              label={childItem.label}
-            />
-          </Link>
-        ))}
-      </NavLink>
+      <Tooltip label={item.label} position="right" withArrow openDelay={300}>
+        <Anchor
+          href={item.href}
+          component={Link}
+          data-active={isActive}
+          classNames={NAV_LINK_COLLAPSED_STYLES}
+          key={item.label}
+        >
+          {IconComponent}
+        </Anchor>
+      </Tooltip>
     )
   }
 
   return (
-    <Link href={item.href}>
-      <NavLink
-        component="span"
-        active={pathname.endsWith(item.href)}
-        leftSection={IconComponent}
-        classNames={NAV_LINK_STYLES}
-        key={item.label}
-        label={item.label}
-      />
-    </Link>
+    <Anchor
+      href={item.href}
+      component={Link}
+      data-active={isActive}
+      classNames={NAV_LINK_STYLES}
+      key={item.label}
+    >
+      {IconComponent}
+      <span>{item.label}</span>
+    </Anchor>
   )
 }

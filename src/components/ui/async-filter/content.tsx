@@ -9,8 +9,10 @@ export function Content<T>({
   loadOptions,
   renderOption,
   getOptionValue,
+  getOptionDisabled,
   filterId,
-  filterFn
+  filterFn,
+  showSearch = true
 }: ContentProps<T>) {
   const [search, setSearch] = useDebouncedState('', 100)
   const { selectedItems, toggle, clear } = useSelectedItems()
@@ -32,11 +34,7 @@ export function Content<T>({
 
   if (error) {
     return (
-      <Alert
-        color="red"
-        title="Erro ao carregar opções"
-        className="m-2"
-      >
+      <Alert color="red" title="Erro ao carregar opções" className="m-2">
         {error.message}
       </Alert>
     )
@@ -49,55 +47,57 @@ export function Content<T>({
     selectedItems.has(getOptionValue(option))
   )
 
+  const renderCheckboxItem = (option: T) => (
+    <li key={getOptionValue(option)} className="group">
+      <label
+        className={`flex w-full cursor-pointer space-x-2 p-2 text-xs hover:bg-gray-100 ${
+          getOptionDisabled(option)
+            ? 'cursor-not-allowed text-muted-foreground'
+            : ''
+        }`}
+      >
+        <Checkbox
+          className="mt-0.5"
+          size="xs"
+          checked={selectedItems.has(getOptionValue(option))}
+          onChange={() =>
+            !getOptionDisabled(option) && toggle(getOptionValue(option))
+          }
+          disabled={getOptionDisabled(option)}
+        />
+        {renderOption(option)}
+      </label>
+    </li>
+  )
+
   return (
     <>
-      <header className="border-b p-1">
-        <Input
-          classNames={{
-            input: 'border-none'
-          }}
-          onChange={(event) => setSearch(event.target.value)}
-          placeholder="Pesquisar"
-          rightSection={<Search className="size-4" />}
-        />
-      </header>
+      {showSearch && (
+        <header className="border-b p-1">
+          <Input
+            classNames={{
+              input: 'border-none'
+            }}
+            onChange={(event) => setSearch(event.target.value)}
+            placeholder="Pesquisar"
+            rightSection={<Search className="size-4" />}
+          />
+        </header>
+      )}
       <ul className="max-h-96 w-full overflow-y-auto overflow-x-clip">
         {selectedOptions.length > 0 && (
           <>
             <span className="block p-2 text-xs font-semibold text-secondary-foreground">
               Selecinados
             </span>
-            {selectedOptions.map((option) => (
-              <li key={getOptionValue(option)} className="group">
-                <label className="flex w-full cursor-pointer space-x-2 p-2 text-xs hover:bg-gray-100">
-                  <Checkbox
-                    className="mt-0.5"
-                    size="xs"
-                    checked={selectedItems.has(getOptionValue(option))}
-                    onChange={() => toggle(getOptionValue(option))}
-                  />
-                  {renderOption(option)}
-                </label>
-              </li>
-            ))}
+            {selectedOptions.map(renderCheckboxItem)}
             <Divider className="my-2" />
           </>
         )}
         {filteredOptions.map(
           (option) =>
-            !selectedItems.has(getOptionValue(option)) && (
-              <li key={getOptionValue(option)} className="group">
-                <label className="flex w-full cursor-pointer space-x-2 p-2 text-xs hover:bg-gray-100">
-                  <Checkbox
-                    className="mt-0.5"
-                    size="xs"
-                    checked={selectedItems.has(getOptionValue(option))}
-                    onChange={() => toggle(getOptionValue(option))}
-                  />
-                  {renderOption(option)}
-                </label>
-              </li>
-            )
+            !selectedItems.has(getOptionValue(option)) &&
+            renderCheckboxItem(option)
         )}
       </ul>
       {selectedOptions.length > 0 && (

@@ -18,6 +18,7 @@ export interface RoutingConfiguration {
   defaults: {
     protection: 'public' | 'protected'
     permissions: Role[]
+    redirectPath: string
     unauthorized: {
       defaultUnauthenticatedPath: string
       defaultAccessDeniedPath: string

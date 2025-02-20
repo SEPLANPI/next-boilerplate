@@ -16,9 +16,11 @@ export function AsyncFilter<T extends object = DefaultOption>({
   renderOption,
   getOptionValue,
   getOptionLabel,
+  getOptionDisabled,
   filterId,
   searchParamKey = 'selectedItems',
-  filterFn
+  filterFn,
+  showSearch = true
 }: AsyncFilterProps<T>) {
   const isDefaultOption = (option: T): option is T & DefaultOption =>
     'id' in option && 'label' in option
@@ -39,13 +41,21 @@ export function AsyncFilter<T extends object = DefaultOption>({
   const finalRenderOption =
     renderOption ||
     ((option: T) => (
-      <span className="flex-grow font-medium">{handlers.getLabel(option)}</span>
+      <span
+        className={`flex-grow font-medium ${
+          getOptionDisabled?.(option) ? 'text-gray-400' : ''
+        }`}
+      >
+        {handlers.getLabel(option)}
+      </span>
     ))
 
   const finalFilterFn =
     filterFn ||
     ((option: T, search: string) =>
       handlers.getLabel(option).toLowerCase().includes(search.toLowerCase()))
+
+  const finalGetOptionDisabled = getOptionDisabled || (() => false)
 
   return (
     <SelectedItemsProvider searchParamKey={searchParamKey}>
@@ -60,8 +70,10 @@ export function AsyncFilter<T extends object = DefaultOption>({
               renderOption: finalRenderOption,
               getOptionValue: handlers.getValue,
               getOptionLabel: handlers.getLabel,
+              getOptionDisabled: finalGetOptionDisabled,
               filterId,
-              filterFn: finalFilterFn
+              filterFn: finalFilterFn,
+              showSearch // Pass the prop
             }}
           />
         </Popover.Dropdown>
