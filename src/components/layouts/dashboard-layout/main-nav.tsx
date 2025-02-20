@@ -17,11 +17,11 @@ export function MainNav({ config }: MainNavProps) {
   return (
     <aside
       className={`flex h-full flex-col border-r bg-gray-50 transition-all duration-300 ${
-        collapsed ? 'w-20' : 'w-64'
+        collapsed ? 'w-16' : 'w-64'
       }`}
     >
       <div
-        className={`mb-2 border-b px-4 py-2 ${collapsed ? 'flex flex-col items-center gap-2' : 'flex items-center justify-between'}`}
+        className={`mb-2 border-b py-2 ${collapsed ? 'flex flex-col items-center gap-2' : 'flex items-center justify-between px-4'}`}
       >
         <div
           className={`flex items-center ${collapsed ? 'justify-center' : 'space-x-2'} overflow-hidden`}

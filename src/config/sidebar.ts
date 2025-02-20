@@ -1,3 +1,5 @@
+'use client'
+
 import { SidebarConfig } from '@/types/sidebar'
 import { File } from 'lucide-react'
 
