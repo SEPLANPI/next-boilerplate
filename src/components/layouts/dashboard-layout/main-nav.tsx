@@ -33,6 +33,7 @@ export function MainNav({ config }: MainNavProps) {
               width={120}
               height={120}
               className="size-10"
+              quality={100}
             />
           ) : (
             defaultLogo
