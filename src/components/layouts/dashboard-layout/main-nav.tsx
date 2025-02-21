@@ -16,7 +16,7 @@ export function MainNav({ config }: MainNavProps) {
 
   return (
     <aside
-      className={`flex h-full flex-col border-r bg-gray-50 transition-all duration-300 ${
+      className={`flex h-full flex-col overflow-hidden border-r bg-gray-50 transition-all duration-300 ${
         collapsed ? 'w-16' : 'w-64'
       }`}
     >
@@ -24,7 +24,7 @@ export function MainNav({ config }: MainNavProps) {
         className={`mb-2 border-b py-2 ${collapsed ? 'flex flex-col items-center gap-2' : 'flex items-center justify-between px-4'}`}
       >
         <div
-          className={`flex items-center ${collapsed ? 'justify-center' : 'space-x-2'} overflow-hidden`}
+          className={`flex items-center ${collapsed ? 'justify-center' : 'space-x-2'} `}
         >
           {config.app.logo ? (
             <Image
