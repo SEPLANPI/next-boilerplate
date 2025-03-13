@@ -34,36 +34,54 @@ export const counselorSchema = z.object({
   endereco: addressSchema,
 
   // Passo 3: Conselho
-  conselho: z.enum([
-    'VALE_DO_SAMBITO',
-    'CHAPADAS_DAS_MANGABEIRAS',
-    'ENTRE_RIOS',
-    'SERRA_DA_CAPIRAVA',
-    'VALE_DO_CANINDE',
-    'VALE_DO_PIAUI_E_ITAUEIRA',
-    'CARNAUBAIS',
-    'COCAIS',
-    'PLANICIE_LITORANEA',
-    'TABULEIRO_DO_ALTO_PARNAIBA',
-    'VALE_DO_ITAIM',
-    'VALE_DO_RIO_GUARIBAS'
-  ]),
-  tipo_conselho: z.enum(['PODER_PUBLICO', 'SOCIEDADE_CIVIL']),
-  tipo_membro: z.enum(['NUCLEO_GESTOR', 'MEMBRO']),
+  conselho: z.enum(
+    [
+      'VALE_DO_SAMBITO',
+      'CHAPADAS_DAS_MANGABEIRAS',
+      'ENTRE_RIOS',
+      'SERRA_DA_CAPIRAVA',
+      'VALE_DO_CANINDE',
+      'VALE_DO_PIAUI_E_ITAUEIRA',
+      'CARNAUBAIS',
+      'COCAIS',
+      'PLANICIE_LITORANEA',
+      'TABULEIRO_DO_ALTO_PARNAIBA',
+      'VALE_DO_ITAIM',
+      'VALE_DO_RIO_GUARIBAS'
+    ],
+    {
+      errorMap: () => ({ message: 'Selecione um conselho' })
+    }
+  ),
+  tipo_conselho: z.enum(['PODER_PUBLICO', 'SOCIEDADE_CIVIL'], {
+    errorMap: () => ({ message: 'Selecione um tipo de conselho' })
+  }),
+  tipo_membro: z.enum(['NUCLEO_GESTOR', 'MEMBRO'], {
+    errorMap: () => ({ message: 'Selecione um tipo de membro' })
+  }),
 
   // Passo 4: Dados Bancários
   banco_id: z.string().min(1, 'Banco é obrigatório'),
-  agencia: z.number().min(3, 'Agência inválida'),
-  conta: z.number().min(3, 'Conta inválida'),
-  tipo_conta: z.enum(['POUPANCA', 'CORRENTE']),
+  agencia: z.number().min(3, 'Número de agência inválido'),
+  conta: z.number().min(3, 'Número de conta inválido'),
 
   // Passo 5: Oficina
-  oficina: z.string().min(3, 'Oficina inválida'),
+  oficina: z.string().min(3, 'Nome da oficina muito curto'),
 
   // Passo 6: Documentos
-  rg_frente: z.instanceof(File),
-  rg_verso: z.instanceof(File),
-  comprovante_residencia: z.instanceof(File),
-  comprovante_conselho: z.instanceof(File),
-  comprovante_bancario: z.instanceof(File)
+  rg_frente: z.instanceof(File, {
+    message: 'Arquivo da frente do RG é obrigatório'
+  }),
+  rg_verso: z.instanceof(File, {
+    message: 'Arquivo do verso do RG é obrigatório'
+  }),
+  comprovante_residencia: z.instanceof(File, {
+    message: 'Comprovante de residência é obrigatório'
+  }),
+  comprovante_conselho: z.instanceof(File, {
+    message: 'Comprovante do conselho é obrigatório'
+  }),
+  comprovante_bancario: z.instanceof(File, {
+    message: 'Comprovante bancário é obrigatório'
+  })
 })

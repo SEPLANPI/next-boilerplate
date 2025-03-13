@@ -2,7 +2,6 @@
 import { PropsWithChildren, useEffect, useMemo, useState } from 'react'
 import { Stepper } from '@mantine/core'
 import { useForm, zodResolver } from '@mantine/form'
-import { z } from 'zod'
 import { PersonalDataStep } from './personal-data-step'
 import { AddressStep } from './address-step'
 import { AddressType } from '../types/counselor'
@@ -18,7 +17,7 @@ import {
   InitialFormValues
 } from '@/lib/form-initial-values'
 
-type FormValues = Omit<
+export type FormValues = Omit<
   InitialFormValues<typeof counselorSchema>,
   'endereco'
 > & {
@@ -49,28 +48,27 @@ function SectionTitle({ children }: PropsWithChildren) {
 }
 
 export function RegisterCounselorForm() {
-  const initialValues = useMemo(() => ({
-    ...createInitialFormValues(counselorSchema),
-    endereco: {
-      tipo_endereco: AddressType.URBAN,
-      rua: '',
-      numero: '',
-      complemento: '',
-      bairro: '',
-      referencia: '',
-      cep: '',
-      municipio_id: ''
-    }
-  }), [])
+  const initialValues = useMemo(
+    () => ({
+      ...createInitialFormValues(counselorSchema),
+      endereco: {
+        tipo_endereco: AddressType.URBAN,
+        rua: '',
+        numero: '',
+        complemento: '',
+        bairro: '',
+        referencia: '',
+        cep: '',
+        municipio_id: ''
+      }
+    }),
+    []
+  )
 
   const form = useForm<FormValues>({
     initialValues,
     validate: zodResolver(counselorSchema)
   })
-
-  useEffect(() => {
-    console.log('dasdas')
-  }, [form.values.nome])
 
   const steps = [
     {
@@ -110,7 +108,7 @@ export function RegisterCounselorForm() {
     {
       label: 'Dados Bancários',
       component: <BankDetailsStep form={form} />,
-      fields: ['banco_id', 'agencia', 'conta', 'tipo_conta']
+      fields: ['banco_id', 'agencia', 'conta']
     },
     {
       label: 'Oficina',

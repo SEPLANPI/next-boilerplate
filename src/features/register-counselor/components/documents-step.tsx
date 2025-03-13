@@ -1,6 +1,7 @@
 import { UseFormReturnType } from '@mantine/form'
 import { FileInput } from '@mantine/core'
 import { z } from 'zod'
+import { FormValues } from './register-counselor-form'
 
 export const documentsSchema = z.object({
   rg_frente: z
@@ -20,32 +21,47 @@ export const documentsSchema = z.object({
     .refine((file) => file.size > 0, 'Arquivo obrigatório')
 })
 
-export function DocumentsStep({ form }: { form: UseFormReturnType<any> }) {
+export function DocumentsStep({
+  form
+}: {
+  form: UseFormReturnType<FormValues>
+}) {
+  console.log(form.values.rg_frente)
   return (
     <>
       <FileInput
+        className="col-span-2"
         label="RG Frente"
-        accept="image/*,application/pdf"
+        accept="image/jpg, image/png, image/jpeg ,application/pdf"
+        placeholder="Selecione o arquivo (jpg. jpeg, png, pdf)"
         {...form.getInputProps('rg_frente')}
       />
       <FileInput
+        className="col-span-2"
         label="RG Verso"
-        accept="image/*,application/pdf"
+        accept="image/jpg, image/png, image/jpeg ,application/pdf"
+        placeholder="Selecione o arquivo (jpg. jpeg, png, pdf)"
         {...form.getInputProps('rg_verso')}
       />
       <FileInput
+        className="col-span-2"
         label="Comprovante de Residência"
-        accept="application/pdf"
+        accept="image/jpg, image/png, image/jpeg ,application/pdf"
+        placeholder="Selecione o arquivo (jpg. jpeg, png, pdf)"
         {...form.getInputProps('comprovante_residencia')}
       />
       <FileInput
+        className="col-span-2"
         label="Comprovante do Conselho"
-        accept="application/pdf"
+        accept="image/jpg, image/png, image/jpeg ,application/pdf"
+        placeholder="Selecione o arquivo (jpg. jpeg, png, pdf)"
         {...form.getInputProps('comprovante_conselho')}
       />
       <FileInput
+        className="col-span-2"
         label="Comprovante Bancário"
-        accept="application/pdf"
+        accept="image/jpg, image/png, image/jpeg ,application/pdf"
+        placeholder="Selecione o arquivo (jpg. jpeg, png, pdf)"
         {...form.getInputProps('comprovante_bancario')}
       />
     </>

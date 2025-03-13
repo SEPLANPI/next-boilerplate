@@ -4,10 +4,11 @@ import {
   BookOpen,
   Check,
   FileText,
+  Instagram,
   Landmark,
   Leaf,
   ListChecks,
-  Lock,
+  Mail,
   Presentation,
   School,
   Settings,
@@ -22,8 +23,8 @@ import { Section } from '@/features/landing-page/components/section'
 
 function CheckListItem({ children }: PropsWithChildren) {
   return (
-    <li className="flex items-center gap-2">
-      <span className="flex size-6 items-center justify-center rounded-full bg-blue-900">
+    <li className="flex gap-2">
+      <span className="mt-1 flex size-6 flex-shrink-0 items-center justify-center rounded-full bg-blue-900">
         <Check className="size-4 text-white" />
       </span>
       <span>{children}</span>
@@ -34,8 +35,8 @@ function CheckListItem({ children }: PropsWithChildren) {
 export default function LandingPage() {
   return (
     <div className="font-montserrat">
-      <section className="relative h-[480px] p-8 sm:h-[680px] md:h-[800px] md:p-0">
-        <header className="container relative z-10 mx-auto flex items-center justify-between md:py-2">
+      <section className="relative h-[480px] p-8 sm:h-[680px] md:h-[800px] md:py-0">
+        <header className="relative z-10 mx-auto flex max-w-[1120px] items-center justify-between md:py-2">
           <span className="font-montserrat text-xl font-bold text-yellow-500">
             diálogos
           </span>
@@ -53,18 +54,18 @@ export default function LandingPage() {
 
       <div className="flex h-5 items-stretch">
         <span className="flex-1 bg-yellow-500" />
-        <span className="flex-1 bg-red-500" />
+        <span className="flex-1 bg-[#EF4123]" />
         <span className="flex-1 bg-green-900" />
       </div>
 
       <Section>
         <div className="grid grid-cols-1 items-center gap-10 sm:grid-cols-2 md:grid-cols-3">
           <div className="flex flex-col gap-8 md:col-span-2">
-            <h3 className="font-sans text-sm font-extrabold text-red-500">
+            <h3 className="font-sans text-sm font-extrabold text-[#EF4123]">
               OQUE É?
             </h3>
             <h2 className="text-xl font-bold md:text-4xl">
-              <span className="text-transparent block bg-gradient-to-r from-red-500 to-yellow-500 bg-clip-text">
+              <span className="block bg-gradient-to-r from-[#EF4123] to-yellow-500 bg-clip-text text-transparent">
                 Diálogos pelo Piauí:
               </span>
               <span>O Governo nos Territórios</span>
@@ -203,13 +204,88 @@ export default function LandingPage() {
               </span>
             </Card.Subtitle>
           </Card.Root>
-          <Card.Root className="bg-red-500 text-white sm:col-span-6 md:col-span-3">
+          <Card.Root className="bg-[#EF4123] text-white sm:col-span-6 md:col-span-3">
             <Card.Icon className="bg-white/20">
               <ShieldCheck className="size-4" />
             </Card.Icon>
             <Card.Title>Justiça e Segurança</Card.Title>
             <Card.Subtitle>Piauí Seguro</Card.Subtitle>
           </Card.Root>
+        </div>
+      </Section>
+
+      <Section
+        containerClassName="flex flex-col items-center"
+        className="!pt-0"
+      >
+        <h3 className="mb-8 text-center text-sm font-extrabold">CRONOGRAMA</h3>
+        <div className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
+          <div className="space-y-3">
+            <div className="rounded-md bg-yellow-500 px-3 py-1.5">
+              <h4 className="font-bold">Abril</h4>
+            </div>
+            <div className="flex flex-col space-y-2.5 px-3 py-2">
+              <span className="text-sm font-semibold">
+                11 - 12 VALE DO RIO GUARIBAS
+              </span>
+              <span className="text-sm">Picos</span>
+            </div>
+          </div>
+          <div className="space-y-3">
+            <div className="rounded-md bg-yellow-500 px-3 py-1.5">
+              <h4 className="font-bold">Maio</h4>
+            </div>
+            <div className="flex flex-col space-y-2.5 px-3 py-2">
+              <span className="text-sm font-semibold">
+                16 - 17 VALE DOS RIOS E PIAUÍ EE ITAUEIRAS
+              </span>
+              <span className="text-sm">Floriano</span>
+            </div>
+          </div>{' '}
+          <div className="space-y-3">
+            <div className="rounded-md bg-yellow-500 px-3 py-1.5">
+              <h4 className="font-bold">Junho</h4>
+            </div>
+            <div className="flex flex-col space-y-2.5 px-3 py-2">
+              <span className="text-sm font-semibold">
+                13 - 14 TABULEIROS DO ALTO PARNAÍBA
+              </span>
+              <span className="text-sm">Uruçuí</span>
+            </div>
+          </div>{' '}
+          <div className="space-y-3">
+            <div className="rounded-md bg-yellow-500 px-3 py-1.5">
+              <h4 className="font-bold">Julho</h4>
+            </div>
+            <div className="flex flex-col space-y-2.5 px-3 py-2">
+              <span className="text-sm font-semibold">
+                11 - 12 VALE DO RIO GUARIBAS
+              </span>
+              <span className="text-sm">Picos</span>
+            </div>
+          </div>{' '}
+          <div className="space-y-3">
+            <div className="rounded-md bg-yellow-500 px-3 py-1.5">
+              <h4 className="font-bold">Agosto</h4>
+            </div>
+            <div className="flex flex-col space-y-2.5 px-3 py-2">
+              <span className="text-sm font-semibold">
+                11 - 12 VALE DO RIO GUARIBAS
+              </span>
+              <span className="text-sm">Picos</span>
+            </div>
+          </div>{' '}
+          <div className="space-y-3">
+            <div className="rounded-md bg-yellow-500 px-3 py-1.5">
+              <h4 className="font-bold">Setembro</h4>
+            </div>
+            <div className="flex flex-col space-y-2.5 px-3 py-2">
+              <span className="text-sm font-semibold">
+                11 - 12 VALE DO RIO GUARIBAS
+              </span>
+              <span className="text-sm">Picos</span>
+            </div>
+          </div>
         </div>
       </Section>
 
@@ -328,6 +404,35 @@ export default function LandingPage() {
           />
         </div>
       </Section>
+      <footer className="bg-gray-900 px-8 py-5 text-white">
+        <div className="mx-auto flex max-w-[1120px] flex-col items-center justify-between gap-4 sm:flex-row">
+          <Image
+            src="/seplan-logo.png"
+            className="h-16 w-auto"
+            width={350}
+            height={120}
+            alt="Logo SEPLAN"
+          />
+          <div className="flex gap-10">
+            <Anchor
+              className="text-white"
+              href="mailto:"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Mail className="size-5" />
+            </Anchor>
+            <Anchor
+              className="text-white"
+              href="https://www.instagram.com/seplanpiaui/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Instagram className="size-5" />
+            </Anchor>
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }
