@@ -28,6 +28,7 @@ export async function handleInitialSignIn(
         error: 'UserInfoError'
       }
     }
+    console.log(user, userInfo)
 
     return {
       ...token,

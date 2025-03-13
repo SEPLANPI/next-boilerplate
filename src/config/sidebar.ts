@@ -1,20 +1,19 @@
 'use client'
 
 import { SidebarConfig } from '@/types/sidebar'
-import { File } from 'lucide-react'
+import { Users } from 'lucide-react'
 
 export const sidebarConfig: SidebarConfig = {
   app: {
-    name: 'Boilerplate',
-    logo: undefined
+    name: 'Diálogos'
   },
   sections: [
     {
       items: [
         {
-          label: 'Página Exemplo',
-          href: '/',
-          icon: File
+          label: 'Acessos',
+          href: '/admin/acessos/cadastros',
+          icon: Users
         }
       ]
     }

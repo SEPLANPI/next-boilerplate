@@ -4,7 +4,7 @@ export const routingConfig: RoutingConfiguration = {
   defaults: {
     protection: 'protected',
     permissions: [],
-    redirectPath: '/',
+    redirectPath: '/admin/acessos/cadastros',
     unauthorized: {
       defaultUnauthenticatedPath: '/api/auth/sign-in',
       defaultAccessDeniedPath: '/acesso-negado'
@@ -14,6 +14,10 @@ export const routingConfig: RoutingConfiguration = {
   routes: [
     {
       path: '/acesso-negado',
+      type: 'public'
+    },
+    {
+      path: '/conselheiros/cadastro/',
       type: 'public'
     }
   ]

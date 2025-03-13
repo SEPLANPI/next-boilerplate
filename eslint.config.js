@@ -1,4 +1,3 @@
-import js from '@eslint/js'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
@@ -11,7 +10,7 @@ const compat = new FlatCompat()
 export default tseslint.config(
   ...compat.extends('standard', 'next/core-web-vitals'),
   {
-    ignores: ['dist'],
+    ignores: ['node_modules/', '.next/'],
     extends: [
       js.configs.recommended,
       ...tseslint.configs.recommended,

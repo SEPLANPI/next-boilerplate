@@ -16,12 +16,12 @@ export function MainNav({ config }: MainNavProps) {
 
   return (
     <aside
-      className={`flex h-full flex-col overflow-hidden border-r bg-gray-50 transition-all duration-300 ${
+      className={`flex h-full flex-col overflow-hidden border-r bg-white transition-all duration-300 ${
         collapsed ? 'w-16' : 'w-64'
       }`}
     >
       <div
-        className={`mb-2 border-b py-2 ${collapsed ? 'flex flex-col items-center gap-2' : 'flex items-center justify-between px-4'}`}
+        className={`mb-2 h-12 border-b ${collapsed ? 'flex flex-col items-center justify-center gap-2' : 'flex items-center justify-between px-4'}`}
       >
         <div
           className={`flex items-center ${collapsed ? 'justify-center' : 'space-x-2'} `}
@@ -45,14 +45,26 @@ export function MainNav({ config }: MainNavProps) {
             </>
           )}
         </div>
-        <ActionIcon onClick={() => toggleCollapsed()} variant="ghost" size="lg">
-          {collapsed ? (
-            <PanelLeftOpen className="size-4" />
-          ) : (
+        {!collapsed && (
+          <ActionIcon
+            onClick={() => toggleCollapsed()}
+            variant="ghost"
+            size="lg"
+          >
             <PanelLeftClose className="size-4" />
-          )}
-        </ActionIcon>
+          </ActionIcon>
+        )}
       </div>
+      {collapsed && (
+        <ActionIcon
+          onClick={() => toggleCollapsed()}
+          variant="ghost"
+          size="lg"
+          className="mx-auto mb-2"
+        >
+          <PanelLeftOpen className="size-4" />
+        </ActionIcon>
+      )}
       <nav className="flex-1 space-y-2 overflow-y-auto overflow-x-clip px-4">
         {config.sections.map((section, index) => (
           <section className="flex flex-col" key={section.title || index}>

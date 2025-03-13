@@ -3,17 +3,33 @@ import { ColorSchemeScript } from '@mantine/core'
 import './globals.css'
 import '@mantine/dates/styles.css'
 import '@mantine/notifications/styles.css'
-import { Figtree, Montserrat } from 'next/font/google'
+import { Montserrat } from 'next/font/google'
+import localFont from 'next/font/local'
 import { Providers } from './providers'
 
 export const metadata: Metadata = {
-  title: 'DITI Next.js Boilerplate'
+  title: {
+    default: 'Diálogos',
+    template: '%s | Diálogos'
+  }
 }
 
-const figtree = Figtree({ subsets: ['latin'] })
+const roboto = localFont({
+  src: [
+    {
+      path: './roboto-italic.ttf',
+      style: 'italic'
+    },
+    {
+      path: './roboto-normal.ttf',
+      style: 'normal'
+    }
+  ]
+})
+
 const montserrat = Montserrat({
   subsets: ['latin'],
-  weight: ['600', '800'],
+  weight: ['400', '500', '600', '700', '800'],
   variable: '--font-montserrat'
 })
 
@@ -27,9 +43,7 @@ export default function RootLayout({
       <head>
         <ColorSchemeScript />
       </head>
-      <body
-        className={`${figtree.className} ${montserrat.variable} antialised`}
-      >
+      <body className={`${roboto.className} ${montserrat.variable} antialised`}>
         <Providers>{children}</Providers>
       </body>
     </html>
