@@ -21,6 +21,13 @@ import Image from 'next/image'
 import { PropsWithChildren } from 'react'
 import { Card } from '@/features/landing-page/components/card'
 import { Section } from '@/features/landing-page/components/section'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Diálogos pelo Piauí',
+  description:
+    'Aproximando a gestão pública da sociedade para construir um futuro mais justo e sustentável.'
+}
 
 function CheckListItem({ children }: PropsWithChildren) {
   return (
@@ -83,7 +90,7 @@ export default function LandingPage() {
               OQUE É?
             </h3>
             <h2 className="text-xl font-bold md:text-4xl">
-              <span className="block bg-gradient-to-r from-[#EF4123] to-yellow-500 bg-clip-text text-transparent">
+              <span className="text-transparent block bg-gradient-to-r from-[#EF4123] to-yellow-500 bg-clip-text">
                 Diálogos pelo Piauí:
               </span>
               <span>O Governo nos Territórios</span>
