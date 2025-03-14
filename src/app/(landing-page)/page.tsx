@@ -25,7 +25,7 @@ import { Section } from '@/features/landing-page/components/section'
 function CheckListItem({ children }: PropsWithChildren) {
   return (
     <li className="flex gap-2">
-      <span className="mt-1 flex size-6 flex-shrink-0 items-center justify-center rounded-full bg-blue-900">
+      <span className="flex size-6 flex-shrink-0 items-center justify-center rounded-full bg-blue-900">
         <Check className="size-4 text-white" />
       </span>
       <span>{children}</span>

@@ -76,10 +76,11 @@ export function Nav() {
             </nav>
             <Button
               color="yellow"
-              className="text-gray-900"
+              className="text-gray-900 opacity-50"
               size="md"
               fullWidth
               leftSection={<Lock className="size-4" />}
+              disabled
             >
               <div className="flex flex-col space-y-1">
                 <span className="text-[9px] font-normal">Acesso exclusivo</span>
@@ -126,7 +127,8 @@ export function Nav() {
       <Button
         size="md"
         color="yellow"
-        className="text-gray-900"
+        className="text-gray-900 opacity-50"
+        disabled
         leftSection={<Lock className="size-4" />}
       >
         <div className="flex flex-col space-y-1">
