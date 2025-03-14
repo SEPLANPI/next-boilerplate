@@ -1,4 +1,3 @@
-import type { Metadata } from 'next'
 import { ColorSchemeScript } from '@mantine/core'
 import './globals.css'
 import '@mantine/dates/styles.css'
@@ -6,13 +5,6 @@ import '@mantine/notifications/styles.css'
 import { Montserrat } from 'next/font/google'
 import localFont from 'next/font/local'
 import { Providers } from './providers'
-
-export const metadata: Metadata = {
-  title: {
-    default: 'Diálogos',
-    template: '%s | Diálogos'
-  }
-}
 
 const roboto = localFont({
   src: [
