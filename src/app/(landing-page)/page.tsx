@@ -1,5 +1,5 @@
 import { Nav } from '@/features/landing-page/components/nav'
-import { Anchor, Button } from '@mantine/core'
+import { Anchor } from '@mantine/core'
 import {
   BookOpen,
   Check,
@@ -14,7 +14,8 @@ import {
   Settings,
   ShieldCheck,
   Target,
-  TrendingUp
+  TrendingUp,
+  Youtube
 } from 'lucide-react'
 import Image from 'next/image'
 import { PropsWithChildren } from 'react'
@@ -35,30 +36,47 @@ function CheckListItem({ children }: PropsWithChildren) {
 export default function LandingPage() {
   return (
     <div className="font-montserrat">
-      <section className="relative h-[480px] p-8 sm:h-[680px] md:h-[800px] md:py-0">
-        <header className="relative z-10 mx-auto flex max-w-[1120px] items-center justify-between md:py-2">
-          <span className="font-montserrat text-xl font-bold text-yellow-500">
+      <section className="relative flex h-[320px] flex-col p-8 sm:h-[420px] md:h-[660px] md:py-0">
+        <header className="relative z-10 mx-auto flex w-full max-w-[1120px] items-center justify-between md:py-2">
+          <span className="font-montserrat text-2xl font-bold text-yellow-500">
             diálogos
           </span>
           <Nav />
         </header>
+        <main className="relative z-10 mx-auto flex w-full max-w-[1120px] flex-1 flex-col justify-center gap-2.5 text-white">
+          <h1 className="text-2xl font-bold md:text-5xl">
+            Diálogos pelo Piauí
+          </h1>
+          <p className="max-w-xs text-sm md:max-w-md md:text-lg">
+            Aproximando a gestão pública da sociedade para construir um futuro
+            mais justo e sustentável.
+          </p>
+        </main>
         <Image
-          className="absolute left-0 top-0 z-0 block h-full object-cover"
+          className="absolute left-0 top-0 z-0 hidden h-full object-cover sm:block"
           src="/lp/banner.png"
           sizes={'200vw'}
           quality={100}
           fill
-          alt="uma senhora, um senhor e uma jovem sorrindo em um gradiente azul claro e escuro"
+          alt="uma senhora e um senhor em um gradiente azul claro e escuro com as listras do piauí"
+        />
+        <Image
+          className="absolute left-0 top-0 z-0 block h-full object-cover sm:hidden"
+          src="/lp/banner-mobile.png"
+          sizes={'200vw'}
+          quality={100}
+          fill
+          alt="gradiente azul claro e escuro com as listras do piauí"
         />
       </section>
 
-      <div className="flex h-5 items-stretch">
+      <div className="flex h-3 items-stretch sm:h-4">
         <span className="flex-1 bg-yellow-500" />
         <span className="flex-1 bg-[#EF4123]" />
         <span className="flex-1 bg-green-900" />
       </div>
 
-      <Section>
+      <Section id="sobre">
         <div className="grid grid-cols-1 items-center gap-10 sm:grid-cols-2 md:grid-cols-3">
           <div className="flex flex-col gap-8 md:col-span-2">
             <h3 className="font-sans text-sm font-extrabold text-[#EF4123]">
@@ -93,7 +111,10 @@ export default function LandingPage() {
         </div>
       </Section>
 
-      <Section className="bg-gradient-to-r from-blue-500 to-blue-900 text-white">
+      <Section
+        id="ppa"
+        className="bg-gradient-to-r from-[#389CF8] to-[#0352AA] text-white"
+      >
         <div className="flex flex-col items-center">
           <h3 className="mb-8 font-sans text-sm font-extrabold">
             PLANO PLURIANUAL
@@ -144,7 +165,7 @@ export default function LandingPage() {
         </div>
       </Section>
 
-      <Section containerClassName="flex flex-col items-center">
+      <Section id="eixos" containerClassName="flex flex-col items-center">
         <h3 className="mb-8 text-center text-sm font-extrabold text-blue-900">
           EIXOS ESTRATÉGICOS
         </h3>
@@ -230,6 +251,10 @@ export default function LandingPage() {
               </span>
               <span className="text-sm">Picos</span>
             </div>
+            <div className="flex flex-col space-y-2.5 px-3 py-2">
+              <span className="text-sm font-semibold">25 - 26 COCAIS</span>
+              <span className="text-sm">Piripiri</span>
+            </div>
           </div>
           <div className="space-y-3">
             <div className="rounded-md bg-yellow-500 px-3 py-1.5">
@@ -237,11 +262,15 @@ export default function LandingPage() {
             </div>
             <div className="flex flex-col space-y-2.5 px-3 py-2">
               <span className="text-sm font-semibold">
-                16 - 17 VALE DOS RIOS E PIAUÍ EE ITAUEIRAS
+                16 - 17 VALE DOS RIOS E PIAUÍ E ITAUEIRAS
               </span>
               <span className="text-sm">Floriano</span>
             </div>
-          </div>{' '}
+            <div className="flex flex-col space-y-2.5 px-3 py-2">
+              <span className="text-sm font-semibold">30 -31 CARNAUBAIS</span>
+              <span className="text-sm">Campo Maior</span>
+            </div>
+          </div>
           <div className="space-y-3">
             <div className="rounded-md bg-yellow-500 px-3 py-1.5">
               <h4 className="font-bold">Junho</h4>
@@ -252,44 +281,67 @@ export default function LandingPage() {
               </span>
               <span className="text-sm">Uruçuí</span>
             </div>
-          </div>{' '}
+            <div className="flex flex-col space-y-2.5 px-3 py-2">
+              <span className="text-sm font-semibold">
+                27 - 28 CHAPADA DAS MANGABEIRAS
+              </span>
+              <span className="text-sm">Bom Jesus</span>
+            </div>
+          </div>
           <div className="space-y-3">
             <div className="rounded-md bg-yellow-500 px-3 py-1.5">
               <h4 className="font-bold">Julho</h4>
             </div>
             <div className="flex flex-col space-y-2.5 px-3 py-2">
               <span className="text-sm font-semibold">
-                11 - 12 VALE DO RIO GUARIBAS
+                11 - 12 PLANÍCIE LITORÂNEA
               </span>
-              <span className="text-sm">Picos</span>
+              <span className="text-sm">Parnaíba</span>
             </div>
-          </div>{' '}
+            <div className="flex flex-col space-y-2.5 px-3 py-2">
+              <span className="text-sm font-semibold">
+                25 - 26 SERRA DA CAPIVARA
+              </span>
+              <span className="text-sm">São Raimundo Nonato</span>
+            </div>
+          </div>
           <div className="space-y-3">
             <div className="rounded-md bg-yellow-500 px-3 py-1.5">
               <h4 className="font-bold">Agosto</h4>
             </div>
             <div className="flex flex-col space-y-2.5 px-3 py-2">
               <span className="text-sm font-semibold">
-                11 - 12 VALE DO RIO GUARIBAS
+                08 - 09 VALE DO CANINDÉ
               </span>
-              <span className="text-sm">Picos</span>
+              <span className="text-sm">Oeiras</span>
             </div>
-          </div>{' '}
+            <div className="flex flex-col space-y-2.5 px-3 py-2">
+              <span className="text-sm font-semibold">
+                22 - 23 CHAPADA DO VALE ITAIM
+              </span>
+              <span className="text-sm">Paulistana</span>
+            </div>
+          </div>
           <div className="space-y-3">
             <div className="rounded-md bg-yellow-500 px-3 py-1.5">
               <h4 className="font-bold">Setembro</h4>
             </div>
             <div className="flex flex-col space-y-2.5 px-3 py-2">
               <span className="text-sm font-semibold">
-                11 - 12 VALE DO RIO GUARIBAS
+                05 - 06 VALE DO SAMBITO
               </span>
-              <span className="text-sm">Picos</span>
+              <span className="text-sm">Valença</span>
+            </div>
+            <div className="flex flex-col space-y-2.5 px-3 py-2">
+              <span className="text-sm font-semibold">19 - 20 ENTRE RIOS</span>
+              <span className="text-sm">Teresina</span>
             </div>
           </div>
         </div>
       </Section>
 
       <Section
+        id="como-funciona"
         className="bg-green-900 text-white"
         containerClassName="flex flex-col items-center"
       >
@@ -367,7 +419,7 @@ export default function LandingPage() {
           </Card.Root>
         </div>
       </Section>
-      <Section>
+      <Section id="como-participar">
         <div className="grid grid-cols-1 items-center gap-10 md:grid-cols-3">
           <div className="flex flex-col gap-8 md:col-span-2">
             <h3 className="font-sans text-sm font-extrabold text-blue-900">
@@ -416,7 +468,7 @@ export default function LandingPage() {
           <div className="flex gap-10">
             <Anchor
               className="text-white"
-              href="mailto:"
+              href="mailto:gabinete@seplan.pi.gov.br"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -424,11 +476,20 @@ export default function LandingPage() {
             </Anchor>
             <Anchor
               className="text-white"
-              href="https://www.instagram.com/seplanpiaui/"
+              href="https://www.instagram.com/seplan_pi/"
               target="_blank"
               rel="noopener noreferrer"
             >
               <Instagram className="size-5" />
+            </Anchor>
+            <Anchor
+              className="text-white"
+              href="https://www.youtube.com/channel/UCImPGFdsVo3oGX_eIhwIMlA
+"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Youtube className="size-5" />
             </Anchor>
           </div>
         </div>

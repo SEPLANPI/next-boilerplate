@@ -2,6 +2,7 @@
 import { PropsWithChildren, useEffect, useMemo, useState } from 'react'
 import { Stepper } from '@mantine/core'
 import { useForm, zodResolver } from '@mantine/form'
+import { z } from 'zod'
 import { PersonalDataStep } from './personal-data-step'
 import { AddressStep } from './address-step'
 import { AddressType } from '../types/counselor'
@@ -17,7 +18,7 @@ import {
   InitialFormValues
 } from '@/lib/form-initial-values'
 
-export type FormValues = Omit<
+type FormValues = Omit<
   InitialFormValues<typeof counselorSchema>,
   'endereco'
 > & {
@@ -70,6 +71,10 @@ export function RegisterCounselorForm() {
     validate: zodResolver(counselorSchema)
   })
 
+  useEffect(() => {
+    console.log('dasdas')
+  }, [form.values.nome])
+
   const steps = [
     {
       label: 'Dados Pessoais',
@@ -108,7 +113,7 @@ export function RegisterCounselorForm() {
     {
       label: 'Dados Bancários',
       component: <BankDetailsStep form={form} />,
-      fields: ['banco_id', 'agencia', 'conta']
+      fields: ['banco_id', 'agencia', 'conta', 'tipo_conta']
     },
     {
       label: 'Oficina',

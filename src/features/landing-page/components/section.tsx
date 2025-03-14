@@ -4,10 +4,15 @@ import { PropsWithChildren } from 'react'
 export const Section = ({
   children,
   className,
-  containerClassName
-}: PropsWithChildren<{ className?: string; containerClassName?: string }>) => {
+  containerClassName,
+  id
+}: PropsWithChildren<{
+  className?: string
+  containerClassName?: string
+  id?: string
+}>) => {
   return (
-    <section className={cn('px-8 py-8 sm:py-16 md:py-36', className)}>
+    <section id={id} className={cn('px-8 py-8 sm:py-16 md:py-36', className)}>
       <div className={cn('mx-auto max-w-[1120px]', containerClassName)}>
         {children}
       </div>

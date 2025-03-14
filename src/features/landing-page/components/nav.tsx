@@ -18,7 +18,7 @@ export function Nav() {
           <Menu className="size-8" />
         </ActionIcon>
         <Drawer
-          size={"75%"}
+          size={'75%'}
           opened={opened}
           withCloseButton={false}
           onClose={close}
@@ -28,25 +28,55 @@ export function Nav() {
             <nav>
               <ul className="flex flex-col">
                 <li>
-                  <Anchor className={LINK_CLASSES_MOBILE}>Sobre</Anchor>
+                  <Anchor
+                    href="#sobre"
+                    className={LINK_CLASSES_MOBILE}
+                    onClick={close}
+                  >
+                    Sobre
+                  </Anchor>
                 </li>
                 <li>
-                  <Anchor className={LINK_CLASSES_MOBILE}>PPA</Anchor>
+                  <Anchor
+                    href="#ppa"
+                    className={LINK_CLASSES_MOBILE}
+                    onClick={close}
+                  >
+                    PPA
+                  </Anchor>
                 </li>
                 <li>
-                  <Anchor className={LINK_CLASSES_MOBILE}>Eixos</Anchor>
+                  <Anchor
+                    href="#eixos"
+                    className={LINK_CLASSES_MOBILE}
+                    onClick={close}
+                  >
+                    Eixos
+                  </Anchor>
                 </li>
                 <li>
-                  <Anchor className={LINK_CLASSES_MOBILE}>Como Funciona</Anchor>
+                  <Anchor
+                    href="#como-funciona"
+                    className={LINK_CLASSES_MOBILE}
+                    onClick={close}
+                  >
+                    Como Funciona
+                  </Anchor>
                 </li>
                 <li>
-                  <Anchor className={LINK_CLASSES_MOBILE}>
+                  <Anchor
+                    href="#como-participar"
+                    className={LINK_CLASSES_MOBILE}
+                    onClick={close}
+                  >
                     Como Participar
                   </Anchor>
                 </li>
               </ul>
             </nav>
             <Button
+              color="yellow"
+              className="text-gray-900"
               size="md"
               fullWidth
               leftSection={<Lock className="size-4" />}
@@ -67,23 +97,38 @@ export function Nav() {
       <nav>
         <ul className="flex">
           <li>
-            <Anchor className={LINK_CLASSES_DESKTOP}>Sobre</Anchor>
+            <Anchor href="#sobre" className={LINK_CLASSES_DESKTOP}>
+              Sobre
+            </Anchor>
           </li>
           <li>
-            <Anchor className={LINK_CLASSES_DESKTOP}>PPA</Anchor>
+            <Anchor href="#ppa" className={LINK_CLASSES_DESKTOP}>
+              PPA
+            </Anchor>
           </li>
           <li>
-            <Anchor className={LINK_CLASSES_DESKTOP}>Eixos</Anchor>
+            <Anchor href="#eixos" className={LINK_CLASSES_DESKTOP}>
+              Eixos
+            </Anchor>
           </li>
           <li>
-            <Anchor className={LINK_CLASSES_DESKTOP}>Como Funciona</Anchor>
+            <Anchor href="#como-funciona" className={LINK_CLASSES_DESKTOP}>
+              Como Funciona
+            </Anchor>
           </li>
           <li>
-            <Anchor className={LINK_CLASSES_DESKTOP}>Como Participar</Anchor>
+            <Anchor href="#como-participar" className={LINK_CLASSES_DESKTOP}>
+              Como Participar
+            </Anchor>
           </li>
         </ul>
       </nav>
-      <Button size="md" leftSection={<Lock className="size-4" />}>
+      <Button
+        size="md"
+        color="yellow"
+        className="text-gray-900"
+        leftSection={<Lock className="size-4" />}
+      >
         <div className="flex flex-col space-y-1">
           <span className="text-[9px] font-normal">Acesso exclusivo</span>
           <span className="text-xs">Conselheiros</span>
