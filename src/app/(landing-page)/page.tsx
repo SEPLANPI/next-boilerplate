@@ -21,13 +21,6 @@ import Image from 'next/image'
 import { PropsWithChildren } from 'react'
 import { Card } from '@/features/landing-page/components/card'
 import { Section } from '@/features/landing-page/components/section'
-import { Metadata } from 'next'
-
-export const metadata: Metadata = {
-  title: 'Diálogos pelo Piauí',
-  description:
-    'Aproximando a gestão pública da sociedade para construir um futuro mais justo e sustentável.'
-}
 
 function CheckListItem({ children }: PropsWithChildren) {
   return (
