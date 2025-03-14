@@ -19,6 +19,10 @@ export const routingConfig: RoutingConfiguration = {
     {
       path: '/conselheiros/cadastro/',
       type: 'public'
+    },
+    {
+      path: '/',
+      type: 'public'
     }
   ]
 }
