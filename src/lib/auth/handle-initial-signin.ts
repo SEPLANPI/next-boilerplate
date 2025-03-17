@@ -40,6 +40,8 @@ export async function handleInitialSignIn(
       user: {
         ...user,
         cpf: userInfo?.preferred_username,
+        birthDate: userInfo.dataNascimento,
+        fullName: userInfo.nomeCompleto,
         roles:
           accessTokenContent?.resource_access?.[env.AUTH_KEYCLOAK_ID]?.roles ||
           []

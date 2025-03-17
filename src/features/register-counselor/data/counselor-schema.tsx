@@ -26,9 +26,14 @@ const addressSchema = z.discriminatedUnion('tipo_endereco', [
 export const counselorSchema = z.object({
   nome: z.string().min(2, 'Nome deve ter pelo menos 2 caracteres'),
   cpf: z.string().regex(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, 'CPF inválido'),
-  rg: z.string().min(5, 'RG deve ter pelo menos 5 dígitos'),
+  rg: z.string().min(7, 'RG deve ter pelo menos 7 dígitos'),
   data_nascimento: z.date({ invalid_type_error: 'Data inválida' }),
-  telefone: z.string().regex(/^\(\d{2}\) \d{5}-\d{4}$/, 'Telefone inválido'),
+  telefone: z
+    .string()
+    .regex(
+      /^\(\d{2}\)\s\d{5}-\d{4}$/,
+      'Telefone deve estar no formato (00) 00000-0000'
+    ),
   email: z.string().email('Email inválido'),
 
   endereco: addressSchema,

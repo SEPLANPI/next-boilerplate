@@ -1,8 +1,8 @@
 'use client'
-import { PropsWithChildren, useEffect, useMemo, useState } from 'react'
-import { Stepper } from '@mantine/core'
+import { useMemo, useState } from 'react'
+import { Accordion } from '@mantine/core'
+import { CircleCheck, CircleDot, CircleDotDashed } from 'lucide-react'
 import { useForm, zodResolver } from '@mantine/form'
-import { z } from 'zod'
 import { PersonalDataStep } from './personal-data-step'
 import { AddressStep } from './address-step'
 import { AddressType } from '../types/counselor'
@@ -12,13 +12,12 @@ import { DocumentsStep } from './documents-step'
 import { FormNavigation } from './form-navigation'
 import { WorkshopStep } from './workshop-step'
 import { counselorSchema } from '../data/counselor-schema'
-import { FormCompletionView } from './form-completion.view'
 import {
   createInitialFormValues,
   InitialFormValues
 } from '@/lib/form-initial-values'
 
-type FormValues = Omit<
+export type FormValues = Omit<
   InitialFormValues<typeof counselorSchema>,
   'endereco'
 > & {
@@ -40,12 +39,19 @@ type FormValues = Omit<
       }
 }
 
-function SectionTitle({ children }: PropsWithChildren) {
-  return (
-    <h2 className="mx-auto my-4 block w-fit border-b-2 border-govBlue-600 text-center text-lg font-semibold">
-      {children}
-    </h2>
-  )
+type StepStatus = 'pending' | 'error' | 'completed' | 'current'
+
+function StepStatus({ status }: { status: StepStatus }) {
+  if (status === 'completed') {
+    return <CircleCheck className="size-5 text-green-900" />
+  }
+  if (status === 'current') {
+    return <CircleDot className="size-5 text-blue-900" />
+  }
+  if (status === 'error') {
+    return <CircleDotDashed className="size-5 text-red-600" />
+  }
+  return <CircleDotDashed className="size-5 text-gray-600" />
 }
 
 export function RegisterCounselorForm() {
@@ -68,27 +74,22 @@ export function RegisterCounselorForm() {
 
   const form = useForm<FormValues>({
     initialValues,
-    validate: zodResolver(counselorSchema)
+    validate: zodResolver(counselorSchema),
+    transformValues: (values) => ({
+      ...values,
+      telefone: values.telefone.replace(/\D/g, ''),
+      endereco: {
+        ...values.endereco,
+        cep: values.endereco.cep.replace(/\D/g, '')
+      }
+    })
   })
-
-  useEffect(() => {
-    console.log('dasdas')
-  }, [form.values.nome])
 
   const steps = [
     {
       label: 'Dados Pessoais',
       component: <PersonalDataStep form={form} />,
-      fields: [
-        'nome',
-        'cpf',
-        'rg',
-        'data_nascimento',
-        'telefone',
-        'email',
-        'tipo_conselho',
-        'tipo_membro'
-      ]
+      fields: ['rg', 'telefone']
     },
     {
       label: 'Endereço',
@@ -127,27 +128,56 @@ export function RegisterCounselorForm() {
         'rg_frente',
         'rg_verso',
         'comprovante_residencia',
-        'comprovante_conselh',
+        'comprovante_conselho',
         'comprovante_bancario'
       ]
     }
   ]
 
   const [active, setActive] = useState(0)
+  const [stepStatuses, setStepStatuses] = useState<StepStatus[]>(
+    Array(steps.length).fill('pending')
+  )
   const isLastStep = active === steps.length - 1
 
-  function validateCurrentStep() {
-    return false
-    return steps[active].fields.reduce((acc, field) => {
+  function validateStep(stepIndex: number) {
+    return true
+    const hasErrors = steps[stepIndex].fields.reduce((acc, field) => {
       const { hasError } = form.validateField(field)
       return acc || hasError
     }, false)
+    return !hasErrors
   }
 
   const handleStepChange = (nextStep: number) => {
-    const hasErrors = validateCurrentStep()
-    if (nextStep > active && hasErrors) return
+    if (nextStep > active) {
+      const isValid = validateStep(active)
+      if (!isValid) {
+        setStepStatuses((prev) =>
+          prev.map((status, i) => (i === active ? 'error' : status))
+        )
+        return
+      }
+    }
+
+    setStepStatuses((prev) =>
+      prev.map((status, i) =>
+        i === active
+          ? validateStep(active)
+            ? 'completed'
+            : 'error'
+          : i === nextStep
+            ? 'current'
+            : status
+      )
+    )
     setActive(nextStep)
+  }
+
+  const handleAccordionChange = (value: string | null) => {
+    if (!value) return
+    const nextStep = steps.findIndex((step) => step.label === value)
+    handleStepChange(nextStep)
   }
 
   const handleSubmit = (values: FormValues) => {
@@ -159,37 +189,40 @@ export function RegisterCounselorForm() {
       onSubmit={form.onSubmit(handleSubmit)}
       className="flex flex-1 flex-col justify-between"
     >
-      <Stepper
-        active={active}
-        onStepClick={handleStepChange}
+      <Accordion
+        value={steps[active].label}
+        onChange={handleAccordionChange}
         classNames={{
-          steps: 'space-x-2',
-          step: 'h-1 rounded bg-gray-500 data-[completed=true]:bg-govBlue-600 flex-1',
-          stepWrapper: 'hidden',
-          separator: 'hidden',
-          stepBody: 'hidden'
+          root: 'space-y-4',
+          item: 'bg-white rounded-md shadow-md',
+          control: 'rounded-md p-6 ',
+          label: 'font-semibold text-md p-0',
+          content: 'p-6 pt-0'
         }}
       >
         {steps.map((step, index) => (
-          <Stepper.Step key={step.label} label={step.label}>
-            <SectionTitle>{step.label}</SectionTitle>
-            <section className="grid grid-cols-2 gap-4">
-              {index === active && step.component}
-            </section>
-          </Stepper.Step>
+          <Accordion.Item key={step.label} value={step.label}>
+            <Accordion.Control
+              icon={<StepStatus status={stepStatuses[index]} />}
+            >
+              {step.label}
+            </Accordion.Control>
+            <Accordion.Panel>
+              <section className="grid grid-cols-2 gap-6">
+                {step.component}
+              </section>
+              {index === active && (
+                <FormNavigation
+                  active={active}
+                  isLastStep={isLastStep}
+                  onBack={() => handleStepChange(active - 1)}
+                  onNext={() => handleStepChange(active + 1)}
+                />
+              )}
+            </Accordion.Panel>
+          </Accordion.Item>
         ))}
-
-        <Stepper.Completed>
-          <FormCompletionView />
-        </Stepper.Completed>
-      </Stepper>
-
-      <FormNavigation
-        active={active}
-        isLastStep={isLastStep}
-        onBack={() => handleStepChange(active - 1)}
-        onNext={() => handleStepChange(active + 1)}
-      />
+      </Accordion>
     </form>
   )
 }

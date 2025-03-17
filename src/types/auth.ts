@@ -5,5 +5,7 @@ export interface BaseUser {
   email: string
   id: string
   cpf: string
+  fullName: string
+  birthDate: string
   roles: Role[]
 }

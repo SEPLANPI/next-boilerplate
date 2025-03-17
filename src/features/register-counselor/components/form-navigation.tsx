@@ -1,5 +1,4 @@
 import { Button } from '@mantine/core'
-import { Group } from 'lucide-react'
 
 interface FormNavigationProps {
   active: number
@@ -15,7 +14,7 @@ export function FormNavigation({
   onNext
 }: FormNavigationProps) {
   return (
-    <div className="mt-8 flex items-center justify-end space-x-4">
+    <div className="mt-6 flex items-center justify-end space-x-4">
       <Button variant="light" onClick={onBack} disabled={active === 0}>
         Voltar
       </Button>

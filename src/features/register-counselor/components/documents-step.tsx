@@ -26,7 +26,6 @@ export function DocumentsStep({
 }: {
   form: UseFormReturnType<FormValues>
 }) {
-  console.log(form.values.rg_frente)
   return (
     <>
       <FileInput

@@ -1,10 +1,22 @@
 import { UseFormReturnType } from '@mantine/form'
-import { TextInput, Checkbox, Select } from '@mantine/core'
+import { TextInput, Input } from '@mantine/core'
 import { DateInput } from '@mantine/dates'
-import { MemberType } from '../types/counselor'
-import { z } from 'zod'
+import { FormValues } from './register-counselor-form'
+import { useSession } from 'next-auth/react'
+import { dayjs } from '@/lib/dayjs'
+import { IMaskInput } from 'react-imask'
 
-export function PersonalDataStep({ form }: { form: UseFormReturnType<any> }) {
+export function PersonalDataStep({
+  form
+}: {
+  form: UseFormReturnType<FormValues>
+}) {
+  const { data } = useSession()
+
+  const birthDate = data?.user
+    ? dayjs(data?.user.birthDate, 'DD/MM/YYYY').toDate()
+    : null
+
   return (
     <>
       <p className="col-span-2 text-sm text-gray-700">
@@ -15,38 +27,48 @@ export function PersonalDataStep({ form }: { form: UseFormReturnType<any> }) {
       </p>
       <TextInput
         label="Nome Completo"
-        placeholder="João da Silva"
         className="col-span-2"
-        key={form.key('nome')}
-        {...form.getInputProps('nome')}
+        disabled
+        value={data?.user.fullName ?? ''}
       />
-      <TextInput
-        label="RG"
-        placeholder="0000000-0"
-        {...form.getInputProps('rg')}
-      />
+
+      <Input.Wrapper label="CPF">
+        <Input
+          component={IMaskInput}
+          mask="000.000.000-00"
+          placeholder="000.000.000-00"
+          disabled
+          value={data?.user.cpf ?? ''}
+        />
+      </Input.Wrapper>
       <DateInput
         label="Data de Nascimento"
         valueFormat="DD/MM/YYYY"
-        {...form.getInputProps('data_nascimento')}
+        disabled
+        value={birthDate}
       />
-
       <TextInput
-        label="CPF"
         className="col-span-2"
-        placeholder="000.000.000-00"
-        {...form.getInputProps('cpf')}
-      />
-      <TextInput
         label="Email"
         placeholder="seu@email.com"
         {...form.getInputProps('email')}
+        disabled
+        value={data?.user.email ?? ''}
       />
       <TextInput
-        label="Telefone"
-        placeholder="(00) 00000-0000"
-        {...form.getInputProps('telefone')}
+        withAsterisk
+        label="RG"
+        placeholder="00000000"
+        {...form.getInputProps('rg')}
       />
+      <Input.Wrapper label="Telefone" error={form.errors.telefone} withAsterisk>
+        <Input
+          component={IMaskInput}
+          mask="(00) 00000-0000"
+          placeholder="(00) 00000-0000"
+          {...form.getInputProps('telefone')}
+        />
+      </Input.Wrapper>
     </>
   )
 }

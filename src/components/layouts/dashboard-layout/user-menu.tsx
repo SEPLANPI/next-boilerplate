@@ -59,8 +59,9 @@ export function UserMenu() {
         >
           <Menu.Target>
             <UnstyledButton
-              className={`${open ? 'ring-4' : ''
-                } h-min rounded-full ring-gray-300 hover:ring-4`}
+              className={`${
+                open ? 'ring-4' : ''
+              } h-min rounded-full ring-gray-300 hover:ring-4`}
             >
               <Avatar
                 radius="xl"
