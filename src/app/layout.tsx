@@ -9,9 +9,11 @@ import { Providers } from './providers'
 
 export const metadata: Metadata = {
   title: {
-    default: 'Diálogos',
+    default: 'Diálogos pelo Piauí',
     template: '%s | Diálogos'
-  }
+  },
+  description:
+    'Aproximando a gestão pública da sociedade para construir um futuro mais justo e sustentável.'
 }
 
 const roboto = localFont({

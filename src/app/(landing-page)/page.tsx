@@ -456,8 +456,8 @@ export default function LandingPage() {
           <Image
             className="hidden h-full rounded-md object-cover md:block"
             src="/lp/senhor-fundo-verde.png"
-            width={900}
-            height={900}
+            width={700}
+            height={800}
             quality={100}
             alt="Mulher jovem com cabelo cacheado sorrindo em fundo vermelho"
           />
