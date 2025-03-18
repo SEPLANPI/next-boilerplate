@@ -3,7 +3,6 @@ module.exports = {
     name: 'dialogos-client',
     script: 'npm',
     args: 'start',
-    cwd: '.next/standalone',
     env: {
       NODE_ENV: 'production',
       NEXT_TELEMETRY_DISABLED: 1
