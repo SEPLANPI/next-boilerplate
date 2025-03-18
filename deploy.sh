@@ -1,4 +1,6 @@
 #!/bin/bash
+source ~/.bashrc 
+
 echo "Iniciando processo de implantação..."
 
 echo "Instalando dependências..."
