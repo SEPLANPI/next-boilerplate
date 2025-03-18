@@ -1,23 +1,11 @@
 #!/bin/bash
-
-echo "Verificando instalação do Node.js e npm..."
-
-if ! command -v node &> /dev/null || ! command -v npm &> /dev/null; then
-    echo "Node.js ou npm não encontrados. Instalando..."
-    
-    sudo apt update
-    sudo apt install -y curl build-essential
-
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
-
-    export NVM_DIR="$HOME/.nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-
+if ! command -v node &> /dev/null; then
     nvm install 20
-    nvm alias default 20
+    nvm use 20
+fi
 
-    node --version
-    npm --version
+if ! command -v pm2 &> /dev/null; then
+    npm install -g pm2
 fi
 
 echo "Iniciando processo de implantação..."
