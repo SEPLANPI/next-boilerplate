@@ -97,7 +97,6 @@ export function RegisterCounselorForm() {
       fields: [
         'endereco.tipo_endereco',
         'endereco.rua',
-        'endereco.logradouro',
         'endereco.numero',
         'endereco.complemento',
         'endereco.bairro',
@@ -117,11 +116,6 @@ export function RegisterCounselorForm() {
       fields: ['banco_id', 'agencia', 'conta', 'tipo_conta']
     },
     {
-      label: 'Oficina',
-      component: <WorkshopStep form={form} />,
-      fields: ['oficina']
-    },
-    {
       label: 'Documentos',
       component: <DocumentsStep form={form} />,
       fields: [
@@ -131,6 +125,11 @@ export function RegisterCounselorForm() {
         'comprovante_conselho',
         'comprovante_bancario'
       ]
+    },
+    {
+      label: 'Oficina',
+      component: <WorkshopStep form={form} />,
+      fields: ['eixo_id']
     }
   ]
 

@@ -44,10 +44,8 @@ export default function LandingPage() {
   return (
     <div className="font-montserrat">
       <section className="relative flex h-[320px] flex-col p-8 sm:h-[420px] md:h-[660px] md:py-0">
-        <header className="relative z-10 mx-auto flex w-full max-w-[1120px] items-center justify-between md:py-2">
-          <span className="font-montserrat text-2xl font-bold text-yellow-500">
-            diálogos
-          </span>
+        <header className="relative z-10 mx-auto flex w-full max-w-[1120px] items-center justify-between md:py-4">
+          <Image width={288} height={80} src="/lp/logo.png" alt="Logo Diálogos" className="h-[30px] sm:h-[40px] w-auto"/>
           <Nav />
         </header>
         <main className="relative z-10 mx-auto flex w-full max-w-[1120px] flex-1 flex-col justify-center gap-2.5 text-white">

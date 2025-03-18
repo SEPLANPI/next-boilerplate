@@ -67,11 +67,12 @@ export const counselorSchema = z.object({
 
   // Passo 4: Dados Bancários
   banco_id: z.string().min(1, 'Banco é obrigatório'),
-  agencia: z.number().min(3, 'Número de agência inválido'),
-  conta: z.number().min(3, 'Número de conta inválido'),
+  agencia: z.coerce.number().min(3, 'Número de agência inválido'),
+  conta: z.coerce.number().min(3, 'Número de conta inválido'),
+  nome_titular: z.string().min(1, 'Nome do titular é obrigatório'),
 
   // Passo 5: Oficina
-  oficina: z.string().min(3, 'Nome da oficina muito curto'),
+  eixo_id: z.string().min(1, 'Oficina é obrigatório'),
 
   // Passo 6: Documentos
   rg_frente: z.instanceof(File, {

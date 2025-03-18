@@ -1,87 +1,110 @@
 import { UseFormReturnType } from '@mantine/form'
-import { Radio, RadioGroup, Select } from '@mantine/core'
+import { Radio, RadioGroup } from '@mantine/core'
 import {
   CouncilLocation,
   CouncilRepresentativeType,
   MemberType
 } from '../types/counselor'
-import { z } from 'zod'
+import { FormValues } from './register-counselor-form'
 
-export const councilInfoSchema = z.object({
-  conselho: z.nativeEnum(CouncilLocation),
-  tipo_conselho: z.enum(['PODER_PUBLICO', 'SOCIEDADE_CIVIL'])
-})
-
-export function CouncilInfoStep({ form }: { form: UseFormReturnType<any> }) {
+export function CouncilInfoStep({
+  form
+}: {
+  form: UseFormReturnType<FormValues>
+}) {
   return (
     <>
       <RadioGroup
         label="Representante de qual conselho?"
         withAsterisk
         className="col-span-2"
-        {...form.getInputProps('endereco.tipo_endereco')}
+        {...form.getInputProps('conselho')}
       >
         <div className="grid grid-cols-2 gap-4">
-          <Radio
-            className="rounded border p-3"
+          <Radio.Card
+            className="flex items-center space-x-3 rounded border p-3 text-sm text-gray-700"
             value={CouncilLocation.VALE_DO_SAMBITO}
-            label="Vale do Sambito"
-          />
-          <Radio
-            className="rounded border p-3"
+          >
+            <Radio.Indicator />
+            <span>Vale do Sambito</span>
+          </Radio.Card>
+          <Radio.Card
+            className="flex items-center space-x-3 rounded border p-3 text-sm text-gray-700"
             value={CouncilLocation.CARNAUBAIS}
-            label="Carnaubais"
-          />
-          <Radio
-            className="rounded border p-3"
+          >
+            <Radio.Indicator />
+            <span>Carnaubais</span>
+          </Radio.Card>
+          <Radio.Card
+            className="flex items-center space-x-3 rounded border p-3 text-sm text-gray-700"
             value={CouncilLocation.CHAPADAS_DAS_MANGABEIRAS}
-            label="Chapada das Mangabeiras"
-          />
-          <Radio
-            className="rounded border p-3"
+          >
+            <Radio.Indicator />
+            <span>Chapada das Mangabeiras</span>
+          </Radio.Card>
+          <Radio.Card
+            className="flex items-center space-x-3 rounded border p-3 text-sm text-gray-700"
             value={CouncilLocation.COCAIS}
-            label="Cocais"
-          />
-          <Radio
-            className="rounded border p-3"
+          >
+            <Radio.Indicator />
+            <span>Cocais</span>
+          </Radio.Card>
+          <Radio.Card
+            className="flex items-center space-x-3 rounded border p-3 text-sm text-gray-700"
             value={CouncilLocation.ENTRE_RIOS}
-            label="Entre Rios"
-          />
-          <Radio
-            className="rounded border p-3"
+          >
+            <Radio.Indicator />
+            <span>Entre Rios</span>
+          </Radio.Card>
+          <Radio.Card
+            className="flex items-center space-x-3 rounded border p-3 text-sm text-gray-700"
             value={CouncilLocation.PLANICIE_LITORANEA}
-            label="Planície Litorânea"
-          />
-          <Radio
-            className="rounded border p-3"
+          >
+            <Radio.Indicator />
+            <span>Planície Litorânea</span>
+          </Radio.Card>
+          <Radio.Card
+            className="flex items-center space-x-3 rounded border p-3 text-sm text-gray-700"
             value={CouncilLocation.SERRA_DA_CAPIVARA}
-            label="Serra da Capivara"
-          />
-          <Radio
-            className="rounded border p-3"
+          >
+            <Radio.Indicator />
+            <span>Serra da Capivara</span>
+          </Radio.Card>
+          <Radio.Card
+            className="flex items-center space-x-3 rounded border p-3 text-sm text-gray-700"
             value={CouncilLocation.TABULEIRO_DO_ALTO_PARNAIBA}
-            label="Tabuleiro do Alto Parnaíba"
-          />
-          <Radio
-            className="rounded border p-3"
+          >
+            <Radio.Indicator />
+            <span>Tabuleiro do Alto Parnaíba</span>
+          </Radio.Card>
+          <Radio.Card
+            className="flex items-center space-x-3 rounded border p-3 text-sm text-gray-700"
             value={CouncilLocation.VALE_DO_RIO_GUARIBAS}
-            label="Vale do Rio Guaribas"
-          />
-          <Radio
-            className="rounded border p-3"
+          >
+            <Radio.Indicator />
+            <span>Vale do Rio Guaribas</span>
+          </Radio.Card>
+          <Radio.Card
+            className="flex items-center space-x-3 rounded border p-3 text-sm text-gray-700"
             value={CouncilLocation.VALE_DO_CANINDE}
-            label="Vale do Canindé"
-          />
-          <Radio
-            className="rounded border p-3"
+          >
+            <Radio.Indicator />
+            <span>Vale do Canindé</span>
+          </Radio.Card>
+          <Radio.Card
+            className="flex items-center space-x-3 rounded border p-3 text-sm text-gray-700"
             value={CouncilLocation.VALE_DO_ITAIM}
-            label="Vale do Itaim"
-          />
-          <Radio
-            className="rounded border p-3"
+          >
+            <Radio.Indicator />
+            <span>Vale do Itaim</span>
+          </Radio.Card>
+          <Radio.Card
+            className="flex items-center space-x-3 rounded border p-3 text-sm text-gray-700"
             value={CouncilLocation.VALE_DO_PIAUI_E_ITAUEIRA}
-            label="Vale do Piauí e Itaueira"
-          />
+          >
+            <Radio.Indicator />
+            <span>Vale do Piauí e Itaueira</span>
+          </Radio.Card>
         </div>
       </RadioGroup>
 
@@ -89,7 +112,7 @@ export function CouncilInfoStep({ form }: { form: UseFormReturnType<any> }) {
         label="Representação no conselho"
         withAsterisk
         className="col-span-2"
-        {...form.getInputProps('endereco.tipo_endereco')}
+        {...form.getInputProps('tipo_conselho')}
       >
         <div className="flex space-x-3">
           <Radio
@@ -107,7 +130,7 @@ export function CouncilInfoStep({ form }: { form: UseFormReturnType<any> }) {
         label="Composição no conselho"
         withAsterisk
         className="col-span-2"
-        {...form.getInputProps('endereco.tipo_endereco')}
+        {...form.getInputProps('tipo_membro')}
       >
         <div className="flex space-x-3">
           <Radio value={MemberType.NUCLEO_GESTOR} label="Núcleo Gestor" />
