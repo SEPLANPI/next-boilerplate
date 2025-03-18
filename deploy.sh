@@ -23,7 +23,7 @@ fi
 echo "Iniciando processo de implantação..."
 
 echo "Instalando dependências..."
-npm ci
+npm i
 
 echo "Compilando a aplicação..."
 npm run build
