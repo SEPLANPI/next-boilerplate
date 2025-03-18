@@ -21,6 +21,13 @@ import Image from 'next/image'
 import { PropsWithChildren } from 'react'
 import { Card } from '@/features/landing-page/components/card'
 import { Section } from '@/features/landing-page/components/section'
+import { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Diálogos pelo Piauí',
+  description:
+    'Aproximando a gestão pública da sociedade para construir um futuro mais justo e sustentável.'
+}
 
 function CheckListItem({ children }: PropsWithChildren) {
   return (
@@ -37,10 +44,14 @@ export default function LandingPage() {
   return (
     <div className="font-montserrat">
       <section className="relative flex h-[320px] flex-col p-8 sm:h-[420px] md:h-[660px] md:py-0">
-        <header className="relative z-10 mx-auto flex w-full max-w-[1120px] items-center justify-between md:py-2">
-          <span className="font-montserrat text-2xl font-bold text-yellow-500">
-            diálogos
-          </span>
+        <header className="relative z-10 mx-auto flex w-full max-w-[1120px] items-center justify-between md:py-4">
+          <Image
+            width={288}
+            height={80}
+            src="/lp/logo.png"
+            alt="Logo Diálogos"
+            className="h-[30px] w-auto sm:h-[40px]"
+          />
           <Nav />
         </header>
         <main className="relative z-10 mx-auto flex w-full max-w-[1120px] flex-1 flex-col justify-center gap-2.5 text-white">
@@ -83,7 +94,7 @@ export default function LandingPage() {
               OQUE É?
             </h3>
             <h2 className="text-xl font-bold md:text-4xl">
-              <span className="block bg-gradient-to-r from-[#EF4123] to-yellow-500 bg-clip-text text-transparent">
+              <span className="text-transparent block bg-gradient-to-r from-[#EF4123] to-yellow-500 bg-clip-text">
                 Diálogos pelo Piauí:
               </span>
               <span>O Governo nos Territórios</span>
@@ -449,8 +460,8 @@ export default function LandingPage() {
           <Image
             className="hidden h-full rounded-md object-cover md:block"
             src="/lp/senhor-fundo-verde.png"
-            width={700}
-            height={800}
+            width={900}
+            height={900}
             quality={100}
             alt="Mulher jovem com cabelo cacheado sorrindo em fundo vermelho"
           />
