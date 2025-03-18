@@ -1,6 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
+  outputFileTracing: true,
   eslint: {
     ignoreDuringBuilds: true
   },
@@ -14,7 +15,7 @@ const nextConfig = {
   //   ]
   // },
   // Habilitar Streaming e Suspense com Nginx
-  async headers() {
+  async headers () {
     return [
       {
         source: '/:path*{/}?',
