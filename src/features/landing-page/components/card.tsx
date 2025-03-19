@@ -52,7 +52,7 @@ function CardSubtitle({
   ...props
 }: ComponentPropsWithoutRef<'p'>) {
   return (
-    <span className={cn(className)} {...props}>
+    <span className={cn('text-sm', className)} {...props}>
       {children}
     </span>
   )
