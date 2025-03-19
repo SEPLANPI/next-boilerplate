@@ -245,100 +245,114 @@ export default function LandingPage() {
       >
         <h3 className="mb-8 text-center text-sm font-extrabold">CRONOGRAMA</h3>
         <div className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
-          <div className="space-y-3">
-            <div className="rounded-md bg-yellow-500 px-3 py-1.5">
+          <div className="flex h-full flex-col">
+            <div className="rounded-t-md bg-yellow-500 px-3 py-1.5">
               <h4 className="font-bold">Abril</h4>
             </div>
-            <div className="flex flex-col space-y-2.5 px-3 py-2">
-              <span className="text-sm font-semibold">
-                11 - 12 VALE DO RIO GUARIBAS
-              </span>
-              <span className="text-sm">Picos</span>
-            </div>
-            <div className="flex flex-col space-y-2.5 px-3 py-2">
-              <span className="text-sm font-semibold">25 - 26 COCAIS</span>
-              <span className="text-sm">Piripiri</span>
+            <div className="flex-1 divide-y rounded-b-md border border-t-0 px-4">
+              <div className="flex flex-col space-y-2 py-4">
+                <span className="text-sm font-semibold">
+                  11 - 12 VALE DO RIO GUARIBAS
+                </span>
+                <span className="text-sm">Picos</span>
+              </div>
+              <div className="flex flex-col space-y-2 py-4">
+                <span className="text-sm font-semibold">25 - 26 COCAIS</span>
+                <span className="text-sm">Piripiri</span>
+              </div>
             </div>
           </div>
-          <div className="space-y-3">
-            <div className="rounded-md bg-yellow-500 px-3 py-1.5">
+          <div className="flex h-full flex-col">
+            <div className="rounded-t-md bg-yellow-500 px-3 py-1.5">
               <h4 className="font-bold">Maio</h4>
             </div>
-            <div className="flex flex-col space-y-2.5 px-3 py-2">
-              <span className="text-sm font-semibold">
-                16 - 17 VALE DOS RIOS E PIAUÍ E ITAUEIRAS
-              </span>
-              <span className="text-sm">Floriano</span>
-            </div>
-            <div className="flex flex-col space-y-2.5 px-3 py-2">
-              <span className="text-sm font-semibold">30 -31 CARNAUBAIS</span>
-              <span className="text-sm">Campo Maior</span>
+            <div className="flex-1 divide-y rounded-b-md border border-t-0 px-4">
+              <div className="flex flex-col space-y-2 py-4">
+                <span className="text-sm font-semibold">
+                  16 - 17 VALE DOS RIOS E PIAUÍ E ITAUEIRAS
+                </span>
+                <span className="text-sm">Floriano</span>
+              </div>
+              <div className="flex flex-col space-y-2 py-4">
+                <span className="text-sm font-semibold">30 -31 CARNAUBAIS</span>
+                <span className="text-sm">Campo Maior</span>
+              </div>
             </div>
           </div>
-          <div className="space-y-3">
-            <div className="rounded-md bg-yellow-500 px-3 py-1.5">
+          <div className="flex h-full flex-col">
+            <div className="rounded-t-md bg-yellow-500 px-3 py-1.5">
               <h4 className="font-bold">Junho</h4>
             </div>
-            <div className="flex flex-col space-y-2.5 px-3 py-2">
-              <span className="text-sm font-semibold">
-                13 - 14 TABULEIROS DO ALTO PARNAÍBA
-              </span>
-              <span className="text-sm">Uruçuí</span>
-            </div>
-            <div className="flex flex-col space-y-2.5 px-3 py-2">
-              <span className="text-sm font-semibold">
-                27 - 28 CHAPADA DAS MANGABEIRAS
-              </span>
-              <span className="text-sm">Bom Jesus</span>
+            <div className="flex-1 divide-y rounded-b-md border border-t-0 px-4">
+              <div className="flex flex-col space-y-2 py-4">
+                <span className="text-sm font-semibold">
+                  13 - 14 TABULEIROS DO ALTO PARNAÍBA
+                </span>
+                <span className="text-sm">Uruçuí</span>
+              </div>
+              <div className="flex flex-col space-y-2 py-4">
+                <span className="text-sm font-semibold">
+                  27 - 28 CHAPADA DAS MANGABEIRAS
+                </span>
+                <span className="text-sm">Bom Jesus</span>
+              </div>
             </div>
           </div>
-          <div className="space-y-3">
-            <div className="rounded-md bg-yellow-500 px-3 py-1.5">
+          <div className="flex h-full flex-col">
+            <div className="rounded-t-md bg-yellow-500 px-3 py-1.5">
               <h4 className="font-bold">Julho</h4>
             </div>
-            <div className="flex flex-col space-y-2.5 px-3 py-2">
-              <span className="text-sm font-semibold">
-                11 - 12 PLANÍCIE LITORÂNEA
-              </span>
-              <span className="text-sm">Parnaíba</span>
-            </div>
-            <div className="flex flex-col space-y-2.5 px-3 py-2">
-              <span className="text-sm font-semibold">
-                25 - 26 SERRA DA CAPIVARA
-              </span>
-              <span className="text-sm">São Raimundo Nonato</span>
+            <div className="flex-1 divide-y rounded-b-md border border-t-0 px-4">
+              <div className="flex flex-col space-y-2 py-4">
+                <span className="text-sm font-semibold">
+                  11 - 12 PLANÍCIE LITORÂNEA
+                </span>
+                <span className="text-sm">Parnaíba</span>
+              </div>
+              <div className="flex flex-col space-y-2 py-4">
+                <span className="text-sm font-semibold">
+                  25 - 26 SERRA DA CAPIVARA
+                </span>
+                <span className="text-sm">São Raimundo Nonato</span>
+              </div>
             </div>
           </div>
-          <div className="space-y-3">
-            <div className="rounded-md bg-yellow-500 px-3 py-1.5">
+          <div className="flex h-full flex-col">
+            <div className="rounded-t-md bg-yellow-500 px-3 py-1.5">
               <h4 className="font-bold">Agosto</h4>
             </div>
-            <div className="flex flex-col space-y-2.5 px-3 py-2">
-              <span className="text-sm font-semibold">
-                08 - 09 VALE DO CANINDÉ
-              </span>
-              <span className="text-sm">Oeiras</span>
-            </div>
-            <div className="flex flex-col space-y-2.5 px-3 py-2">
-              <span className="text-sm font-semibold">
-                22 - 23 CHAPADA DO VALE ITAIM
-              </span>
-              <span className="text-sm">Paulistana</span>
+            <div className="flex-1 divide-y rounded-b-md border border-t-0 px-4">
+              <div className="flex flex-col space-y-2 py-4">
+                <span className="text-sm font-semibold">
+                  08 - 09 VALE DO CANINDÉ
+                </span>
+                <span className="text-sm">Oeiras</span>
+              </div>
+              <div className="flex flex-col space-y-2 py-4">
+                <span className="text-sm font-semibold">
+                  22 - 23 CHAPADA DO VALE ITAIM
+                </span>
+                <span className="text-sm">Paulistana</span>
+              </div>
             </div>
           </div>
-          <div className="space-y-3">
-            <div className="rounded-md bg-yellow-500 px-3 py-1.5">
+          <div className="flex h-full flex-col">
+            <div className="rounded-t-md bg-yellow-500 px-3 py-1.5">
               <h4 className="font-bold">Setembro</h4>
             </div>
-            <div className="flex flex-col space-y-2.5 px-3 py-2">
-              <span className="text-sm font-semibold">
-                05 - 06 VALE DO SAMBITO
-              </span>
-              <span className="text-sm">Valença</span>
-            </div>
-            <div className="flex flex-col space-y-2.5 px-3 py-2">
-              <span className="text-sm font-semibold">19 - 20 ENTRE RIOS</span>
-              <span className="text-sm">Teresina</span>
+            <div className="flex-1 divide-y rounded-b-md border border-t-0 px-4">
+              <div className="flex flex-col space-y-2 py-4">
+                <span className="text-sm font-semibold">
+                  05 - 06 VALE DO SAMBITO
+                </span>
+                <span className="text-sm">Valença</span>
+              </div>
+              <div className="flex flex-col space-y-2 py-4">
+                <span className="text-sm font-semibold">
+                  19 - 20 ENTRE RIOS
+                </span>
+                <span className="text-sm">Teresina</span>
+              </div>
             </div>
           </div>
         </div>
