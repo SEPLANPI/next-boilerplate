@@ -1,7 +1,6 @@
-import { RegisterCounselorForm } from '@/features/register-counselor/components/register-counselor-form'
 import { SignInGovpiButton } from '@/features/register-counselor/components/signin-govpi-button'
 import { registerCounselorSearchParams } from '@/features/register-counselor/lib/search-params'
-import { Button, Divider } from '@mantine/core'
+import { Divider } from '@mantine/core'
 import Image from 'next/image'
 import { SearchParams } from 'nuqs/server'
 
@@ -14,30 +13,44 @@ export default async function CadastroConselheiro({
 }: CadastroConselheiroProps) {
   await registerCounselorSearchParams.parse(searchParams)
   return (
-    <div className="flex min-h-[100dvh] w-full items-center justify-center py-5 sm:justify-end sm:pr-20">
+    <div className="flex min-h-[100dvh] w-full gap-8 bg-white p-8 sm:justify-end">
       <Image
         src="/background-conselheiro-form.png"
-        width={5760}
-        height={3240}
-        quality={100}
-        alt="Senhor com fundo verde"
-        className="fixed left-0 top-0 z-0 h-[100dvh] w-full object-cover"
+        width={1000}
+        height={700}
+        className="hidden flex-1 rounded-md object-cover sm:block"
+        alt="senhor sorrindo em fundo verde"
       />
-      <div className="relative z-10 flex min-h-[90dvh] w-[90%] flex-col gap-8 rounded-md bg-white p-6 shadow sm:min-h-[680px] sm:w-[600px]">
-        <h2 className="text-lg font-bold">
-          Para que possamos atender você melhor, é necessário que se autentique
-          no sistema com sua conta ACESSO.GOV.BR.
-        </h2>
-        <Divider />
-        <p className="text-lg">
-          Clique no botão abaixo para acessar os serviços do Governo.
-        </p>
-        <SignInGovpiButton />
-        <p>
-          Você será redirecionado(a) para uma página externa (gov.pi), para
-          realizar o seu login ou para criar uma nova conta.
-        </p>
-      </div>
+      <section className="flex w-full flex-shrink-0 flex-col items-center xs:px-12 sm:mx-8 sm:w-[512px]">
+        <Image
+          src="/marca-dialogos-vertical.png"
+          width={368}
+          height={328}
+          quality={100}
+          className="w-48"
+          alt="senhor sorrindo em fundo verde"
+        />
+        <div className="flex flex-1 flex-col items-center justify-center space-y-12">
+          <div className="flex flex-col items-center space-y-3 text-center font-montserrat">
+            <h1 className="text-xl font-bold">Bem vindo(a), Conselheiro(a)!</h1>
+            <p className="text-sm text-gray-600">
+              Preencha os dados abaixo para realizar seu cadastro e participar
+              do evento.
+            </p>
+          </div>
+          <Divider className="w-full" />
+          <p className="font-bold">
+            Para continuar com o preenchimento do formulário, siga os passos
+            abaixo para realizar o login no GovPI Cidadão:
+          </p>
+          <SignInGovpiButton />
+          <Divider className="w-full" />
+          <p className="text-sm text-gray-600">
+            Você será redirecionado(a) para uma página externa (gov.pi), para
+            realizar o seu login ou para criar uma nova conta.
+          </p>
+        </div>
+      </section>
     </div>
   )
 }
