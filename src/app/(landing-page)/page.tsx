@@ -90,18 +90,18 @@ export default function LandingPage() {
               <span className="text-transparent block bg-gradient-to-r from-[#EF4123] to-yellow-500 bg-clip-text">
                 Diálogos pelo Piauí:
               </span>
-              <span>O Governo nos Territórios</span>
+              <span>O Governo mais perto de você</span>
             </h2>
             <p className="text-sm sm:text-base">
-              O Diálogos pelo Piauí é uma iniciativa do Governo do Estado que
-              promove a escuta ativa da sociedade para garantir que o
-              planejamento governamental esteja alinhado com as reais
-              necessidades da população. O evento percorre os 12 Territórios de
-              Desenvolvimento (TDs) do estado, criando um espaço de participação
-              cidadã na revisão do Plano Plurianual (PPA) 2024-2027. Através de
-              oficinas temáticas e plenárias, a população pode contribuir com
-              propostas para as políticas públicas, fortalecendo a transparência
-              e a governança participativa.
+              O <span className="font-bold">Diálogos pelo Piauí</span> é uma
+              iniciativa do Governo do Estado que promove a escuta ativa da
+              sociedade para garantir que o planejamento governamental esteja
+              alinhado com as reais necessidades da população. O evento percorre
+              os 12 Territórios de Desenvolvimento (TDs) do estado, criando um
+              espaço de participação cidadã na revisão do Plano Plurianual (PPA)
+              2024-2027. Através de oficinas temáticas e plenárias, a população
+              pode contribuir com propostas para as políticas públicas,
+              fortalecendo a transparência e a governança participativa.
             </p>
           </div>
           <Image
