@@ -48,8 +48,8 @@ export default function LandingPage() {
           <Nav />
         </header>
         <main className="relative z-10 mx-auto flex w-full max-w-[1120px] flex-1 flex-col justify-center gap-2.5 text-white">
-          <h1 className="text-2xl font-bold md:text-5xl">
-            Diálogos pelo Piauí
+          <h1 className="max-w-xs text-2xl font-bold md:max-w-md md:text-4xl">
+            Planejando um futuro sustentável e inclusivo
           </h1>
           <p className="max-w-xs text-sm md:max-w-md md:text-lg">
             Aproximando a gestão pública da sociedade para construir um futuro
@@ -84,7 +84,7 @@ export default function LandingPage() {
         <div className="grid grid-cols-1 items-center gap-10 sm:grid-cols-2 md:grid-cols-3">
           <div className="flex flex-col gap-8 md:col-span-2">
             <h3 className="font-sans text-sm font-extrabold text-[#EF4123]">
-              OQUE É?
+              O QUE É?
             </h3>
             <h2 className="text-xl font-bold md:text-4xl">
               <span className="text-transparent block bg-gradient-to-r from-[#EF4123] to-yellow-500 bg-clip-text">
