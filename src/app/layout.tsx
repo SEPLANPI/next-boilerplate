@@ -9,7 +9,7 @@ import { Providers } from './providers'
 
 export const metadata: Metadata = {
   title: {
-    default: 'Diálogos',
+    default: 'Diálogos pelo Piauí',
     template: '%s | Diálogos'
   }
 }

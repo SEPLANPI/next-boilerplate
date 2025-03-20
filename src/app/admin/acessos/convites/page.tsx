@@ -4,7 +4,7 @@ import {
 } from '@/components/layouts/dashboard-layout/breadcrumbs'
 import { DashboardContent } from '@/components/layouts/dashboard-layout/content'
 import { DashboardHeader } from '@/components/layouts/dashboard-layout/header'
-import AccessTabs from '@/features/access/components/access-tabs'
+import { AccessTabs } from '@/features/access/components/access-tabs'
 import { InvitationFilters } from '@/features/invitations/components/invitation-filters'
 import { InvitationsListView } from '@/features/invitations/components/invitations-list-view'
 import { InvitationsTableSkeleton } from '@/features/invitations/components/invitations-table-skeleton'
