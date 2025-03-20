@@ -12,6 +12,7 @@ import { DocumentsStep } from './documents-step'
 import { FormNavigation } from './form-navigation'
 import { WorkshopStep } from './workshop-step'
 import { counselorSchema } from '../data/counselor-schema'
+import { DeclarationStep } from './declaration-step'
 import {
   createInitialFormValues,
   InitialFormValues
@@ -130,6 +131,11 @@ export function RegisterCounselorForm() {
       label: 'Oficina',
       component: <WorkshopStep form={form} />,
       fields: ['eixo_id']
+    },
+    {
+      label: 'Declarações',
+      component: <DeclarationStep form={form} />,
+      fields: ['aceite_termos', 'aceite_veracidade']
     }
   ]
 
@@ -140,7 +146,6 @@ export function RegisterCounselorForm() {
   const isLastStep = active === steps.length - 1
 
   function validateStep(stepIndex: number) {
-    return true
     const hasErrors = steps[stepIndex].fields.reduce((acc, field) => {
       const { hasError } = form.validateField(field)
       return acc || hasError

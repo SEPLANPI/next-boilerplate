@@ -1,16 +1,14 @@
 import { API } from '@/constants/messages'
 import { clientApi } from '@/lib/client-api'
 
-interface FilterOptionWorkshop {
+export interface Council {
   id: number
   nome: string
-  esgotado: boolean
+  code: string
 }
 
-export async function getWorkshopsFilterOptions(): Promise<
-  FilterOptionWorkshop[]
-> {
-  const response = await clientApi.get('/eixos/')
+export async function getCouncils(): Promise<Council[]> {
+  const response = await clientApi.get('/conselhos/')
   if (!response.ok) {
     const error = await response.json()
     throw Error(error.detail || API.UNEXPECTED_FETCH_ERROR)

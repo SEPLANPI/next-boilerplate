@@ -26,8 +26,12 @@ export function DocumentsStep({
 }: {
   form: UseFormReturnType<FormValues>
 }) {
+  console.log(form.errors)
   return (
     <>
+      <p className="col-span-2 text-sm font-semibold text-gray-700">
+        O participante deve anexar os seguintes arquivos:
+      </p>
       <FileInput
         className="col-span-2"
         label="RG Frente"

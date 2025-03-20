@@ -24,17 +24,13 @@ const addressSchema = z.discriminatedUnion('tipo_endereco', [
 ])
 
 export const counselorSchema = z.object({
-  nome: z.string().min(2, 'Nome deve ter pelo menos 2 caracteres'),
-  cpf: z.string().regex(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, 'CPF inválido'),
   rg: z.string().min(7, 'RG deve ter pelo menos 7 dígitos'),
-  data_nascimento: z.date({ invalid_type_error: 'Data inválida' }),
   telefone: z
     .string()
     .regex(
       /^\(\d{2}\)\s\d{5}-\d{4}$/,
       'Telefone deve estar no formato (00) 00000-0000'
     ),
-  email: z.string().email('Email inválido'),
 
   endereco: addressSchema,
 
@@ -67,8 +63,8 @@ export const counselorSchema = z.object({
 
   // Passo 4: Dados Bancários
   banco_id: z.string().min(1, 'Banco é obrigatório'),
-  agencia: z.coerce.number().min(3, 'Número de agência inválido'),
-  conta: z.coerce.number().min(3, 'Número de conta inválido'),
+  agencia: z.coerce.number().min(1, 'Número de agência inválido'),
+  conta: z.coerce.number().min(1, 'Número de conta inválido'),
   nome_titular: z.string().min(1, 'Nome do titular é obrigatório'),
 
   // Passo 5: Oficina
@@ -89,5 +85,24 @@ export const counselorSchema = z.object({
   }),
   comprovante_bancario: z.instanceof(File, {
     message: 'Comprovante bancário é obrigatório'
-  })
+  }),
+
+  // Passo 7: Declarações
+  aceite_termos: z
+    .boolean({
+      required_error: 'Você precisa aceitar os termos e condições'
+    })
+    .refine(
+      (val) => val === true,
+      'Você precisa aceitar os termos e condições'
+    ),
+
+  aceite_veracidade: z
+    .boolean({
+      required_error: 'Você precisa declarar a veracidade das informações'
+    })
+    .refine(
+      (val) => val === true,
+      'Você precisa declarar a veracidade das informações'
+    )
 })

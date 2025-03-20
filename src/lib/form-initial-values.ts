@@ -17,8 +17,7 @@ export function createInitialFormValues<T extends z.ZodType>(
   if (
     schema instanceof z.ZodString ||
     schema instanceof z.ZodNumber ||
-    schema instanceof z.ZodEnum ||
-    schema instanceof z.ZodBoolean
+    schema instanceof z.ZodEnum
   ) {
     return '' as any
   }
@@ -29,6 +28,10 @@ export function createInitialFormValues<T extends z.ZodType>(
 
   if (schema instanceof z.ZodNullable || schema instanceof z.ZodOptional) {
     return null as any
+  }
+
+  if (schema instanceof z.ZodBoolean) {
+    return false as any
   }
 
   if (schema instanceof z.ZodUnion) {

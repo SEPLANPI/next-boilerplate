@@ -79,7 +79,11 @@ export function AddressStep({ form }: { form: UseFormReturnType<FormValues> }) {
           <Radio value={AddressType.RURAL} label="Rural" />
         </div>
       </RadioGroup>
-      <Input.Wrapper withAsterisk label="CEP">
+      <Input.Wrapper
+        withAsterisk
+        label="CEP"
+        className="col-span-2 sm:col-span-1"
+      >
         <Input
           component={IMaskInput}
           mask="00000-000"
@@ -89,6 +93,7 @@ export function AddressStep({ form }: { form: UseFormReturnType<FormValues> }) {
       </Input.Wrapper>
       <Select
         filter={filterOptions}
+        className="col-span-2 sm:col-span-1"
         searchable
         withAsterisk
         label="Município"
@@ -105,11 +110,13 @@ export function AddressStep({ form }: { form: UseFormReturnType<FormValues> }) {
             {...form.getInputProps('endereco.bairro')}
           />
           <TextInput
+            className="col-span-2 sm:col-span-1"
             withAsterisk
             label="Rua/Avenida"
             {...form.getInputProps('endereco.rua')}
           />
           <TextInput
+            className="col-span-2 sm:col-span-1"
             withAsterisk
             label="Número"
             {...form.getInputProps('endereco.numero')}

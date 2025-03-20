@@ -1,17 +1,8 @@
 import { SignInGovpiButton } from '@/features/register-counselor/components/signin-govpi-button'
-import { registerCounselorSearchParams } from '@/features/register-counselor/lib/search-params'
 import { Divider } from '@mantine/core'
 import Image from 'next/image'
-import { SearchParams } from 'nuqs/server'
 
-interface CadastroConselheiroProps {
-  searchParams: Promise<SearchParams>
-}
-
-export default async function CadastroConselheiro({
-  searchParams
-}: CadastroConselheiroProps) {
-  await registerCounselorSearchParams.parse(searchParams)
+export default async function CadastroConselheiro() {
   return (
     <div className="flex min-h-[100dvh] w-full gap-8 bg-white p-8 sm:justify-end">
       <Image

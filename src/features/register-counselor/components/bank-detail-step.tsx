@@ -44,18 +44,12 @@ export function BankDetailsStep({
         data={banksOptions}
         {...form.getInputProps('banco_id')}
       />
-      <NumberInput
-        withAsterisk
-        label="Agência"
-        {...form.getInputProps('agencia')}
-        hideControls
-      />
-      <NumberInput
-        withAsterisk
-        label="Conta corrente"
-        {...form.getInputProps('conta')}
-        hideControls
-      />
+      <Input.Wrapper label="Agência" error={form.errors.agencia}>
+        <Input type="number" {...form.getInputProps('agencia')} />
+      </Input.Wrapper>
+      <Input.Wrapper label="Conta corrente" error={form.errors.conta}>
+        <Input type="number" {...form.getInputProps('conta')} />
+      </Input.Wrapper>
       <Input.Wrapper label="CPF do Titular" className="col-span-2">
         <Input
           component={IMaskInput}

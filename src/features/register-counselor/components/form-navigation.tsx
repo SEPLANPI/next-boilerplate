@@ -22,7 +22,7 @@ export function FormNavigation({
       {!isLastStep ? (
         <Button onClick={onNext}>Avançar</Button>
       ) : (
-        <Button type="submit">Enviar Cadastro</Button>
+        <Button type="submit">Finalizar inscrição</Button>
       )}
     </div>
   )

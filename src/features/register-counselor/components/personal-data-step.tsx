@@ -32,7 +32,7 @@ export function PersonalDataStep({
         value={data?.user.fullName ?? ''}
       />
 
-      <Input.Wrapper label="CPF">
+      <Input.Wrapper label="CPF" className="col-span-2 sm:col-span-1">
         <Input
           component={IMaskInput}
           mask="000.000.000-00"
@@ -42,6 +42,7 @@ export function PersonalDataStep({
         />
       </Input.Wrapper>
       <DateInput
+        className="col-span-2 sm:col-span-1"
         label="Data de Nascimento"
         valueFormat="DD/MM/YYYY"
         disabled
@@ -59,9 +60,15 @@ export function PersonalDataStep({
         withAsterisk
         label="RG"
         placeholder="00000000"
+        className="col-span-2 sm:col-span-1"
         {...form.getInputProps('rg')}
       />
-      <Input.Wrapper label="Telefone" error={form.errors.telefone} withAsterisk>
+      <Input.Wrapper
+        label="Telefone"
+        error={form.errors.telefone}
+        withAsterisk
+        className="col-span-2 sm:col-span-1"
+      >
         <Input
           component={IMaskInput}
           mask="(00) 00000-0000"

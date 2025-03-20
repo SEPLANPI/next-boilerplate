@@ -1,8 +1,9 @@
 import { UseFormReturnType } from '@mantine/form'
-import { Radio, RadioGroup } from '@mantine/core'
+import { Radio, RadioGroup, Tooltip } from '@mantine/core'
 import { useQuery } from '@tanstack/react-query'
-import { getWorkshopsFilterOptions } from '../api/client/get-workshops-filter-options'
 import { FormValues } from './register-counselor-form'
+import { Info } from 'lucide-react'
+import { getWorkshopsOptions } from '../api/client/get-workshops-options'
 
 export function WorkshopStep({
   form
@@ -11,7 +12,7 @@ export function WorkshopStep({
 }) {
   const { data: workshops } = useQuery({
     queryKey: ['workshops'],
-    queryFn: getWorkshopsFilterOptions,
+    queryFn: getWorkshopsOptions,
     staleTime: 24 * 60 * 60 * 1000,
     gcTime: 7 * 24 * 60 * 60 * 1000
   })
@@ -27,12 +28,17 @@ export function WorkshopStep({
         {workshops?.map((workshop) => (
           <Radio.Card
             key={workshop.id.toString()}
-            className="flex items-center space-x-4 rounded border p-3 text-sm text-gray-700"
+            className="flex items-center space-x-4 rounded border p-3 text-sm text-gray-700 disabled:bg-gray-50 disabled:text-gray-500"
             value={workshop.id.toString()}
-            disabled={workshop.esgotado}
+            disabled={!workshop.vagas_disponiveis}
           >
             <Radio.Indicator />
-            <span>{workshop.nome}</span>
+            <span className="w-full">{workshop.nome}</span>
+            {!workshop.vagas_disponiveis && (
+              <Tooltip label="Vagas esgotadas">
+                <Info className="size-4" />
+              </Tooltip>
+            )}
           </Radio.Card>
         ))}
       </div>
