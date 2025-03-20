@@ -23,14 +23,14 @@ export function CouncilInfoStep({
         label="Representante de qual conselho?"
         withAsterisk
         className="col-span-2"
-        {...form.getInputProps('conselho')}
+        {...form.getInputProps('conselho_id')}
       >
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           {councils?.map((council) => (
             <Radio.Card
               key={council.id}
               className="flex items-center space-x-3 rounded border p-3 text-sm text-gray-700"
-              value={council.code}
+              value={council.id.toString()}
             >
               <Radio.Indicator />
               <span>{council.nome}</span>

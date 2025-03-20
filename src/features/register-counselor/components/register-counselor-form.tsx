@@ -1,7 +1,12 @@
 'use client'
 import { useMemo, useState } from 'react'
 import { Accordion } from '@mantine/core'
-import { CircleCheck, CircleDot, CircleDotDashed } from 'lucide-react'
+import {
+  CircleAlert,
+  CircleCheck,
+  CircleDot,
+  CircleDotDashed
+} from 'lucide-react'
 import { useForm, zodResolver } from '@mantine/form'
 import { PersonalDataStep } from './personal-data-step'
 import { AddressStep } from './address-step'
@@ -17,6 +22,9 @@ import {
   createInitialFormValues,
   InitialFormValues
 } from '@/lib/form-initial-values'
+import { useParams } from 'next/navigation'
+import { registerCounselor } from '../actions/register-counselor'
+import { notifications } from '@mantine/notifications'
 
 export type FormValues = Omit<
   InitialFormValues<typeof counselorSchema>,
@@ -50,12 +58,15 @@ function StepStatus({ status }: { status: StepStatus }) {
     return <CircleDot className="size-5 text-blue-900" />
   }
   if (status === 'error') {
-    return <CircleDotDashed className="size-5 text-red-600" />
+    return <CircleAlert className="size-5 text-red-600" />
   }
   return <CircleDotDashed className="size-5 text-gray-600" />
 }
 
 export function RegisterCounselorForm() {
+  const { token } = useParams<{ token: string }>()
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
   const initialValues = useMemo(
     () => ({
       ...createInitialFormValues(counselorSchema),
@@ -109,7 +120,7 @@ export function RegisterCounselorForm() {
     {
       label: 'Conselho',
       component: <CouncilInfoStep form={form} />,
-      fields: ['conselho', 'tipo_conselho', 'tipo_membro']
+      fields: ['conselho_id', 'tipo_conselho', 'tipo_membro']
     },
     {
       label: 'Dados Bancários',
@@ -184,49 +195,116 @@ export function RegisterCounselorForm() {
     handleStepChange(nextStep)
   }
 
-  const handleSubmit = (values: FormValues) => {
-    console.log('Form submitted:', values)
+  const handleSubmit = async (values: FormValues) => {
+    try {
+      setIsSubmitting(true)
+      const formData = new FormData()
+
+      formData.append('rg', values.rg)
+      formData.append('telefone', values.telefone)
+
+      formData.append('eixo_id', values.eixo_id)
+      formData.append('token_convite', token)
+
+      if (values.rg_frente instanceof File)
+        formData.append('documento_rg_frente', values.rg_frente)
+      if (values.rg_verso instanceof File)
+        formData.append('documento_rg_verso', values.rg_verso)
+      if (values.comprovante_residencia instanceof File)
+        formData.append('comprovante_residencia', values.comprovante_residencia)
+      if (values.comprovante_conselho instanceof File)
+        formData.append('comprovante_conselho', values.comprovante_conselho)
+      if (values.comprovante_bancario instanceof File)
+        formData.append('comprovante_bancario', values.comprovante_bancario)
+
+      formData.append('endereco_tipo_zona', values.endereco.tipo_endereco)
+      formData.append('endereco_cep', values.endereco.cep)
+      formData.append('endereco_municipio', values.endereco.municipio_id)
+
+      if (values.endereco.tipo_endereco === AddressType.URBAN) {
+        formData.append('endereco_logradouro', values.endereco.rua)
+        formData.append('endereco_numero', values.endereco.numero)
+        formData.append('endereco_complemento', values.endereco.complemento)
+        formData.append('endereco_bairro', values.endereco.bairro)
+      }
+
+      if (values.endereco.tipo_endereco === AddressType.RURAL) {
+        formData.append('endereco_referencia', values.endereco.referencia)
+      }
+
+      formData.append('tipo_membro', values.tipo_membro)
+      formData.append('conselho_id', values.conselho_id)
+      formData.append(
+        'poder_publico',
+        values.tipo_conselho === 'PODER_PUBLICO' ? 'true' : 'false'
+      )
+      formData.append('banco_id', values.banco_id)
+      formData.append('banco_agencia', values.agencia)
+      formData.append('banco_conta', values.conta)
+      formData.append('banco_nome_titular', values.nome_titular)
+
+      formData.append('aceitou_termos', values.aceite_termos)
+
+      const { error } = await registerCounselor(formData)
+
+      if (error) {
+        setIsSubmitting(false)
+        notifications.show({
+          title: 'Não foi possível realizar o cadastro',
+          message: error,
+          color: 'red'
+        })
+        return
+      }
+    } catch (err) {
+      console.log(err)
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
-    <form
-      onSubmit={form.onSubmit(handleSubmit)}
-      className="flex flex-1 flex-col justify-between"
-    >
-      <Accordion
-        value={steps[active].label}
-        onChange={handleAccordionChange}
-        classNames={{
-          root: 'space-y-4',
-          item: 'bg-white rounded-md shadow-md',
-          control: 'rounded-md p-6 ',
-          label: 'font-semibold text-md p-0',
-          content: 'p-6 pt-0'
-        }}
+    <>
+      <form
+        onSubmit={form.onSubmit(handleSubmit)}
+        className="flex flex-1 flex-col justify-between"
       >
-        {steps.map((step, index) => (
-          <Accordion.Item key={step.label} value={step.label}>
-            <Accordion.Control
-              icon={<StepStatus status={stepStatuses[index]} />}
-            >
-              {step.label}
-            </Accordion.Control>
-            <Accordion.Panel>
-              <section className="grid grid-cols-2 gap-6">
-                {step.component}
-              </section>
-              {index === active && (
-                <FormNavigation
-                  active={active}
-                  isLastStep={isLastStep}
-                  onBack={() => handleStepChange(active - 1)}
-                  onNext={() => handleStepChange(active + 1)}
-                />
-              )}
-            </Accordion.Panel>
-          </Accordion.Item>
-        ))}
-      </Accordion>
-    </form>
+        <Accordion
+          value={steps[active].label}
+          onChange={handleAccordionChange}
+          classNames={{
+            root: 'space-y-4',
+            item: 'bg-white rounded-md shadow-md',
+            control: 'rounded-md p-6 ',
+            label: 'font-semibold text-md p-0',
+            content: 'p-6 pt-0'
+          }}
+        >
+          {steps.map((step, index) => (
+            <Accordion.Item key={step.label} value={step.label}>
+              <Accordion.Control
+                icon={<StepStatus status={stepStatuses[index]} />}
+              >
+                {step.label}
+              </Accordion.Control>
+              <Accordion.Panel>
+                <section className="grid grid-cols-2 gap-6">
+                  {step.component}
+                </section>
+                {index === active && (
+                  <FormNavigation
+                    isSubmitting={isSubmitting}
+                    active={active}
+                    isLastStep={isLastStep}
+                    onBack={() => handleStepChange(active - 1)}
+                    onNext={() => handleStepChange(active + 1)}
+                  />
+                )}
+              </Accordion.Panel>
+            </Accordion.Item>
+          ))}
+        </Accordion>
+      </form>
+    </>
   )
 }

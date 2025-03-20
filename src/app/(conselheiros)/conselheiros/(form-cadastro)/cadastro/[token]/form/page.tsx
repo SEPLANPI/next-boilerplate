@@ -7,7 +7,7 @@ import Link from 'next/link'
 export default async function CadastroConselheiroForm({
   params
 }: {
-  params: { code: string }
+  params: { token: string }
 }) {
   const data = await auth()
 
@@ -53,7 +53,7 @@ export default async function CadastroConselheiroForm({
             <span className="ml-3 text-sm text-gray-700">{displayName}</span>
             <Button
               component={Link}
-              href={`/api/auth/sign-out?redirect=/conselheiros/cadastro?code=${params.code}`}
+              href={`/api/auth/sign-out?redirect=/conselheiros/cadastro/${params.token}/`}
               size="sm"
               variant="subtle"
               className="ml-auto"

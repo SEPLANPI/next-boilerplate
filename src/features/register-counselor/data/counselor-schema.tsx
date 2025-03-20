@@ -35,25 +35,7 @@ export const counselorSchema = z.object({
   endereco: addressSchema,
 
   // Passo 3: Conselho
-  conselho: z.enum(
-    [
-      'VALE_DO_SAMBITO',
-      'CHAPADAS_DAS_MANGABEIRAS',
-      'ENTRE_RIOS',
-      'SERRA_DA_CAPIRAVA',
-      'VALE_DO_CANINDE',
-      'VALE_DO_PIAUI_E_ITAUEIRA',
-      'CARNAUBAIS',
-      'COCAIS',
-      'PLANICIE_LITORANEA',
-      'TABULEIRO_DO_ALTO_PARNAIBA',
-      'VALE_DO_ITAIM',
-      'VALE_DO_RIO_GUARIBAS'
-    ],
-    {
-      errorMap: () => ({ message: 'Selecione um conselho' })
-    }
-  ),
+  conselho_id: z.string().min(1, 'Selecione um conselho'),
   tipo_conselho: z.enum(['PODER_PUBLICO', 'SOCIEDADE_CIVIL'], {
     errorMap: () => ({ message: 'Selecione um tipo de conselho' })
   }),

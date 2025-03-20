@@ -13,7 +13,7 @@ export function PersonalDataStep({
 }) {
   const { data } = useSession()
 
-  const birthDate = data?.user
+  const birthDate = data?.user.birthDate
     ? dayjs(data?.user.birthDate, 'DD/MM/YYYY').toDate()
     : null
 
