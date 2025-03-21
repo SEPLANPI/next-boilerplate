@@ -1,4 +1,4 @@
-import { Anchor } from '@mantine/core'
+import { Button } from '@mantine/core'
 import { Check } from 'lucide-react'
 import { Metadata } from 'next'
 import Link from 'next/link'
@@ -21,9 +21,9 @@ export default function Successo() {
       <p className="max-w-md text-center text-secondary-foreground">
         Agradecemos sua participação. Sua inscrição foi realizada com sucesso.
       </p>
-      <Anchor component={Link} href="/conselheiros/dados" variant="">
+      <Button component={Link} href="/conselheiros/dados">
         Ir para meu painel de conselheiro
-      </Anchor>
+      </Button>
     </div>
   )
 }
