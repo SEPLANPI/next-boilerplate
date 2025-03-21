@@ -5,9 +5,11 @@ interface FormNavigationProps {
   isLastStep: boolean
   onBack: () => void
   onNext: () => void
+  isSubmitting: boolean
 }
 
 export function FormNavigation({
+  isSubmitting = false,
   active,
   isLastStep,
   onBack,
@@ -22,7 +24,9 @@ export function FormNavigation({
       {!isLastStep ? (
         <Button onClick={onNext}>Avançar</Button>
       ) : (
-        <Button type="submit">Finalizar inscrição</Button>
+        <Button type="submit" loading={isSubmitting}>
+          Finalizar inscrição
+        </Button>
       )}
     </div>
   )

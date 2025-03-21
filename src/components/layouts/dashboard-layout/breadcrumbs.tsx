@@ -29,7 +29,7 @@ export const DashboardBreadcrumbs: React.FC<DashboardBreadcrumbsProps> = memo(
             <>
               {Icon && <Icon className="size-4" />}
               <span
-                className={`text-gray-700 ${isLastItem ? 'font-semibold' : ''}`}
+                className={`text-secondary-foreground ${isLastItem ? 'font-semibold' : ''}`}
               >
                 {label}
               </span>

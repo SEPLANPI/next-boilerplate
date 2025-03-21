@@ -17,8 +17,12 @@ export const routingConfig: RoutingConfiguration = {
       type: 'public'
     },
     {
-      path: '/conselheiros/cadastro/',
+      path: '/conselheiros/cadastro/*',
       type: 'public'
+    },
+    {
+      path: '/conselheiros/cadastro/:id/token',
+      type: 'protected'
     }
   ]
 }

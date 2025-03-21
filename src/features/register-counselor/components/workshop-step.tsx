@@ -28,7 +28,7 @@ export function WorkshopStep({
         {workshops?.map((workshop) => (
           <Radio.Card
             key={workshop.id.toString()}
-            className="flex items-center space-x-4 rounded border p-3 text-sm text-gray-700 disabled:bg-gray-50 disabled:text-gray-500"
+            className="flex items-center space-x-4 rounded border p-3 text-sm text-secondary-foreground disabled:bg-gray-50 disabled:text-gray-500"
             value={workshop.id.toString()}
             disabled={!workshop.vagas_disponiveis}
           >

@@ -13,13 +13,13 @@ export function PersonalDataStep({
 }) {
   const { data } = useSession()
 
-  const birthDate = data?.user
+  const birthDate = data?.user.birthDate
     ? dayjs(data?.user.birthDate, 'DD/MM/YYYY').toDate()
     : null
 
   return (
     <>
-      <p className="col-span-2 text-sm text-gray-700">
+      <p className="col-span-2 text-sm text-secondary-foreground">
         Os seus dados cadastrados no GovPI Cidadão serão importados
         automaticamente para esta etapa do formulário. Certifique-se de que as
         informações estão corretas. Caso necessário, atualize seu cadastro

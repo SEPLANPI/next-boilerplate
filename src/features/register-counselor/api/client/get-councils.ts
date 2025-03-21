@@ -4,7 +4,6 @@ import { clientApi } from '@/lib/client-api'
 export interface Council {
   id: number
   nome: string
-  code: string
 }
 
 export async function getCouncils(): Promise<Council[]> {
