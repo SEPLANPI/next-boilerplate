@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { CouncilRepresentativeType, MemberType } from '../types/counselor'
 import { FormValues } from './register-counselor-form'
 import { getCouncils } from '../api/client/get-councils'
+import { useEffect } from 'react'
 
 export function CouncilInfoStep({
   form
@@ -16,6 +17,18 @@ export function CouncilInfoStep({
     staleTime: 24 * 60 * 60 * 1000,
     gcTime: 7 * 24 * 60 * 60 * 1000
   })
+  
+  // Reset bank fields when council type changes
+  useEffect(() => {
+    const currentType = form.values.tipo_conselho;
+    if (currentType !== CouncilRepresentativeType.SOCIEDADE_CIVIL) {
+      form.setFieldValue('banco_id', '');
+      form.setFieldValue('agencia', '');
+      form.setFieldValue('conta', '');
+      form.setFieldValue('nome_titular', '');
+      form.setFieldValue('comprovante_bancario', null);
+    }
+  }, [form.values.tipo_conselho]);
 
   return (
     <>
@@ -40,7 +53,7 @@ export function CouncilInfoStep({
       </RadioGroup>
 
       <RadioGroup
-        label="Representação no conselho"
+        label="Representação no conselho"
         withAsterisk
         className="col-span-2"
         {...form.getInputProps('tipo_conselho')}
@@ -58,7 +71,7 @@ export function CouncilInfoStep({
       </RadioGroup>
 
       <RadioGroup
-        label="Composição no conselho"
+        label="Composição no conselho"
         withAsterisk
         className="col-span-2"
         {...form.getInputProps('tipo_membro')}

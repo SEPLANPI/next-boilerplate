@@ -1,13 +1,15 @@
-import { z } from 'zod'
+import { object, string, z } from 'zod'
 
 export type InitialFormValues<T extends z.ZodType> = {
   [K in keyof z.infer<T>]: z.infer<T>[K] extends string | number | boolean
-    ? string
-    : z.infer<T>[K] extends Array<any>
-      ? []
-      : z.infer<T>[K] extends object
-        ? InitialFormValues<z.ZodType<z.infer<T>[K]>> | null
-        : string | null
+  ? string
+  : z.infer<T>[K] extends Array<any>
+  ? []
+  : z.infer<T>[K] extends File | null
+  ? File | null
+  : z.infer<T>[K] extends object
+  ? InitialFormValues<z.ZodType<z.infer<T>[K]>> | null
+  : string | null
 }
 
 export function createInitialFormValues<T extends z.ZodType>(
@@ -37,6 +39,10 @@ export function createInitialFormValues<T extends z.ZodType>(
   if (schema instanceof z.ZodUnion) {
     const [firstOption] = schema.options
     return createInitialFormValues(firstOption)
+  }
+
+  if (schema instanceof z.ZodEffects) {
+    return createInitialFormValues(schema.innerType())
   }
 
   if (schema instanceof z.ZodObject) {

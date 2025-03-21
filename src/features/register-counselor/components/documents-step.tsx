@@ -26,7 +26,8 @@ export function DocumentsStep({
 }: {
   form: UseFormReturnType<FormValues>
 }) {
-  console.log(form.errors)
+  const isSociedadeCivil = form.values.tipo_conselho === 'SOCIEDADE_CIVIL'
+  
   return (
     <>
       <p className="col-span-2 text-sm font-semibold text-gray-700">
@@ -60,13 +61,15 @@ export function DocumentsStep({
         placeholder="Selecione o arquivo (jpg. jpeg, png, pdf)"
         {...form.getInputProps('comprovante_conselho')}
       />
-      <FileInput
-        className="col-span-2"
-        label="Comprovante Bancário"
-        accept="image/jpg, image/png, image/jpeg ,application/pdf"
-        placeholder="Selecione o arquivo (jpg. jpeg, png, pdf)"
-        {...form.getInputProps('comprovante_bancario')}
-      />
+      {isSociedadeCivil && (
+        <FileInput
+          className="col-span-2"
+          label="Comprovante Bancário"
+          accept="image/jpg, image/png, image/jpeg ,application/pdf"
+          placeholder="Selecione o arquivo (jpg. jpeg, png, pdf)"
+          {...form.getInputProps('comprovante_bancario')}
+        />
+      )}
     </>
   )
 }

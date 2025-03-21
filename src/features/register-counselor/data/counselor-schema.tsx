@@ -43,11 +43,11 @@ export const counselorSchema = z.object({
     errorMap: () => ({ message: 'Selecione um tipo de membro' })
   }),
 
-  // Passo 4: Dados Bancários
-  banco_id: z.string().min(1, 'Banco é obrigatório'),
-  agencia: z.coerce.number().min(1, 'Número de agência inválido'),
-  conta: z.coerce.number().min(1, 'Número de conta inválido'),
-  nome_titular: z.string().min(1, 'Nome do titular é obrigatório'),
+  // Passo 4: Dados Bancários - now optional fields
+  banco_id: z.string().optional(),
+  agencia: z.coerce.number().optional(),
+  conta: z.coerce.number().optional(),
+  nome_titular: z.string().optional(),
 
   // Passo 5: Oficina
   eixo_id: z.string().min(1, 'Oficina é obrigatório'),
@@ -65,10 +65,7 @@ export const counselorSchema = z.object({
   comprovante_conselho: z.instanceof(File, {
     message: 'Comprovante do conselho é obrigatório'
   }),
-  comprovante_bancario: z.instanceof(File, {
-    message: 'Comprovante bancário é obrigatório'
-  }),
-
+  comprovante_bancario: z.instanceof(File).nullable(),
   // Passo 7: Declarações
   aceite_termos: z
     .boolean({
@@ -87,4 +84,42 @@ export const counselorSchema = z.object({
       (val) => val === true,
       'Você precisa declarar a veracidade das informações'
     )
+}).superRefine((data, ctx) => {
+  if (data.tipo_conselho === 'SOCIEDADE_CIVIL') {
+    if (!data.banco_id) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Banco é obrigatório',
+        path: ['banco_id']
+      });
+    }
+    if (!data.agencia) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Número de agência inválido',
+        path: ['agencia']
+      });
+    }
+    if (!data.conta) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Número de conta inválido',
+        path: ['conta']
+      });
+    }
+    if (!data.nome_titular) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Nome do titular é obrigatório',
+        path: ['nome_titular']
+      });
+    }
+    if (!(data.comprovante_bancario instanceof File)) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Comprovante bancário é obrigatório',
+        path: ['comprovante_bancario']
+      });
+    }
+  }
 })

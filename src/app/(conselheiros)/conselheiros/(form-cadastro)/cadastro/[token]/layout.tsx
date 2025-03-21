@@ -1,5 +1,10 @@
 import { api } from '@/lib/server-api'
+import { Metadata } from 'next'
 import { PropsWithChildren } from 'react'
+
+export const metadata: Metadata = {
+  title: 'Cadastro de conselheiro'
+}
 
 type CounselorFormLayoutProps = PropsWithChildren<{
   params: {
@@ -22,8 +27,8 @@ export default async function CounselorFormLayout({
 
     if (data.error === 'Convite não encontrado.')
       return (
-        <div className="flex min-h-[100dvh] w-full flex-col items-center justify-center p-4 text-center">
-          <h1 className="mb-4 font-montserrat text-2xl font-semibold">
+        <div className="flex min-h-[100dvh] w-full flex-col items-center justify-center p-5 text-center">
+          <h1 className="mb-4 font-montserrat text-2xl font-bold">
             Link de convite inválido
           </h1>
           <p className="max-w-md text-gray-600">
@@ -36,8 +41,8 @@ export default async function CounselorFormLayout({
 
     if (data.error === 'Este convite já foi utilizado.')
       return (
-        <div className="flex min-h-[100dvh] w-full flex-col items-center justify-center p-4 text-center">
-          <h1 className="mb-4 font-montserrat text-2xl font-semibold">
+        <div className="flex min-h-[100dvh] w-full flex-col items-center justify-center p-5 text-center">
+          <h1 className="mb-4 font-montserrat text-2xl font-bold">
             Convite já utilizado
           </h1>
           <p className="max-w-md text-gray-600">

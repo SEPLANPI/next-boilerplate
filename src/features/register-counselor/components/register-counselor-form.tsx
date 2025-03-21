@@ -1,5 +1,6 @@
 'use client'
-import { useMemo, useState } from 'react'
+
+import { useMemo, useState, useEffect } from 'react'
 import { Accordion } from '@mantine/core'
 import {
   CircleAlert,
@@ -25,6 +26,8 @@ import {
 import { useParams } from 'next/navigation'
 import { registerCounselor } from '../actions/register-counselor'
 import { notifications } from '@mantine/notifications'
+import { error } from 'console'
+import { API } from '@/constants/messages'
 
 export type FormValues = Omit<
   InitialFormValues<typeof counselorSchema>,
@@ -84,6 +87,8 @@ export function RegisterCounselorForm() {
     []
   )
 
+  console.log(initialValues)
+
   const form = useForm<FormValues>({
     initialValues,
     validate: zodResolver(counselorSchema),
@@ -97,37 +102,45 @@ export function RegisterCounselorForm() {
     })
   })
 
-  const steps = [
-    {
-      label: 'Dados Pessoais',
-      component: <PersonalDataStep form={form} />,
-      fields: ['rg', 'telefone']
-    },
-    {
-      label: 'Endereço',
-      component: <AddressStep form={form} />,
-      fields: [
-        'endereco.tipo_endereco',
-        'endereco.rua',
-        'endereco.numero',
-        'endereco.complemento',
-        'endereco.bairro',
-        'endereco.referencia',
-        'endereco.cep',
-        'endereco.municipio_id'
-      ]
-    },
-    {
-      label: 'Conselho',
-      component: <CouncilInfoStep form={form} />,
-      fields: ['conselho_id', 'tipo_conselho', 'tipo_membro']
-    },
-    {
-      label: 'Dados Bancários',
-      component: <BankDetailsStep form={form} />,
-      fields: ['banco_id', 'agencia', 'conta', 'tipo_conta']
-    },
-    {
+  const isSociedadeCivil = form.values.tipo_conselho === 'SOCIEDADE_CIVIL'
+
+  const steps = useMemo(() => {
+    const baseSteps = [
+      {
+        label: 'Dados Pessoais',
+        component: <PersonalDataStep form={form} />,
+        fields: ['rg', 'telefone']
+      },
+      {
+        label: 'Endereço',
+        component: <AddressStep form={form} />,
+        fields: [
+          'endereco.tipo_endereco',
+          'endereco.rua',
+          'endereco.numero',
+          'endereco.complemento',
+          'endereco.bairro',
+          'endereco.referencia',
+          'endereco.cep',
+          'endereco.municipio_id'
+        ]
+      },
+      {
+        label: 'Conselho',
+        component: <CouncilInfoStep form={form} />,
+        fields: ['conselho_id', 'tipo_conselho', 'tipo_membro']
+      }
+    ]
+
+    if (isSociedadeCivil) {
+      baseSteps.push({
+        label: 'Dados Bancários',
+        component: <BankDetailsStep form={form} />,
+        fields: ['banco_id', 'agencia', 'conta', 'tipo_conta', 'nome_titular']
+      })
+    }
+
+    baseSteps.push({
       label: 'Documentos',
       component: <DocumentsStep form={form} />,
       fields: [
@@ -135,25 +148,45 @@ export function RegisterCounselorForm() {
         'rg_verso',
         'comprovante_residencia',
         'comprovante_conselho',
-        'comprovante_bancario'
+        ...(isSociedadeCivil ? ['comprovante_bancario'] : [])
       ]
-    },
-    {
+    })
+
+    baseSteps.push({
       label: 'Oficina',
       component: <WorkshopStep form={form} />,
       fields: ['eixo_id']
-    },
-    {
+    })
+
+    baseSteps.push({
       label: 'Declarações',
       component: <DeclarationStep form={form} />,
       fields: ['aceite_termos', 'aceite_veracidade']
-    }
-  ]
+    })
+
+    return baseSteps
+  }, [form, isSociedadeCivil])
 
   const [active, setActive] = useState(0)
   const [stepStatuses, setStepStatuses] = useState<StepStatus[]>(
     Array(steps.length).fill('pending')
   )
+
+  useEffect(() => {
+    setStepStatuses((prev) => {
+      if (active >= steps.length) {
+        setActive(steps.length - 1)
+      }
+      return Array(steps.length)
+        .fill('pending')
+        .map((_, i) => {
+          if (i < active) return 'completed'
+          if (i === active) return 'current'
+          return 'pending'
+        })
+    })
+  }, [steps.length])
+
   const isLastStep = active === steps.length - 1
 
   function validateStep(stepIndex: number) {
@@ -196,71 +229,74 @@ export function RegisterCounselorForm() {
   }
 
   const handleSubmit = async (values: FormValues) => {
-    try {
-      setIsSubmitting(true)
-      const formData = new FormData()
+    setIsSubmitting(true)
+    const formData = new FormData()
 
-      formData.append('rg', values.rg)
-      formData.append('telefone', values.telefone)
+    formData.append('rg', values.rg)
+    formData.append('telefone', values.telefone)
 
-      formData.append('eixo_id', values.eixo_id)
-      formData.append('token_convite', token)
+    formData.append('eixo_id', values.eixo_id)
+    formData.append('token_convite', token)
 
-      if (values.rg_frente instanceof File)
-        formData.append('documento_rg_frente', values.rg_frente)
-      if (values.rg_verso instanceof File)
-        formData.append('documento_rg_verso', values.rg_verso)
-      if (values.comprovante_residencia instanceof File)
-        formData.append('comprovante_residencia', values.comprovante_residencia)
-      if (values.comprovante_conselho instanceof File)
-        formData.append('comprovante_conselho', values.comprovante_conselho)
-      if (values.comprovante_bancario instanceof File)
-        formData.append('comprovante_bancario', values.comprovante_bancario)
+    if (values.rg_frente instanceof File)
+      formData.append('documento_rg_frente', values.rg_frente)
+    if (values.rg_verso instanceof File)
+      formData.append('documento_rg_verso', values.rg_verso)
+    if (values.comprovante_residencia instanceof File)
+      formData.append('comprovante_residencia', values.comprovante_residencia)
+    if (values.comprovante_conselho instanceof File)
+      formData.append('comprovante_conselho', values.comprovante_conselho)
 
-      formData.append('endereco_tipo_zona', values.endereco.tipo_endereco)
-      formData.append('endereco_cep', values.endereco.cep)
-      formData.append('endereco_municipio', values.endereco.municipio_id)
+    // Only add bank document if sociedade civil
+    if (
+      values.tipo_conselho === 'SOCIEDADE_CIVIL' &&
+      values.comprovante_bancario instanceof File
+    )
+      formData.append('comprovante_bancario', values.comprovante_bancario)
 
-      if (values.endereco.tipo_endereco === AddressType.URBAN) {
-        formData.append('endereco_logradouro', values.endereco.rua)
-        formData.append('endereco_numero', values.endereco.numero)
-        formData.append('endereco_complemento', values.endereco.complemento)
-        formData.append('endereco_bairro', values.endereco.bairro)
-      }
+    formData.append('endereco_tipo_zona', values.endereco.tipo_endereco)
+    formData.append('endereco_cep', values.endereco.cep)
+    formData.append('endereco_municipio', values.endereco.municipio_id)
 
-      if (values.endereco.tipo_endereco === AddressType.RURAL) {
-        formData.append('endereco_referencia', values.endereco.referencia)
-      }
-
-      formData.append('tipo_membro', values.tipo_membro)
-      formData.append('conselho_id', values.conselho_id)
-      formData.append(
-        'poder_publico',
-        values.tipo_conselho === 'PODER_PUBLICO' ? 'true' : 'false'
-      )
-      formData.append('banco_id', values.banco_id)
-      formData.append('banco_agencia', values.agencia)
-      formData.append('banco_conta', values.conta)
-      formData.append('banco_nome_titular', values.nome_titular)
-
-      formData.append('aceitou_termos', values.aceite_termos)
-
-      const { error } = await registerCounselor(formData)
-
-      if (error) {
-        setIsSubmitting(false)
-        notifications.show({
-          title: 'Não foi possível realizar o cadastro',
-          message: error,
-          color: 'red'
-        })
-        return
-      }
-    } catch (err) {
-      console.log(err)
-    } finally {
-      setIsSubmitting(false)
+    if (values.endereco.tipo_endereco === AddressType.URBAN) {
+      formData.append('endereco_logradouro', values.endereco.rua)
+      formData.append('endereco_numero', values.endereco.numero)
+      formData.append('endereco_complemento', values.endereco.complemento)
+      formData.append('endereco_bairro', values.endereco.bairro)
     }
+
+    if (values.endereco.tipo_endereco === AddressType.RURAL) {
+      formData.append('endereco_referencia', values.endereco.referencia)
+    }
+
+    formData.append('tipo_membro', values.tipo_membro)
+    formData.append('conselho_id', values.conselho_id)
+    formData.append(
+      'poder_publico',
+      values.tipo_conselho === 'PODER_PUBLICO' ? 'true' : 'false'
+    )
+
+    if (values.tipo_conselho === 'SOCIEDADE_CIVIL') {
+      formData.append('banco_id', values.banco_id || '')
+      formData.append('banco_agencia', values.agencia || '')
+      formData.append('banco_conta', values.conta || '')
+      formData.append('banco_nome_titular', values.nome_titular || '')
+    }
+
+    formData.append('aceitou_termos', values.aceite_termos)
+
+    const data = await registerCounselor(formData)
+
+    if (data?.error) {
+      setIsSubmitting(false)
+      notifications.show({
+        title: 'Não foi possível realizar o cadastro',
+        message: data.error,
+        color: 'red'
+      })
+      return
+    }
+    setIsSubmitting(false)
   }
 
   return (

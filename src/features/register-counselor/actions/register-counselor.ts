@@ -7,13 +7,13 @@ import { redirect } from 'next/navigation'
 export async function registerCounselor(
   input: FormData
 ): Promise<ActionState<never>> {
+
   const response = await api.post('/conselheiros/', {
     contentType: 'form-data',
     body: input
   })
 
   if (!response.ok) {
-    console.log(await response.text())
     const error = await response.json()
     console.log(error)
     return { error: error.detail || API.UNEXPECTED_FETCH_ERROR }
