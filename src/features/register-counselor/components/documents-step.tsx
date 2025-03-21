@@ -27,10 +27,10 @@ export function DocumentsStep({
   form: UseFormReturnType<FormValues>
 }) {
   const isSociedadeCivil = form.values.tipo_conselho === 'SOCIEDADE_CIVIL'
-  
+
   return (
     <>
-      <p className="col-span-2 text-sm font-semibold text-gray-700">
+      <p className="col-span-2 text-sm font-semibold text-secondary-foreground">
         O participante deve anexar os seguintes arquivos:
       </p>
       <FileInput

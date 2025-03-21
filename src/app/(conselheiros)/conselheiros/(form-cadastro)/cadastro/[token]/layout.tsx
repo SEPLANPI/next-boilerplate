@@ -31,7 +31,7 @@ export default async function CounselorFormLayout({
           <h1 className="mb-4 font-montserrat text-2xl font-bold">
             Link de convite inválido
           </h1>
-          <p className="max-w-md text-gray-600">
+          <p className="max-w-md text-secondary-foreground">
             O link de convite que você está tentando acessar não existe ou pode
             ter expirado. Por favor, entre em contato com o administrador para
             solicitar um novo convite.
@@ -45,7 +45,7 @@ export default async function CounselorFormLayout({
           <h1 className="mb-4 font-montserrat text-2xl font-bold">
             Convite já utilizado
           </h1>
-          <p className="max-w-md text-gray-600">
+          <p className="max-w-md text-secondary-foreground">
             Este link de convite já foi usado para criar uma conta. Cada convite
             pode ser utilizado apenas uma vez. Se você precisa de acesso,
             solicite um novo convite ao administrador.
@@ -58,7 +58,7 @@ export default async function CounselorFormLayout({
         <h1 className="mb-4 font-montserrat text-2xl font-semibold">
           Erro ao validar convite
         </h1>
-        <p className="max-w-md text-gray-600">
+        <p className="max-w-md text-secondary-foreground">
           Ocorreu um erro ao validar seu convite. Por favor, tente novamente ou
           entre em contato com o administrador caso o problema persista.
         </p>

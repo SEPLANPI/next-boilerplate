@@ -13,7 +13,7 @@
     @apply scroll-smooth;
   }
   body {
-    --mantine-color-text: var(--mantine-color-gray-9);
+    --mantine-color-text: #211F20;
     @apply bg-background text-foreground;
     font-synthesis-weight: none;
     text-rendering: optimizeLegibility;

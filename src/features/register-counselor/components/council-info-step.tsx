@@ -17,18 +17,18 @@ export function CouncilInfoStep({
     staleTime: 24 * 60 * 60 * 1000,
     gcTime: 7 * 24 * 60 * 60 * 1000
   })
-  
+
   // Reset bank fields when council type changes
   useEffect(() => {
-    const currentType = form.values.tipo_conselho;
+    const currentType = form.values.tipo_conselho
     if (currentType !== CouncilRepresentativeType.SOCIEDADE_CIVIL) {
-      form.setFieldValue('banco_id', '');
-      form.setFieldValue('agencia', '');
-      form.setFieldValue('conta', '');
-      form.setFieldValue('nome_titular', '');
-      form.setFieldValue('comprovante_bancario', null);
+      form.setFieldValue('banco_id', '')
+      form.setFieldValue('agencia', '')
+      form.setFieldValue('conta', '')
+      form.setFieldValue('nome_titular', '')
+      form.setFieldValue('comprovante_bancario', null)
     }
-  }, [form.values.tipo_conselho]);
+  }, [form.values.tipo_conselho])
 
   return (
     <>
@@ -42,7 +42,7 @@ export function CouncilInfoStep({
           {councils?.map((council) => (
             <Radio.Card
               key={council.id}
-              className="flex items-center space-x-3 rounded border p-3 text-sm text-gray-700"
+              className="flex items-center space-x-3 rounded border p-3 text-sm text-secondary-foreground"
               value={council.id.toString()}
             >
               <Radio.Indicator />

@@ -63,7 +63,7 @@ function StepStatus({ status }: { status: StepStatus }) {
   if (status === 'error') {
     return <CircleAlert className="size-5 text-red-600" />
   }
-  return <CircleDotDashed className="size-5 text-gray-600" />
+  return <CircleDotDashed className="size-5 text-secondary-foreground" />
 }
 
 export function RegisterCounselorForm() {
