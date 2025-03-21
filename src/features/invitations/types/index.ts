@@ -1,10 +1,8 @@
 export type Invitation = {
   id: string
-  nome: string
-  situacao: 'SUBMETIDO' | 'PENDENTE'
+  admin: string
+  token: string
+  identificador: string
+  usado: boolean
   criado_em: string
-  responsavel: {
-    nome: string
-    avatar?: string
-  }
 }

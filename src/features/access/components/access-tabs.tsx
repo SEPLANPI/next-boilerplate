@@ -1,8 +1,13 @@
+'use client'
+
 import { NavigationTabs, TabItem } from '@/components/ui/navigation-tabs'
 import { FileSpreadsheet, UserPlus } from 'lucide-react'
-import { useParams } from 'next/navigation'
+import { useSession } from 'next-auth/react'
 
 export function AccessTabs() {
+  const { data } = useSession()
+
+  console.log(data?.accessToken)
   const accessTabItems: TabItem[] = [
     { value: 'cadastros', icon: FileSpreadsheet, label: 'Cadastros' },
     { value: 'convites', icon: UserPlus, label: 'Convites' }
@@ -11,7 +16,7 @@ export function AccessTabs() {
   return (
     <NavigationTabs
       items={accessTabItems}
-      basePath={`/acessos`}
+      basePath={`/admin/acessos`}
       defaultValue="cadastros"
     />
   )

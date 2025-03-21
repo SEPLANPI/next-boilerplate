@@ -41,7 +41,7 @@ export function UserMenu() {
         </div>
       </div>
       <Menu.Divider />
-      <Menu.Item component={Link} href="/api/auth/sign-out">
+      <Menu.Item component={Link} href="/api/auth/sign-out?redirect=/">
         Sair
       </Menu.Item>
     </Menu.Dropdown>

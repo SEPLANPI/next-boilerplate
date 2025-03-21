@@ -1,3 +1,10 @@
-import { createBaseSearchParams } from '@/lib/search-params'
+import {
+  baseSearchParamsParsers,
+  createBaseSearchParams
+} from '@/lib/search-params'
+import { createSearchParamsCache, parseAsString } from 'nuqs/server'
 
-export const invitationsSearchParams = createBaseSearchParams()
+export const invitationsSearchParams = createSearchParamsCache({
+  ...baseSearchParamsParsers,
+  search: parseAsString
+})

@@ -16,19 +16,19 @@ export function MainNav({ config }: MainNavProps) {
 
   return (
     <aside
-      className={`flex h-full flex-col overflow-hidden border-r bg-white transition-all duration-300 ${
+      className={`flex h-full flex-col overflow-hidden border-r-2 bg-white transition-all duration-300 ${
         collapsed ? 'w-16' : 'w-64'
       }`}
     >
       <div
-        className={`mb-2 h-12 border-b ${collapsed ? 'flex flex-col items-center justify-center gap-2' : 'flex items-center justify-between px-4'}`}
+        className={`mb-2 h-12 border-b-2 ${collapsed ? 'flex flex-col items-center justify-center gap-2' : 'flex items-center justify-between px-4'}`}
       >
         <div
           className={`flex items-center ${collapsed ? 'justify-center' : 'space-x-2'} `}
         >
-          {config.app.logo ? (
+          {collapsed ? (
             <Image
-              src={config.app.logo}
+              src={'/logo/icon/verde-verde.png'}
               alt={config.app.name}
               width={120}
               height={120}
@@ -36,13 +36,14 @@ export function MainNav({ config }: MainNavProps) {
               quality={100}
             />
           ) : (
-            defaultLogo
-          )}
-          {!collapsed && (
-            <>
-              <Divider orientation="vertical" className="my-auto h-6" />
-              <span className="font-medium">{config.app.name}</span>
-            </>
+            <Image
+              src={'/logo/horizontal/verde-verde.png'}
+              alt={config.app.name}
+              width={205}
+              height={56}
+              className="h-7 w-auto"
+              quality={100}
+            />
           )}
         </div>
         {!collapsed && (

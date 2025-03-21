@@ -1,55 +1,31 @@
 import { API } from '@/constants/messages'
 import { ServerResult } from '@/types/server-result'
 import { Invitation } from '../types'
+import { api } from '@/lib/server-api'
+import { invitationsSearchParams } from '../lib/search-params'
+import { buildParams } from '@/lib/api-utils'
 
 type GetInvitationsResponse = {
   count: number
   results: Invitation[]
 }
 
-const mockData: GetInvitationsResponse = {
-  count: 3,
-  results: [
-    {
-      id: '1',
-      nome: 'Empresa A',
-      situacao: 'PENDENTE',
-      criado_em: '03-02-2025',
-      responsavel: {
-        nome: 'João Silva',
-        avatar: 'https://i.pravatar.cc/150?u=1'
-      }
-    },
-    {
-      id: '2',
-      nome: 'Empresa B',
-      criado_em: '01-02-2025',
-
-      situacao: 'SUBMETIDO',
-      responsavel: {
-        nome: 'Maria Santos'
-      }
-    },
-    {
-      id: '3',
-      nome: 'Empresa C',
-      situacao: 'PENDENTE',
-      criado_em: '05-02-2025',
-      responsavel: {
-        nome: 'Carlos Oliveira',
-        avatar: 'https://i.pravatar.cc/150?u=3'
-      }
-    }
-  ]
-}
-
 export async function getInvitations(): Promise<
   ServerResult<GetInvitationsResponse>
 > {
   try {
-    // Simulate network delay
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-    return { data: mockData }
+    const { page, search } = invitationsSearchParams.all()
+    const params = buildParams({ page, search })
+    const response = await api.get(`/convites/?${params}`)
+
+    if (!response.ok) {
+      const data = await response.json()
+      return { error: data.detail || API.UNEXPECTED_FETCH_ERROR }
+    }
+
+    const data: GetInvitationsResponse = await response.json()
+
+    return { data }
   } catch (error) {
     return { error: API.UNEXPECTED_FETCH_ERROR }
   }

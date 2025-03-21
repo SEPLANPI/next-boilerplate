@@ -17,10 +17,10 @@ export function InvitationsTableSkeleton() {
     <Table verticalSpacing="xs" className="w-full table-fixed">
       <TableThead>
         <TableTr>
-          <TableTh className="w-full">Nome</TableTh>
-          <TableTh className="w-48">Situação</TableTh>
+          <TableTh className="w-full">Identificador</TableTh>
+          <TableTh className="w-48">Status</TableTh>
           <TableTh className="w-48">Criado em</TableTh>
-          <TableTh className="w-28">Responsável</TableTh>
+          <TableTh className="w-28">Admin</TableTh>
         </TableTr>
       </TableThead>
       <TableTbody>
@@ -36,7 +36,7 @@ export function InvitationsTableSkeleton() {
               <Skeleton height={rowContentHeight} />
             </TableTd>
             <TableTd>
-              <Skeleton circle height={26} width={26} />
+              <Skeleton height={rowContentHeight} />
             </TableTd>
           </TableTr>
         ))}

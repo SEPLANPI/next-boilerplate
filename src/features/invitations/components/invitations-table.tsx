@@ -8,18 +8,19 @@ import {
   TableThead,
   TableTbody,
   TableTh,
-  Avatar,
-  Tooltip,
   Badge,
-  MantineColor
+  MantineColor,
+  Menu,
+  ActionIcon
 } from '@mantine/core'
+import { MoreHorizontal, Copy } from 'lucide-react'
+import { useClipboard } from '@/hooks/use-clipboard'
 import { Invitation } from '../types'
-import dayjs from 'dayjs'
 import { formatDate } from '@/utils/format-date'
 
 const INVITATION_STATUS = {
-  SUBMETIDO: { color: 'blue' as MantineColor, label: 'Submetido' },
-  PENDENTE: { color: 'orange' as MantineColor, label: 'Pendente' }
+  USED: { color: 'blue' as MantineColor, label: 'Usado' },
+  AVAILABLE: { color: 'orange' as MantineColor, label: 'Pendente' }
 } as const
 
 interface InvitationsTableProps {
@@ -27,41 +28,55 @@ interface InvitationsTableProps {
 }
 
 export function InvitationsTable({ data }: InvitationsTableProps) {
+  const { copy } = useClipboard()
+
   return (
     <Table verticalSpacing="xs" className="w-full table-fixed">
       <TableThead>
         <TableTr>
-          <TableTh className="w-full">Nome</TableTh>
-          <TableTh className="w-48">Situação</TableTh>
+          <TableTh className="w-full">Identificador</TableTh>
+          <TableTh className="w-48">Status</TableTh>
           <TableTh className="w-48">Criado em</TableTh>
-          <TableTh className="w-28">Responsável</TableTh>
+          <TableTh className="w-28 truncate">Responsável</TableTh>
+          <TableTh className="w-16"></TableTh>
         </TableTr>
       </TableThead>
       <TableTbody>
         {data.map((invitation) => {
-          const statusConfig = INVITATION_STATUS[invitation.situacao]
+          const status = invitation.usado
+            ? INVITATION_STATUS.USED
+            : INVITATION_STATUS.AVAILABLE
 
           return (
             <TableTr key={invitation.id}>
-              <TableTd className="w-full">{invitation.nome}</TableTd>
+              <TableTd className="w-full">{invitation.identificador}</TableTd>
               <TableTd className="w-48">
-                <Badge color={statusConfig.color} variant="light" radius="sm">
-                  {statusConfig.label}
+                <Badge color={status.color} variant="light" radius="sm">
+                  {status.label}
                 </Badge>
               </TableTd>
               <TableTd>{formatDate(invitation.criado_em)}</TableTd>
-              <TableTd className="w-28">
-                <Tooltip label={invitation.responsavel.nome}>
-                  <Avatar
-                    radius="xl"
-                    color="initials"
-                    key={invitation.responsavel.nome}
-                    name={invitation.responsavel.nome}
-                    alt="Avatar do responsável"
-                    variant="filled"
-                    size="sm"
-                  />
-                </Tooltip>
+              <TableTd className="w-28 truncate">{invitation.admin}</TableTd>
+              <TableTd>
+                <Menu position="bottom-end">
+                  <Menu.Target>
+                    <ActionIcon variant="ghost">
+                      <MoreHorizontal className="size-4" />
+                    </ActionIcon>
+                  </Menu.Target>
+                  <Menu.Dropdown>
+                    <Menu.Item
+                      leftSection={<Copy className="size-4" />}
+                      onClick={() =>
+                        copy(
+                          `${process.env.NEXT_PUBLIC_APP_URL}/conselheiros/cadastro/${invitation.token}`
+                        )
+                      }
+                    >
+                      Copiar URL
+                    </Menu.Item>
+                  </Menu.Dropdown>
+                </Menu>
               </TableTd>
             </TableTr>
           )
