@@ -87,8 +87,6 @@ export function RegisterCounselorForm() {
     []
   )
 
-  console.log(initialValues)
-
   const form = useForm<FormValues>({
     initialValues,
     validate: zodResolver(counselorSchema),

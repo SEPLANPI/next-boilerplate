@@ -34,6 +34,7 @@ export function DocumentsStep({
         O participante deve anexar os seguintes arquivos:
       </p>
       <FileInput
+        withAsterisk
         className="col-span-2"
         label="RG Frente"
         accept="image/jpg, image/png, image/jpeg ,application/pdf"
@@ -41,6 +42,7 @@ export function DocumentsStep({
         {...form.getInputProps('rg_frente')}
       />
       <FileInput
+        withAsterisk
         className="col-span-2"
         label="RG Verso"
         accept="image/jpg, image/png, image/jpeg ,application/pdf"
@@ -48,6 +50,7 @@ export function DocumentsStep({
         {...form.getInputProps('rg_verso')}
       />
       <FileInput
+        withAsterisk
         className="col-span-2"
         label="Comprovante de Residência"
         accept="image/jpg, image/png, image/jpeg ,application/pdf"
@@ -55,6 +58,7 @@ export function DocumentsStep({
         {...form.getInputProps('comprovante_residencia')}
       />
       <FileInput
+        withAsterisk
         className="col-span-2"
         label="Comprovante do Conselho"
         accept="image/jpg, image/png, image/jpeg ,application/pdf"
@@ -63,6 +67,7 @@ export function DocumentsStep({
       />
       {isSociedadeCivil && (
         <FileInput
+          withAsterisk
           className="col-span-2"
           label="Comprovante Bancário"
           accept="image/jpg, image/png, image/jpeg ,application/pdf"
