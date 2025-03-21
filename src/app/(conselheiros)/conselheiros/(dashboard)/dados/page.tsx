@@ -1,3 +1,10 @@
+import { FetchError } from '@/components/errors/fetch-error'
+import {
+  DadosResponse,
+  getMeusDados
+} from '@/features/counselors/api/get-meusDados'
+import DownloadButtons from '@/features/counselors/components/download-buttons'
+import { dayjs } from '@/lib/dayjs'
 import { Box, Card, Grid, GridCol, Text } from '@mantine/core'
 import { Pencil } from 'lucide-react'
 import { Metadata } from 'next'
@@ -6,174 +13,78 @@ export const metadata: Metadata = {
   title: 'Dados'
 }
 
-interface PersonalData {
-  name: string
-  birthdate: string
-  rg: string
-  cpf: string
-  email: string
-  phone: string
-}
-
-interface AddressData {
-  street: string
-  number: string
-  complement: string
-  neighborhood: string
-  city: string
-  zipCode: string
-}
-
-interface CouncilData {
-  representing: string
-  representation: string
-  composition: string
-}
-
-interface EventData {
-  axis: string
-  date: string
-  localization: string
-}
-
-interface BankData {
-  bank: string
-  number: string
-  agency: string
-  account: string
-  cpf: string
-  name: string
-}
-
-interface DocsData {
-  type:
-    | 'Foto do RG'
-    | 'Foto do CPF'
-    | 'Comprovante de Residência'
-    | 'Comprovante que comprove participação no Conselho'
-    | 'Comprovante bancário'
-  title: string
-  date: string
-}
-
-export default function Dados() {
-  const personalData: PersonalData = {
-    name: 'Neemias Calebe',
-    birthdate: '01/01/2000',
-    rg: '000.000.000.1',
-    cpf: '000.000.000.-00',
-    email: 'mail@mail.com',
-    phone: '(86) 4002-8922'
+export default async function Dados() {
+  const { data: myData, error: error } = await getMeusDados()
+  console.log(myData?.inscricoes[0].evento)
+  if (error) {
+    return <FetchError error={error} />
   }
 
-  const addressData: AddressData = {
-    street: 'Rua 15',
-    number: '3162',
-    complement: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-    neighborhood: 'Bairro 1',
-    city: 'Teresina',
-    zipCode: '00000-000'
+  if (!myData) {
+    return <FetchError error="No data" />
   }
-
-  const councilData: CouncilData = {
-    representing: 'Vale do Sambito',
-    representation: 'Sociedade civil',
-    composition: 'Member'
-  }
-
-  const eventData: EventData = {
-    axis: 'Infraestrutura',
-    date: '01/01/2022',
-    localization: 'Teresina'
-  }
-
-  const bankData: BankData = {
-    bank: 'Banco do Brasil',
-    number: '0000-0',
-    agency: '0000-0',
-    account: '000000-0',
-    cpf: '00000000000',
-    name: 'Neemias Calebe'
-  }
-
-  const docsData: DocsData[] = [
-    {
-      type: 'Foto do RG',
-      title: 'rg.pdf',
-      date: '01/01/2022'
-    },
-    {
-      type: 'Foto do CPF',
-      title: 'cpf.jpg',
-      date: '01/01/2022'
-    },
-    {
-      type: 'Comprovante de Residência',
-      title: 'comp-res.jpg',
-      date: '01/01/2022'
-    },
-    {
-      type: 'Comprovante que comprove participação no Conselho',
-      title: 'conselho-comp.jpg',
-      date: '01/01/2022'
-    },
-    {
-      type: 'Comprovante bancário',
-      title: 'extrato.jpg',
-      date: '01/01/2022'
-    }
-  ]
 
   return (
-    <Card className="p-5" withBorder radius={24} shadow='sm'>
+    <Card
+      className="p-5"
+      withBorder
+      radius={24}
+      shadow="sm"
+      style={{ borderColor: '#e5e7eb' }} // Alterando a cor da borda para azul
+    >
       <Grid>
         <GridCol span={{ lg: 4, sm: 12 }} className="p-3">
-          {personalSection(personalData)}
+          {personalSection(myData)}
         </GridCol>
         <GridCol span={{ lg: 4, sm: 12 }} className="p-3">
-          {adressSection(addressData)}
+          {adressSection(myData)}
         </GridCol>
         <GridCol span={{ lg: 4, sm: 12 }} className="p-3">
-          {councilSection(councilData)}
+          {councilSection(myData)}
         </GridCol>
         <GridCol span={{ lg: 4, sm: 12 }} className="p-3">
-          {eventSection(eventData)}
+          {eventSection(myData)}
         </GridCol>
+        {!myData.poder_publico && (
+          <GridCol span={{ lg: 4, sm: 12 }} className="p-3">
+            {bankInfoSection(myData)}
+          </GridCol>
+        )}
         <GridCol span={{ lg: 4, sm: 12 }} className="p-3">
-          {bankInfoSection(bankData)}
-        </GridCol>
-        <GridCol span={{ lg: 4, sm: 12 }} className="p-3">
-          {docsSection(docsData)}
+          {docsSection(myData)}
         </GridCol>
       </Grid>
     </Card>
   )
 }
 
-function docsSection(docsData: DocsData[]) {
+function docsSection(docsData: DadosResponse) {
   return (
     <>
       <SectionHeader title="Documentos" />
       <Grid className="px-4">
-        {docsData.map((doc) => (
+        {docsData.documentos.map((doc) => (
           <>
             <GridCol className="p-2" span={12}>
               <Text
                 fw={600}
                 size="sm"
                 className="pb-1 text-gray-600"
-                key={doc.type}
+                key={doc.id}
               >
-                {doc.type}
+                {getDocType(doc.tipo_documento)}
               </Text>
               <div className="flex gap-2">
-                <Box className="h-12 w-16 rounded-sm bg-gray-100" />
-                <div className="pt-1 items-center">
-                  <Text size="sm">{doc.title}</Text>
+                <Box className="min-h-12 min-w-16 rounded-sm bg-gray-100" />
+                <div className="w-full items-center overflow-hidden text-ellipsis whitespace-nowrap pt-1">
+                  <Text size="sm" truncate>
+                    {doc.arquivo.nome}
+                  </Text>
                   <Text size="xs" className="text-gray-500">
-                    {doc.date}
+                    {dayjs(doc.criado_em).format('DD/MM/YYYY')}
                   </Text>
                 </div>
+                <DownloadButtons {...doc} />
               </div>
             </GridCol>
           </>
@@ -183,7 +94,7 @@ function docsSection(docsData: DocsData[]) {
   )
 }
 
-function bankInfoSection(bankData: BankData) {
+function bankInfoSection(bankData: DadosResponse) {
   return (
     <>
       <SectionHeader title="Dados Bancários" />
@@ -193,7 +104,7 @@ function bankInfoSection(bankData: BankData) {
             <div className="overflow-hidden text-ellipsis whitespace-nowrap">
               <span className="text-sm font-semibold text-gray-600">Banco</span>
               <Text size="sm" truncate lineClamp={2}>
-                {bankData.bank}
+                {bankData.dados_bancarios.banco.nome}
               </Text>
             </div>
           </GridCol>
@@ -203,7 +114,7 @@ function bankInfoSection(bankData: BankData) {
                 Número
               </span>
               <Text size="sm" truncate lineClamp={2}>
-                {bankData.number}
+                {bankData.dados_bancarios.banco.codigo}
               </Text>
             </div>
           </GridCol>
@@ -213,7 +124,7 @@ function bankInfoSection(bankData: BankData) {
                 Agência
               </span>
               <Text size="sm" truncate>
-                {bankData.agency}
+                {bankData.dados_bancarios.agencia}
               </Text>
             </div>
           </GridCol>
@@ -223,7 +134,7 @@ function bankInfoSection(bankData: BankData) {
                 Conta Corrente
               </span>
               <Text size="sm" truncate>
-                {bankData.account}
+                {bankData.dados_bancarios.conta}
               </Text>
             </div>
           </GridCol>
@@ -233,7 +144,7 @@ function bankInfoSection(bankData: BankData) {
                 CPF do Titular da Conta
               </span>
               <Text size="sm" truncate>
-                {bankData.cpf}
+                {bankData.dados_bancarios.cpf_titular}
               </Text>
             </div>
           </GridCol>
@@ -243,7 +154,7 @@ function bankInfoSection(bankData: BankData) {
                 Nome do titular
               </span>
               <Text size="sm" truncate>
-                {bankData.name}
+                {bankData.dados_bancarios.nome_titular}
               </Text>
             </div>
           </GridCol>
@@ -253,7 +164,7 @@ function bankInfoSection(bankData: BankData) {
   )
 }
 
-function eventSection(eventData: EventData) {
+function eventSection(eventData: DadosResponse) {
   return (
     <>
       <SectionHeader title="Evento" />
@@ -265,7 +176,7 @@ function eventSection(eventData: EventData) {
                 Eixo de participação
               </span>
               <Text size="sm" truncate lineClamp={2}>
-                {eventData.axis}
+                {eventData.inscricoes[0].evento.nome}
               </Text>
             </div>
           </GridCol>
@@ -275,7 +186,7 @@ function eventSection(eventData: EventData) {
                 Data do evento
               </span>
               <Text size="sm" truncate lineClamp={2}>
-                {eventData.date}
+                {eventData.inscricoes[0].evento.data_evento || 'Não informado'}
               </Text>
             </div>
           </GridCol>
@@ -285,7 +196,7 @@ function eventSection(eventData: EventData) {
                 Localização
               </span>
               <Text size="sm" truncate>
-                {eventData.localization}
+                {eventData.inscricoes[0].evento.municipio.nome}
               </Text>
             </div>
           </GridCol>
@@ -295,7 +206,7 @@ function eventSection(eventData: EventData) {
   )
 }
 
-function councilSection(councilData: CouncilData) {
+function councilSection(councilData: DadosResponse) {
   return (
     <>
       <SectionHeader title="Conselho" />
@@ -307,7 +218,7 @@ function councilSection(councilData: CouncilData) {
                 Representante de qual Conselho?
               </span>
               <Text size="sm" truncate lineClamp={2}>
-                {councilData.representing}
+                {councilData.conselho.nome}
               </Text>
             </div>
           </GridCol>
@@ -317,7 +228,9 @@ function councilSection(councilData: CouncilData) {
                 Representação no conselho
               </span>
               <Text size="sm" truncate lineClamp={2}>
-                {councilData.representation}
+                {councilData.poder_publico
+                  ? 'Poder Público'
+                  : 'Sociedade Civil'}
               </Text>
             </div>
           </GridCol>
@@ -327,7 +240,7 @@ function councilSection(councilData: CouncilData) {
                 Composição no conselho
               </span>
               <Text size="sm" truncate>
-                {councilData.composition}
+                {councilData.tipo_membro}
               </Text>
             </div>
           </GridCol>
@@ -337,7 +250,7 @@ function councilSection(councilData: CouncilData) {
   )
 }
 
-function adressSection(adressData: AddressData) {
+function adressSection(adressData: DadosResponse) {
   return (
     <>
       <SectionHeader title="Localização" />
@@ -349,7 +262,7 @@ function adressSection(adressData: AddressData) {
                 Rua/Avenida
               </span>
               <Text size="sm" truncate lineClamp={2}>
-                {adressData.street}
+                {adressData.endereco.logradouro}
               </Text>
             </div>
           </GridCol>
@@ -359,7 +272,7 @@ function adressSection(adressData: AddressData) {
                 Número
               </span>
               <Text size="sm" truncate lineClamp={2}>
-                {adressData.number}
+                {adressData.endereco.numero}
               </Text>
             </div>
           </GridCol>
@@ -369,14 +282,14 @@ function adressSection(adressData: AddressData) {
                 Bairro
               </span>
               <Text size="sm" truncate>
-                {adressData.neighborhood}
+                {adressData.endereco.bairro}
               </Text>
             </div>
           </GridCol>
           <GridCol span={6}>
             <span className="text-sm font-semibold text-gray-600">CEP</span>
             <Text size="sm" truncate lineClamp={2}>
-              {adressData.zipCode}
+              {adressData.endereco.cep.replace(/(\d{5})(\d{3})/, '$1-$2')}
             </Text>
           </GridCol>
           <GridCol span={12}>
@@ -385,7 +298,7 @@ function adressSection(adressData: AddressData) {
                 Cidade
               </span>
               <Text size="sm" truncate>
-                {adressData.city}
+                {adressData.endereco.municipio.nome}
               </Text>
             </div>
           </GridCol>
@@ -394,7 +307,7 @@ function adressSection(adressData: AddressData) {
               Complemento
             </span>
             <Text size="sm" truncate lineClamp={2}>
-              {adressData.complement}
+              {adressData.endereco.complemento || 'Não informado'}
             </Text>
           </GridCol>
         </Grid>
@@ -403,7 +316,7 @@ function adressSection(adressData: AddressData) {
   )
 }
 
-function personalSection(personalData: PersonalData) {
+function personalSection(personalData: DadosResponse) {
   return (
     <>
       <SectionHeader title="Dados Pessoais" />
@@ -413,7 +326,7 @@ function personalSection(personalData: PersonalData) {
             <div className="overflow-hidden text-ellipsis whitespace-nowrap">
               <span className="text-sm font-semibold text-gray-600">Nome</span>
               <Text size="sm" truncate lineClamp={2}>
-                {personalData.name}
+                {personalData.nome}
               </Text>
             </div>
           </GridCol>
@@ -423,7 +336,7 @@ function personalSection(personalData: PersonalData) {
                 Data de Nascimento
               </span>
               <Text size="sm" truncate lineClamp={2}>
-                {personalData.birthdate}
+                {dayjs(personalData.data_nascimento).format('DD/MM/YYYY')}
               </Text>
             </div>
           </GridCol>
@@ -440,7 +353,10 @@ function personalSection(personalData: PersonalData) {
           <GridCol span={6}>
             <span className="text-sm font-semibold text-gray-600">CPF</span>
             <Text size="sm" truncate lineClamp={2}>
-              {personalData.cpf}
+              {personalData.cpf.replace(
+                /(\d{3})(\d{3})(\d{3})(\d{2})/,
+                '$1.$2.$3-$4'
+              )}
             </Text>
           </GridCol>
           <GridCol span={6}>
@@ -456,13 +372,31 @@ function personalSection(personalData: PersonalData) {
               Telefone
             </span>
             <Text size="sm" truncate lineClamp={2}>
-              {personalData.phone}
+              {personalData.telefone.replace(
+                /(\d{2})(\d{5})(\d{4})/,
+                '($1) $2-$3'
+              )}
             </Text>
           </GridCol>
         </Grid>
       </div>
     </>
   )
+}
+
+function getDocType(docType: string) {
+  switch (docType) {
+    case 'COMPROVANTE_CONSELHO':
+      return 'Documento que comprove pariticipação no conselho'
+    case 'COMPROVANTE_RESIDENCIA':
+      return 'Comprovante de Residência'
+    case 'RG_VERSO':
+      return 'RG - Verso'
+    case 'RG_FRENTE':
+      return 'RG - Frente'
+    default:
+      return 'Desconhecido'
+  }
 }
 
 function SectionHeader({ title }: { title: string }) {
