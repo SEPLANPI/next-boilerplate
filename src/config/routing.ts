@@ -2,27 +2,40 @@ import { RoutingConfiguration } from '@/types/routing'
 
 export const routingConfig: RoutingConfiguration = {
   defaults: {
-    protection: 'protected',
-    permissions: [],
-    redirectPath: '/admin/acessos/cadastros',
-    unauthorized: {
-      defaultUnauthenticatedPath: '/api/auth/sign-in',
-      defaultAccessDeniedPath: '/acesso-negado'
+    isPublic: true,
+    requiredRoles: [],
+    redirects: {
+      loginPagePath: '/api/auth/sign-in',
+      defaultAccessDeniedPath: '/acesso-negado',
+      accessDeniedPageByRequiredRole: {}
     }
   },
-
   routes: [
     {
-      path: '/acesso-negado',
-      type: 'public'
+      path: '/admin/*',
+      isPublic: false,
+      auth: {
+        requiredRoles: ['admin']
+      },
+      overrides: [
+        {
+          path: '/admin/acesso-negado',
+          isPublic: true
+        }
+      ]
     },
     {
-      path: '/conselheiros/cadastro/*',
-      type: 'public'
-    },
-    {
-      path: '/conselheiros/cadastro/:id/token',
-      type: 'protected'
+      path: '/conselheiros/*',
+      isPublic: false,
+      auth: {
+        requiredRoles: ['advisor']
+      },
+      overrides: [
+        {
+          path: '/conselheiros/acesso-negado',
+          isPublic: true
+        }
+      ]
     }
   ]
 }

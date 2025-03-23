@@ -17,72 +17,66 @@ export function matchRoute(path: string, routes: string[]): boolean {
 }
 
 export function checkPermissions(
-  userPermissions: Role[] = [],
-  routePermissions?: RouteConfig['permissions'],
-  defaultPermissions: Role[] = []
+  userRoles: Role[] = [],
+  routeAuth?: RouteConfig['auth'],
+  defaultRoles: Role[] = []
 ): boolean {
-  const requiredPermissions = routePermissions?.required ?? defaultPermissions
+  const requiredRoles = routeAuth?.requiredRoles ?? defaultRoles
 
-  return requiredPermissions.every((perm) => userPermissions.includes(perm))
+  if (requiredRoles.length === 0) {
+    return true
+  }
+
+  return requiredRoles.every((role) => userRoles.includes(role))
 }
 
 export function determineRouteAccess(
   path: string,
-  userPermissions: Role[] = []
+  userRoles: Role[] = []
 ): {
-  type: 'public' | 'protected'
+  isPublic: boolean
   hasPermission: boolean
   accessDeniedPath?: string
 } {
-  const matchedConfigs = routingConfig.routes.filter((config) =>
-    matchRoute(path, [config.path])
+  let matchedConfig = routingConfig.routes.find(route =>
+    matchRoute(path, [route.path])
   )
 
-  if (matchedConfigs.length === 0) {
-    return {
-      type: routingConfig.defaults.protection,
-      hasPermission: checkPermissions(
-        userPermissions,
-        undefined,
-        routingConfig.defaults.permissions
-      )
+  // Check for overrides
+  if (matchedConfig?.overrides) {
+    const override = matchedConfig.overrides.find(override =>
+      matchRoute(path, [override.path])
+    )
+    if (override) {
+      matchedConfig = override
     }
   }
 
-  const config = matchedConfigs[matchedConfigs.length - 1]
-
-  if (config.exceptions) {
-    if (config.type === 'protected' && config.exceptions.public) {
-      if (matchRoute(path, config.exceptions.public)) {
-        return {
-          type: 'public',
-          hasPermission: true
-        }
-      }
+  if (!matchedConfig) {
+    return {
+      isPublic: routingConfig.defaults.isPublic,
+      hasPermission: true
     }
+  }
 
-    if (config.type === 'public' && config.exceptions.protected) {
-      if (matchRoute(path, config.exceptions.protected)) {
-        return {
-          type: 'protected',
-          hasPermission: checkPermissions(
-            userPermissions,
-            config.permissions,
-            routingConfig.defaults.permissions
-          ),
-          accessDeniedPath: config.permissions?.accessDeniedPath
-        }
-      }
+  const isPublic = matchedConfig.isPublic ?? routingConfig.defaults.isPublic
+  const requiredRoles = matchedConfig.auth?.requiredRoles ?? routingConfig.defaults.requiredRoles
+
+  const hasPermission = requiredRoles.every(role => userRoles.includes(role))
+
+  let accessDeniedPath = routingConfig.defaults.redirects.defaultAccessDeniedPath
+  if (!hasPermission && requiredRoles.length > 0) {
+    const roleSpecificPath = requiredRoles
+      .map(role => routingConfig.defaults.redirects.accessDeniedPageByRequiredRole[role])
+      .find(path => path !== undefined)
+    if (roleSpecificPath) {
+      accessDeniedPath = roleSpecificPath
     }
   }
 
   return {
-    type: config.type ?? routingConfig.defaults.protection,
-    hasPermission: checkPermissions(
-      userPermissions,
-      config.permissions,
-      routingConfig.defaults.permissions
-    ),
-    accessDeniedPath: config.permissions?.accessDeniedPath
+    isPublic,
+    hasPermission,
+    accessDeniedPath
   }
 }

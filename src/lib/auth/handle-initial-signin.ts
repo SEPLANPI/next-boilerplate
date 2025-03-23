@@ -28,7 +28,8 @@ export async function handleInitialSignIn(
         error: 'UserInfoError'
       }
     }
-    console.log(user, userInfo)
+
+    console.log(accessTokenContent?.resource_access?.[env.AUTH_KEYCLOAK_ID]?.roles)
 
     return {
       ...token,

@@ -1,8 +1,10 @@
 import { signIn } from '@/auth'
-import { routingConfig } from '@/config/routing'
 
-export async function GET() {
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url)
+  const callbackUrl = searchParams.get('callbackUrl')
+
   return signIn('keycloak', {
-    redirectTo: routingConfig.defaults.redirectPath || '/'
+    redirectTo: callbackUrl || '/'
   })
 }
