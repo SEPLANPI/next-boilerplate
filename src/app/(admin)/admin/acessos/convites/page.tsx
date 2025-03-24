@@ -3,10 +3,7 @@ import {
   DashboardBreadcrumbs
 } from '@/components/layouts/dashboard-layout/breadcrumbs'
 import { DashboardContent } from '@/components/layouts/dashboard-layout/content'
-import {
-  DashboardHeader,
-  DashboardHeaderActions
-} from '@/components/layouts/dashboard-layout/header'
+import { DashboardHeader } from '@/components/layouts/dashboard-layout/header'
 import { AccessTabs } from '@/features/access/components/access-tabs'
 import { InvitationFilters } from '@/features/invitations/components/invitation-filters'
 import { InvitationForm } from '@/features/invitations/components/invitation-form'
@@ -15,15 +12,22 @@ import { InvitationsTableSkeleton } from '@/features/invitations/components/invi
 import { invitationsSearchParams } from '@/features/invitations/lib/search-params'
 import { Divider } from '@mantine/core'
 import { Users } from 'lucide-react'
+import { Metadata } from 'next'
 import { SearchParams } from 'nuqs/server'
 import { Suspense } from 'react'
+
+export const metadata: Metadata = {
+  title: 'Convites'
+}
 
 export default async function Convites({
   searchParams
 }: {
   searchParams: Promise<SearchParams>
 }) {
-  await invitationsSearchParams.parse(searchParams)
+  const params = await invitationsSearchParams.parse(searchParams)
+
+  const suspenseKey = `invitation-${JSON.stringify(params)}`
 
   const items: BreadcrumbItem[] = [
     {
@@ -43,7 +47,7 @@ export default async function Convites({
           <InvitationFilters />
           <InvitationForm />
         </div>
-        <Suspense fallback={<InvitationsTableSkeleton />}>
+        <Suspense fallback={<InvitationsTableSkeleton />} key={suspenseKey}>
           <InvitationsListView />
         </Suspense>
       </DashboardContent>

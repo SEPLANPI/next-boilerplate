@@ -10,6 +10,8 @@ export interface UserInfo {
   preferred_username: string
   dataNascimento: string
   nomeCompleto: string
+  name: string
+  email: string
 }
 
 export interface TokenRefreshRequest {

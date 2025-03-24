@@ -53,7 +53,11 @@ export function RegistrationTable({ data }: RegistrationTableProps) {
                   {registration.usuario.nome}
                 </div>
               </TableTd>
-              <TableTd className="w-48">{registration.eixo}</TableTd>
+              <TableTd className="w-48">
+                <span className="rounded-full border p-1.5 text-xs text-secondary-foreground">
+                  {registration.eixo}
+                </span>
+              </TableTd>
               <TableTd className="w-48">
                 <Badge color={statusConfig.color} variant="light" radius="sm">
                   {statusConfig.label}

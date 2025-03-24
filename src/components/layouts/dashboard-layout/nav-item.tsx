@@ -11,7 +11,7 @@ interface NavItemProps {
 }
 
 const NAV_LINK_BASE_STYLES =
-  'rounded flex items-center text-gray-700 [&:not([data-active=true])]:hover:bg-gray-200 data-[active=true]:text-green-700 data-[active=true]:bg-green-50 '
+  'rounded flex items-center text-gray-700 [&:not([data-active=true])]:hover:bg-gray-200 data-[active=true]:text-govGreen-700 data-[active=true]:bg-govGreen-50 '
 
 const NAV_LINK_STYLES = {
   root: `${NAV_LINK_BASE_STYLES} block whitespace-nowrap no-underline space-x-2 font-medium text-sm w-full px-3 py-2 font-normal data-[active=true]:font-semibold `

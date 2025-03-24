@@ -7,6 +7,15 @@ const LINK_CLASSES_DESKTOP = 'block text-white font-semibold text-md py-3 px-2'
 const LINK_CLASSES_MOBILE =
   'block text-gray-700 font-semibold text-md py-3 px-2'
 
+const BUTTON_PROPS = {
+  color: 'yellow.4',
+  size: 'sm' as const,
+  leftSection: <Lock className="size-4" />,
+  component: 'a' as const,
+  href: '/api/auth/role-redirect',
+  className: 'text-gray-900'
+}
+
 export function Nav() {
   const [opened, { toggle, close }] = useDisclosure()
   const isMobile = useMediaQuery('(max-width: 768px)')
@@ -74,18 +83,8 @@ export function Nav() {
                 </li>
               </ul>
             </nav>
-            <Button
-              color="yellow"
-              className="text-gray-900 opacity-50"
-              size="md"
-              fullWidth
-              leftSection={<Lock className="size-4" />}
-              disabled
-            >
-              <div className="flex flex-col space-y-1">
-                <span className="text-[9px] font-normal">Acesso exclusivo</span>
-                <span className="text-xs">Conselheiros</span>
-              </div>
+            <Button {...BUTTON_PROPS} fullWidth>
+              Acessar Sistema
             </Button>
           </div>
         </Drawer>
@@ -124,18 +123,7 @@ export function Nav() {
           </li>
         </ul>
       </nav>
-      <Button
-        size="md"
-        color="yellow"
-        className="text-gray-900 opacity-50"
-        disabled
-        leftSection={<Lock className="size-4" />}
-      >
-        <div className="flex flex-col space-y-1">
-          <span className="text-[9px] font-normal">Acesso exclusivo</span>
-          <span className="text-xs">Conselheiros</span>
-        </div>
-      </Button>
+      <Button {...BUTTON_PROPS}>Acessar Sistema</Button>
     </div>
   )
 }

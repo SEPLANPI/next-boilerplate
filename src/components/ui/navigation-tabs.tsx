@@ -55,7 +55,7 @@ export function NavigationTabs({
       classNames={{
         root: 'translate-y-[2px] h-full',
         list: ' flex h-full',
-        tab: 'flex space-x-2 items-center h-full font-normal px-3 text-sm text-gray-700 data-[active=true]:font-bold data-[active=true]:text-green-700 border-[transparent] border-b-2 data-[active=true]:border-green-700',
+        tab: 'flex space-x-2 items-center h-full font-normal px-3 text-sm text-gray-700 data-[active=true]:font-bold data-[active=true]:text-govGreen-600 border-[transparent] border-b-2 data-[active=true]:border-govGreen-600',
         tabLabel: 'leading-[20px]'
       }}
     >
@@ -67,7 +67,7 @@ export function NavigationTabs({
             defaultValue={defaultValue}
             leftSection={
               <tab.icon
-                className={`size-4 ${activeTab === tab.value ? 'text-green-700' : ''}`}
+                className={`size-4 ${activeTab === tab.value ? 'text-govGreen-600' : ''}`}
               />
             }
           >

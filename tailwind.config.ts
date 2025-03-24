@@ -7,7 +7,7 @@ const config: Config = {
     './src/features/**/*.{js,ts,jsx,tsx,mdx}',
     './src/lib/**/*.{js,ts,jsx,tsx,mdx}'
   ],
-  darkMode: 'media', // or 'class'
+  darkMode: 'media',
   theme: {
     colors: {
       gray: {
@@ -50,9 +50,9 @@ const config: Config = {
         950: '#431407'
       },
       yellow: {
-        50: '#FFFBEB',
+        50: '#FFF8EB',
         100: '#FFF2C6',
-        200: '#FEE689',
+        200: '#FEE889',
         300: '#FED24B',
         400: '#FDB913',
         500: '#F79C09',
@@ -73,7 +73,7 @@ const config: Config = {
         700: '#009E3A',
         800: '#007932',
         900: '#02652C',
-        950: '#003916',
+        950: '#003916'
       },
       blue: {
         50: '#F0F6FF',
@@ -136,9 +136,48 @@ const config: Config = {
         800: '#66a80f',
         900: '#5c940d'
       },
+      emerald: {
+        50: '#ECFDF5',
+        100: '#D1FAE5',
+        200: '#A7F3D0',
+        300: '#6EE7B7',
+        400: '#34D399',
+        500: '#10B981',
+        600: '#059669',
+        700: '#047857',
+        800: '#065F46',
+        900: '#064E3B',
+        950: '#022C22'
+      },
+      teal: {
+        50: '#F0FDFA',
+        100: '#CCFBF1',
+        200: '#99F6E4',
+        300: '#5EEAD4',
+        400: '#2DD4BF',
+        500: '#14B8A6',
+        600: '#0D9488',
+        700: '#0F766E',
+        800: '#115E59',
+        900: '#134E4A',
+        950: '#042F2E'
+      },
+      govGreen: {
+        50: '#F2FFF6',
+        100: '#E0FFE9',
+        200: '#C4FFD7',
+        300: '#97FFBA',
+        400: '#61FF9A',
+        500: '#009E3A',
+        600: '#00822F',
+        700: '#006A26',
+        800: '#00531E',
+        900: '#003D16',
+        950: '#002911'
+      },
       neutral: {
-        0: '#ffffff', // White
-        1000: '#000000' // Black
+        0: '#ffffff',
+        1000: '#000000'
       },
       white: '#fff',
       black: '#000',
@@ -184,16 +223,15 @@ const config: Config = {
       '9xl': 'calc(8rem * var(--mantine-scale))'
     },
     screens: {
-      // Definindo os breakpoints de acordo com o tema fornecido
-      xs: '36em', // 576px
-      sm: '48em', // 768px
-      md: '62em', // 992px
-      lg: '75em', // 1200px
-      xl: '88em' // 1408px
+      xs: '36em',
+      sm: '48em',
+      md: '62em',
+      lg: '75em',
+      xl: '88em'
     },
     extend: {
       borderColor: {
-        DEFAULT: '#E5E7EB'
+        DEFAULT: '#D1D5DB'
       },
       colors: {
         background: 'white',
@@ -204,7 +242,7 @@ const config: Config = {
         },
         secondary: {
           DEFAULT: '#f8f9fa',
-          foreground: '#6B7280'
+          foreground: '#4B5563'
         },
         muted: {
           DEFAULT: '#e9ecef',
@@ -216,7 +254,8 @@ const config: Config = {
         sm: 'calc(0.25rem * var(--mantine-scale))',
         md: 'calc(0.5rem * var(--mantine-scale))',
         lg: 'calc(1rem * var(--mantine-scale))',
-        xl: 'calc(2rem * var(--mantine-scale))'
+        xl: 'calc(1.5rem * var(--mantine-scale))',
+        '2xl': 'calc(2rem * var(--mantine-scale))'
       },
       spacing: {
         xs: 'calc(0.625rem * var(--mantine-scale))',

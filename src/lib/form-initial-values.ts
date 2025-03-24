@@ -1,8 +1,10 @@
-import { object, string, z } from 'zod'
+import { z } from 'zod'
 
 export type InitialFormValues<T extends z.ZodType> = {
   [K in keyof z.infer<T>]: z.infer<T>[K] extends string | number | boolean
   ? string
+  : z.infer<T>[K] extends boolean
+  ? boolean
   : z.infer<T>[K] extends Array<any>
   ? []
   : z.infer<T>[K] extends File | null

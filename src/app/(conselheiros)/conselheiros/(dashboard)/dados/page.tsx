@@ -15,7 +15,6 @@ export const metadata: Metadata = {
 
 export default async function Dados() {
   const { data: myData, error: error } = await getMeusDados()
-  console.log(myData?.inscricoes[0].evento)
   if (error) {
     return <FetchError error={error} />
   }

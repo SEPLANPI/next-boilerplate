@@ -4,6 +4,7 @@ import { Invitation } from '../types'
 import { api } from '@/lib/server-api'
 import { invitationsSearchParams } from '../lib/search-params'
 import { buildParams } from '@/lib/api-utils'
+import { PAGINATION } from '@/constants/pagination'
 
 type GetInvitationsResponse = {
   count: number
@@ -14,8 +15,14 @@ export async function getInvitations(): Promise<
   ServerResult<GetInvitationsResponse>
 > {
   try {
-    const { page, search } = invitationsSearchParams.all()
-    const params = buildParams({ page, search })
+    const { page, search, usado, sort } = invitationsSearchParams.all()
+    const params = buildParams({
+      page,
+      search,
+      usado,
+      ordering: sort,
+      page_size: PAGINATION.DEFAULT_PAGE_SIZE
+    })
     const response = await api.get(`/convites/?${params}`)
 
     if (!response.ok) {
@@ -24,7 +31,6 @@ export async function getInvitations(): Promise<
     }
 
     const data: GetInvitationsResponse = await response.json()
-
     return { data }
   } catch (error) {
     return { error: API.UNEXPECTED_FETCH_ERROR }

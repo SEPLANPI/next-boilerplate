@@ -17,7 +17,7 @@ export default async function CadastroConselheiroForm({
     return `${names[0]} ${names[names.length - 1]}`
   }
 
-  const displayName = formatName(data?.user.name)
+  const displayName = formatName(data?.user.fullName)
 
   return (
     <div className="relative flex min-h-[100dvh] w-full items-center justify-center p-5">

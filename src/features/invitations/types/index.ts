@@ -1,8 +1,25 @@
-export type Invitation = {
+type BaseInvitation = {
   id: string
-  admin: string
+  admin: {
+    id: string
+    nome: string
+    cpf: string
+  }
   token: string
   identificador: string
-  usado: boolean
   criado_em: string
 }
+
+export type Invitation =
+  | (BaseInvitation & {
+    usado: true
+    conselheiro: {
+      id: string
+      nome: string
+      cpf: string
+    }
+  })
+  | (BaseInvitation & {
+    usado: false
+    conselheiro: null
+  })

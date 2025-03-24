@@ -13,6 +13,7 @@ export default async function CadastroConselheiro() {
           quality={100}
           className="object-cover"
           alt="senhor sorrindo em fundo verde"
+          priority
         />
       </div>
       <section className="flex w-full flex-shrink-0 flex-col items-center justify-center space-y-12 xs:px-12 sm:mx-8 sm:w-[512px]">

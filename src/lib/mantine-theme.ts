@@ -132,18 +132,6 @@ export const theme = createTheme({
       '#0c8599',
       '#0b7285'
     ],
-    teal: [
-      '#e6fcf5',
-      '#c3fae8',
-      '#96f2d7',
-      '#63e6be',
-      '#38d9a9',
-      '#20c997',
-      '#12b886',
-      '#0ca678',
-      '#099268',
-      '#087f5b'
-    ],
     green: [
       '#ECFFF4',
       '#D3FFE5',
@@ -155,6 +143,18 @@ export const theme = createTheme({
       '#009E3A',
       '#007932',
       '#02652C'
+    ],
+    govGreen: [
+      '#F2FFF6',
+      '#E0FFE9',
+      '#C4FFD7',
+      '#97FFBA',
+      '#61FF9A',
+      '#009E3A',
+      '#00822F',
+      '#006A26',
+      '#00531E',
+      '#003D16'
     ],
     lime: [
       '#f4fce3',
@@ -169,9 +169,9 @@ export const theme = createTheme({
       '#5c940d'
     ],
     yellow: [
-      '#FFFBEB',
+      '#FFF8EB',
       '#FFF2C6',
-      '#FEE689',
+      '#FEE889',
       '#FED24B',
       '#FDB913',
       '#F79C09',
@@ -203,13 +203,39 @@ export const theme = createTheme({
       '#7048e8',
       '#6741d9',
       '#5f3dc4'
+    ],
+    teal: [
+      '#F0FDFA',
+      '#CCFBF1',
+      '#99F6E4',
+      '#5EEAD4',
+      '#2DD4BF',
+      '#14B8A6',
+      '#0D9488',
+      '#0F766E',
+      '#115E59',
+      '#134E4A',
+      '#042F2E'
+    ],
+    emerald: [
+      '#ECFDF5',
+      '#D1FAE5',
+      '#A7F3D0',
+      '#6EE7B7',
+      '#34D399',
+      '#10B981',
+      '#059669',
+      '#047857',
+      '#065F46',
+      '#064E3B',
+      '#022C22'
     ]
   },
   primaryShade: {
-    light: 8,
+    light: 6,
     dark: 8
   },
-  primaryColor: 'green',
+  primaryColor: 'govGreen',
   autoContrast: false,
   luminanceThreshold: 0.3,
   fontFamily:
@@ -278,11 +304,11 @@ export const theme = createTheme({
     sm: 'calc(0.25rem * var(--mantine-scale))',
     md: 'calc(0.5rem * var(--mantine-scale))',
     lg: 'calc(1rem * var(--mantine-scale))',
-    xl: 'calc(2rem * var(--mantine-scale))'
+    xl: 'calc(1.5rem * var(--mantine-scale))',
+    '2xl': 'calc(2rem * var(--mantine-scale))'
   },
   spacing: {
     xs: 'calc(0.625rem * var(--mantine-scale))',
-
     sm: 'calc(0.75rem * var(--mantine-scale))',
     md: 'calc(1rem * var(--mantine-scale))',
     lg: 'calc(1.25rem * var(--mantine-scale))',
@@ -313,6 +339,11 @@ export const theme = createTheme({
     InputWrapper: {
       classNames: {
         label: 'text-secondary-foreground'
+      }
+    },
+    Table: {
+      classNames: {
+        thead: 'bg-gray-100 text-secondary-foreground rounded-t-md'
       }
     }
   },

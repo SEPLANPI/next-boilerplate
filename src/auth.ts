@@ -18,7 +18,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (account && user) {
         return true
       } else {
-        return routingConfig.defaults.unauthorized.defaultUnauthenticatedPath
+        return routingConfig.defaults.redirects.loginPagePath
       }
     },
     redirect: async ({ url, baseUrl }) => {
@@ -34,9 +34,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
       return session
     },
-    jwt: async ({ token, user, account }) => {
+    jwt: async ({ token, user, account, trigger }) => {
       if (account && user) {
         return handleInitialSignIn(token, user, account)
+      }
+
+      if (trigger === 'update') {
+        return refreshAccessToken(token)
       }
 
       if (Date.now() < token.accessTokenExpires) return token

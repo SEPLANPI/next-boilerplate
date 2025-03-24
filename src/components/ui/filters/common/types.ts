@@ -5,39 +5,39 @@ export type DefaultOption = {
   label: string
 }
 
-export type SelectedItemsContextType = {
-  selectedItems: Set<string>
-  toggleItem: (value: string) => void
-}
-
 export type IsDefaultOption<T> = T extends DefaultOption ? true : false
 
-export type AsyncFilterProps<T> = PropsWithChildren<
+export type OptionHandlers<T> = {
+  getId: (option: T) => string
+  getLabel: (option: T) => string
+}
+
+export type BaseFilterProps<T> = PropsWithChildren<
   {
-    loadOptions: () => Promise<T[]>
     renderOption?: (option: T) => JSX.Element
-    filterId: string
-    searchParamKey?: string
+    searchParamKey: string
     filterFn?: (option: T, search: string) => boolean
-    getOptionDisabled?: (option: T) => boolean
+    isDisabled?: (option: T) => boolean
     showSearch?: boolean
+    showSelectedOnTop?: boolean
   } & (IsDefaultOption<T> extends true
     ? {
-      getOptionValue?: (option: T) => string
+      getOptionId?: (option: T) => string
       getOptionLabel?: (option: T) => string
     }
     : {
-      getOptionValue: (option: T) => string
+      getOptionId: (option: T) => string
       getOptionLabel: (option: T) => string
     })
 >
-export type ContentProps<T> = {
+
+export type BaseContentProps<T> = {
+  options: T[]
   renderOption: (option: T) => JSX.Element
-  loadOptions: () => Promise<T[]>
-  getOptionValue: (option: T) => string
+  getOptionId: (option: T) => string
   getOptionLabel: (option: T) => string
-  getOptionDisabled: (option: T) => boolean
-  filterId: string
+  isDisabled: (option: T) => boolean
   filterFn: (option: T, search: string) => boolean
-  showSearch?: boolean // Add this prop
+  showSearch?: boolean
+  showSelectedOnTop?: boolean
 }

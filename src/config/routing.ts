@@ -34,6 +34,9 @@ export const routingConfig: RoutingConfiguration = {
         {
           path: '/conselheiros/acesso-negado',
           isPublic: true
+        },
+        {
+          path: '/conselheiros/cadastro/*'
         }
       ]
     }

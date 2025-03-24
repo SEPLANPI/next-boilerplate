@@ -26,8 +26,8 @@ import {
 import { useParams } from 'next/navigation'
 import { registerCounselor } from '../actions/register-counselor'
 import { notifications } from '@mantine/notifications'
-import { error } from 'console'
-import { API } from '@/constants/messages'
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 
 export type FormValues = Omit<
   InitialFormValues<typeof counselorSchema>,
@@ -67,6 +67,8 @@ function StepStatus({ status }: { status: StepStatus }) {
 }
 
 export function RegisterCounselorForm() {
+  const { update: updateSession } = useSession()
+  const router = useRouter()
   const { token } = useParams<{ token: string }>()
   const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -136,19 +138,19 @@ export function RegisterCounselorForm() {
         component: <BankDetailsStep form={form} />,
         fields: ['banco_id', 'agencia', 'conta', 'tipo_conta', 'nome_titular']
       })
+      baseSteps.push({
+        label: 'Documentos',
+        component: <DocumentsStep form={form} />,
+        fields: [
+          'rg_frente',
+          'rg_verso',
+          'comprovante_residencia',
+          'comprovante_conselho',
+          'comprovante_bancario'
+        ]
+      })
     }
 
-    baseSteps.push({
-      label: 'Documentos',
-      component: <DocumentsStep form={form} />,
-      fields: [
-        'rg_frente',
-        'rg_verso',
-        'comprovante_residencia',
-        'comprovante_conselho',
-        ...(isSociedadeCivil ? ['comprovante_bancario'] : [])
-      ]
-    })
 
     baseSteps.push({
       label: 'Oficina',
@@ -244,10 +246,7 @@ export function RegisterCounselorForm() {
       formData.append('comprovante_residencia', values.comprovante_residencia)
     if (values.comprovante_conselho instanceof File)
       formData.append('comprovante_conselho', values.comprovante_conselho)
-
-    // Only add bank document if sociedade civil
     if (
-      values.tipo_conselho === 'SOCIEDADE_CIVIL' &&
       values.comprovante_bancario instanceof File
     )
       formData.append('comprovante_bancario', values.comprovante_bancario)
@@ -281,19 +280,23 @@ export function RegisterCounselorForm() {
       formData.append('banco_nome_titular', values.nome_titular || '')
     }
 
-    formData.append('aceitou_termos', values.aceite_termos)
+    formData.append('aceitou_termos', values.aceite_termos ? 'true' : 'false')
 
-    const data = await registerCounselor(formData)
+    const result = await registerCounselor(formData)
 
-    if (data?.error) {
+    if (result?.error) {
       setIsSubmitting(false)
       notifications.show({
         title: 'Não foi possível realizar o cadastro',
-        message: data.error,
+        message: result.error,
         color: 'red'
       })
       return
     }
+
+    await updateSession({})
+    
+    router.push('/conselheiros/cadastro/sucesso/')
     setIsSubmitting(false)
   }
 

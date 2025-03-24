@@ -2,22 +2,28 @@
 import { API } from '@/constants/messages'
 import { api } from '@/lib/server-api'
 import { ActionState } from '@/types/actions'
-import { redirect } from 'next/navigation'
+import { revalidatePath } from 'next/cache'
 
 export async function registerCounselor(
   input: FormData
-): Promise<ActionState<never>> {
+): Promise<ActionState<{ success: boolean }>> {
+  try {
+    const response = await api.post('/conselheiros/', {
+      contentType: 'form-data',
+      body: input
+    })
 
-  const response = await api.post('/conselheiros/', {
-    contentType: 'form-data',
-    body: input
-  })
+    if (!response.ok) {
+      const error = await response.json()
+      return { error: error.detail || API.UNEXPECTED_FETCH_ERROR }
+    }
 
-  if (!response.ok) {
-    const error = await response.json()
-    console.log(error)
-    return { error: error.detail || API.UNEXPECTED_FETCH_ERROR }
+    revalidatePath('/admin/acessos/cadastros')
+    revalidatePath('/admin/acessos/convites')
+
+    return { data: { success: true } }
+  } catch (error) {
+    console.error('Error registering counselor:', error)
+    return { error: API.UNEXPECTED_FETCH_ERROR }
   }
-
-  redirect('/conselheiros/cadastro/sucesso/')
 }

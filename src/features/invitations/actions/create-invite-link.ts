@@ -18,7 +18,6 @@ export async function createInviteLink(
     })
 
     if (!response.ok) {
-      console.log(await response.text())
       const error = await response.json()
       return { error: error.detail || API.UNEXPECTED_FETCH_ERROR }
     }
@@ -27,7 +26,6 @@ export async function createInviteLink(
     revalidatePath('/admin/acessos/convites')
     return { data }
   } catch (error) {
-    console.log(error)
     return { error: API.UNEXPECTED_FETCH_ERROR }
   }
 }

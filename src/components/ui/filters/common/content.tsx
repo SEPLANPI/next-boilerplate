@@ -1,0 +1,82 @@
+import { useDebouncedState } from '@mantine/hooks'
+import { Input, Checkbox, Divider, Button } from '@mantine/core'
+import { Search } from 'lucide-react'
+import { BaseContentProps } from './types'
+import { useSelectedItems } from './selected-items-provider'
+
+export function BaseContent<T>({
+  options,
+  renderOption,
+  getOptionId,
+  isDisabled,
+  filterFn,
+  showSearch = true,
+  showSelectedOnTop = true
+}: BaseContentProps<T>) {
+  const [search, setSearch] = useDebouncedState('', 100)
+  const { selectedItems, toggle, clear } = useSelectedItems()
+
+  const filteredOptions = options.filter((option) => filterFn(option, search))
+  const selectedOptions = filteredOptions.filter((option) =>
+    selectedItems.has(getOptionId(option))
+  )
+
+  const renderCheckboxItem = (option: T) => (
+    <li key={getOptionId(option)} className="group">
+      <label
+        className={`flex w-full cursor-pointer space-x-2 p-2 text-xs hover:bg-gray-100 ${
+          isDisabled(option) ? 'cursor-not-allowed text-muted-foreground' : ''
+        }`}
+      >
+        <Checkbox
+          className="mt-0.5"
+          size="xs"
+          checked={selectedItems.has(getOptionId(option))}
+          onChange={() => !isDisabled(option) && toggle(getOptionId(option))}
+          disabled={isDisabled(option)}
+        />
+        {renderOption(option)}
+      </label>
+    </li>
+  )
+
+  return (
+    <>
+      {showSearch && (
+        <header className="border-b p-1">
+          <Input
+            classNames={{ input: 'border-none' }}
+            onChange={(event) => setSearch(event.target.value)}
+            placeholder="Pesquisar"
+            rightSection={<Search className="size-4" />}
+          />
+        </header>
+      )}
+      <ul className="max-h-96 w-full overflow-y-auto overflow-x-clip">
+        {showSelectedOnTop && selectedOptions.length > 0 && (
+          <>
+            <span className="block p-2 text-xs font-semibold text-secondary-foreground">
+              Selecionados
+            </span>
+            {selectedOptions.map(renderCheckboxItem)}
+            <Divider className="my-2" />
+          </>
+        )}
+        {showSelectedOnTop
+          ? filteredOptions.map(
+              (option) =>
+                !selectedItems.has(getOptionId(option)) &&
+                renderCheckboxItem(option)
+            )
+          : filteredOptions.map(renderCheckboxItem)}
+      </ul>
+      {selectedOptions.length > 0 && (
+        <footer className="border-t">
+          <Button variant="white" size="sm" onClick={() => clear()}>
+            Limpar
+          </Button>
+        </footer>
+      )}
+    </>
+  )
+}

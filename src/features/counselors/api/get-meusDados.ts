@@ -1,6 +1,6 @@
-import { API } from "@/constants/messages";
-import { api } from "@/lib/server-api";
-import { ServerResult } from "@/types/server-result";
+import { API } from '@/constants/messages'
+import { api } from '@/lib/server-api'
+import { ServerResult } from '@/types/server-result'
 
 interface EnderecoData {
     tipo_zona: string
@@ -91,7 +91,6 @@ export interface DadosResponse {
     historico_validacao: []
 }
 
-
 export async function getMeusDados(): Promise<ServerResult<DadosResponse>> {
     try {
         const response = await api.get('/meus-dados/')
@@ -102,7 +101,6 @@ export async function getMeusDados(): Promise<ServerResult<DadosResponse>> {
         const data = await response.json()
         return { data }
     } catch (error) {
-        console.log(error)
         return { error: API.UNEXPECTED_FETCH_ERROR }
     }
 }
