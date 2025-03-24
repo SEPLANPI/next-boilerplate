@@ -3,7 +3,8 @@ import { Button, Anchor, ActionIcon, Drawer } from '@mantine/core'
 import { useDisclosure, useMediaQuery } from '@mantine/hooks'
 import { Lock, Menu } from 'lucide-react'
 
-const LINK_CLASSES_DESKTOP = 'block text-white font-semibold text-md py-3 px-2'
+const LINK_CLASSES_DESKTOP =
+  'block text-white font-semibold text-md py-3 px-2 data-[isfloating=true]:text-gray-700'
 const LINK_CLASSES_MOBILE =
   'block text-gray-700 font-semibold text-md py-3 px-2'
 
@@ -16,14 +17,19 @@ const BUTTON_PROPS = {
   className: 'text-gray-900'
 }
 
-export function Nav() {
+export function Nav({ isFloating = false }: { isFloating: boolean }) {
   const [opened, { toggle, close }] = useDisclosure()
   const isMobile = useMediaQuery('(max-width: 768px)')
 
   if (isMobile) {
     return (
       <>
-        <ActionIcon color="white" variant="subtle" onClick={toggle} size="lg">
+        <ActionIcon
+          color={isFloating ? '' : 'white'}
+          variant="subtle"
+          onClick={toggle}
+          size="lg"
+        >
           <Menu className="size-8" />
         </ActionIcon>
         <Drawer
@@ -97,27 +103,47 @@ export function Nav() {
       <nav>
         <ul className="flex">
           <li>
-            <Anchor href="#sobre" className={LINK_CLASSES_DESKTOP}>
+            <Anchor
+              data-isfloating={isFloating}
+              href="#sobre"
+              className={LINK_CLASSES_DESKTOP}
+            >
               Sobre
             </Anchor>
           </li>
           <li>
-            <Anchor href="#ppa" className={LINK_CLASSES_DESKTOP}>
+            <Anchor
+              data-isfloating={isFloating}
+              href="#ppa"
+              className={LINK_CLASSES_DESKTOP}
+            >
               PPA
             </Anchor>
           </li>
           <li>
-            <Anchor href="#eixos" className={LINK_CLASSES_DESKTOP}>
+            <Anchor
+              data-isfloating={isFloating}
+              href="#eixos"
+              className={LINK_CLASSES_DESKTOP}
+            >
               Eixos
             </Anchor>
           </li>
           <li>
-            <Anchor href="#como-funciona" className={LINK_CLASSES_DESKTOP}>
+            <Anchor
+              data-isfloating={isFloating}
+              href="#como-funciona"
+              className={LINK_CLASSES_DESKTOP}
+            >
               Como Funciona
             </Anchor>
           </li>
           <li>
-            <Anchor href="#como-participar" className={LINK_CLASSES_DESKTOP}>
+            <Anchor
+              data-isfloating={isFloating}
+              href="#como-participar"
+              className={LINK_CLASSES_DESKTOP}
+            >
               Como Participar
             </Anchor>
           </li>
