@@ -466,8 +466,6 @@ export default function LandingPage() {
             src="/lp/senhor-fundo-verde.png"
             width={900}
             height={900}
-            width={900}
-            height={900}
             quality={100}
             alt="Mulher jovem com cabelo cacheado sorrindo em fundo vermelho"
           />
