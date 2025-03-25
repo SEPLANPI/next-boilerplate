@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { BaseUser } from '@/types/auth'
 import { auth } from '@/auth'
+import { env } from '@/config/env'
 
 export async function GET(request: NextRequest) {
   const session = await auth()
@@ -9,7 +10,7 @@ export async function GET(request: NextRequest) {
   if (!user) {
     return NextResponse.redirect(
       new URL(
-        '/api/auth/sign-in?callbackUrl=/api/auth/role-redirect',
+        `${env.APP_URL}/api/auth/sign-in?callbackUrl=/api/auth/role-redirect`,
         request.url
       )
     )
@@ -17,17 +18,19 @@ export async function GET(request: NextRequest) {
 
   if (user.roles.includes('admin')) {
     return NextResponse.redirect(
-      new URL('/admin/acessos/cadastros', request.url)
+      new URL(`${env.APP_URL}/admin/acessos/cadastros`, request.url)
     )
   }
 
   if (user.roles.includes('advisor')) {
-    return NextResponse.redirect(new URL('/conselheiros/dados', request.url))
+    return NextResponse.redirect(
+      new URL(`${env.APP_URL}/conselheiros/dados`, request.url)
+    )
   }
 
   return NextResponse.redirect(
     new URL(
-      '/api/auth/sign-in?callbackUrl=/api/auth/role-redirect',
+      `${env.APP_URL}/api/auth/sign-in?callbackUrl=/api/auth/role-redirect`,
       request.url
     )
   )
