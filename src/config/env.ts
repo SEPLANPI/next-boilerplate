@@ -8,7 +8,8 @@ const createEnv = () => {
     AUTH_KEYCLOAK_ISSUER: z.string().url(),
     AUTH_KEYCLOAK_ID: z.string(),
     AUTH_KEYCLOAK_SECRET: z.string(),
-    AUTH_SECRET: z.string()
+    AUTH_SECRET: z.string(),
+    AUTH_SECURE_COOKIE: z.string().transform((val) => val === 'True')
   })
 
   const envVars = {
@@ -18,7 +19,8 @@ const createEnv = () => {
     AUTH_KEYCLOAK_ISSUER: process.env.AUTH_KEYCLOAK_ISSUER,
     AUTH_KEYCLOAK_SECRET: process.env.AUTH_KEYCLOAK_SECRET,
     AUTH_KEYCLOAK_ID: process.env.AUTH_KEYCLOAK_ID,
-    AUTH_SECRET: process.env.AUTH_SECRET
+    AUTH_SECRET: process.env.AUTH_SECRET,
+    AUTH_SECURE_COOKIE: process.env.AUTH_SECURE_COOKIE
   }
 
   const parsedEnv = EnvSchema.safeParse(envVars)
@@ -28,8 +30,8 @@ const createEnv = () => {
       `Configuração de ambiente inválida.
 As seguintes variáveis estão ausentes ou inválidas:
 ${Object.entries(parsedEnv.error.flatten().fieldErrors)
-        .map(([key, errors]) => `- ${key}: ${errors.join(', ')}`)
-        .join('\n')}`
+  .map(([key, errors]) => `- ${key}: ${errors.join(', ')}`)
+  .join('\n')}`
     )
   }
 

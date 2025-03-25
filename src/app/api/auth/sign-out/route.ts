@@ -7,18 +7,13 @@ export async function GET(req: Request) {
   const searchParams = new URL(req.url).searchParams
   const redirectTo = searchParams.get('redirect')
 
-  console.log('NODE_ENV: ', process.env.NODE_ENV)
-
   const token = await getToken({
     req,
     secret: env.AUTH_SECRET,
-    secureCookie: process.env.NODE_ENV === 'production'
+    secureCookie: env.AUTH_SECURE_COOKIE
   })
 
-  console.log('Token:', token)
-
   if (!token?.idToken) {
-    console.log('idToken nao encontrado')
     return await signOut({ redirectTo: redirectTo || '' })
   }
 
