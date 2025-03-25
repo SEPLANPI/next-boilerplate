@@ -9,7 +9,7 @@ const createEnv = () => {
     AUTH_KEYCLOAK_ID: z.string(),
     AUTH_KEYCLOAK_SECRET: z.string(),
     AUTH_SECRET: z.string(),
-    AUTH_SECURE_COOKIE: z.boolean().default(true)
+    AUTH_SECURE_COOKIE: z.boolean().default(false)
   })
 
   const envVars = {
