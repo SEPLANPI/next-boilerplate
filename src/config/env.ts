@@ -9,7 +9,7 @@ const createEnv = () => {
     AUTH_KEYCLOAK_ID: z.string(),
     AUTH_KEYCLOAK_SECRET: z.string(),
     AUTH_SECRET: z.string(),
-    AUTH_SECURE_COOKIE: z.string().transform((val) => val === 'True')
+    AUTH_SECURE_COOKIE: z.boolean().default(true)
   })
 
   const envVars = {
@@ -20,7 +20,7 @@ const createEnv = () => {
     AUTH_KEYCLOAK_SECRET: process.env.AUTH_KEYCLOAK_SECRET,
     AUTH_KEYCLOAK_ID: process.env.AUTH_KEYCLOAK_ID,
     AUTH_SECRET: process.env.AUTH_SECRET,
-    AUTH_SECURE_COOKIE: process.env.AUTH_SECURE_COOKIE
+    AUTH_SECURE_COOKIE: Boolean(process.env.AUTH_SECURE_COOKIE)
   }
 
   const parsedEnv = EnvSchema.safeParse(envVars)
