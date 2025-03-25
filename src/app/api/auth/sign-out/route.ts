@@ -13,7 +13,10 @@ export async function GET(req: Request) {
     secureCookie: process.env.NODE_ENV === 'production'
   })
 
+  console.log('Token:', token)
+
   if (!token?.idToken) {
+    console.log('idToken nao encontrado')
     return await signOut({ redirectTo: redirectTo || '' })
   }
 
