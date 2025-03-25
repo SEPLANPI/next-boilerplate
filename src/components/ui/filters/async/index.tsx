@@ -2,7 +2,7 @@
 
 import { Popover, Loader, Alert } from '@mantine/core'
 import { useQuery } from '@tanstack/react-query'
-import { DefaultOption, OptionHandlers } from '../common/types'
+import { DefaultOption } from '../common/types'
 import { FilterButton } from '../common/filter-button'
 import { SelectedItemsProvider } from '../common/selected-items-provider'
 import { BaseContent } from '../common/content'
@@ -12,13 +12,14 @@ export function AsyncFilter<T extends object = DefaultOption>({
   children,
   loadOptions,
   renderOption,
-  getOptionValue,
+  getOptionId,
   getOptionLabel,
-  getOptionDisabled,
+  isDisabled,
   filterId,
   searchParamKey = 'selectedItems',
   filterFn,
-  showSearch = true
+  showSearch = true,
+  showSelectedOnTop = true
 }: AsyncFilterProps<T>) {
   const { data, error, isFetching } = useQuery({
     queryKey: [`async-filter-${filterId}`],
@@ -28,11 +29,11 @@ export function AsyncFilter<T extends object = DefaultOption>({
   const isDefaultOption = (option: T): option is T & DefaultOption =>
     'id' in option && 'label' in option
 
-  const handlers: OptionHandlers<T> = {
-    getValue: (option: T): string => {
-      if (getOptionValue) return getOptionValue(option)
+  const handlers = {
+    getId: (option: T): string => {
+      if (getOptionId) return getOptionId(option)
       if (isDefaultOption(option)) return option.id
-      throw new Error('getOptionValue is required for non-DefaultOption types')
+      throw new Error('getOptionId is required for non-DefaultOption types')
     },
     getLabel: (option: T): string => {
       if (getOptionLabel) return getOptionLabel(option)
@@ -45,7 +46,7 @@ export function AsyncFilter<T extends object = DefaultOption>({
     renderOption ||
     ((option: T) => (
       <span
-        className={`flex-grow font-medium ${getOptionDisabled?.(option) ? 'text-gray-400' : ''}`}
+        className={`flex-grow font-medium ${isDisabled?.(option) ? 'text-gray-400' : ''}`}
       >
         {handlers.getLabel(option)}
       </span>
@@ -56,7 +57,7 @@ export function AsyncFilter<T extends object = DefaultOption>({
     ((option: T, search: string) =>
       handlers.getLabel(option).toLowerCase().includes(search.toLowerCase()))
 
-  const finalGetOptionDisabled = getOptionDisabled || (() => false)
+  const finalIsDisabled = isDisabled || (() => false)
 
   return (
     <SelectedItemsProvider searchParamKey={searchParamKey}>
@@ -80,11 +81,12 @@ export function AsyncFilter<T extends object = DefaultOption>({
             <BaseContent
               options={data || []}
               renderOption={finalRenderOption}
-              getOptionValue={handlers.getValue}
+              getOptionId={handlers.getId}
               getOptionLabel={handlers.getLabel}
-              getOptionDisabled={finalGetOptionDisabled}
+              isDisabled={finalIsDisabled}
               filterFn={finalFilterFn}
               showSearch={showSearch}
+              showSelectedOnTop={showSelectedOnTop}
             />
           )}
         </Popover.Dropdown>
