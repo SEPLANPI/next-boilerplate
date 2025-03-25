@@ -3,15 +3,15 @@
 import { API } from '@/constants/messages'
 import { api } from '@/lib/server-api'
 import { revalidatePath } from 'next/cache'
-import { ActionState } from '@/types/actions'
+import { ActionState, DjangoError } from '@/types/actions'
 
 export async function deleteInvitation(id: string): Promise<ActionState<void>> {
   try {
     const response = await api.delete(`/convites/${id}/`)
 
     if (!response.ok) {
-      const error = await response.json()
-      return { error: error.detail || API.UNEXPECTED_FETCH_ERROR }
+      const error: DjangoError = await response.json()
+      return { error }
     }
 
     revalidatePath('/admin/acessos/convites')

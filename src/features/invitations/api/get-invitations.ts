@@ -5,6 +5,8 @@ import { api } from '@/lib/server-api'
 import { invitationsSearchParams } from '../lib/search-params'
 import { buildParams } from '@/lib/api-utils'
 import { PAGINATION } from '@/constants/pagination'
+import { error } from 'console'
+import { DjangoError } from '@/types/actions'
 
 type GetInvitationsResponse = {
   count: number
@@ -26,8 +28,8 @@ export async function getInvitations(): Promise<
     const response = await api.get(`/convites/?${params}`)
 
     if (!response.ok) {
-      const data = await response.json()
-      return { error: data.detail || API.UNEXPECTED_FETCH_ERROR }
+      const error: DjangoError = await response.json()
+      return { error }
     }
 
     const data: GetInvitationsResponse = await response.json()
