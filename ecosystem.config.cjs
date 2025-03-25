@@ -17,5 +17,25 @@ module.exports = {
     exec_mode: 'cluster',
     autorestart: true,
     watch: false
+  },
+  {
+    name: 'dialogos-client-dev',
+    script: 'npm',
+    args: 'run dev',
+    env: {
+      NODE_ENV: 'development',
+      NEXT_TELEMETRY_DISABLED: 1
+    },
+    max_memory_restart: '1G',
+    error_file: 'logs/error-dev.log',
+    out_file: 'logs/out-dev.log',
+    log_date_format: 'YYYY-MM-DD HH:mm:ss',
+    merge_logs: true,
+    log_type: 'json',
+    instances: 1,
+    exec_mode: 'fork',
+    autorestart: true,
+    watch: true,
+    ignore_watch: ['node_modules', 'logs']
   }]
 }

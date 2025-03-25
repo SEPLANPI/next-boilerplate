@@ -20,7 +20,7 @@ cp package.json .next/standalone/
 
 echo "Iniciando aplicação com PM2..."
 pm2 delete dialogos-client 2>/dev/null || true
-pm2 start ecosystem.config.cjs
+pm2 start ecosystem.config.cjs --only dialogos-client
 
 echo "Salvando configuração do PM2..."
 pm2 save
