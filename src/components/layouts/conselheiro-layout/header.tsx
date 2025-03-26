@@ -18,8 +18,8 @@ export function Header({ children }: PropsWithChildren) {
   const isMobile = useMediaQuery('(max-width: 768px)')
 
   return (
-    <div className="flex flex-col">
-      <header className="flex h-12 w-full items-center justify-between border-b px-4 sm:px-6 md:px-8">
+    <div className="flex flex-col bg-gray-50">
+      <header className="flex h-12 w-full items-center justify-between border-b bg-white px-4 sm:px-6 md:px-8">
         <div className="flex h-full items-center space-x-4">
           <Image
             className="h-7 w-auto"

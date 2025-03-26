@@ -6,7 +6,6 @@ import {
 import DownloadButtons from '@/features/counselors/components/download-buttons'
 import { dayjs } from '@/lib/dayjs'
 import { Box, Card, Grid, GridCol, Text } from '@mantine/core'
-import { Pencil } from 'lucide-react'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -49,7 +48,7 @@ export default async function Dados() {
             {bankInfoSection(myData)}
           </GridCol>
         )}
-        {!myData.documentos && (
+        {myData.documentos && (
           <GridCol span={{ lg: 4, sm: 12 }} className="p-3">
             {docsSection(myData)}
           </GridCol>
@@ -197,7 +196,8 @@ function eventSection(eventData: DadosResponse) {
                 Localização
               </span>
               <Text size="sm" truncate>
-                {eventData.inscricoes[0].evento.municipio.nome || 'Não informado'}
+                {eventData.inscricoes[0].evento.municipio.nome ||
+                  'Não informado'}
               </Text>
             </div>
           </GridCol>
