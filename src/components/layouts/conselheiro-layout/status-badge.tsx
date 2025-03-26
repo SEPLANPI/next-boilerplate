@@ -18,7 +18,7 @@ const statusConfig = {
     icon: Check,
     label: 'Aprovado'
   },
-  rejeitado: {
+  REJEITADO: {
     color: 'red',
     icon: X,
     label: 'Rejeitado'

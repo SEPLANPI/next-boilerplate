@@ -10,6 +10,7 @@ import { z } from 'zod'
 import { createInviteLink } from '../actions/create-invite-link'
 import { notifications } from '@mantine/notifications'
 import { useClipboard } from '@/hooks/use-clipboard'
+import { buildErrorMessage } from '@/utils/format-django-errors'
 
 const invitationSchmema = z.object({
   identificador: z.string().min(1, 'O texto é obrigatório')
@@ -45,7 +46,7 @@ export function InvitationForm() {
 
       if (error) {
         setIsSubmitting(false)
-        setError(error)
+        setError(buildErrorMessage(error))
         return
       }
       setIsSubmitting(false)

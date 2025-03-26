@@ -44,7 +44,9 @@ export default async function Convites({
       </DashboardHeader>
       <DashboardContent>
         <div className="mb-5 flex justify-between space-x-4">
-          <InvitationFilters />
+          <Suspense>
+            <InvitationFilters />
+          </Suspense>
           <InvitationForm />
         </div>
         <Suspense fallback={<InvitationsTableSkeleton />} key={suspenseKey}>

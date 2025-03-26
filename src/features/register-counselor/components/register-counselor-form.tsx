@@ -28,6 +28,7 @@ import { registerCounselor } from '../actions/register-counselor'
 import { notifications } from '@mantine/notifications'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
+import { displayDjangoErrors, buildErrorMessage } from '@/utils/format-django-errors'
 
 export type FormValues = Omit<
   InitialFormValues<typeof counselorSchema>,
@@ -288,7 +289,7 @@ export function RegisterCounselorForm() {
       setIsSubmitting(false)
       notifications.show({
         title: 'Não foi possível realizar o cadastro',
-        message: result.error,
+        message: buildErrorMessage(result.error),
         color: 'red'
       })
       return

@@ -10,7 +10,7 @@ export async function GET(req: Request) {
   const token = await getToken({
     req,
     secret: env.AUTH_SECRET,
-    secureCookie: process.env.NODE_ENV === 'production'
+    secureCookie: env.AUTH_SECURE_COOKIE
   })
 
   if (!token?.idToken) {

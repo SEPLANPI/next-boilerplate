@@ -22,13 +22,13 @@ export type BaseFilterProps<T> = PropsWithChildren<
     showSelectedOnTop?: boolean
   } & (IsDefaultOption<T> extends true
     ? {
-      getOptionId?: (option: T) => string
-      getOptionLabel?: (option: T) => string
-    }
+        getOptionId?: (option: T) => string
+        getOptionLabel?: (option: T) => string
+      }
     : {
-      getOptionId: (option: T) => string
-      getOptionLabel: (option: T) => string
-    })
+        getOptionId: (option: T) => string
+        getOptionLabel: (option: T) => string
+      })
 >
 
 export type BaseContentProps<T> = {

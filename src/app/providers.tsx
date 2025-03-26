@@ -23,7 +23,7 @@ export function Providers({ children }: PropsWithChildren) {
           }}
         >
           <MantineProvider theme={theme}>
-            <Notifications position="top-center" autoClose={2000} />
+            <Notifications position="top-center" autoClose={4000} />
             <NuqsAdapter>{children}</NuqsAdapter>
           </MantineProvider>
         </DatesProvider>

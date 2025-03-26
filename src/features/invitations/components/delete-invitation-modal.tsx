@@ -4,6 +4,7 @@ import React from 'react'
 import { Modal, Button, Group } from '@mantine/core'
 import { notifications } from '@mantine/notifications'
 import { deleteInvitation } from '../actions/delete-invitation'
+import { buildErrorMessage } from '@/utils/format-django-errors'
 
 interface DeleteInvitationModalProps {
   opened: boolean
@@ -27,7 +28,7 @@ export function DeleteInvitationModal({
     if (result.error) {
       notifications.show({
         title: 'Erro',
-        message: result.error,
+        message: buildErrorMessage(result.error),
         color: 'red'
       })
     } else {

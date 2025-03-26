@@ -3,7 +3,7 @@
 import { API } from '@/constants/messages'
 import { api } from '@/lib/server-api'
 import { revalidatePath } from 'next/cache'
-import { ActionState } from '@/types/actions'
+import { ActionState, DjangoError } from '@/types/actions'
 
 type CreateInviteLinkInput = {
   identificador: string
@@ -18,8 +18,8 @@ export async function createInviteLink(
     })
 
     if (!response.ok) {
-      const error = await response.json()
-      return { error: error.detail || API.UNEXPECTED_FETCH_ERROR }
+      const error: DjangoError = await response.json()
+      return { error }
     }
 
     const data: { token: string } = await response.json()
