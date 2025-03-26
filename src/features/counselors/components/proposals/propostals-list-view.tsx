@@ -17,7 +17,7 @@ export default async function PropostasListView({
     return <FetchError error={error} />
   }
   if (minhasPropostas && minhasPropostas.length === 0) {
-    return <div className='pt-6 text-center'>Nenhuma proposta encontrada.</div>
+    return <div className="pt-6 text-center">Nenhuma proposta encontrada.</div>
   }
 
   return <ProposalsList propostas={minhasPropostas || []} />
