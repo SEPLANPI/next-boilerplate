@@ -1,5 +1,5 @@
 'use client'
-import { Badge, Modal, Table } from '@mantine/core'
+import { Badge, Modal, Table, Text } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { notifications } from '@mantine/notifications'
 import { Info } from 'lucide-react'
@@ -69,8 +69,28 @@ export default function ProposalsList({ propostas }: PropostasListProps) {
               onClick={() => handleRowClick(proposta)}
               className="cursor-pointer"
             >
-              <Table.Td w="50%">{proposta.titulo}</Table.Td>
-              <Table.Td w="40%">{proposta.conteudo}</Table.Td>
+              <Table.Td
+                w="50%"
+                className="w-full overflow-hidden text-ellipsis"
+              >
+                <Text size="sm" truncate style={{ maxWidth: '400px' }}>
+                  {proposta.titulo}
+                </Text>
+              </Table.Td>
+              <Table.Td w="40%">
+                <Text
+                  size="sm"
+                  truncate
+                  style={{
+                    maxWidth: '400px',
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap'
+                  }}
+                >
+                  {proposta.conteudo}
+                </Text>
+              </Table.Td>
               <Table.Td w="10%">{getStatusBadge(proposta.status)}</Table.Td>
             </Table.Tr>
           ))}

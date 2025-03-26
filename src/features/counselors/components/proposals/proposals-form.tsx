@@ -83,6 +83,9 @@ export default function ProposalsForm({
       <Textarea
         withAsterisk
         label="Descrição"
+        autosize
+        minRows={3}
+        maxRows={6}
         placeholder="Conte-nos um pouco sobre a sua proposta"
         key={form.key('conteudo')}
         {...form.getInputProps('conteudo')}
