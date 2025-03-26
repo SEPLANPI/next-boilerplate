@@ -1,8 +1,11 @@
 import { SearchInput } from '@/components/ui/search-input'
-import ProposalsList from '@/features/counselors/components/proposals/proposals-list'
 import ProposalsModal from '@/features/counselors/components/proposals/proposals-modal'
-import { Card } from '@mantine/core'
+import PropostasListView from '@/features/counselors/components/proposals/propostals-list-view'
+import { propostaSearchParams } from '@/features/counselors/lib/search-params'
+import { Card, Loader } from '@mantine/core'
 import { Metadata } from 'next'
+import { SearchParams } from 'nuqs'
+import { Suspense } from 'react'
 
 export const metadata: Metadata = {
   title: 'Propostas'
@@ -14,27 +17,16 @@ export interface Propostas {
   status: string
 }
 
-export default function Propostas() {
-  const propostas: Propostas[] = [
-    {
-      titulo: 'Proposta 1',
-      descricao: 'Descrição da proposta 1',
-      status: 'Reprovada'
-    },
-    {
-      titulo: 'Proposta 2',
-      descricao: 'Descrição da proposta 2',
-      status: 'Aprovada'
-    },
-    {
-      titulo: 'Proposta 3',
-      descricao: 'Descrição da proposta 3',
-      status: 'Pendente'
-    }
-  ]
+export default async function Propostas({
+  searchParams
+}: {
+  searchParams: Promise<SearchParams>
+}) {
+  const params = propostaSearchParams.parse(await searchParams)
+  const suspenseKey = JSON.stringify(params)
 
   return (
-    <div className="flex h-screen flex-col -mb-[32px]">
+    <div className="-mb-[32px] flex h-screen flex-col">
       <Card
         shadow="xs"
         padding="md"
@@ -46,7 +38,16 @@ export default function Propostas() {
           <ProposalsModal />
         </div>
 
-        <ProposalsList propostas={propostas} />
+        <Suspense
+          fallback={
+            <div className="flex justify-center items-center h-96">
+              <Loader />
+            </div>
+          }
+          key={suspenseKey}
+        >
+          <PropostasListView searchParams={searchParams} />
+        </Suspense>
       </Card>
     </div>
   )

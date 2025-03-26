@@ -30,7 +30,7 @@ export default function ProposalsModal() {
           body: { paddingLeft: '24px', paddingRight: '24px' }
         }}
       >
-        <ProposalsForm />
+        <ProposalsForm onClose={close}/>
       </Modal>
     </>
   )

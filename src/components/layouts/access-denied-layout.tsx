@@ -15,7 +15,6 @@ export async function AccessDeniedLayout({
   suggestions
 }: AccessDeniedLayoutProps) {
   const session = await auth()
-
   return (
     <div className="container mx-auto max-w-4xl py-12">
       <div className="flex flex-col items-start gap-8">

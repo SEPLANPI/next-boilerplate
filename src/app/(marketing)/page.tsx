@@ -1,3 +1,6 @@
+import { Card } from '@/features/landing-page/components/card'
+import { Header } from '@/features/landing-page/components/header'
+import { Section } from '@/features/landing-page/components/section'
 import { Anchor } from '@mantine/core'
 import {
   BookOpen,
@@ -19,11 +22,8 @@ import {
   Youtube
 } from 'lucide-react'
 import Image from 'next/image'
-import { PropsWithChildren } from 'react'
-import { Card } from '@/features/landing-page/components/card'
-import { Section } from '@/features/landing-page/components/section'
-import { Header } from '@/features/landing-page/components/header'
 import Link from 'next/link'
+import { PropsWithChildren } from 'react'
 
 function CheckListItem({ children }: PropsWithChildren) {
   return (

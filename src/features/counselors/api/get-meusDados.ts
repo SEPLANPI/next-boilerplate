@@ -1,4 +1,5 @@
 import { API } from '@/constants/messages'
+import { logger } from '@/lib/logger'
 import { api } from '@/lib/server-api'
 import { DjangoError } from '@/types/actions'
 import { ServerResult } from '@/types/server-result'

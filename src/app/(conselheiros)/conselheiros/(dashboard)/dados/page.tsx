@@ -49,9 +49,11 @@ export default async function Dados() {
             {bankInfoSection(myData)}
           </GridCol>
         )}
-        <GridCol span={{ lg: 4, sm: 12 }} className="p-3">
-          {docsSection(myData)}
-        </GridCol>
+        {!myData.documentos && (
+          <GridCol span={{ lg: 4, sm: 12 }} className="p-3">
+            {docsSection(myData)}
+          </GridCol>
+        )}
       </Grid>
     </Card>
   )
@@ -175,7 +177,7 @@ function eventSection(eventData: DadosResponse) {
                 Eixo de participação
               </span>
               <Text size="sm" truncate lineClamp={2}>
-                {eventData.inscricoes[0].evento.nome}
+                {eventData.inscricoes[0].evento.nome || 'Não informado'}
               </Text>
             </div>
           </GridCol>
@@ -195,7 +197,7 @@ function eventSection(eventData: DadosResponse) {
                 Localização
               </span>
               <Text size="sm" truncate>
-                {eventData.inscricoes[0].evento.municipio.nome}
+                {eventData.inscricoes[0].evento.municipio.nome || 'Não informado'}
               </Text>
             </div>
           </GridCol>
@@ -404,9 +406,9 @@ function SectionHeader({ title }: { title: string }) {
       <div>
         <h2 className="text-sm font-bold text-gray-600">{title}</h2>
       </div>
-      <div>
+      {/* <div>
         <Pencil size={16} />
-      </div>
+      </div> */}
     </div>
   )
 }
