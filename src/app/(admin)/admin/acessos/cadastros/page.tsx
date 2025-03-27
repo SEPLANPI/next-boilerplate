@@ -7,16 +7,16 @@ import {
   DashboardMainSection
 } from '@/components/layouts/dashboard-layout/content'
 import { DashboardHeader } from '@/components/layouts/dashboard-layout/header'
-import { SearchParams } from 'nuqs'
-import { registrationSearchParams } from '@/features/registration-monitoring/lib/search-params'
 import { AccessTabs } from '@/features/access/components/access-tabs'
 import { RegistrationFilters } from '@/features/registration-monitoring/components/registration-filters'
 import { RegistrationListView } from '@/features/registration-monitoring/components/registration-list-view'
 import { RegistrationTableSkeleton } from '@/features/registration-monitoring/components/registration-table-skeleton'
-import { Suspense } from 'react'
+import { registrationSearchParams } from '@/features/registration-monitoring/lib/search-params'
 import { Divider } from '@mantine/core'
 import { Users } from 'lucide-react'
 import { Metadata } from 'next'
+import { SearchParams } from 'nuqs'
+import { Suspense } from 'react'
 
 export const metadata: Metadata = {
   title: 'Cadastros'

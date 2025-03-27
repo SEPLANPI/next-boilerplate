@@ -1,7 +1,7 @@
 'use client'
 
 import { SidebarConfig } from '@/types/sidebar'
-import { Users } from 'lucide-react'
+import { ClipboardList, Users } from 'lucide-react'
 
 export const sidebarConfig: SidebarConfig = {
   app: {
@@ -15,6 +15,12 @@ export const sidebarConfig: SidebarConfig = {
           href: '/admin/acessos/cadastros',
           match: '/admin/acessos',
           icon: Users
+        },
+        {
+          label: 'Propostas',
+          href: '/admin/propostas',
+          match: '/admin/propostas',
+          icon: ClipboardList
         }
       ]
     }
