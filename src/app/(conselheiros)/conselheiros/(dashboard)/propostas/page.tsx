@@ -33,7 +33,7 @@ export default async function Propostas({
         withBorder
         className="border-1 flex-grow rounded-t-xl bg-white p-6"
       >
-        <div className="flex gap-4">
+        <div className="flex gap-4 sm:flex-row flex-col">
           <SearchInput className="max-w-full flex-1"/>
           <ProposalsModal />
         </div>
