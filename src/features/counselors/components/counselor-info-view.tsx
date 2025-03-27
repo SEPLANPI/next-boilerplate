@@ -232,7 +232,7 @@ function councilSection(councilData: CounselorInfo) {
 function adressSection(adressData: CounselorInfo) {
   return (
     <>
-      <SectionHeader title="Localização" />
+      <SectionHeader title="Endereço" />
       <div className="px-4">
         <Grid className="flex">
           <GridCol span={6}>
