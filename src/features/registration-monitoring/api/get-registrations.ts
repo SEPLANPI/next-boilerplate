@@ -30,13 +30,11 @@ export async function getRegistrations(): Promise<
     )
 
     if (!response.ok) {
-      console.log(await response.text())
       const error: DjangoError = await response.json()
       return { error }
     }
 
     const data: GetRegistrationsResponse = await response.json()
-    console.log(data)
     return { data }
   } catch (error) {
     console.log(error)
