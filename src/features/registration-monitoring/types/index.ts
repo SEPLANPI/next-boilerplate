@@ -1,13 +1,18 @@
 export type Registration = {
   id: string
-  usuario: {
+  nome: string
+  cpf?: string
+  eixo: {
+    id: string
     nome: string
-    avatar?: string
   }
-  eixo: string
-  ultimo_status: 'PENDENTE' | 'APROVADO' | 'REPROVADO'
-  responsavel: {
+  status: {
+    atual: 'PENDENTE' | 'APROVADO' | 'REPROVADO'
+  }
+  usuario?: {
     nome: string
-    avatar?: string
+  }
+  responsavel?: {
+    nome: string
   }
 }

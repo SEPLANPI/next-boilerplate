@@ -1,3 +1,13 @@
-import { createBaseSearchParams } from '@/lib/search-params'
+import { baseSearchParamsParsers } from '@/lib/search-params'
+import {
+  createSearchParamsCache,
+  parseAsArrayOf,
+  parseAsString
+} from 'nuqs/server'
 
-export const registrationSearchParams = createBaseSearchParams()
+export const registrationSearchParams = createSearchParamsCache({
+  ...baseSearchParamsParsers,
+  status: parseAsArrayOf(parseAsString),
+  eixos: parseAsArrayOf(parseAsString),
+  search: parseAsString
+})

@@ -69,7 +69,7 @@ export default function LandingPage() {
       </section>
 
       <div className="flex h-3 items-stretch sm:h-4">
-        <span className="flex-1 bg-yellow-500" />
+        <span className="flex-1 bg-govYellow-400" />
         <span className="flex-1 bg-[#EF4123]" />
         <span className="flex-1 bg-blue-700" />
       </div>
@@ -188,7 +188,7 @@ export default function LandingPage() {
             </Card.Title>
             <Card.Subtitle>Piauí Integrado</Card.Subtitle>
           </Card.Root>
-          <Card.Root className="bg-yellow-400 sm:col-span-4">
+          <Card.Root className="bg-govYellow-400 sm:col-span-4">
             <Card.Icon className="bg-white/20">
               <TrendingUp className="size-4" />
             </Card.Icon>
@@ -243,7 +243,7 @@ export default function LandingPage() {
         </h3>
         <div className="grid w-full grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
           <div className="flex h-full flex-col">
-            <div className="rounded-t-md bg-yellow-400 px-3 py-1.5">
+            <div className="rounded-t-md bg-govYellow-400 px-3 py-1.5">
               <h4 className="font-bold">Abril</h4>
             </div>
             <div className="flex-1 divide-y rounded-b-md border border-t-0 px-4">
@@ -260,7 +260,7 @@ export default function LandingPage() {
             </div>
           </div>
           <div className="flex h-full flex-col">
-            <div className="rounded-t-md bg-yellow-400 px-3 py-1.5">
+            <div className="rounded-t-md bg-govYellow-400 px-3 py-1.5">
               <h4 className="font-bold">Maio</h4>
             </div>
             <div className="flex-1 divide-y rounded-b-md border border-t-0 px-4">
@@ -277,7 +277,7 @@ export default function LandingPage() {
             </div>
           </div>
           <div className="flex h-full flex-col">
-            <div className="rounded-t-md bg-yellow-400 px-3 py-1.5">
+            <div className="rounded-t-md bg-govYellow-400 px-3 py-1.5">
               <h4 className="font-bold">Junho</h4>
             </div>
             <div className="flex-1 divide-y rounded-b-md border border-t-0 px-4">
@@ -296,7 +296,7 @@ export default function LandingPage() {
             </div>
           </div>
           <div className="flex h-full flex-col">
-            <div className="rounded-t-md bg-yellow-400 px-3 py-1.5">
+            <div className="rounded-t-md bg-govYellow-400 px-3 py-1.5">
               <h4 className="font-bold">Julho</h4>
             </div>
             <div className="flex-1 divide-y rounded-b-md border border-t-0 px-4">
@@ -315,7 +315,7 @@ export default function LandingPage() {
             </div>
           </div>
           <div className="flex h-full flex-col">
-            <div className="rounded-t-md bg-yellow-400 px-3 py-1.5">
+            <div className="rounded-t-md bg-govYellow-400 px-3 py-1.5">
               <h4 className="font-bold">Agosto</h4>
             </div>
             <div className="flex-1 divide-y rounded-b-md border border-t-0 px-4">
@@ -334,7 +334,7 @@ export default function LandingPage() {
             </div>
           </div>
           <div className="flex h-full flex-col">
-            <div className="rounded-t-md bg-yellow-400 px-3 py-1.5">
+            <div className="rounded-t-md bg-govYellow-400 px-3 py-1.5">
               <h4 className="font-bold">Setembro</h4>
             </div>
             <div className="flex-1 divide-y rounded-b-md border border-t-0 px-4">

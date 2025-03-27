@@ -1,11 +1,19 @@
+import { cn } from '@/lib/utils'
 import { PropsWithChildren } from 'react'
 
-export function DashboardContent({ children }: PropsWithChildren) {
+export function DashboardContent({
+  children,
+  className
+}: PropsWithChildren<{ className?: string }>) {
   return (
-    <div className="flex flex-1 bg-gray-100 p-8 pb-0">
-      <div className="flex-1 rounded-t-xl border-2 bg-white p-6">
-        {children}
-      </div>
+    <div className={cn('flex flex-1 flex-col bg-gray-100 p-8 pb-0', className)}>
+      {children}
     </div>
+  )
+}
+
+export function DashboardMainSection({ children }: PropsWithChildren) {
+  return (
+    <div className="flex-1 rounded-t-xl border-2 bg-white p-6">{children}</div>
   )
 }
