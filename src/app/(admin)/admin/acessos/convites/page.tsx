@@ -2,7 +2,10 @@ import {
   BreadcrumbItem,
   DashboardBreadcrumbs
 } from '@/components/layouts/dashboard-layout/breadcrumbs'
-import { DashboardContent } from '@/components/layouts/dashboard-layout/content'
+import {
+  DashboardContent,
+  DashboardMainSection
+} from '@/components/layouts/dashboard-layout/content'
 import { DashboardHeader } from '@/components/layouts/dashboard-layout/header'
 import { AccessTabs } from '@/features/access/components/access-tabs'
 import { InvitationFilters } from '@/features/invitations/components/invitation-filters'
@@ -43,15 +46,17 @@ export default async function Convites({
         <AccessTabs />
       </DashboardHeader>
       <DashboardContent>
-        <div className="mb-5 flex justify-between space-x-4">
-          <Suspense>
-            <InvitationFilters />
+        <DashboardMainSection>
+          <div className="mb-5 flex justify-between space-x-4">
+            <Suspense>
+              <InvitationFilters />
+            </Suspense>
+            <InvitationForm />
+          </div>
+          <Suspense fallback={<InvitationsTableSkeleton />} key={suspenseKey}>
+            <InvitationsListView />
           </Suspense>
-          <InvitationForm />
-        </div>
-        <Suspense fallback={<InvitationsTableSkeleton />} key={suspenseKey}>
-          <InvitationsListView />
-        </Suspense>
+        </DashboardMainSection>
       </DashboardContent>
     </>
   )

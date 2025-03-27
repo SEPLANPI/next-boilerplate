@@ -9,7 +9,7 @@ const LINK_CLASSES_MOBILE =
   'block text-gray-700 font-semibold text-md py-3 px-2'
 
 const BUTTON_PROPS = {
-  color: 'yellow.4',
+  color: 'govYellow.4',
   size: 'sm' as const,
   leftSection: <Lock className="size-4" />,
   component: 'a' as const,

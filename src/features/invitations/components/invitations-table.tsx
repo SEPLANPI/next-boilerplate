@@ -24,6 +24,7 @@ import { SORT_LABELS } from '@/constants/sort-labels'
 import { Invitation } from '../types'
 import { formatDate } from '@/utils/format-date'
 import { DeleteInvitationModal } from './delete-invitation-modal'
+import Link from 'next/link'
 
 const INVITATION_STATUS = {
   USED: { color: 'blue' as MantineColor, label: 'Usado' },
@@ -77,15 +78,20 @@ export function InvitationsTable({ data }: InvitationsTableProps) {
                 <TableTd>{invitation.identificador}</TableTd>
                 <TableTd className="flex justify-center">
                   {invitation.usado ? (
-                    <Tooltip label={invitation.conselheiro.nome}>
-                      <Avatar
-                        radius="xl"
-                        size="sm"
-                        name={invitation.conselheiro.nome}
-                        color="initials"
-                        variant="filled"
-                      />
-                    </Tooltip>
+                    <Link
+                      href={`/admin/acessos/cadastros/${invitation.conselheiro.id}`}
+                    >
+                      <Tooltip label={invitation.conselheiro.nome}>
+                        <Avatar
+                          radius="xl"
+                          size="sm"
+                          name={invitation.conselheiro.nome}
+                          color="initials"
+                          variant="filled"
+                          className="cursor-pointer"
+                        />
+                      </Tooltip>
+                    </Link>
                   ) : (
                     '-'
                   )}

@@ -169,6 +169,32 @@ export const theme = createTheme({
       '#5c940d'
     ],
     yellow: [
+      '#FEFCE8',
+      '#FEF9C3',
+      '#FEF08A',
+      '#FDE047',
+      '#FACC15',
+      '#EAB308',
+      '#CA8A04',
+      '#A16207',
+      '#854D0E',
+      '#713F12',
+      '#422006'
+    ],
+    amber: [
+      '#FFFBEB',
+      '#FEF3C7',
+      '#FDE68A',
+      '#FCD34D',
+      '#FBBF24',
+      '#F59E0B',
+      '#D97706',
+      '#B45309',
+      '#92400E',
+      '#78350F',
+      '#451A03'
+    ],
+    govYellow: [
       '#FFF8EB',
       '#FFF2C6',
       '#FEE889',

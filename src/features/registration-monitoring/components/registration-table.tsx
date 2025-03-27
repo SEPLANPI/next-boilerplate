@@ -9,16 +9,16 @@ import {
   TableTbody,
   TableTh,
   Avatar,
-  Tooltip,
   Badge,
   MantineColor
 } from '@mantine/core'
+import { useRouter } from 'next/navigation'
 import { Registration } from '../types'
 
 const REGISTRATION_STATUS = {
   APROVADO: { color: 'green' as MantineColor, label: 'Aprovado' },
   REPROVADO: { color: 'red' as MantineColor, label: 'Reprovado' },
-  PENDENTE: { color: 'yellow' as MantineColor, label: 'Pendente' }
+  PENDENTE: { color: 'amber' as MantineColor, label: 'Pendente' }
 } as const
 
 interface RegistrationTableProps {
@@ -26,52 +26,63 @@ interface RegistrationTableProps {
 }
 
 export function RegistrationTable({ data }: RegistrationTableProps) {
+  const router = useRouter()
+
+  function handleNavigateToRegistration(id: string) {
+    router.push(`/admin/acessos/cadastros/${id}`)
+  }
+
   return (
-    <Table verticalSpacing="xs" className="w-full table-fixed">
+    <Table
+      verticalSpacing="xs"
+      className="w-full table-fixed"
+      highlightOnHover
+      classNames={{
+        tbody: '[&>tr]:cursor-pointer'
+      }}
+    >
       <TableThead>
         <TableTr>
-          <TableTh className="w-full">Usuário</TableTh>
-          <TableTh className="w-48">Eixo</TableTh>
-          <TableTh className="w-48">Situação</TableTh>
-          <TableTh className="w-28">Responsável</TableTh>
+          <TableTh>Conselheiro</TableTh>
+          <TableTh>Status</TableTh>
+          <TableTh>Eixo</TableTh>
         </TableTr>
       </TableThead>
       <TableTbody>
         {data.map((registration) => {
-          const statusConfig = REGISTRATION_STATUS[registration.ultimo_status]
+          const status = REGISTRATION_STATUS[registration.status.atual]
 
           return (
-            <TableTr key={registration.id}>
-              <TableTd className="w-full">
-                <div className="flex items-center gap-2">
+            <TableTr
+              key={registration.id}
+              onClick={() => handleNavigateToRegistration(registration.id)}
+            >
+              <TableTd>
+                <div className="flex items-center gap-3">
                   <Avatar
                     radius="xl"
                     size="sm"
-                    src={registration.usuario.avatar}
-                    name={registration.usuario.nome}
+                    name={registration.nome}
+                    color="initials"
+                    variant="filled"
                   />
-                  {registration.usuario.nome}
+                  <div className="flex flex-col">
+                    <span className="font-medium">{registration.nome}</span>
+                    <span className="text-sm text-gray-600">
+                      {registration.cpf || 'CPF não informado'}
+                    </span>
+                  </div>
                 </div>
               </TableTd>
-              <TableTd className="w-48">
-                <span className="rounded-full border p-1.5 text-xs text-secondary-foreground">
-                  {registration.eixo}
-                </span>
-              </TableTd>
-              <TableTd className="w-48">
-                <Badge color={statusConfig.color} variant="light" radius="sm">
-                  {statusConfig.label}
+              <TableTd>
+                <Badge color={status.color} variant="light" radius="sm">
+                  {status.label}
                 </Badge>
               </TableTd>
-              <TableTd className="w-28">
-                <Tooltip label={registration.responsavel.nome}>
-                  <Avatar
-                    radius="xl"
-                    size="sm"
-                    src={registration.responsavel.avatar}
-                    name={registration.responsavel.nome}
-                  />
-                </Tooltip>
+              <TableTd>
+                <span className="rounded-full border p-1.5 text-xs text-secondary-foreground">
+                  {registration.eixo.nome}
+                </span>
               </TableTd>
             </TableTr>
           )

@@ -9,7 +9,7 @@ interface StatusBadgeProps {
 
 const statusConfig = {
   PENDENTE: {
-    color: 'yellow',
+    color: 'amber',
     icon: Circle,
     label: 'Pendente'
   },

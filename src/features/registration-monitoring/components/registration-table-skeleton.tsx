@@ -14,32 +14,31 @@ export function RegistrationTableSkeleton() {
   const rowContentHeight = 21.688
 
   return (
-    <Table verticalSpacing="xs" className="w-full table-fixed">
+    <Table verticalSpacing="xs">
       <TableThead>
         <TableTr>
-          <TableTh className="w-full">Usuário</TableTh>
-          <TableTh className="w-48">Eixo</TableTh>
-          <TableTh className="w-48">Situação</TableTh>
-          <TableTh className="w-28">Responsável</TableTh>
+          <TableTh>Conselheiro</TableTh>
+          <TableTh>Status</TableTh>
+          <TableTh>Eixo</TableTh>
         </TableTr>
       </TableThead>
       <TableTbody>
         {skeletonRows.map((_, index) => (
           <TableTr key={index}>
-            <TableTd className="w-full">
-              <div className="flex items-center gap-2">
-                <Skeleton circle height={26} width={26} />
-                <Skeleton height={rowContentHeight} width='50%  ' />
+            <TableTd>
+              <div className="flex w-full items-center gap-3">
+                <Skeleton circle height={32} width={32} />
+                <div className="flex flex-1 flex-col">
+                  <Skeleton height={rowContentHeight} width="75%" />
+                  <Skeleton height={rowContentHeight} width="40%" />
+                </div>
               </div>
             </TableTd>
             <TableTd>
-              <Skeleton height={rowContentHeight} />
+              <Skeleton height={rowContentHeight} width="60%" />
             </TableTd>
             <TableTd>
-              <Skeleton height={rowContentHeight} />
-            </TableTd>
-            <TableTd>
-              <Skeleton circle height={26} width={26} />
+              <Skeleton height={rowContentHeight} width="80%" />
             </TableTd>
           </TableTr>
         ))}
