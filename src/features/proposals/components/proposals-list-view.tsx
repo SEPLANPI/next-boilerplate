@@ -1,7 +1,7 @@
 import { FetchError } from '@/components/errors/fetch-error'
 import { UrlPaginationFooter } from '@/components/ui/pagination-footer/url-pagination-footer'
 import { PAGINATION } from '@/constants/pagination'
-import { getProposals } from '../api/get-propostas'
+import { getProposals } from '../api/get-proposals'
 import { ProposalsTable } from './proposals-table'
 
 export async function ProposalsListView() {
