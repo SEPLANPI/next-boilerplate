@@ -27,7 +27,7 @@ export function CounselorInfoView({ data }: CounselorInfoViewProps) {
           {bankInfoSection(data)}
         </GridCol>
       )}
-      {data.documentos && (
+      {data.documentos.length > 0 && (
         <GridCol span={{ lg: 4, sm: 12 }} className="p-3">
           {docsSection(data)}
         </GridCol>
