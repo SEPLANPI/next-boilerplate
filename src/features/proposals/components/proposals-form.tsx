@@ -4,10 +4,18 @@ import { useForm } from '@mantine/form'
 import { notifications } from '@mantine/notifications'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { Proposal } from '../types'
+import { Axis, Proposal } from '../types'
 
 interface ProposalsFormValues {
   id?: string
+  eixo_id?: number
+  status?:
+    | 'PENDENTE'
+    | 'APROVADA'
+    | 'REPROVADO'
+    | 'REJEITADA'
+    | 'EM_VOTACAO'
+    | 'CANCELADA'
   titulo: string
   conteudo: string
 }
@@ -18,76 +26,57 @@ interface ProposalsFormProps {
   items?: Proposal
 }
 
-type Axis = {
-    id: number
-    nome: string
-    descricao: string
-    criado_em: string
-    limite_inscricoes: number
-    total_inscricoes: number
-    vagas_restantes: number
-    vagas_disponiveis: true
-}
-
 export default function ProposalsForm({
   onClose,
   edit,
   items
 }: ProposalsFormProps) {
   const router = useRouter()
-  const [eixos, setEixos] = useState<Axis[]>()
+  const [eixos, setEixos] = useState<Axis[]>([])
   const [loading, setLoading] = useState(false)
   const form = useForm<ProposalsFormValues>({
     initialValues: {
       id: items?.id || '',
       titulo: items?.titulo || '',
-      conteudo: items?.conteudo || ''
+      conteudo: items?.conteudo || '',
+      eixo_id: edit ? items?.eixo.id : 0, 
+      status: items?.status || 'PENDENTE'
     },
     validate: {
-      titulo: (value) =>
-        value.length < 5 && 'Título deve ter no mínimo 5 caracteres',
-      conteudo: (value) =>
-        value.length < 5 && 'Descrição deve ter no mínimo 5 caracteres'
-    }
-  })
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await clientApi.get('/api/v1/eixos/')
-        if (response.ok) {
-          const data = await response.json()
-          setEixos(data) // Salva os dados no estado
-        } else {
-          console.error('Erro ao buscar os dados')
+      eixo_id: (value) => {
+        if (!edit && (!value || value === 0)) {
+          return 'Selecione um eixo'
         }
-      } catch (error) {
-        console.error('Erro na requisição:', error)
+        return null
+      },
+      titulo: (value) => {
+        return value.length < 5 ? 'Título deve ter no mínimo 5 caracteres' : null
+      },
+      conteudo: (value) => {
+        return value.length < 5 ? 'Descrição deve ter no mínimo 5 caracteres' : null
       }
     }
-
-    fetchData()
-  }, [])
+  })
 
   const handleSubmit = async (values: ProposalsFormValues) => {
     setLoading(true)
     let response = null
     if (edit) {
       response = await clientApi.put(
-        `/propostas/${values.id}/atualizar_conselheiro/`,
+        `/propostas/${values.id}/atualizar-admin/`,
         {
           body: values
         }
       )
     } else {
-      response = await clientApi.post('/criar-proposta-conselheiro/', {
+      response = await clientApi.post('/criar-proposta-admin/', {
         body: values
       })
     }
     if (response.ok) {
       notifications.show({
         title: 'Proposta enviada',
-        message: 'Sua proposta foi enviada com sucesso'
+        message: `Sua proposta foi ${edit ? 'editada' : 'enviada'} com sucesso`
       })
       router.refresh()
       onClose()
@@ -100,20 +89,50 @@ export default function ProposalsForm({
     }
   }
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await clientApi.get('/eixos/')
+        if (response.ok) {
+          const data = await response.json()
+          setEixos(data)
+        } else {
+          notifications.show({
+            title: 'Erro',
+            message: 'Não foi possível carregar os eixos'
+          })
+        }
+      } catch (error) {
+        console.error('Erro na requisição:', error)
+        notifications.show({
+          title: 'Erro',
+          message: 'Ocorreu um erro ao buscar eixos'
+        })
+      }
+    }
+
+    fetchData()
+  }, [])
+
   return (
     <form
       onSubmit={form.onSubmit(handleSubmit)}
       className="flex flex-col gap-4"
     >
-      <Select
-        withAsterisk
-        label="Eixo"
-        data={eixos.map((eixo) => ({
-          value: eixo.id,
-          label: eixo.nome
-        }))}
-        placeholder="Selecione o Eixo referente à Proposta"
-      />
+      {!edit && (
+        <Select
+          withAsterisk
+          allowDeselect={false}
+          label="Eixo"
+          data={eixos.map((eixo) => ({
+            value: String(eixo.id),
+            label: eixo.nome
+          }))}
+          placeholder="Selecione o Eixo referente à Proposta"
+          key={form.key('eixo_id')}
+          {...form.getInputProps('eixo_id')}
+        />
+      )}
       <TextInput
         withAsterisk
         label="Título"
@@ -121,6 +140,22 @@ export default function ProposalsForm({
         key={form.key('titulo')}
         {...form.getInputProps('titulo')}
       />
+      {edit && (
+        <Select
+          label="Status"
+          allowDeselect={false}
+          data={[
+            { value: 'APROVADA', label: 'Aprovada' },
+            { value: 'REJEITADA', label: 'Rejeitada' },
+            { value: 'EM_VOTACAO', label: 'Em votação' },
+            { value: 'CANCELADA', label: 'Cancelada' },
+            { value: 'PENDENTE', label: 'Pendente' }
+          ]}
+          key={form.key('status')}
+          {...form.getInputProps('status')}
+        />
+      )}
+
       <Textarea
         withAsterisk
         label="Descrição"
