@@ -26,15 +26,15 @@ export default async function Propostas({
   const suspenseKey = JSON.stringify(params)
 
   return (
-    <div className="-mb-[32px] flex h-screen flex-col">
+    <div className="-mb-[32px]  flex min-h-screen flex-col">
       <Card
         shadow="xs"
         padding="md"
         withBorder
         className="border-1 flex-grow rounded-t-xl bg-white p-6"
       >
-        <div className="flex gap-4">
-          <SearchInput className="max-w-full flex-1" />
+        <div className="flex gap-4 sm:flex-row flex-col">
+          <SearchInput className="max-w-full flex-1"/>
           <ProposalsModal />
         </div>
 
