@@ -166,7 +166,7 @@ export default function ProposalsForm({
         key={form.key('conteudo')}
         {...form.getInputProps('conteudo')}
       />
-      <Group className="justify-end">
+      <Group className="justify-end pt-3">
         <Button onClick={onClose} variant="light">
           Cancelar
         </Button>
