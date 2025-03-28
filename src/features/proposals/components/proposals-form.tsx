@@ -39,7 +39,7 @@ export default function ProposalsForm({
       id: items?.id || '',
       titulo: items?.titulo || '',
       conteudo: items?.conteudo || '',
-      eixo_id: edit ? items?.eixo.id : 0, 
+      eixo_id: edit ? items?.eixo.id : 0,
       status: items?.status || 'PENDENTE'
     },
     validate: {
@@ -50,10 +50,14 @@ export default function ProposalsForm({
         return null
       },
       titulo: (value) => {
-        return value.length < 5 ? 'Título deve ter no mínimo 5 caracteres' : null
+        return value.length < 5
+          ? 'Título deve ter no mínimo 5 caracteres'
+          : null
       },
       conteudo: (value) => {
-        return value.length < 5 ? 'Descrição deve ter no mínimo 5 caracteres' : null
+        return value.length < 5
+          ? 'Descrição deve ter no mínimo 5 caracteres'
+          : null
       }
     }
   })
@@ -138,6 +142,7 @@ export default function ProposalsForm({
       <TextInput
         withAsterisk
         label="Título"
+        disabled={edit}
         placeholder="Dê um titulo a sua proposta"
         key={form.key('titulo')}
         {...form.getInputProps('titulo')}
@@ -146,6 +151,7 @@ export default function ProposalsForm({
         <Select
           label="Status"
           allowDeselect={false}
+          disabled={edit}
           data={[
             { value: 'APROVADA', label: 'Aprovada' },
             { value: 'REJEITADA', label: 'Rejeitada' },
@@ -160,22 +166,26 @@ export default function ProposalsForm({
 
       <Textarea
         withAsterisk
+        disabled={edit}
         label="Descrição"
         autosize
         minRows={3}
-        maxRows={6}
+        maxRows={12}
         placeholder="Conte-nos um pouco sobre a sua proposta"
         key={form.key('conteudo')}
         {...form.getInputProps('conteudo')}
       />
-      <Group className="justify-end pt-3">
-        <Button onClick={onClose} variant="light">
-          Cancelar
-        </Button>
-        <Button type="submit" loading={loading}>
-          Salvar
-        </Button>
-      </Group>
+
+      {!edit && (
+        <Group className="justify-end pt-3">
+          <Button onClick={onClose} variant="light">
+            Cancelar
+          </Button>
+          <Button type="submit" loading={loading}>
+            Salvar
+          </Button>
+        </Group>
+      )}
     </form>
   )
 }

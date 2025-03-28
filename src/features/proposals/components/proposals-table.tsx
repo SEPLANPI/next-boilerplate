@@ -68,7 +68,7 @@ export function ProposalsTable({ data }: ProposalsTableProps) {
             return (
               <TableTr
                 key={proposal.id}
-                // onClick={() => handleRowClick(proposal)}
+                onClick={() => handleRowClick(proposal)}
               >
                 <TableTd w="50%">
                   <Text size="sm" truncate className="max-w-[650px]">
@@ -102,7 +102,7 @@ export function ProposalsTable({ data }: ProposalsTableProps) {
         </TableTbody>
       </Table>
       <Drawer
-        title="Editar Proposta"
+        title="Visualizar Proposta"
         size="md"
         position="right"
         opened={opened}
