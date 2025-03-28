@@ -2,6 +2,7 @@ import DownloadButtons from '@/features/counselors/components/download-buttons'
 import { CounselorInfo } from '@/features/counselors/types'
 import { dayjs } from '@/lib/dayjs'
 import { Box, Grid, GridCol, Text } from '@mantine/core'
+import { get } from 'http'
 
 interface CounselorInfoViewProps {
   data: CounselorInfo
@@ -219,7 +220,7 @@ function councilSection(councilData: CounselorInfo) {
                 Composição no conselho
               </span>
               <Text size="sm" truncate>
-                {councilData.tipo_membro}
+                {getMemberType(councilData.tipo_membro)}
               </Text>
             </div>
           </GridCol>
@@ -235,36 +236,40 @@ function adressSection(adressData: CounselorInfo) {
       <SectionHeader title="Endereço" />
       <div className="px-4">
         <Grid className="flex">
-          <GridCol span={6}>
-            <div className="overflow-hidden text-ellipsis whitespace-nowrap">
-              <span className="text-sm font-semibold text-gray-600">
-                Rua/Avenida
-              </span>
-              <Text size="sm" truncate lineClamp={2}>
-                {adressData.endereco.logradouro}
-              </Text>
-            </div>
-          </GridCol>
-          <GridCol span={6}>
-            <div className="overflow-hidden text-ellipsis whitespace-nowrap">
-              <span className="text-sm font-semibold text-gray-600">
-                Número
-              </span>
-              <Text size="sm" truncate lineClamp={2}>
-                {adressData.endereco.numero}
-              </Text>
-            </div>
-          </GridCol>
-          <GridCol span={6}>
-            <div className="overflow-hidden text-ellipsis whitespace-nowrap">
-              <span className="text-sm font-semibold text-gray-600">
-                Bairro
-              </span>
-              <Text size="sm" truncate>
-                {adressData.endereco.bairro}
-              </Text>
-            </div>
-          </GridCol>
+          {adressData.endereco.tipo_zona === 'URBANA' && (
+            <>
+              <GridCol span={6}>
+                <div className="overflow-hidden text-ellipsis whitespace-nowrap">
+                  <span className="text-sm font-semibold text-gray-600">
+                    Rua/Avenida
+                  </span>
+                  <Text size="sm" truncate lineClamp={2}>
+                    {adressData.endereco.logradouro}
+                  </Text>
+                </div>
+              </GridCol>
+              <GridCol span={6}>
+                <div className="overflow-hidden text-ellipsis whitespace-nowrap">
+                  <span className="text-sm font-semibold text-gray-600">
+                    Número
+                  </span>
+                  <Text size="sm" truncate lineClamp={2}>
+                    {adressData.endereco.numero}
+                  </Text>
+                </div>
+              </GridCol>
+              <GridCol span={6}>
+                <div className="overflow-hidden text-ellipsis whitespace-nowrap">
+                  <span className="text-sm font-semibold text-gray-600">
+                    Bairro
+                  </span>
+                  <Text size="sm" truncate>
+                    {adressData.endereco.bairro}
+                  </Text>
+                </div>
+              </GridCol>
+            </>
+          )}
           <GridCol span={6}>
             <span className="text-sm font-semibold text-gray-600">CEP</span>
             <Text size="sm" truncate lineClamp={2}>
@@ -361,6 +366,17 @@ function personalSection(personalData: CounselorInfo) {
       </div>
     </>
   )
+}
+
+function getMemberType(memberType: string) {
+  switch (memberType) {
+    case 'NUCLEO_GESTOR':
+      return 'Núcleo Gestor'
+    case 'MEMBRO':
+      return 'Membro'
+    default:
+      return 'Desconhecido'
+  }
 }
 
 function getDocType(docType: string) {
