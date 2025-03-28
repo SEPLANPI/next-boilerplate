@@ -37,7 +37,6 @@ export async function getRegistrations(): Promise<
     const data: GetRegistrationsResponse = await response.json()
     return { data }
   } catch (error) {
-    console.log(error)
     return { error: API.UNEXPECTED_FETCH_ERROR }
   }
 }

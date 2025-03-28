@@ -35,7 +35,6 @@ export async function getProposals(): Promise<
     const data: GetProposalResponse = await response.json()
     return { data }
   } catch (error) {
-    console.log(error)
     return { error: API.UNEXPECTED_FETCH_ERROR }
   }
 }
