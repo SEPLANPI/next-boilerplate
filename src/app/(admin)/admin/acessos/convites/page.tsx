@@ -8,8 +8,8 @@ import {
 } from '@/components/layouts/dashboard-layout/content'
 import { DashboardHeader } from '@/components/layouts/dashboard-layout/header'
 import { AccessTabs } from '@/features/access/components/access-tabs'
+import { CreateInvitationModal } from '@/features/invitations/components/create-invitation-modal'
 import { InvitationFilters } from '@/features/invitations/components/invitation-filters'
-import { InvitationForm } from '@/features/invitations/components/invitation-form'
 import { InvitationsListView } from '@/features/invitations/components/invitations-list-view'
 import { InvitationsTableSkeleton } from '@/features/invitations/components/invitations-table-skeleton'
 import { invitationsSearchParams } from '@/features/invitations/lib/search-params'
@@ -51,7 +51,7 @@ export default async function Convites({
             <Suspense>
               <InvitationFilters />
             </Suspense>
-            <InvitationForm />
+            <CreateInvitationModal />
           </div>
           <Suspense fallback={<InvitationsTableSkeleton />} key={suspenseKey}>
             <InvitationsListView />

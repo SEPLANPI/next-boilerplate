@@ -15,16 +15,17 @@ import {
   Avatar,
   Tooltip
 } from '@mantine/core'
-import { MoreHorizontal, Copy, Trash2 } from 'lucide-react'
+import { MoreHorizontal, Copy, Trash2, Pencil } from 'lucide-react'
 import { useClipboard } from '@/hooks/use-clipboard'
 import { useDisclosure } from '@mantine/hooks'
 import { parseAsString, useQueryState } from 'nuqs'
 import { SortableColumnHeader } from '@/components/ui/sortable-column-header'
 import { SORT_LABELS } from '@/constants/sort-labels'
-import { Invitation } from '../types'
 import { formatDate } from '@/utils/format-date'
 import { DeleteInvitationModal } from './delete-invitation-modal'
+import { EditInvitationModal } from './edit-invitation-modal'
 import Link from 'next/link'
+import { Invitation } from '../types'
 
 const INVITATION_STATUS = {
   USED: { color: 'blue' as MantineColor, label: 'Usado' },
@@ -37,8 +38,12 @@ interface InvitationsTableProps {
 
 export function InvitationsTable({ data }: InvitationsTableProps) {
   const { copy } = useClipboard()
-  const [opened, { open, close }] = useDisclosure(false)
-  const [selectedId, setSelectedId] = React.useState<string | null>(null)
+  const [deleteOpened, { open: openDelete, close: closeDelete }] =
+    useDisclosure(false)
+  const [editOpened, { open: openEdit, close: closeEdit }] =
+    useDisclosure(false)
+  const [selectedInvitation, setSelectedInvitation] =
+    React.useState<Invitation | null>(null)
   const [sort, setSort] = useQueryState(
     'sort',
     parseAsString.withOptions({
@@ -134,16 +139,27 @@ export function InvitationsTable({ data }: InvitationsTableProps) {
                         Copiar URL
                       </Menu.Item>
                       {!invitation.usado && (
-                        <Menu.Item
-                          color="red"
-                          leftSection={<Trash2 className="size-4" />}
-                          onClick={() => {
-                            setSelectedId(invitation.id)
-                            open()
-                          }}
-                        >
-                          Excluir
-                        </Menu.Item>
+                        <>
+                          <Menu.Item
+                            leftSection={<Pencil className="size-4" />}
+                            onClick={() => {
+                              setSelectedInvitation(invitation)
+                              openEdit()
+                            }}
+                          >
+                            Editar
+                          </Menu.Item>
+                          <Menu.Item
+                            color="red"
+                            leftSection={<Trash2 className="size-4" />}
+                            onClick={() => {
+                              setSelectedInvitation(invitation)
+                              openDelete()
+                            }}
+                          >
+                            Excluir
+                          </Menu.Item>
+                        </>
                       )}
                     </Menu.Dropdown>
                   </Menu>
@@ -154,13 +170,23 @@ export function InvitationsTable({ data }: InvitationsTableProps) {
         </TableTbody>
       </Table>
       <DeleteInvitationModal
-        opened={opened}
+        opened={deleteOpened}
         onClose={() => {
-          close()
-          setSelectedId(null)
+          closeDelete()
+          setSelectedInvitation(null)
         }}
-        invitationId={selectedId}
+        invitationId={selectedInvitation?.id || null}
       />
+      {selectedInvitation && (
+        <EditInvitationModal
+          invitation={selectedInvitation}
+          opened={editOpened}
+          onClose={() => {
+            closeEdit()
+            setSelectedInvitation(null)
+          }}
+        />
+      )}
     </>
   )
 }

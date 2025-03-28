@@ -12,14 +12,14 @@ type BaseInvitation = {
 
 export type Invitation =
   | (BaseInvitation & {
-    usado: true
-    conselheiro: {
-      id: string
-      nome: string
-      cpf: string
-    }
-  })
+      usado: true
+      conselheiro: {
+        id: string
+        nome: string
+        cpf: string
+      }
+    })
   | (BaseInvitation & {
-    usado: false
-    conselheiro: null
-  })
+      usado: false
+      conselheiro: null
+    })

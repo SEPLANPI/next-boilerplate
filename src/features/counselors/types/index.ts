@@ -27,7 +27,7 @@ interface EventoData {
 interface InscricoesData {
   id: string
   evento: EventoData
-  eixo: { id: string, nome: string }
+  eixo: { id: string; nome: string }
   tipo_inscricao: string
   status: string
   validado_em: string
