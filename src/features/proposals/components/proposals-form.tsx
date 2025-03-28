@@ -84,7 +84,8 @@ export default function ProposalsForm({
       setLoading(false)
       notifications.show({
         title: 'Erro ao enviar proposta',
-        message: `Houve um erro ao enviar a proposta, tente novamente`
+        message: `Houve um erro ao enviar a proposta, tente novamente`,
+        color: 'red'
       })
     }
   }
@@ -106,7 +107,8 @@ export default function ProposalsForm({
         console.error('Erro na requisição:', error)
         notifications.show({
           title: 'Erro',
-          message: 'Ocorreu um erro ao buscar eixos'
+          message: 'Ocorreu um erro ao buscar eixos',
+          color: 'red'
         })
       }
     }

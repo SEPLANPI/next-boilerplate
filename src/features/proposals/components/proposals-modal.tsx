@@ -17,7 +17,7 @@ export default function ProposalsModal() {
         Cadastrar Proposta
       </Button>
       <Drawer
-        title="Adicionar Proposta"
+        title="Cadastro de Proposta"
         size="md"
         position='right'
         opened={opened}

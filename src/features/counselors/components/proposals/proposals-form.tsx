@@ -55,7 +55,7 @@ export default function ProposalsForm({
     if (response.ok) {
       notifications.show({
         title: 'Proposta enviada',
-        message: 'Sua proposta foi enviada com sucesso'
+        message: 'Sua proposta foi enviada com sucesso',
       })
       router.refresh()
       onClose()
@@ -63,7 +63,8 @@ export default function ProposalsForm({
       setLoading(false)
       notifications.show({
         title: 'Erro ao enviar proposta',
-        message: `Houve um erro ao enviar a proposta, tente novamente`
+        message: `Houve um erro ao enviar a proposta, tente novamente`,
+        color: 'red'
       })
     }
   }
