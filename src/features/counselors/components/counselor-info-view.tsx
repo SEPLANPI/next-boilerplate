@@ -152,7 +152,7 @@ function eventSection(eventData: CounselorInfo) {
           <GridCol span={12}>
             <div className="overflow-hidden text-ellipsis whitespace-nowrap">
               <span className="text-sm font-semibold text-gray-600">
-                Eixo de participação
+                Nome do evento
               </span>
               <Text size="sm" truncate lineClamp={2}>
                 {eventData.inscricoes[0].evento.nome || 'Não informado'}
@@ -162,10 +162,22 @@ function eventSection(eventData: CounselorInfo) {
           <GridCol span={12}>
             <div className="overflow-hidden text-ellipsis whitespace-nowrap">
               <span className="text-sm font-semibold text-gray-600">
+                Eixo de Participação
+              </span>
+              <Text size="sm" truncate lineClamp={2}>
+                {eventData.inscricoes[0].eixo.nome || 'Não informado'}
+              </Text>
+            </div>
+          </GridCol>
+          <GridCol span={12}>
+            <div className="overflow-hidden text-ellipsis whitespace-nowrap">
+              <span className="text-sm font-semibold text-gray-600">
                 Data do evento
               </span>
               <Text size="sm" truncate lineClamp={2}>
-                {eventData.inscricoes[0].evento.data_evento || 'Não informado'}
+                {eventData.inscricoes[0].evento.data_evento && dayjs(eventData.inscricoes[0].evento.data_evento).isValid()
+                  ? dayjs(eventData.inscricoes[0].evento.data_evento).format('DD/MM/YYYY')
+                  : 'Não informado'}
               </Text>
             </div>
           </GridCol>
