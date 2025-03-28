@@ -2,7 +2,6 @@ import DownloadButtons from '@/features/counselors/components/download-buttons'
 import { CounselorInfo } from '@/features/counselors/types'
 import { dayjs } from '@/lib/dayjs'
 import { Box, Grid, GridCol, Text } from '@mantine/core'
-import { get } from 'http'
 
 interface CounselorInfoViewProps {
   data: CounselorInfo
@@ -175,8 +174,11 @@ function eventSection(eventData: CounselorInfo) {
                 Data do evento
               </span>
               <Text size="sm" truncate lineClamp={2}>
-                {eventData.inscricoes[0].evento.data_evento && dayjs(eventData.inscricoes[0].evento.data_evento).isValid()
-                  ? dayjs(eventData.inscricoes[0].evento.data_evento).format('DD/MM/YYYY')
+                {eventData.inscricoes[0].evento.data_evento &&
+                dayjs(eventData.inscricoes[0].evento.data_evento).isValid()
+                  ? dayjs(eventData.inscricoes[0].evento.data_evento).format(
+                      'DD/MM/YYYY'
+                    )
                   : 'Não informado'}
               </Text>
             </div>
@@ -298,14 +300,25 @@ function adressSection(adressData: CounselorInfo) {
               </Text>
             </div>
           </GridCol>
-          <GridCol span={12}>
-            <span className="text-sm font-semibold text-gray-600">
-              Complemento
-            </span>
-            <Text size="sm" truncate lineClamp={2}>
-              {adressData.endereco.complemento || 'Não informado'}
-            </Text>
-          </GridCol>
+          {adressData.endereco.tipo_zona === 'URBANA' ? (
+            <GridCol span={12}>
+              <span className="text-sm font-semibold text-gray-600">
+                Complemento
+              </span>
+              <Text size="sm" truncate lineClamp={2}>
+                {adressData.endereco.complemento || 'Não informado'}
+              </Text>
+            </GridCol>
+          ) : (
+            <GridCol span={12}>
+              <span className="text-sm font-semibold text-gray-600">
+                Referência
+              </span>
+              <Text size="sm" truncate lineClamp={2}>
+                {adressData.endereco.referencia || 'Não informado'}
+              </Text>
+            </GridCol>
+          )}
         </Grid>
       </div>
     </>
