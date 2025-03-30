@@ -4,6 +4,7 @@ import { env } from './config/env'
 import { refreshAccessToken } from './lib/auth/refresh-access-token'
 import { handleInitialSignIn } from './lib/auth/handle-initial-signin'
 import { routingConfig } from './config/routing'
+import { verifySessionActivity } from './lib/auth/verify-session'
 
 const keycloakProvider = KeycloakProvider({
   clientId: env.AUTH_KEYCLOAK_ID,
@@ -39,12 +40,17 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         return handleInitialSignIn(token, user, account)
       }
 
-      if (trigger === 'update') {
+      if (Date.now() > token.accessTokenExpires || trigger === 'update')
         return refreshAccessToken(token)
+
+      if (token.accessToken) {
+        const isActive = await verifySessionActivity(token.accessToken)
+        if (!isActive) {
+          return { ...token, error: 'TokenInvalidError' }
+        }
       }
 
-      if (Date.now() < token.accessTokenExpires) return token
-      return refreshAccessToken(token)
+      return token
     },
     authorized: async ({ auth }) => {
       return !!auth && !auth.error

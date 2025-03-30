@@ -28,3 +28,12 @@ export interface TokenRefreshResponse {
   expires_in: number
   refresh_expires_in: number
 }
+
+export interface TokenIntrospectionResponse {
+  active: boolean
+  exp: number
+  sub?: string
+  username?: string
+  client_id?: string
+  error?: string
+}
