@@ -1,8 +1,8 @@
 import { UseFormReturnType } from '@mantine/form'
-import { Radio, RadioGroup, Tooltip } from '@mantine/core'
+import { RadioGroup } from '@mantine/core'
+import { RadioCard } from '@/components/ui/radio-card'
 import { useQuery } from '@tanstack/react-query'
 import { FormValues } from './register-counselor-form'
-import { Info } from 'lucide-react'
 import { getWorkshopsOptions } from '../api/client/get-workshops-options'
 
 export function WorkshopStep({
@@ -17,6 +17,14 @@ export function WorkshopStep({
     gcTime: 7 * 24 * 60 * 60 * 1000
   })
 
+  const workshopOptions =
+    workshops?.map((workshop) => ({
+      value: workshop.id.toString(),
+      label: workshop.nome,
+      disabled: !workshop.vagas_disponiveis,
+      disabledTooltip: 'Vagas esgotadas'
+    })) || []
+
   return (
     <RadioGroup
       label="Selecione abaixo em qual oficina gostaria de confirmar sua participação"
@@ -25,21 +33,8 @@ export function WorkshopStep({
       {...form.getInputProps('eixo_id')}
     >
       <div className="flex flex-col gap-4">
-        {workshops?.map((workshop) => (
-          <Radio.Card
-            key={workshop.id.toString()}
-            className="flex items-center space-x-4 rounded border p-3 text-sm text-secondary-foreground disabled:bg-gray-50 disabled:text-gray-500"
-            value={workshop.id.toString()}
-            disabled={!workshop.vagas_disponiveis}
-          >
-            <Radio.Indicator />
-            <span className="w-full">{workshop.nome}</span>
-            {!workshop.vagas_disponiveis && (
-              <Tooltip label="Vagas esgotadas">
-                <Info className="size-4" />
-              </Tooltip>
-            )}
-          </Radio.Card>
+        {workshopOptions.map((option) => (
+          <RadioCard key={option.value} {...option} />
         ))}
       </div>
     </RadioGroup>

@@ -5,6 +5,7 @@ import { CouncilRepresentativeType, MemberType } from '../types/counselor'
 import { FormValues } from './register-counselor-form'
 import { getCouncils } from '../api/client/get-councils'
 import { useEffect } from 'react'
+import { RadioCard } from '@/components/ui/radio-card'
 
 export function CouncilInfoStep({
   form
@@ -17,6 +18,12 @@ export function CouncilInfoStep({
     staleTime: 24 * 60 * 60 * 1000,
     gcTime: 7 * 24 * 60 * 60 * 1000
   })
+
+  const councilOptions =
+    councils?.map((council) => ({
+      value: council.id.toString(),
+      label: council.nome
+    })) || []
 
   // Reset bank fields when council type changes
   useEffect(() => {
@@ -38,16 +45,9 @@ export function CouncilInfoStep({
         className="col-span-2"
         {...form.getInputProps('conselho_id')}
       >
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          {councils?.map((council) => (
-            <Radio.Card
-              key={council.id}
-              className="flex items-center space-x-3 rounded border p-3 text-sm text-secondary-foreground"
-              value={council.id.toString()}
-            >
-              <Radio.Indicator />
-              <span>{council.nome}</span>
-            </Radio.Card>
+        <div className="grid grid-cols-2 gap-4">
+          {councilOptions.map((option) => (
+            <RadioCard key={option.value} {...option} />
           ))}
         </div>
       </RadioGroup>
