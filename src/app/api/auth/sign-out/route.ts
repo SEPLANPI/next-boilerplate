@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation'
 
 export async function GET(req: Request) {
   const searchParams = new URL(req.url).searchParams
-  const redirectTo = searchParams.get('redirect')
+  const redirectTo = searchParams.get('redirectTo')
 
   const token = await getToken({
     req,
@@ -21,7 +21,7 @@ export async function GET(req: Request) {
   const params = new URLSearchParams({
     client_id: env.AUTH_KEYCLOAK_ID,
     id_token_hint: token.idToken as string,
-    post_logout_redirect_uri: `${env.APP_URL}/api/auth/callback-sign-out${redirectTo ? `?redirect=${redirectTo}` : ''}`
+    post_logout_redirect_uri: `${env.APP_URL}/api/auth/callback-sign-out${redirectTo ? `?redirectTo=${redirectTo}` : ''}`
   })
 
   const keycloakLogoutUrl = `${url}?${params}`
