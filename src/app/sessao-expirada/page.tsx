@@ -1,14 +1,14 @@
-'use client'
-
 import { Button } from '@mantine/core'
 import { AlertCircle } from 'lucide-react'
 import { signIn } from 'next-auth/react'
-import { useSearchParams } from 'next/navigation'
 
-export default function SessionExpired() {
-  const searchParams = useSearchParams()
-  const redirectTo = searchParams.get('redirectTo') || '/'
-
+export default async function SessionExpired({
+  searchParams: { redirectTo }
+}: {
+  searchParams: {
+    redirectTo?: string
+  }
+}) {
   return (
     <div className="flex h-screen w-full items-center justify-center">
       <div className="space-y-6 text-center">
