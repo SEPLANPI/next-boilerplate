@@ -1,30 +1,10 @@
 import { Text, Timeline, TimelineItem } from '@mantine/core'
 import { CircleDotDashed } from 'lucide-react'
+import { History, Proposal } from '../types'
 
-interface TimelineItemProps {
-  title: string
-  date: string
-  description: string
-}
 
-export default function ProposalTimeline() {
-  const items: TimelineItemProps[] = [
-    {
-      title: 'Proposta criada',
-      date: '02/08/2021 às 12:36',
-      description: 'Proposta criada por João Silva'
-    },
-    {
-      title: 'Proposta enviada',
-      date: '02/08/2021 às 12:59',
-      description: 'Proposta enviada para revisão por Maria Souza'
-    },
-    {
-      title: 'Proposta aprovada',
-      date: '02/08/2021 às 14:42',
-      description: 'Proposta aprovada por Maria Souza'
-    }
-  ]
+export default function ProposalTimeline({ proposta }: { proposta: Proposal }) {
+  const historyItems: History[] = proposta.historicos
 
   return (
     <>
@@ -41,10 +21,10 @@ export default function ProposalTimeline() {
         lineWidth="1px"
         color="gray-50"
       >
-        {items.map((item, index) => (
+        {historyItems.map((item, index) => (
           <TimelineItem
             bullet={<CircleDotDashed size="44" color="gray" />}
-            title={item.title}
+            title={item.alterado_por}
             styles={{
               itemTitle: { fontWeight: 700 }
             }}
@@ -52,10 +32,10 @@ export default function ProposalTimeline() {
             key={index}
           >
             <Text className="text-gray-400" fw={400}>
-              {item.description}
+              {item.dados_antigos.conteudo}
             </Text>
             <Text className="text-gray-400" size="xs">
-              {item.date}
+              {item.criado_em}
             </Text>
           </TimelineItem>
         ))}

@@ -7,6 +7,19 @@ export type Proposal = {
     autor: string
     tipo_autor: string
     criado_em: string
+    historicos: History[]
+}
+
+export type History = {
+    id: number
+    status: 'PENDENTE' | 'APROVADA' | 'REJEITADA' | 'EM_VOTACAO' | 'CANCELADA'
+    comentário: string
+    dados_antigos: {
+        titulo: string
+        conteudo: string
+    }
+    alterado_por: string
+    criado_em: string
 }
 
 export type Axis = {
