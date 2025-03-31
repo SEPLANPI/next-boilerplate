@@ -39,8 +39,7 @@ export function ProposalsTable({ data }: ProposalsTableProps) {
   const router = useRouter()
 
   function handleRowClick(proposal: Proposal) {
-    open()
-    setItem(proposal)
+    router.push(`/admin/propostas/${proposal.id}`)
   }
 
   return (
