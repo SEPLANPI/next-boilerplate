@@ -14,7 +14,7 @@ const BUTTON_PROPS = {
   leftSection: <Lock className="size-4" />,
   component: 'a' as const,
   href: '/api/auth/role-redirect',
-  className: 'text-gray-900'
+  className: 'text-gray-900 font-sans'
 }
 
 export function Nav({ isFloating = false }: { isFloating: boolean }) {
@@ -90,7 +90,10 @@ export function Nav({ isFloating = false }: { isFloating: boolean }) {
               </ul>
             </nav>
             <Button {...BUTTON_PROPS} fullWidth>
-              Acessar Sistema
+              <span className="block text-[9px] font-normal">
+                Acesso exclusivo
+              </span>
+              <span className="text-xs font-semibold">Conselheiros</span>
             </Button>
           </div>
         </Drawer>
@@ -149,7 +152,12 @@ export function Nav({ isFloating = false }: { isFloating: boolean }) {
           </li>
         </ul>
       </nav>
-      <Button {...BUTTON_PROPS}>Acessar Sistema</Button>
+      <Button {...BUTTON_PROPS}>
+        <div className="flex flex-col">
+          <span className="text-[9px] font-normal">Acesso exclusivo</span>
+          <span className="text-xs font-semibold">Conselheiros</span>
+        </div>
+      </Button>
     </div>
   )
 }

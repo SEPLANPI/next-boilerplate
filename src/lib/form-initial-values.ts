@@ -9,6 +9,8 @@ export type InitialFormValues<T extends z.ZodType> = {
   ? []
   : z.infer<T>[K] extends File | null
   ? File | null
+  : z.infer<T>[K] extends Date | null
+  ? Date | null
   : z.infer<T>[K] extends object
   ? InitialFormValues<z.ZodType<z.infer<T>[K]>> | null
   : string | null

@@ -9,9 +9,8 @@ import {
   CircleDotDashed
 } from 'lucide-react'
 import { useForm, zodResolver } from '@mantine/form'
-import { personSchema } from '../data/person-schema'
+import { personSchema, RegistrationType } from '../data/person-schema'
 import { PersonalDataStep } from './personal-data-step'
-import { DocumentsStep } from './documents-step'
 import { RegistrationStep } from './registration-step'
 import { FormNavigation } from '@/features/register-counselor/components/form-navigation'
 import {
@@ -44,9 +43,17 @@ export function RegisterPersonForm() {
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
 
-  const form = useForm({
-    initialValues: createInitialFormValues(personSchema),
-    validate: zodResolver(personSchema)
+  const form = useForm<FormValues>({
+    initialValues: {
+      ...createInitialFormValues(personSchema),
+      email: ''
+    },
+    validate: zodResolver(personSchema),
+    transformValues: (values) => ({
+      ...values,
+      telefone: values.telefone.replace(/\D/g, ''),
+      cpf: values.cpf.replace(/\D/g, ''),
+    })
   })
 
   const steps = useMemo(
@@ -61,14 +68,6 @@ export function RegisterPersonForm() {
           'telefone',
           'email',
           'municipio_id'
-        ]
-      },
-      {
-        label: 'Documentos',
-        component: <DocumentsStep form={form} />,
-        fields: [
-          'documento_identificacao_frente',
-          'documento_identificacao_verso'
         ]
       },
       {
@@ -141,21 +140,30 @@ export function RegisterPersonForm() {
     setActive(nextStep)
   }
 
-  const handleSubmit = async (values: any) => {
+  const handleSubmit = async (values: FormValues) => {
     setIsSubmitting(true)
-    const formData = new FormData()
 
-    Object.entries(values).forEach(([key, value]) => {
-      if (value instanceof File) {
-        formData.append(key, value)
-      } else if (value instanceof Date) {
-        formData.append(key, value.toISOString().split('T')[0])
-      } else if (value !== null && value !== undefined) {
-        formData.append(key, String(value))
-      }
-    })
+    const registrationMap = {
+      OFICINA: 'votante',
+      PLENARIA: 'ouvinte'
+    } as const
 
-    const result = await registerPerson(formData)
+    const registrationType =  registrationMap[values.tipo_inscricao as RegistrationType] 
+
+    const payload = {
+      nome: values.nome,
+      cpf: values.cpf,
+      telefone: values.telefone,
+      email: values.email || null,
+      municipio_id: values.municipio_id,
+      tipo_inscricao: registrationType,
+      data_nascimento: values.data_nascimento instanceof Date 
+        ? values.data_nascimento.toISOString().split('T')[0]
+        : null,
+      ...(values.tipo_inscricao === 'OFICINA' ? { eixo_id: values.eixo_id } : {}),
+    }
+
+    const result = await registerPerson(payload)
 
     if (result?.error) {
       setIsSubmitting(false)
@@ -167,7 +175,7 @@ export function RegisterPersonForm() {
       return
     }
 
-    router.push('/participantes/cadastro/sucesso/')
+    router.push('/inscrever-se/sucesso')
     setIsSubmitting(false)
   }
 

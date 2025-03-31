@@ -49,7 +49,6 @@ export function PersonalDataStep({
         />
       </Input.Wrapper>
       <DateInput
-        withAsterisk
         className="col-span-2 sm:col-span-1"
         label="Data de Nascimento"
         valueFormat="DD/MM/YYYY"
@@ -69,9 +68,9 @@ export function PersonalDataStep({
         />
       </Input.Wrapper>
       <TextInput
-        withAsterisk
         className="col-span-2 sm:col-span-1"
         label="Email"
+        placeholder="email@exemplo.com"
         type="email"
         {...form.getInputProps('email')}
       />

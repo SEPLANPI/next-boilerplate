@@ -1,28 +1,48 @@
 'use server'
 
+import { getActiveEvent } from '@/api/get-active-event'
 import { API } from '@/constants/messages'
 import { api } from '@/lib/server-api'
 import { ActionState, DjangoError } from '@/types/actions'
-import { revalidatePath } from 'next/cache'
 
 export async function registerPerson(
-  input: FormData
+  input: any
 ): Promise<ActionState<{ success: boolean }>> {
   try {
-    const response = await api.post('/participantes/', {
-      contentType: 'form-data',
-      body: input
+    const result = await getActiveEvent()
+
+    if (result.error) {
+      return { error: result.error }
+    }
+
+    const event = result.data
+
+    console.log(event)
+
+    console.log({
+      ...input,
+      evento_id: event?.id,
+      cadastrado_presencialmente: false
+    })
+
+    const response = await api.post('/pessoas/', {
+      body: {
+        ...input,
+        evento_id: event?.id,
+        cadastrado_presencialmente: false
+      }
     })
 
     if (!response.ok) {
       const error: DjangoError = await response.json()
+
+      console.log(error)
       return { error }
     }
 
-    revalidatePath('/admin/participantes')
     return { data: { success: true } }
   } catch (error) {
-    console.error('Error registering person:', error)
+    console.error('Erro ao registrar pessoa:', error)
     return { error: API.UNEXPECTED_FETCH_ERROR }
   }
 }

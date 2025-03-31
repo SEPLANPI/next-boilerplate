@@ -1,7 +1,7 @@
 import { Card } from '@/features/landing-page/components/card'
 import { Header } from '@/features/landing-page/components/header'
 import { Section } from '@/features/landing-page/components/section'
-import { Anchor } from '@mantine/core'
+import { Anchor, Button } from '@mantine/core'
 import {
   BookOpen,
   Check,
@@ -41,7 +41,7 @@ export default function LandingPage() {
     <div className="font-montserrat">
       <section className="relative flex h-[320px] flex-col p-8 sm:h-[420px] md:h-[660px] md:py-0">
         <Header />
-        <main className="relative z-10 mx-auto flex w-full max-w-[1120px] flex-1 flex-col justify-center gap-2.5 text-white">
+        <main className="relative z-10 mx-auto flex w-full max-w-[1120px] flex-1 flex-col justify-center gap-4 text-white">
           <h1 className="max-w-xs text-2xl font-bold md:max-w-md md:text-4xl">
             Planejando um futuro sustentável e inclusivo
           </h1>
@@ -49,6 +49,14 @@ export default function LandingPage() {
             Aproximando a gestão pública da sociedade para construir um futuro
             mais justo e sustentável.
           </p>
+          <Button
+            component={Link}
+            href="/inscrever-se"
+            color="#C5D300"
+            className="w-fit font-sans text-gray-900"
+          >
+            Junte-se a nós
+          </Button>
         </main>
         <Image
           className="absolute left-0 top-0 z-0 hidden h-full object-cover sm:block"
@@ -236,7 +244,7 @@ export default function LandingPage() {
 
       <Section
         containerClassName="flex flex-col items-center"
-        className="!pt-0"
+        className="!py-0"
       >
         <h3 className="mb-8 text-center font-sans text-sm font-extrabold tracking-widest">
           CRONOGRAMA
@@ -351,6 +359,44 @@ export default function LandingPage() {
                 <span className="text-sm">Teresina</span>
               </div>
             </div>
+          </div>
+        </div>
+      </Section>
+
+      <Section id="sobre" className="relative">
+        <Image
+          className="absolute left-0 top-0 z-0 h-full object-cover"
+          src="/lp/bg-participar.png"
+          sizes={'100vw'}
+          quality={100}
+          fill
+          alt="uma senhora e um senhor em um gradiente azul claro e escuro com as listras do piauí"
+        />
+        <div className="grid grid-cols-1 items-center gap-10 sm:grid-cols-2 md:grid-cols-3">
+          <Image
+            className="h-full rounded-md object-cover"
+            src="/lp/senhora-bola-verde.png"
+            width={900}
+            height={900}
+            quality={100}
+            alt="Senhora sorrindo em fundo verde e logo do diálogos ao lado"
+          />
+          <div className="flex flex-col gap-4 md:col-span-2">
+            <h2 className="text-xl font-bold md:text-4xl">
+              Participe do Diálogos pelo Piauí!
+            </h2>
+            <p className="text-sm sm:text-base">
+              Inscreva-se agora e garanta sua vaga nas oficinas de Saúde, Meio
+              Ambiente, Educação e muito mais. Vamos juntos debater e criar
+              soluções para o Piauí!
+            </p>
+            <Button
+              component={Link}
+              href="/inscrever-se"
+              className="w-fit font-sans"
+            >
+              Quero participar
+            </Button>
           </div>
         </div>
       </Section>

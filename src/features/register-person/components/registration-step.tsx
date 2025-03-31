@@ -6,21 +6,6 @@ import { RadioGroup } from '@mantine/core'
 import { FormValues } from './register-person-form'
 import { RadioCard } from '@/components/ui/radio-card'
 
-const REGISTRATION_TYPES = [
-  {
-    value: RegistrationType.OFICINA,
-    label: 'Oficina',
-    description:
-      'Participe de uma oficina temática com discussões e atividades práticas em grupo'
-  },
-  {
-    value: RegistrationType.PLENARIA,
-    label: 'Plenária',
-    description:
-      'Participe da sessão plenária com apresentações e debates gerais'
-  }
-]
-
 export function RegistrationStep({
   form
 }: {
@@ -44,21 +29,28 @@ export function RegistrationStep({
   return (
     <>
       <RadioGroup
-        label="Tipo de Inscrição"
+        label="Como deseja participar?"
         withAsterisk
         className="col-span-2"
         {...form.getInputProps('tipo_inscricao')}
       >
         <div className="flex flex-col gap-4">
-          {REGISTRATION_TYPES.map((option) => (
-            <RadioCard key={option.value} {...option} />
-          ))}
+          <RadioCard
+            value={RegistrationType.PLENARIA}
+            label="Participar apenas da plenária"
+            description="Acompanhe a sessão da tarde, onde o governador comentará as propostas mais votadas."
+          />
+          <RadioCard
+            value={RegistrationType.OFICINA}
+            label="Participar de uma oficina e da plenária"
+            description="Pela manhã, participe de uma oficina e ajude a escolher propostas. À tarde, acompanhe a plenária."
+          />
         </div>
       </RadioGroup>
 
       {form.values.tipo_inscricao === RegistrationType.OFICINA && (
         <RadioGroup
-          label="Selecione a oficina desejada"
+          label="Escolha sua oficina da manhã"
           withAsterisk
           className="col-span-2"
           {...form.getInputProps('eixo_id')}
