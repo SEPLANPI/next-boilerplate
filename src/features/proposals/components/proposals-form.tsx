@@ -142,7 +142,6 @@ export default function ProposalsForm({
       <TextInput
         withAsterisk
         label="Título"
-        disabled={edit}
         placeholder="Dê um titulo a sua proposta"
         key={form.key('titulo')}
         {...form.getInputProps('titulo')}
@@ -151,7 +150,6 @@ export default function ProposalsForm({
         <Select
           label="Status"
           allowDeselect={false}
-          disabled={edit}
           data={[
             { value: 'APROVADA', label: 'Aprovada' },
             { value: 'REJEITADA', label: 'Rejeitada' },
@@ -166,7 +164,6 @@ export default function ProposalsForm({
 
       <Textarea
         withAsterisk
-        disabled={edit}
         label="Descrição"
         autosize
         minRows={3}
@@ -176,16 +173,14 @@ export default function ProposalsForm({
         {...form.getInputProps('conteudo')}
       />
 
-      {!edit && (
-        <Group className="justify-end pt-3">
-          <Button onClick={onClose} variant="light">
-            Cancelar
-          </Button>
-          <Button type="submit" loading={loading}>
-            Salvar
-          </Button>
-        </Group>
-      )}
+      <Group className="justify-end pt-3">
+        <Button onClick={onClose} variant="light">
+          Cancelar
+        </Button>
+        <Button type="submit" loading={loading}>
+          Salvar
+        </Button>
+      </Group>
     </form>
   )
 }
