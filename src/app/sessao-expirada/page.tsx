@@ -3,7 +3,7 @@ import { Button } from '@mantine/core'
 import { AlertCircle } from 'lucide-react'
 
 export default async function SessionExpired({
-  searchParams: { redirectTo }
+  searchParams: { redirectTo = '/' }
 }: {
   searchParams: {
     redirectTo?: string
@@ -19,15 +19,16 @@ export default async function SessionExpired({
             Sua sessão expirou. Por favor, faça login novamente para continuar.
           </p>
         </div>
-        <Button
-          onClick={async () => {
+        <form
+          action={async () => {
             'use server'
-            signIn('keycloak', { redirectTo })
+            await signIn('keycloak', { redirectTo })
           }}
-          className="w-full max-w-[200px]"
         >
-          Atualizar Sessão
-        </Button>
+          <Button className="w-full max-w-[200px]" type="submit">
+            Atualizar Sessão
+          </Button>
+        </form>
       </div>
     </div>
   )
