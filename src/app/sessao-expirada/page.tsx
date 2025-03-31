@@ -1,6 +1,6 @@
+import { signIn } from '@/auth'
 import { Button } from '@mantine/core'
 import { AlertCircle } from 'lucide-react'
-import { signIn } from 'next-auth/react'
 
 export default async function SessionExpired({
   searchParams: { redirectTo }
@@ -20,7 +20,10 @@ export default async function SessionExpired({
           </p>
         </div>
         <Button
-          onClick={() => signIn('keycloak', { redirectTo })}
+          onClick={async () => {
+            'use server'
+            signIn('keycloak', { redirectTo })
+          }}
           className="w-full max-w-[200px]"
         >
           Atualizar Sessão
