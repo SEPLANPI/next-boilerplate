@@ -1,5 +1,12 @@
 import { UseFormReturnType } from '@mantine/form'
-import { Radio, RadioGroup } from '@mantine/core'
+import {
+  Checkbox,
+  Divider,
+  InputDescription,
+  InputLabel,
+  Radio,
+  RadioGroup
+} from '@mantine/core'
 import { useQuery } from '@tanstack/react-query'
 import { CouncilRepresentativeType, MemberType } from '../types/counselor'
 import { FormValues } from './register-counselor-form'
@@ -29,6 +36,7 @@ export function CouncilInfoStep({
   useEffect(() => {
     const currentType = form.values.tipo_conselho
     if (currentType !== CouncilRepresentativeType.SOCIEDADE_CIVIL) {
+      form.setFieldValue('ajuda_custo', false)
       form.setFieldValue('banco_id', '')
       form.setFieldValue('agencia', '')
       form.setFieldValue('conta', '')
@@ -36,6 +44,9 @@ export function CouncilInfoStep({
       form.setFieldValue('comprovante_bancario', null)
     }
   }, [form.values.tipo_conselho])
+
+  const isSociedadeCivil =
+    form.values.tipo_conselho === CouncilRepresentativeType.SOCIEDADE_CIVIL
 
   return (
     <>
@@ -49,6 +60,18 @@ export function CouncilInfoStep({
           {councilOptions.map((option) => (
             <RadioCard key={option.value} {...option} />
           ))}
+        </div>
+      </RadioGroup>
+
+      <RadioGroup
+        label="Composição no conselho"
+        withAsterisk
+        className="col-span-2"
+        {...form.getInputProps('tipo_membro')}
+      >
+        <div className="flex space-x-3">
+          <Radio value={MemberType.NUCLEO_GESTOR} label="Núcleo Gestor" />
+          <Radio value={MemberType.MEMBRO} label="Membro" />
         </div>
       </RadioGroup>
 
@@ -69,18 +92,25 @@ export function CouncilInfoStep({
           />
         </div>
       </RadioGroup>
-
-      <RadioGroup
-        label="Composição no conselho"
-        withAsterisk
-        className="col-span-2"
-        {...form.getInputProps('tipo_membro')}
-      >
-        <div className="flex space-x-3">
-          <Radio value={MemberType.NUCLEO_GESTOR} label="Núcleo Gestor" />
-          <Radio value={MemberType.MEMBRO} label="Membro" />
+      {isSociedadeCivil && (
+        <div className="col-span-2 !mt-2">
+          <Checkbox.Card
+            className="col-span-2 border-0"
+            {...form.getInputProps('ajuda_custo', { type: 'checkbox' })}
+          >
+            <div className="flex space-x-4 border-0">
+              <Checkbox.Indicator />
+              <div className="flex flex-col space-y-2 text-sm">
+                <p className="leading-none">Preciso de ajuda de custo</p>
+                <InputDescription>
+                  A ajuda de custo será fornecida exclusivamente aos
+                  conselheiros que não residem na cidade onde o evento ocorrerá.
+                </InputDescription>
+              </div>
+            </div>
+          </Checkbox.Card>
         </div>
-      </RadioGroup>
+      )}
     </>
   )
 }
