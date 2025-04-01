@@ -6,7 +6,7 @@ import { useQuery } from '@tanstack/react-query'
 import { getMunicipalitiesFilterOptions } from '@/features/register-counselor/api/client/get-municipalities-filter-options'
 import { filterOptions } from '@/utils/filter-options'
 import { FormValues } from './register-person-form'
-import dayjs from 'dayjs'
+import { dayjs } from '@/lib/dayjs'
 
 const dateParser: DateInputProps['dateParser'] = (input) => {
   return dayjs(input, 'DD/MM/YYYY').toDate()
@@ -58,6 +58,7 @@ export function PersonalDataStep({
         className="col-span-2 sm:col-span-1"
         label="Data de Nascimento"
         valueFormat="DD/MM/YYYY"
+        key={form.key('data_nascimento')}
         {...form.getInputProps('data_nascimento')}
       />
       <Input.Wrapper
