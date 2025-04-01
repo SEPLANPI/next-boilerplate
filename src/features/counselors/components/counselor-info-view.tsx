@@ -2,12 +2,14 @@ import DownloadButtons from '@/features/counselors/components/download-buttons'
 import { CounselorInfo } from '@/features/counselors/types'
 import { dayjs } from '@/lib/dayjs'
 import { Box, Grid, GridCol, Text } from '@mantine/core'
+import console from 'console'
 
 interface CounselorInfoViewProps {
   data: CounselorInfo
 }
 
 export function CounselorInfoView({ data }: CounselorInfoViewProps) {
+  console.log(data)
   return (
     <Grid>
       <GridCol span={{ lg: 4, sm: 12 }} className="p-3">
@@ -22,7 +24,7 @@ export function CounselorInfoView({ data }: CounselorInfoViewProps) {
       <GridCol span={{ lg: 4, sm: 12 }} className="p-3">
         {eventSection(data)}
       </GridCol>
-      {!data.poder_publico && (
+      {data.ajuda_custo && (
         <GridCol span={{ lg: 4, sm: 12 }} className="p-3">
           {bankInfoSection(data)}
         </GridCol>
