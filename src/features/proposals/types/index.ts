@@ -7,10 +7,10 @@ export type Proposal = {
     autor: string
     tipo_autor: string
     criado_em: string
-    historicos: History[]
+    historicos: Log[]
 }
 
-export type History = {
+export type Log = {
     id: number
     status: 'PENDENTE' | 'APROVADA' | 'REJEITADA' | 'EM_VOTACAO' | 'CANCELADA'
     comentário: string

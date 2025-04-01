@@ -17,7 +17,7 @@ export default function ProposalDetailsModal({
     <Modal
       opened={opened}
       onClose={() => onClose()}
-      title="Log de alteração"
+      title="Registro de alteração"
       size={'xl'}
       styles={{
         header: {
