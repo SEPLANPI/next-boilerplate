@@ -1,11 +1,16 @@
 import { UseFormReturnType } from '@mantine/form'
 import { TextInput, Input, Select } from '@mantine/core'
-import { DateInput } from '@mantine/dates'
+import { DateInput, DateInputProps } from '@mantine/dates'
 import { IMaskInput } from 'react-imask'
 import { useQuery } from '@tanstack/react-query'
 import { getMunicipalitiesFilterOptions } from '@/features/register-counselor/api/client/get-municipalities-filter-options'
 import { filterOptions } from '@/utils/filter-options'
 import { FormValues } from './register-person-form'
+import dayjs from 'dayjs'
+
+const dateParser: DateInputProps['dateParser'] = (input) => {
+  return dayjs(input, 'DD/MM/YYYY').toDate()
+}
 
 export function PersonalDataStep({
   form
@@ -49,6 +54,7 @@ export function PersonalDataStep({
         />
       </Input.Wrapper>
       <DateInput
+        dateParser={dateParser}
         className="col-span-2 sm:col-span-1"
         label="Data de Nascimento"
         valueFormat="DD/MM/YYYY"
