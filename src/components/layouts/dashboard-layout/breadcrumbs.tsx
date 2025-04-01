@@ -26,14 +26,14 @@ export const DashboardBreadcrumbs: React.FC<DashboardBreadcrumbsProps> = memo(
         items.map(({ href, label, icon: Icon }, index) => {
           const isLastItem = index === items.length - 1
           const content = (
-            <>
-              {Icon && <Icon className="size-4 text-secondary-foreground" />}
+            <div className='flex items-center space-x-1 text-xs'>
+              {Icon && <Icon className="size-3 text-secondary-foreground" />}
               <span
                 className={`text-secondary-foreground ${isLastItem ? 'font-semibold' : ''}`}
               >
                 {label}
               </span>
-            </>
+            </div>
           )
           return href ? (
             <Anchor
