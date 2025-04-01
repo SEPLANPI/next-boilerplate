@@ -9,16 +9,15 @@ export type Event = {
 
 export async function getActiveEvent(): Promise<ServerResult<Event>> {
   try {
-    const response = await api.get(`/eventos/`)
+    const response = await api.get(`/evento-ativo/`)
 
     if (!response.ok) {
       const error: DjangoError = await response.json()
       return { error }
     }
 
-    const result = await response.json()
-    const event: Event = result[0]
-    return { data: event }
+    const data: Event = await response.json()
+    return { data }
   } catch (error) {
     return { error: API.UNEXPECTED_FETCH_ERROR }
   }

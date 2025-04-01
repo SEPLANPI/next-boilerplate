@@ -17,14 +17,6 @@ export async function registerPerson(
 
     const event = result.data
 
-    console.log(event)
-
-    console.log({
-      ...input,
-      evento_id: event?.id,
-      cadastrado_presencialmente: false
-    })
-
     const response = await api.post('/pessoas/', {
       body: {
         ...input,
