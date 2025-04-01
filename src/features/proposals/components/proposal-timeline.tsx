@@ -48,7 +48,7 @@ export default function ProposalTimeline({ proposta }: { proposta: Proposal }) {
             key={index}
             onClick={() => onItemClick(item)}
           >
-            <div className="flex max-w-full overflow-auto">
+            <div className="flex overflow-auto">
               <Text className="text-gray-400" truncate fw={400}>
                 {item.dados_antigos?.conteudo || 'Sem conteúdo'}
               </Text>
