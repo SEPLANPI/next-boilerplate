@@ -10,7 +10,6 @@ import {
 import { DashboardHeader } from '@/components/layouts/dashboard-layout/header'
 import { getProposal } from '@/features/proposals/api/get-proposals'
 import ProposalDetails from '@/features/proposals/components/proposal-details'
-import ProposalTimeline from '@/features/proposals/components/proposal-timeline'
 import { ClipboardList } from 'lucide-react'
 
 export default async function Proposta({ params }: { params: { id: string } }) {
@@ -48,12 +47,9 @@ export default async function Proposta({ params }: { params: { id: string } }) {
         <DashboardBreadcrumbs items={items} />
       </DashboardHeader>
       <DashboardContent className="flex-row gap-8">
-        <DashboardMainSection className="w-9/12">
+        <DashboardMainSection>
           <ProposalDetails proposta={propostaData} />
         </DashboardMainSection>
-        <div className="w-3/12">
-          <ProposalTimeline proposta={propostaData} />
-        </div>
       </DashboardContent>
     </>
   )
