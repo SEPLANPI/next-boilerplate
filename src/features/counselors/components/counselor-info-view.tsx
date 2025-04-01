@@ -412,6 +412,8 @@ function getDocType(docType: string) {
       return 'Documento que comprove pariticipação no conselho'
     case 'COMPROVANTE_RESIDENCIA':
       return 'Comprovante de Residência'
+    case 'COMPROVANTE_BANCARIO':
+      return 'Comprovante Bancário'
     case 'RG_VERSO':
       return 'RG - Verso'
     case 'RG_FRENTE':
