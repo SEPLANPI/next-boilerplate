@@ -52,7 +52,7 @@ export default async function Proposta({ params }: { params: { id: string } }) {
           <ProposalDetails proposta={propostaData} />
         </DashboardMainSection>
         <div className="w-3/12">
-          <ProposalTimeline />
+          <ProposalTimeline proposta={propostaData} />
         </div>
       </DashboardContent>
     </>
