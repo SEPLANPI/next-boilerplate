@@ -7,16 +7,16 @@ import ProposalTimeline from './proposal-timeline'
 export default function ProposalDetails({ proposta }: { proposta: Proposal }) {
   return (
     <div className="grid grid-cols-12 gap-10">
-      <div className="col-span-9">
+      <div className="col-span-9 border-r border-gray-200 pr-10">
         <div className="mb-8 flex justify-between">
           <div>
             <Text variant="h1" fw={800} size="xl">
               {proposta.titulo}
             </Text>
-            <Text variant="h2" size="xs" className="text-gray-400">
+            <Text variant="h2" size="xs" className="text-gray-600">
               Criado em{' '}
               {dayjs(proposta.criado_em).format(`DD/MM/YYYY [às] HH:mm`)} por{' '}
-              {proposta.autor?.nome || '?'}
+              {proposta.autor.nome}
             </Text>
           </div>
           <ProposalEditDrawer proposal={proposta} />
