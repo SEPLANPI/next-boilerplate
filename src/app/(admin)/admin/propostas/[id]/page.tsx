@@ -14,7 +14,6 @@ import { ClipboardList } from 'lucide-react'
 
 export default async function Proposta({ params }: { params: { id: string } }) {
   const { data: propostaData, error: error } = await getProposal(params.id)
-
   if (propostaData === undefined) {
     return (
       <div className="p-8">
