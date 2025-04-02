@@ -39,11 +39,15 @@ export default function ProposalDetailsModal({
           </Text>
           <Text variant="h2" size="xs" className="text-gray-400">
             Alterado em {dayjs(log.criado_em).format(`DD/MM/YYYY [às] HH:mm`)}{' '}
-            por {log.alterado_por}
+            por {log.alterado_por === 'admin' ? 'Administrador' : 'Conselheiro'}
           </Text>
         </div>
-        <Text className="text-gray-500" fw={400}>
-          {log.dados_antigos?.conteudo || 'Sem conteúdo'}
+        <Text
+          size="md"
+          className="block w-full whitespace-break-spaces font-sans text-gray-500"
+          component="pre"
+        >
+          {log.dados_antigos.conteudo || 'Sem conteúdo'}
         </Text>
       </div>
     </Modal>

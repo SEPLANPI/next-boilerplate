@@ -17,7 +17,6 @@ export default function ProposalTimeline({ proposta }: { proposta: Proposal }) {
       open()
     }
   }
-
   return (
     <>
       <Timeline
@@ -33,35 +32,48 @@ export default function ProposalTimeline({ proposta }: { proposta: Proposal }) {
         lineWidth="1px"
         color="gray-50"
       >
-        {logItems.map((item, index) => (
-          <TimelineItem
-            bullet={<CircleDotDashed size="44" color="gray" />}
-            title={
-              index === logItems.length - 1
-                ? item.alterado_por + ' criou a proposta.'
-                : item.alterado_por + ' alterou a proposta.'
-            }
-            styles={{
-              itemTitle: { fontWeight: 700 }
-            }}
-            className="cursor-pointer"
-            key={index}
-            onClick={() => onItemClick(item)}
-          >
-            <div className="flex overflow-auto">
-              <Text className="text-gray-400" truncate fw={400}>
-                {item.dados_antigos?.conteudo || 'Sem conteúdo'}
+        {logItems.map((item, index) => {
+          const user =
+            proposta.autor?.nome.split(' ').slice(0, 2).join(' ') || 'Alguém'
+          return (
+            <TimelineItem
+              bullet={<CircleDotDashed size="44" color="gray" />}
+              title={
+                index === logItems.length - 1
+                  ? user + ' criou a proposta'
+                  : getTypeUser(item.alterado_por)
+              }
+              styles={{
+                itemTitle: { fontWeight: 700 }
+              }}
+              className="cursor-pointer"
+              key={index}
+              onClick={() => onItemClick(item)}
+            >
+              <div className="flex overflow-auto">
+                <Text className="text-gray-400" truncate fw={400}>
+                  {item.dados_antigos?.conteudo || 'Sem conteúdo'}
+                </Text>
+              </div>
+              <Text className="text-gray-400" size="xs">
+                {dayjs(item.criado_em).format('DD/MM/YYYY - HH:mm')}
               </Text>
-            </div>
-            <Text className="text-gray-400" size="xs">
-              {dayjs(item.criado_em).format('DD/MM/YYYY - HH:mm')}
-            </Text>
-          </TimelineItem>
-        ))}
+            </TimelineItem>
+          )
+        })}
       </Timeline>
       {item?.dados_antigos && (
         <ProposalDetailsModal opened={opened} onClose={close} log={item} />
       )}
     </>
   )
+}
+
+function getTypeUser(type: string) {
+  switch (type) {
+    case 'conselheiro':
+      return 'O conselheiro alterou a proposta.'
+    case 'admin':
+      return 'Um administrador alterou a proposta'
+  }
 }
