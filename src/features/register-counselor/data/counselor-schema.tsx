@@ -56,8 +56,6 @@ export const counselorSchema = z
     // Passo 5: Oficina
     eixo_id: z.string().min(1, 'Oficina é obrigatório'),
 
-    rg_frente: z.instanceof(File).nullable(),
-    rg_verso: z.instanceof(File).nullable(),
     comprovante_residencia: z.instanceof(File).nullable(),
     comprovante_conselho: z.instanceof(File).nullable(),
     comprovante_bancario: z.instanceof(File).nullable(),
@@ -79,11 +77,13 @@ export const counselorSchema = z
       .refine(
         (val) => val === true,
         'Você precisa declarar a veracidade das informações'
-      )
+      ),
+
+    ajuda_custo: z.boolean().default(false)
   })
   .superRefine((data, ctx) => {
-    // Validate bank details for SOCIEDADE_CIVIL
-    if (data.tipo_conselho === 'SOCIEDADE_CIVIL') {
+    // Only validate bank details and documents if SOCIEDADE_CIVIL AND ajuda_custo
+    if (data.tipo_conselho === 'SOCIEDADE_CIVIL' && data.ajuda_custo) {
       if (!data.banco_id) {
         ctx.addIssue({
           code: z.ZodIssueCode.custom,
@@ -110,22 +110,6 @@ export const counselorSchema = z
           code: z.ZodIssueCode.custom,
           message: 'Nome do titular é obrigatório',
           path: ['nome_titular']
-        })
-      }
-
-      if (!data.rg_frente || !(data.rg_frente instanceof File)) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: 'Arquivo da frente do RG é obrigatório',
-          path: ['rg_frente']
-        })
-      }
-
-      if (!data.rg_verso || !(data.rg_verso instanceof File)) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: 'Arquivo do verso do RG é obrigatório',
-          path: ['rg_verso']
         })
       }
 

@@ -1,17 +1,19 @@
 import { z } from 'zod'
 
 export type InitialFormValues<T extends z.ZodType> = {
-  [K in keyof z.infer<T>]: z.infer<T>[K] extends string | number | boolean
-  ? string
-  : z.infer<T>[K] extends boolean
-  ? boolean
-  : z.infer<T>[K] extends Array<any>
-  ? []
-  : z.infer<T>[K] extends File | null
-  ? File | null
-  : z.infer<T>[K] extends object
-  ? InitialFormValues<z.ZodType<z.infer<T>[K]>> | null
-  : string | null
+  [K in keyof z.infer<T>]: z.infer<T>[K] extends string | number
+    ? string
+    : z.infer<T>[K] extends boolean
+      ? boolean
+      : z.infer<T>[K] extends Array<any>
+        ? []
+        : z.infer<T>[K] extends File | null
+          ? File | null
+          : z.infer<T>[K] extends Date | null
+            ? Date | null
+            : z.infer<T>[K] extends object
+              ? InitialFormValues<z.ZodType<z.infer<T>[K]>> | null
+              : string | null
 }
 
 export function createInitialFormValues<T extends z.ZodType>(

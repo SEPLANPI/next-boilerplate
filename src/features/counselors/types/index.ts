@@ -72,6 +72,7 @@ export interface CounselorInfo {
   status_atual: string
   propostas_enviadas: number
   aceitou_termos: boolean
+  ajuda_custo: boolean
   auditado: boolean
   criado_em: string
   atualizado_em: string
