@@ -1,0 +1,43 @@
+import {
+  BreadcrumbItem,
+  DashboardBreadcrumbs
+} from '@/components/layouts/dashboard-layout/breadcrumbs'
+import { DashboardHeader } from '@/components/layouts/dashboard-layout/header'
+import { CounselorTabs } from '@/features/registration-monitoring/components/counselor-tabs'
+import { ValidateCounselorModal } from '@/features/registration-monitoring/components/validate-counselor-modal'
+import { Users } from 'lucide-react'
+
+export default function AdminCounselorVoewLayout({
+  children,
+  params
+}: {
+  children: React.ReactNode
+  params: { id: string }
+}) {
+  const items: BreadcrumbItem[] = [
+    {
+      label: 'Acessos',
+      icon: Users
+    },
+    {
+      label: 'Cadastros',
+      href: '/admin/acessos/cadastros'
+    },
+    {
+      label: 'Dados do Conselheiro'
+    }
+  ]
+
+  return (
+    <>
+      <DashboardHeader>
+        <DashboardBreadcrumbs items={items} />
+      </DashboardHeader>
+      <div className="flex items-center justify-between border-b-2 pl-4 pr-8">
+        <CounselorTabs />
+        <ValidateCounselorModal counselorId={params.id} />
+      </div>
+      {children}
+    </>
+  )
+}

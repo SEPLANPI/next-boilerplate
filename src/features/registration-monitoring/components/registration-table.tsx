@@ -17,7 +17,7 @@ import { Registration } from '../types'
 
 const REGISTRATION_STATUS = {
   APROVADO: { color: 'green' as MantineColor, label: 'Aprovado' },
-  REPROVADO: { color: 'red' as MantineColor, label: 'Reprovado' },
+  REJEITADO: { color: 'red' as MantineColor, label: 'Rejeitado' },
   PENDENTE: { color: 'amber' as MantineColor, label: 'Pendente' }
 } as const
 
@@ -29,7 +29,7 @@ export function RegistrationTable({ data }: RegistrationTableProps) {
   const router = useRouter()
 
   function handleNavigateToRegistration(id: string) {
-    router.push(`/admin/acessos/cadastros/${id}`)
+    router.push(`/admin/acessos/cadastros/${id}/dados`)
   }
 
   return (

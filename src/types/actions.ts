@@ -4,7 +4,7 @@ interface ErrorResponse {
   field_errors?: Record<string, string[]>
 }
 
-export type DjangoError = ErrorResponse | string[] | string
+export type DjangoError = ErrorResponse | string[] | string | Record<string, string[]>
 
 export type ActionState<TOutput> =
   | { data: TOutput; error?: never }

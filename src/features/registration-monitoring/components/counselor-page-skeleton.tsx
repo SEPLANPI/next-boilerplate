@@ -1,18 +1,16 @@
 import { DashboardMainSection } from '@/components/layouts/dashboard-layout/content'
 import CounselorInfoSkeleton from '@/features/counselors/components/counselor-info-skeleton'
-import { ActionIcon, Skeleton } from '@mantine/core'
-import { ArrowLeft } from 'lucide-react'
+import { Divider, Skeleton } from '@mantine/core'
 
 export function CounselorPageSkeleton() {
   return (
     <>
-      <div className="mb-6 flex items-center space-x-3">
-        <ActionIcon size="md" radius="xl" variant="default">
-          <ArrowLeft className="size-4" />
-        </ActionIcon>
-        <Skeleton height={14} width="200" />
-      </div>
       <DashboardMainSection>
+        <div className="flex w-full flex-col space-y-2">
+          <Skeleton w="70%" h={18} />
+          <Skeleton w="25%" h={14} />
+        </div>
+        <Divider className="my-6" />
         <CounselorInfoSkeleton />
       </DashboardMainSection>
     </>

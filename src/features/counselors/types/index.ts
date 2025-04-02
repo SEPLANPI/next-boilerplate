@@ -69,7 +69,7 @@ export interface CounselorInfo {
   email: string
   poder_publico: boolean
   tipo_membro: string
-  status_atual: string
+  status_atual: 'PENDENTE' | 'APROVADO' | 'REJEITADO'
   propostas_enviadas: number
   aceitou_termos: boolean
   ajuda_custo: boolean

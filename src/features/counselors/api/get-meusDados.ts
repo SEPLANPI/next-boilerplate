@@ -6,7 +6,9 @@ import { ServerResult } from '@/types/server-result'
 
 export async function getMeusDados(): Promise<ServerResult<CounselorInfo>> {
   try {
-    const response = await api.get('/meus-dados/')
+    const response = await api.get('/meus-dados/', {
+      cache: 'no-store'
+    })
     if (!response.ok) {
       const error: DjangoError = await response.json()
       return { error: error }

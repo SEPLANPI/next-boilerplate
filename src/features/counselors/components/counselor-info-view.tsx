@@ -9,7 +9,6 @@ interface CounselorInfoViewProps {
 }
 
 export function CounselorInfoView({ data }: CounselorInfoViewProps) {
-  console.log(data)
   return (
     <Grid>
       <GridCol span={{ lg: 4, sm: 12 }} className="p-3">

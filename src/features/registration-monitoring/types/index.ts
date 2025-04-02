@@ -7,7 +7,7 @@ export type Registration = {
     nome: string
   }
   status: {
-    atual: 'PENDENTE' | 'APROVADO' | 'REPROVADO'
+    atual: 'PENDENTE' | 'APROVADO' | 'REJEITADO'
   }
   usuario?: {
     nome: string

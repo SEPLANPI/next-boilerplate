@@ -6,7 +6,7 @@ export function DashboardContent({
   className
 }: PropsWithChildren<{ className?: string }>) {
   return (
-    <div className={cn('flex flex-1 flex-col bg-gray-100 p-8 pb-0', className)}>
+    <div className={cn('flex flex-1 flex-col bg-gray-100 p-6 pb-0', className)}>
       {children}
     </div>
   )
