@@ -25,7 +25,13 @@ export type Log = {
         titulo: string
         conteudo: string
     }
-    alterado_por: string
+    alterado_por: {
+        id: string
+        keycloak_id: string
+        nome: string
+        tipo: string
+        cpf: string
+    }
     criado_em: string
 }
 
