@@ -33,15 +33,16 @@ export default function ProposalTimeline({ proposta }: { proposta: Proposal }) {
         color="gray-50"
       >
         {logItems.map((item, index) => {
-          const user =
-            proposta.autor?.nome.split(' ').slice(0, 2).join(' ') || 'Alguém'
+          const userCreated = formatName(proposta.autor.nome)
+          const userAltered = formatName(item.alterado_por.nome)
+
           return (
             <TimelineItem
               bullet={<CircleDotDashed size="44" color="gray" />}
               title={
                 index === logItems.length - 1
-                  ? user + ' criou a proposta'
-                  : getTypeUser(item.alterado_por)
+                  ? userCreated + ' criou a proposta'
+                  : userAltered + ' alterou a proposta'
               }
               styles={{
                 itemTitle: { fontWeight: 700 }
@@ -69,11 +70,6 @@ export default function ProposalTimeline({ proposta }: { proposta: Proposal }) {
   )
 }
 
-function getTypeUser(type: string) {
-  switch (type) {
-    case 'conselheiro':
-      return 'O conselheiro alterou a proposta.'
-    case 'admin':
-      return 'Um administrador alterou a proposta'
-  }
+function formatName(name: string) {
+  return name.split(' ').slice(0, 2).join(' ')
 }
