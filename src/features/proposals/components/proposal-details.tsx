@@ -13,11 +13,14 @@ export default function ProposalDetails({ proposta }: { proposta: Proposal }) {
           </Text>
           <ProposalEditDrawer proposal={proposta} />
         </div>
-        <div className="overflow-auto">
-          <Text variant="h2" size="md" mt={8} className="text-gray-500">
-            {proposta.conteudo}
-          </Text>
-        </div>
+        <Text
+          size="md"
+          mt={8}
+          className="block w-full whitespace-break-spaces font-sans text-gray-500"
+          component="pre"
+        >
+          {proposta.conteudo}
+        </Text>
       </div>
       <div className="col-span-3">
         <ProposalTimeline proposta={proposta} />
