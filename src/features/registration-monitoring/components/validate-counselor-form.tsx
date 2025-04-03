@@ -1,13 +1,13 @@
 'use client'
 
-import { useState } from 'react'
-import { Radio, Textarea, Button, Alert } from '@mantine/core'
+import { API } from '@/constants/messages'
+import { buildErrorMessage } from '@/utils/format-django-errors'
+import { Alert, Button, Radio, Textarea } from '@mantine/core'
 import { useForm, zodResolver } from '@mantine/form'
 import { notifications } from '@mantine/notifications'
+import { useState } from 'react'
 import { z } from 'zod'
 import { validateCounselor } from '../actions/validate-counselor'
-import { buildErrorMessage } from '@/utils/format-django-errors'
-import { API } from '@/constants/messages'
 import { ValidationRadioCard } from './validation-radio-card'
 
 const validationSchema = z
@@ -81,7 +81,7 @@ export function ValidateCounselorForm({
   return (
     <>
       {error && <Alert color="red" title={error} className="mb-4" />}
-      <form id={id} onSubmit={form.onSubmit(handleSubmit)}>
+      <form id={id} onSubmit={form.onSubmit(handleSubmit)} className='flex flex-col gap-4'>
         <Radio.Group {...form.getInputProps('status')}>
           <div className="flex gap-4">
             <ValidationRadioCard
@@ -105,7 +105,7 @@ export function ValidateCounselorForm({
           />
         )}
 
-        <div className="mt-6 flex justify-end gap-2">
+        <div className="flex justify-end gap-2">
           <Button variant="default" onClick={() => onComplete?.(false)}>
             Cancelar
           </Button>
@@ -113,13 +113,6 @@ export function ValidateCounselorForm({
             type="submit"
             loading={isSubmitting}
             disabled={!form.values.status}
-            color={
-              form.values.status === 'APROVADO'
-                ? 'govGreen'
-                : form.values.status === 'REJEITADO'
-                  ? 'red'
-                  : 'blue'
-            }
           >
             Confirmar
           </Button>

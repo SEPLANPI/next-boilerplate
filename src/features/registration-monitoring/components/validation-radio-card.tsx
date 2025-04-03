@@ -18,7 +18,7 @@ export function ValidationRadioCard({
       }`}
       value={value}
     >
-      <div className="flex w-full items-center justify-center space-x-2">
+      <div className="flex w-full items-center space-x-2">
         {variant === 'approve' ? (
           <Check className="size-5" />
         ) : (
