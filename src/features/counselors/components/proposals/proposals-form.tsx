@@ -44,9 +44,12 @@ export default function ProposalsForm({
     setLoading(true)
     let response = null
     if (edit) {
-      response = await clientApi.put(`/propostas/${values.id}/atualizar_conselheiro/`, {
-        body: values
-      })
+      response = await clientApi.put(
+        `/propostas/${values.id}/atualizar_conselheiro/`,
+        {
+          body: values
+        }
+      )
     } else {
       response = await clientApi.post('/criar-proposta-conselheiro/', {
         body: values
@@ -55,7 +58,7 @@ export default function ProposalsForm({
     if (response.ok) {
       notifications.show({
         title: 'Proposta enviada',
-        message: 'Sua proposta foi enviada com sucesso',
+        message: 'Sua proposta foi enviada com sucesso'
       })
       router.refresh()
       onClose()
@@ -96,12 +99,14 @@ export default function ProposalsForm({
           <Info size={16} />
         </div>
         <Text size="xs">
-          As propostas serão avaliadas, apenas as propostas aprovadas estarão
-          disponíveis para votação
+          As propostas serão avaliadas e somente as propostas aprovadas estarão
+          disponíveis para votação.
         </Text>
       </Box>
       <Group className="justify-end">
-        <Button type="submit" loading={loading}>Salvar</Button>
+        <Button type="submit" loading={loading}>
+          Salvar
+        </Button>
       </Group>
     </form>
   )

@@ -19,3 +19,18 @@ export type Axis = {
     vagas_restantes: number
     vagas_disponiveis: true
 }
+
+export type ActiveEvent = {
+    id: number
+    nome: string
+    descricao: string
+    municipio: {
+        id: number
+        nome: string
+        territorio_nome: string
+    }
+    pontos_por_votante: number
+    limite_propostas: number
+    data_evento: string
+    ativo: boolean
+}

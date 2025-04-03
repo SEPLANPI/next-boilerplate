@@ -4,7 +4,7 @@ import { useForm } from '@mantine/form'
 import { notifications } from '@mantine/notifications'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { Axis, Proposal } from '../types'
+import { ActiveEvent, Axis, Proposal } from '../types'
 
 interface ProposalsFormValues {
   id?: string
@@ -18,6 +18,7 @@ interface ProposalsFormValues {
     | 'CANCELADA'
   titulo: string
   conteudo: string
+  evento_id?: number
 }
 
 interface ProposalsFormProps {
@@ -33,6 +34,7 @@ export default function ProposalsForm({
 }: ProposalsFormProps) {
   const router = useRouter()
   const [eixos, setEixos] = useState<Axis[]>([])
+  const [evento, setEvento] = useState<ActiveEvent>()
   const [loading, setLoading] = useState(false)
   const form = useForm<ProposalsFormValues>({
     initialValues: {
@@ -40,6 +42,7 @@ export default function ProposalsForm({
       titulo: items?.titulo || '',
       conteudo: items?.conteudo || '',
       eixo_id: edit ? items?.eixo.id : 0,
+      evento_id: evento?.id,
       status: items?.status || 'PENDENTE'
     },
     validate: {
@@ -93,32 +96,40 @@ export default function ProposalsForm({
       })
     }
   }
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await clientApi.get('/eixos/')
-        if (response.ok) {
-          const data = await response.json()
+  if (!edit) {
+    useEffect(() => {
+      const fetchData = async () => {
+        setLoading(true)
+        const [evento, eixos] = await Promise.all([
+          clientApi.get('/eixos/'),
+          clientApi.get('/evento-ativo/')
+        ])
+        if (eixos.ok) {
+          const data = await eixos.json()
+          setEvento(data)
+        } else {
+          notifications.show({
+            title: 'Erro',
+            message: 'Não foi possível carregar os eventos ativos',
+            color: 'red'
+          })
+        }
+        if (evento.ok) {
+          const data = await evento.json()
           setEixos(data)
         } else {
           notifications.show({
             title: 'Erro',
-            message: 'Não foi possível carregar os eixos'
+            message: 'Não foi possível carregar os eixos',
+            color: 'red'
           })
         }
-      } catch (error) {
-        console.error('Erro na requisição:', error)
-        notifications.show({
-          title: 'Erro',
-          message: 'Ocorreu um erro ao buscar eixos',
-          color: 'red'
-        })
+        setLoading(false)
       }
-    }
 
-    fetchData()
-  }, [])
+      fetchData()
+    }, [])
+  }
 
   return (
     <form
@@ -126,18 +137,47 @@ export default function ProposalsForm({
       className="flex flex-col gap-4"
     >
       {!edit && (
-        <Select
-          withAsterisk
-          allowDeselect={false}
-          label="Eixo"
-          data={eixos.map((eixo) => ({
-            value: String(eixo.id),
-            label: eixo.nome
-          }))}
-          placeholder="Selecione o Eixo referente à Proposta"
-          key={form.key('eixo_id')}
-          {...form.getInputProps('eixo_id')}
-        />
+        <>
+          <Select
+            withAsterisk
+            allowDeselect={false}
+            label="Eixo"
+            data={
+              loading
+                ? []
+                : eixos.map((eixo) => ({
+                    value: String(eixo.id),
+                    label: eixo.nome
+                  }))
+            }
+            placeholder={
+              loading
+                ? 'Carregando eixos...'
+                : 'Selecione o Eixo referente à Proposta'
+            }
+            disabled={loading}
+            key={form.key('eixo_id')}
+            {...form.getInputProps('eixo_id')}
+          />
+          <Select
+            withAsterisk
+            label="Evento"
+            allowDeselect={false}
+            data={
+              loading
+                ? []
+                : [{ value: String(evento?.id), label: evento?.nome || '' }]
+            }
+            placeholder={
+              loading
+                ? 'Carregando eventos...'
+                : 'Selecione o evento referente à Proposta'
+            }
+            disabled={loading}
+            key={form.key('evento_id')}
+            {...form.getInputProps('evento_id')}
+          />
+        </>
       )}
       <TextInput
         withAsterisk
