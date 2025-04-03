@@ -1,11 +1,11 @@
 import { API } from '@/constants/messages'
-import { ServerResult } from '@/types/server-result'
-import { Registration } from '../types'
 import { PAGINATION } from '@/constants/pagination'
 import { buildParams } from '@/lib/api-utils'
 import { api } from '@/lib/server-api'
 import { DjangoError } from '@/types/actions'
+import { ServerResult } from '@/types/server-result'
 import { registrationSearchParams } from '../lib/search-params'
+import { Registration } from '../types'
 
 type GetRegistrationsResponse = {
   count: number
@@ -35,7 +35,6 @@ export async function getRegistrations(): Promise<
     }
 
     const data: GetRegistrationsResponse = await response.json()
-    console.log(data.results[1].status)
     return { data }
   } catch (error) {
     return { error: API.UNEXPECTED_FETCH_ERROR }
