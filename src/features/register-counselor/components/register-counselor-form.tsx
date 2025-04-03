@@ -28,7 +28,10 @@ import { registerCounselor } from '../actions/register-counselor'
 import { notifications } from '@mantine/notifications'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import { displayDjangoErrors, buildErrorMessage } from '@/utils/format-django-errors'
+import {
+  displayDjangoErrors,
+  buildErrorMessage
+} from '@/utils/format-django-errors'
 
 export type FormValues = Omit<
   InitialFormValues<typeof counselorSchema>,
@@ -104,6 +107,7 @@ export function RegisterCounselorForm() {
   })
 
   const isSociedadeCivil = form.values.tipo_conselho === 'SOCIEDADE_CIVIL'
+  const needsFinancialAid = isSociedadeCivil && form.values.ajuda_custo
 
   const steps = useMemo(() => {
     const baseSteps = [
@@ -133,7 +137,7 @@ export function RegisterCounselorForm() {
       }
     ]
 
-    if (isSociedadeCivil) {
+    if (needsFinancialAid) {
       baseSteps.push({
         label: 'Dados Bancários',
         component: <BankDetailsStep form={form} />,
@@ -152,7 +156,6 @@ export function RegisterCounselorForm() {
       })
     }
 
-
     baseSteps.push({
       label: 'Oficina',
       component: <WorkshopStep form={form} />,
@@ -166,7 +169,7 @@ export function RegisterCounselorForm() {
     })
 
     return baseSteps
-  }, [form, isSociedadeCivil])
+  }, [form, isSociedadeCivil, form.values.ajuda_custo])
 
   const [active, setActive] = useState(0)
   const [stepStatuses, setStepStatuses] = useState<StepStatus[]>(
@@ -239,17 +242,11 @@ export function RegisterCounselorForm() {
     formData.append('eixo_id', values.eixo_id)
     formData.append('token_convite', token)
 
-    if (values.rg_frente instanceof File)
-      formData.append('documento_rg_frente', values.rg_frente)
-    if (values.rg_verso instanceof File)
-      formData.append('documento_rg_verso', values.rg_verso)
     if (values.comprovante_residencia instanceof File)
       formData.append('comprovante_residencia', values.comprovante_residencia)
     if (values.comprovante_conselho instanceof File)
       formData.append('comprovante_conselho', values.comprovante_conselho)
-    if (
-      values.comprovante_bancario instanceof File
-    )
+    if (values.comprovante_bancario instanceof File)
       formData.append('comprovante_bancario', values.comprovante_bancario)
 
     formData.append('endereco_tipo_zona', values.endereco.tipo_endereco)
@@ -274,7 +271,9 @@ export function RegisterCounselorForm() {
       values.tipo_conselho === 'PODER_PUBLICO' ? 'true' : 'false'
     )
 
-    if (values.tipo_conselho === 'SOCIEDADE_CIVIL') {
+    formData.append('ajuda_custo', values.ajuda_custo ? 'true' : 'false')
+
+    if (values.ajuda_custo) {
       formData.append('banco_id', values.banco_id || '')
       formData.append('banco_agencia', values.agencia || '')
       formData.append('banco_conta', values.conta || '')
@@ -296,7 +295,7 @@ export function RegisterCounselorForm() {
     }
 
     await updateSession({})
-    
+
     router.push('/conselheiros/cadastro/sucesso/')
     setIsSubmitting(false)
   }

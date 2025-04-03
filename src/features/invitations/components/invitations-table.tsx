@@ -138,17 +138,17 @@ export function InvitationsTable({ data }: InvitationsTableProps) {
                       >
                         Copiar URL
                       </Menu.Item>
+                      <Menu.Item
+                        leftSection={<Pencil className="size-4" />}
+                        onClick={() => {
+                          setSelectedInvitation(invitation)
+                          openEdit()
+                        }}
+                      >
+                        Editar
+                      </Menu.Item>
                       {!invitation.usado && (
                         <>
-                          <Menu.Item
-                            leftSection={<Pencil className="size-4" />}
-                            onClick={() => {
-                              setSelectedInvitation(invitation)
-                              openEdit()
-                            }}
-                          >
-                            Editar
-                          </Menu.Item>
                           <Menu.Item
                             color="red"
                             leftSection={<Trash2 className="size-4" />}

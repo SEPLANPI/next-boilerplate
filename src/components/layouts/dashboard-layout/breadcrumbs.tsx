@@ -1,7 +1,7 @@
-import React, { ComponentType, memo, useMemo } from 'react'
-import Link from 'next/link'
-import { Breadcrumbs as MantineBreadcrumbs, Anchor } from '@mantine/core'
+import { Anchor, Breadcrumbs as MantineBreadcrumbs } from '@mantine/core'
 import { LucideProps } from 'lucide-react'
+import Link from 'next/link'
+import React, { ComponentType, memo, useMemo } from 'react'
 
 export interface BreadcrumbItem {
   // Label for the breadcrumb
@@ -26,21 +26,21 @@ export const DashboardBreadcrumbs: React.FC<DashboardBreadcrumbsProps> = memo(
         items.map(({ href, label, icon: Icon }, index) => {
           const isLastItem = index === items.length - 1
           const content = (
-            <>
-              {Icon && <Icon className="size-4" />}
+            <div className='flex items-center space-x-1 text-xs'>
+              {Icon && <Icon className="size-3 text-secondary-foreground" />}
               <span
                 className={`text-secondary-foreground ${isLastItem ? 'font-semibold' : ''}`}
               >
                 {label}
               </span>
-            </>
+            </div>
           )
           return href ? (
             <Anchor
               component={Link}
               key={index}
               href={href}
-              className={`text-xs`}
+              className={`flex items-center space-x-2 text-xs`}
             >
               {content}
             </Anchor>

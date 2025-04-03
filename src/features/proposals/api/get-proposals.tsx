@@ -35,7 +35,22 @@ export async function getProposals(): Promise<
     const data: GetProposalResponse = await response.json()
     return { data }
   } catch (error) {
-    console.log(error)
+    return { error: API.UNEXPECTED_FETCH_ERROR }
+  }
+}
+
+export async function getProposal(id: string): Promise<ServerResult<Proposal>> {
+  try {
+    const response = await api.get(`/propostas/${id}/detalhes/`)
+
+    if (!response.ok) {
+      const error: DjangoError = await response.json()
+      return { error }
+    }
+
+    const data: Proposal = await response.json()
+    return { data }
+  } catch (error) {
     return { error: API.UNEXPECTED_FETCH_ERROR }
   }
 }

@@ -53,7 +53,7 @@ export function NavigationTabs({
       onChange={handleTabChange}
       unstyled
       classNames={{
-        root: 'translate-y-[2px] h-full',
+        root: 'translate-y-[2px] h-12',
         list: ' flex h-full',
         tab: 'flex space-x-2 items-center h-full font-normal px-3 text-sm text-gray-700 data-[active=true]:font-bold data-[active=true]:text-govGreen-600 border-[transparent] border-b-2 data-[active=true]:border-govGreen-600',
         tabLabel: 'leading-[20px]'

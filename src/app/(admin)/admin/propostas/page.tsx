@@ -13,7 +13,7 @@ import ProposalsModal from '@/features/proposals/components/proposals-modal'
 import { ProposalsTableSkeleton } from '@/features/proposals/components/proposals-table-skeleton'
 import { proposalsSearchParams } from '@/features/proposals/lib/search-params'
 import { Divider } from '@mantine/core'
-import { Users } from 'lucide-react'
+import { ClipboardList } from 'lucide-react'
 import { Metadata } from 'next'
 import { SearchParams } from 'nuqs'
 import { Suspense } from 'react'
@@ -31,7 +31,7 @@ export default async function Propostas({ searchParams }: PropostasProps) {
   const items: BreadcrumbItem[] = [
     {
       label: 'Propostas',
-      icon: Users
+      icon: ClipboardList
     }
   ]
   return (

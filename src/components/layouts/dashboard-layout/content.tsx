@@ -6,14 +6,19 @@ export function DashboardContent({
   className
 }: PropsWithChildren<{ className?: string }>) {
   return (
-    <div className={cn('flex flex-1 flex-col bg-gray-100 p-8 pb-0', className)}>
+    <div className={cn('flex flex-1 flex-col bg-gray-100 p-6 pb-0', className)}>
       {children}
     </div>
   )
 }
 
-export function DashboardMainSection({ children }: PropsWithChildren) {
+export function DashboardMainSection({
+  children,
+  className
+}: PropsWithChildren<{ className?: string }>) {
   return (
-    <div className="flex-1 rounded-t-xl border-2 bg-white p-6">{children}</div>
+    <div className={cn('flex-1 rounded-t-xl border-2 bg-white p-6', className)}>
+      {children}
+    </div>
   )
 }

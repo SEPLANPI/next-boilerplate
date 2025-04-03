@@ -39,8 +39,7 @@ export function ProposalsTable({ data }: ProposalsTableProps) {
   const router = useRouter()
 
   function handleRowClick(proposal: Proposal) {
-    open()
-    setItem(proposal)
+    router.push(`/admin/propostas/${proposal.id}`)
   }
 
   return (
@@ -86,11 +85,11 @@ export function ProposalsTable({ data }: ProposalsTableProps) {
                   </Badge>
                 </TableTd>
                 <TableTd w="10%">
-                  <Tooltip label={proposal.autor}>
+                  <Tooltip label={proposal.autor.nome}>
                     <Avatar
                       radius="xl"
                       size="sm"
-                      name={proposal.autor}
+                      name={proposal.autor.nome}
                       color="initials"
                       variant="filled"
                     />

@@ -2,7 +2,8 @@ import { FetchError } from '@/components/errors/fetch-error'
 import { getCounselorById } from '@/features/registration-monitoring/api/get-counselor-by-id'
 import { CounselorInfoView } from '../../counselors/components/counselor-info-view'
 import { DashboardMainSection } from '@/components/layouts/dashboard-layout/content'
-import { BackButton } from '@/components/ui/back-button'
+import { Divider } from '@mantine/core'
+import { CounselorStatusBadge } from '@/components/ui/counselor-status-badge'
 
 export async function CounselorPageContent({ id }: { id: string }) {
   const { data, error } = await getCounselorById(id)
@@ -17,13 +18,17 @@ export async function CounselorPageContent({ id }: { id: string }) {
 
   return (
     <>
-      <div className="mb-6 flex items-center space-x-3">
-        <BackButton />
-        <span className="text-xs font-bold text-secondary-foreground">
-          {data.nome}
-        </span>
-      </div>
       <DashboardMainSection>
+        <div className="flex w-full items-center justify-between">
+          <div className="flex flex-col space-y-1">
+            <h1 className="text-lg font-semibold">{data.nome}</h1>
+            <p className="text-sm text-secondary-foreground">
+              {data.conselho.nome}
+            </p>
+          </div>
+          <CounselorStatusBadge status={data.status_atual} />
+        </div>
+        <Divider className="my-6" />
         <CounselorInfoView data={data} />
       </DashboardMainSection>
     </>
