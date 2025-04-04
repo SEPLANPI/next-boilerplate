@@ -32,36 +32,31 @@ export default function ProposalTimeline({ proposta }: { proposta: Proposal }) {
         lineWidth="1px"
         color="gray-50"
       >
-        {logItems.map((item, index) => {
-          const userCreated = formatName(proposta.autor.nome)
-          const userAltered = formatName(item.alterado_por.nome)
-
-          return (
-            <TimelineItem
-              bullet={<CircleDotDashed size="44" color="gray" />}
-              title={
-                index === logItems.length - 1
-                  ? userCreated + ' criou a proposta'
-                  : userAltered + ' alterou a proposta'
-              }
-              styles={{
-                itemTitle: { fontWeight: 700 }
-              }}
-              className="cursor-pointer"
-              key={index}
-              onClick={() => onItemClick(item)}
-            >
-              <div className="flex overflow-auto">
-                <Text className="text-gray-400" truncate fw={400}>
-                  {item.dados_antigos?.conteudo || 'Sem conteúdo'}
-                </Text>
-              </div>
-              <Text className="text-gray-400" size="xs">
-                {dayjs(item.criado_em).format('DD/MM/YYYY - HH:mm')}
+        {logItems.map((item, index) => (
+          <TimelineItem
+            bullet={<CircleDotDashed size="44" color="gray" />}
+            title={
+              index === logItems.length - 1
+                ? getShortName(proposta.autor.nome) + ' criou a proposta'
+                : getShortName(item.alterado_por.nome) + ' alterou a proposta'
+            }
+            styles={{
+              itemTitle: { fontWeight: 700 }
+            }}
+            className="cursor-pointer"
+            key={index}
+            onClick={() => onItemClick(item)}
+          >
+            <div className="flex overflow-auto">
+              <Text className="text-gray-400" truncate fw={400}>
+                {item.dados_antigos?.conteudo || 'Sem conteúdo'}
               </Text>
-            </TimelineItem>
-          )
-        })}
+            </div>
+            <Text className="text-gray-400" size="xs">
+              {dayjs(item.criado_em).format('DD/MM/YYYY - HH:mm')}
+            </Text>
+          </TimelineItem>
+        ))}
       </Timeline>
       {item?.dados_antigos && (
         <ProposalDetailsModal opened={opened} onClose={close} log={item} />
@@ -70,6 +65,8 @@ export default function ProposalTimeline({ proposta }: { proposta: Proposal }) {
   )
 }
 
-function formatName(name: string) {
-  return name.split(' ').slice(0, 2).join(' ')
+const getShortName = (fullName?: string) => {
+  if (!fullName) return ''
+  const names = fullName.split(' ')
+  return names.length > 1 ? `${names[0]} ${names[names.length - 1]}` : names[0]
 }
