@@ -1,16 +1,15 @@
 'use client'
 
-import React from 'react'
 import {
-  Table,
-  TableTr,
-  TableTd,
-  TableThead,
-  TableTbody,
-  TableTh,
   Avatar,
   Badge,
-  MantineColor
+  MantineColor,
+  Table,
+  TableTbody,
+  TableTd,
+  TableTh,
+  TableThead,
+  TableTr
 } from '@mantine/core'
 import { useRouter } from 'next/navigation'
 import { Registration } from '../types'
@@ -29,7 +28,7 @@ export function RegistrationTable({ data }: RegistrationTableProps) {
   const router = useRouter()
 
   function handleNavigateToRegistration(id: string) {
-    router.push(`/admin/acessos/cadastros/${id}/dados`)
+    router.push(`/admin/acessos/conselheiros/${id}/dados`)
   }
 
   return (

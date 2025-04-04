@@ -19,7 +19,7 @@ import { SearchParams } from 'nuqs'
 import { Suspense } from 'react'
 
 export const metadata: Metadata = {
-  title: 'Cadastros'
+  title: 'Conselheiros'
 }
 
 interface CadastrosProps {

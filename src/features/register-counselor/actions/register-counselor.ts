@@ -18,7 +18,7 @@ export async function registerCounselor(
       return { error }
     }
 
-    revalidatePath('/admin/acessos/cadastros')
+    revalidatePath('/admin/acessos/conselheiros')
     revalidatePath('/admin/acessos/convites')
 
     return { data: { success: true } }

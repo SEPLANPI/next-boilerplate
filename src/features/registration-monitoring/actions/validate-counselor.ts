@@ -2,9 +2,8 @@
 
 import { API } from '@/constants/messages'
 import { api } from '@/lib/server-api'
-import { revalidatePath, revalidateTag } from 'next/cache'
 import { ActionState, DjangoError } from '@/types/actions'
-import console from 'console'
+import { revalidatePath } from 'next/cache'
 
 type ValidateCounselorInput = {
   counselorId: string
@@ -30,7 +29,7 @@ export async function validateCounselor(
       return { error }
     }
 
-    revalidatePath(`/admin/acessos/cadastros/${input.counselorId}`)
+    revalidatePath(`/admin/acessos/conselheiros/${input.counselorId}`)
 
     return { data: null }
   } catch (error) {

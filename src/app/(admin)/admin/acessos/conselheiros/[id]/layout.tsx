@@ -20,8 +20,8 @@ export default function AdminCounselorVoewLayout({
       icon: Users
     },
     {
-      label: 'Cadastros',
-      href: '/admin/acessos/cadastros'
+      label: 'Conselheiros',
+      href: '/admin/acessos/conselheiros'
     },
     {
       label: 'Dados do Conselheiro'

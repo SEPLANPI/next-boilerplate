@@ -12,7 +12,7 @@ export const sidebarConfig: SidebarConfig = {
       items: [
         {
           label: 'Acessos',
-          href: '/admin/acessos/cadastros',
+          href: '/admin/acessos/conselheiros',
           match: '/admin/acessos',
           icon: Users
         },

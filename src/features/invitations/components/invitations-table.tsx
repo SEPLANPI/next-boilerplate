@@ -1,31 +1,31 @@
 'use client'
 
-import React from 'react'
+import { SortableColumnHeader } from '@/components/ui/sortable-column-header'
+import { SORT_LABELS } from '@/constants/sort-labels'
+import { useClipboard } from '@/hooks/use-clipboard'
+import { formatDate } from '@/utils/format-date'
 import {
-  Table,
-  TableTr,
-  TableTd,
-  TableThead,
-  TableTbody,
-  TableTh,
+  ActionIcon,
+  Avatar,
   Badge,
   MantineColor,
   Menu,
-  ActionIcon,
-  Avatar,
+  Table,
+  TableTbody,
+  TableTd,
+  TableTh,
+  TableThead,
+  TableTr,
   Tooltip
 } from '@mantine/core'
-import { MoreHorizontal, Copy, Trash2, Pencil } from 'lucide-react'
-import { useClipboard } from '@/hooks/use-clipboard'
 import { useDisclosure } from '@mantine/hooks'
+import { Copy, MoreHorizontal, Pencil, Trash2 } from 'lucide-react'
+import Link from 'next/link'
 import { parseAsString, useQueryState } from 'nuqs'
-import { SortableColumnHeader } from '@/components/ui/sortable-column-header'
-import { SORT_LABELS } from '@/constants/sort-labels'
-import { formatDate } from '@/utils/format-date'
+import React from 'react'
+import { Invitation } from '../types'
 import { DeleteInvitationModal } from './delete-invitation-modal'
 import { EditInvitationModal } from './edit-invitation-modal'
-import Link from 'next/link'
-import { Invitation } from '../types'
 
 const INVITATION_STATUS = {
   USED: { color: 'blue' as MantineColor, label: 'Usado' },
@@ -84,7 +84,7 @@ export function InvitationsTable({ data }: InvitationsTableProps) {
                 <TableTd className="flex justify-center">
                   {invitation.usado ? (
                     <Link
-                      href={`/admin/acessos/cadastros/${invitation.conselheiro.id}`}
+                      href={`/admin/acessos/conselheiros/${invitation.conselheiro.id}/dados`}
                     >
                       <Tooltip label={invitation.conselheiro.nome}>
                         <Avatar

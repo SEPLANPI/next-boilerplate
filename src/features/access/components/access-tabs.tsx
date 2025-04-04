@@ -1,11 +1,12 @@
 'use client'
 
 import { NavigationTabs, TabItem } from '@/components/ui/navigation-tabs'
-import { FileSpreadsheet, UserPlus } from 'lucide-react'
+import { FilePen, FileSpreadsheet, UserPlus } from 'lucide-react'
 
 export function AccessTabs() {
   const accessTabItems: TabItem[] = [
-    { value: 'cadastros', icon: FileSpreadsheet, label: 'Cadastros' },
+    { value: 'inscricoes-gerais', icon: FilePen, label: 'Inscrições Gerais' },
+    { value: 'conselheiros', icon: FileSpreadsheet, label: 'Conselheiros' },
     { value: 'convites', icon: UserPlus, label: 'Convites' }
   ]
 
@@ -13,7 +14,7 @@ export function AccessTabs() {
     <NavigationTabs
       items={accessTabItems}
       basePath={`/admin/acessos`}
-      defaultValue="cadastros"
+      defaultValue="conselheiros"
     />
   )
 }

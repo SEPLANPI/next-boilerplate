@@ -15,7 +15,7 @@ export function CounselorTabs() {
   return (
     <NavigationTabs
       items={accessTabItems}
-      basePath={`/admin/acessos/cadastros/${id}`}
+      basePath={`/admin/acessos/conselheiros/${id}`}
       defaultValue="dados"
     />
   )
