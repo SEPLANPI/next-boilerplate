@@ -21,8 +21,8 @@ function FormDrawerRoot({ children, onClose, ...props }: FormDrawerRootProps) {
 
 function FormDrawerHeader({ children }: PropsWithChildren) {
   return (
-    <Drawer.Header className="border-b px-5 py-4">
-      <Drawer.Title className="text-lg font-semibold">{children}</Drawer.Title>
+    <Drawer.Header className="p-6 pb-0">
+      <Drawer.Title className="text-sm font-semibold">{children}</Drawer.Title>
       <Drawer.CloseButton />
     </Drawer.Header>
   )
@@ -34,13 +34,13 @@ interface FormDrawerContentProps {
 
 function FormDrawerContent({ children }: FormDrawerContentProps) {
   return (
-    <Drawer.Body className="flex flex-1 flex-col p-5">{children}</Drawer.Body>
+    <Drawer.Body className="flex flex-1 flex-col p-6">{children}</Drawer.Body>
   )
 }
 
 function FormDrawerFooter({ children }: PropsWithChildren) {
   return (
-    <footer className="sticky bottom-0 border-t bg-white p-5">
+    <footer className="sticky bottom-0 border-t bg-white p-6">
       {children}
     </footer>
   )

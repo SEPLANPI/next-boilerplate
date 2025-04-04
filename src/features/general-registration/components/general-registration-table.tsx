@@ -7,10 +7,14 @@ import {
   TableTd,
   TableTh,
   TableThead,
-  TableTr
+  TableTr,
+  ActionIcon,
+  Menu
 } from '@mantine/core'
-import { useRouter } from 'next/navigation'
+import { MoreHorizontal, UserPlus } from 'lucide-react'
+import { useState } from 'react'
 import { People } from '../types'
+import { RegisterAsCounselorDrawer } from './register-as-counselor-drawer'
 
 interface RegistrationTableProps {
   data: People[]
@@ -22,58 +26,88 @@ const REGISTRATION_TYPE = {
 } as const
 
 export function GeneralRegistrationTable({ data }: RegistrationTableProps) {
-  const router = useRouter()
+  const [selectedPerson, setSelectedPerson] = useState<People | null>(null)
+  const [drawerOpened, setDrawerOpened] = useState(false)
 
   return (
-    <Table
-      verticalSpacing="xs"
-      className="w-full"
-    >
-      <TableThead>
-        <TableTr>
-          <TableTh>Nome</TableTh>
-          <TableTh>Inscrição</TableTh>
-          <TableTh>Eixo</TableTh>
-        </TableTr>
-      </TableThead>
-      <TableTbody>
-        {data.map((registration) => {
-          const type = REGISTRATION_TYPE[registration.inscricao.tipo_inscricao]
-          return (
-            <TableTr
-              key={registration.id}
-            >
-              <TableTd w="60%">
-                <div className="flex items-center gap-3">
-                  <Avatar
-                    radius="xl"
-                    size="sm"
-                    name={registration.nome}
-                    color="initials"
-                    variant="filled"
-                  />
-                  <div className="flex flex-col">
-                    <span className="font-medium">{registration.nome}</span>
-                    <span className="text-sm text-gray-600">
-                      {registration.cpf || 'CPF não informado'}
-                    </span>
+    <>
+      <Table verticalSpacing="xs" className="w-full">
+        <TableThead>
+          <TableTr>
+            <TableTh>Nome</TableTh>
+            <TableTh>Inscrição</TableTh>
+            <TableTh>Eixo</TableTh>
+            <TableTh className="w-16"></TableTh>
+          </TableTr>
+        </TableThead>
+        <TableTbody>
+          {data.map((registration) => {
+            const type =
+              REGISTRATION_TYPE[registration.inscricao.tipo_inscricao]
+            return (
+              <TableTr key={registration.id}>
+                <TableTd w="60%">
+                  <div className="flex items-center gap-3">
+                    <Avatar
+                      radius="xl"
+                      size="sm"
+                      name={registration.nome}
+                      color="initials"
+                      variant="filled"
+                    />
+                    <div className="flex flex-col">
+                      <span className="font-medium">{registration.nome}</span>
+                      <span className="text-sm text-gray-600">
+                        {registration.cpf || 'CPF não informado'}
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </TableTd>
-              <TableTd w="15%">
-                <span className="rounded-full border p-1.5 text-xs text-secondary-foreground">
-                  {type.label}
-                </span>
-              </TableTd>
-              <TableTd w="25%">
-                <span className="rounded-full border p-1.5 text-xs text-secondary-foreground">
-                  {registration.inscricao.eixo?.nome || 'Eixo não informado'}
-                </span>
-              </TableTd>
-            </TableTr>
-          )
-        })}
-      </TableTbody>
-    </Table>
+                </TableTd>
+                <TableTd w="15%">
+                  <span className="rounded-full border p-1.5 text-xs text-secondary-foreground">
+                    {type.label}
+                  </span>
+                </TableTd>
+                <TableTd w="25%">
+                  <span className="rounded-full border p-1.5 text-xs text-secondary-foreground">
+                    {registration.inscricao.eixo?.nome || 'Eixo não informado'}
+                  </span>
+                </TableTd>
+                <TableTd>
+                  {registration.inscricao.tipo_inscricao === 'votante' && (
+                    <Menu position="bottom-end">
+                      <Menu.Target>
+                        <ActionIcon variant="ghost">
+                          <MoreHorizontal className="size-4" />
+                        </ActionIcon>
+                      </Menu.Target>
+                      <Menu.Dropdown>
+                        <Menu.Item
+                          leftSection={<UserPlus className="size-4" />}
+                          onClick={() => {
+                            setSelectedPerson(registration)
+                            setDrawerOpened(true)
+                          }}
+                        >
+                          Cadastrar como conselheiro
+                        </Menu.Item>
+                      </Menu.Dropdown>
+                    </Menu>
+                  )}
+                </TableTd>
+              </TableTr>
+            )
+          })}
+        </TableTbody>
+      </Table>
+      <RegisterAsCounselorDrawer
+        opened={drawerOpened}
+        onClose={() => {
+          setDrawerOpened(false)
+          setSelectedPerson(null)
+        }}
+        person={selectedPerson}
+      />
+    </>
   )
 }
