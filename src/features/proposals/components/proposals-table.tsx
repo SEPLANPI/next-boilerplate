@@ -85,11 +85,11 @@ export function ProposalsTable({ data }: ProposalsTableProps) {
                   </Badge>
                 </TableTd>
                 <TableTd w="10%">
-                  <Tooltip label={proposal.autor.nome}>
+                  <Tooltip label={proposal.autor}>
                     <Avatar
                       radius="xl"
                       size="sm"
-                      name={proposal.autor.nome}
+                      name={proposal.autor}
                       color="initials"
                       variant="filled"
                     />
