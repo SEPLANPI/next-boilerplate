@@ -1,35 +1,46 @@
 'use client'
 
-import { useForm, zodResolver } from '@mantine/form'
-import { createInitialFormValues, InitialFormValues } from '@/lib/form-initial-values'
-import { registerAsCounselorSchema } from '../data/register-as-counselor-schema'
-import { AddressType } from '@/features/register-counselor/types/counselor'
-import { People } from '../types'
-import { TextInput, Select, RadioGroup, Radio, Input, FileInput, Checkbox, Divider, InputDescription } from '@mantine/core'
-import { IMaskInput } from 'react-imask'
-import { useQuery } from '@tanstack/react-query'
-import { getMunicipalitiesFilterOptions } from '@/features/register-counselor/api/client/get-municipalities-filter-options'
-import { getBanksFilterOptions } from '@/features/register-counselor/api/client/get-banks-filter-options'
-import { getWorkshopsOptions } from '@/features/register-counselor/api/client/get-workshops-options'
-import { getCouncils } from '@/features/register-counselor/api/client/get-councils'
-import { filterOptions } from '@/utils/filter-options'
-import { useZipCode } from '@/features/register-counselor/hooks/use-zip-code'
-import { PropsWithChildren, useEffect, useMemo } from 'react'
-import { notifications } from '@mantine/notifications'
 import { RadioCard } from '@/components/ui/radio-card'
-import { DateInput,  DateInputProps } from '@mantine/dates'
-import{ dayjs} from '@/lib/dayjs'
-import { convertPersonToCounselor } from '../actions/convert-person-to-counselor'
+import { getBanksFilterOptions } from '@/features/register-counselor/api/client/get-banks-filter-options'
+import { getCouncils } from '@/features/register-counselor/api/client/get-councils'
+import { getMunicipalitiesFilterOptions } from '@/features/register-counselor/api/client/get-municipalities-filter-options'
+import { getWorkshopsOptions } from '@/features/register-counselor/api/client/get-workshops-options'
+import { useZipCode } from '@/features/register-counselor/hooks/use-zip-code'
+import { AddressType } from '@/features/register-counselor/types/counselor'
+import { dayjs } from '@/lib/dayjs'
+import {
+  createInitialFormValues,
+  InitialFormValues
+} from '@/lib/form-initial-values'
+import { filterOptions } from '@/utils/filter-options'
 import { buildErrorMessage } from '@/utils/format-django-errors'
+import {
+  Checkbox,
+  FileInput,
+  Input,
+  InputDescription,
+  Radio,
+  RadioGroup,
+  Select,
+  TextInput
+} from '@mantine/core'
+import { DateInput, DateInputProps } from '@mantine/dates'
+import { useForm, zodResolver } from '@mantine/form'
+import { notifications } from '@mantine/notifications'
+import { useQuery } from '@tanstack/react-query'
+import { PropsWithChildren, useEffect, useMemo } from 'react'
+import { IMaskInput } from 'react-imask'
+import { convertPersonToCounselor } from '../actions/convert-person-to-counselor'
+import { registerAsCounselorSchema } from '../data/register-as-counselor-schema'
+import { Peoples } from '../types'
 
 const dateParser: DateInputProps['dateParser'] = (input) => {
   return dayjs(input, 'DD/MM/YYYY').toDate()
 }
 
-
 interface Props {
   id?: string
-  person: People | null
+  person: Peoples | null
   onSubmit?: () => void
   onComplete?: (success: boolean) => void
 }
@@ -56,13 +67,13 @@ export type FormValues = Omit<
       }
 }
 
-function Section({children} : PropsWithChildren) {
-  return  <section className="grid grid-cols-2 gap-4">{children}</section>
+function Section({ children }: PropsWithChildren) {
+  return <section className="grid grid-cols-2 gap-4">{children}</section>
 }
 
 function SectionHeader({ title }: { title: string }) {
   return (
-    <div className="mb-4 col-span-2 flex flex-row items-center justify-between gap-2 rounded-sm bg-gray-100 px-3 py-2">
+    <div className="col-span-2 mb-4 flex flex-row items-center justify-between gap-2 rounded-sm bg-gray-100 px-3 py-2">
       <div>
         <h2 className="text-sm font-bold text-secondary-foreground">{title}</h2>
       </div>
@@ -70,13 +81,20 @@ function SectionHeader({ title }: { title: string }) {
   )
 }
 
-export function RegisterAsCounselorForm({ id, person, onSubmit, onComplete }: Props) {
+export function RegisterAsCounselorForm({
+  id,
+  person,
+  onSubmit,
+  onComplete
+}: Props) {
   const initialValues = useMemo(
     () => ({
       ...createInitialFormValues(registerAsCounselorSchema),
       email: person?.email || '',
-      data_nascimento: person?.data_nascimento ? dayjs(person.data_nascimento).toDate() : null,
-      telefone: person?.telefone 
+      data_nascimento: person?.data_nascimento
+        ? dayjs(person.data_nascimento).toDate()
+        : null,
+      telefone: person?.telefone
         ? person.telefone.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3')
         : '',
       nome_titular: person?.nome || '',
@@ -107,10 +125,12 @@ export function RegisterAsCounselorForm({ id, person, onSubmit, onComplete }: Pr
     })
   })
 
-  const { data: municipalities, isLoading: isMunicipalitiesLoading } = useQuery({
-    queryKey: ['municipalities'],
-    queryFn: getMunicipalitiesFilterOptions
-  })
+  const { data: municipalities, isLoading: isMunicipalitiesLoading } = useQuery(
+    {
+      queryKey: ['municipalities'],
+      queryFn: getMunicipalitiesFilterOptions
+    }
+  )
 
   const { data: banks, isLoading: isBanksLoading } = useQuery({
     queryKey: ['banks'],
@@ -147,10 +167,14 @@ export function RegisterAsCounselorForm({ id, person, onSubmit, onComplete }: Pr
 
       if (zipCodeData.localidade && municipalities) {
         const municipality = municipalities.find(
-          (city) => city.nome.toLowerCase() === zipCodeData.localidade.toLowerCase()
+          (city) =>
+            city.nome.toLowerCase() === zipCodeData.localidade.toLowerCase()
         )
         if (municipality) {
-          form.setFieldValue('endereco.municipio_id', municipality.id.toString())
+          form.setFieldValue(
+            'endereco.municipio_id',
+            municipality.id.toString()
+          )
         }
       }
     }
@@ -164,7 +188,10 @@ export function RegisterAsCounselorForm({ id, person, onSubmit, onComplete }: Pr
     formData.append('rg', values.rg)
     formData.append('telefone', values.telefone)
     formData.append('email', values.email)
-    formData.append('data_nascimento', dayjs(values.data_nascimento).format('YYYY-MM-DD'))
+    formData.append(
+      'data_nascimento',
+      dayjs(values.data_nascimento).format('YYYY-MM-DD')
+    )
 
     formData.append('endereco_tipo_zona', values.endereco.tipo_endereco)
     formData.append('endereco_cep', values.endereco.cep)
@@ -183,7 +210,10 @@ export function RegisterAsCounselorForm({ id, person, onSubmit, onComplete }: Pr
 
     formData.append('tipo_membro', values.tipo_membro)
     formData.append('conselho_id', values.conselho_id)
-    formData.append('poder_publico', values.tipo_conselho === 'PODER_PUBLICO' ? 'true' : 'false')
+    formData.append(
+      'poder_publico',
+      values.tipo_conselho === 'PODER_PUBLICO' ? 'true' : 'false'
+    )
     formData.append('ajuda_custo', values.ajuda_custo ? 'true' : 'false')
 
     if (values.ajuda_custo && values.tipo_conselho === 'SOCIEDADE_CIVIL') {
@@ -191,7 +221,7 @@ export function RegisterAsCounselorForm({ id, person, onSubmit, onComplete }: Pr
       formData.append('banco_agencia', values.agencia || '')
       formData.append('banco_conta', values.conta || '')
       formData.append('banco_nome_titular', values.nome_titular || '')
-      formData.append('banco_cpf_titular', person?.cpf|| '')
+      formData.append('banco_cpf_titular', person?.cpf || '')
 
       if (values.comprovante_residencia instanceof File) {
         formData.append('comprovante_residencia', values.comprovante_residencia)
@@ -205,7 +235,7 @@ export function RegisterAsCounselorForm({ id, person, onSubmit, onComplete }: Pr
     }
 
     const result = await convertPersonToCounselor(formData)
-    
+
     if (result?.error) {
       notifications.show({
         title: 'Erro ao cadastrar conselheiro',
@@ -234,7 +264,7 @@ export function RegisterAsCounselorForm({ id, person, onSubmit, onComplete }: Pr
           label="Nome Completo"
           className="col-span-2"
           value={person?.nome}
-          disabled                                                    
+          disabled
         />
         <Input.Wrapper label="CPF" className="col-span-2 sm:col-span-1">
           <Input
@@ -245,15 +275,15 @@ export function RegisterAsCounselorForm({ id, person, onSubmit, onComplete }: Pr
             disabled
           />
         </Input.Wrapper>
-      <DateInput
-      withAsterisk
-        dateParser={dateParser}
-        className="col-span-2 sm:col-span-1"
-        label="Data de Nascimento"
-        valueFormat="DD/MM/YYYY"
-        key={form.key('data_nascimento')}
-        {...form.getInputProps('data_nascimento')}
-      />
+        <DateInput
+          withAsterisk
+          dateParser={dateParser}
+          className="col-span-2 sm:col-span-1"
+          label="Data de Nascimento"
+          valueFormat="DD/MM/YYYY"
+          key={form.key('data_nascimento')}
+          {...form.getInputProps('data_nascimento')}
+        />
         <TextInput
           label="Email"
           className="col-span-2"
@@ -319,7 +349,12 @@ export function RegisterAsCounselorForm({ id, person, onSubmit, onComplete }: Pr
           withAsterisk
           label="Município"
           disabled={isMunicipalitiesLoading}
-          data={municipalities?.map(m => ({ value: m.id.toString(), label: m.nome })) || []}
+          data={
+            municipalities?.map((m) => ({
+              value: m.id.toString(),
+              label: m.nome
+            })) || []
+          }
           {...form.getInputProps('endereco.municipio_id')}
         />
 
@@ -415,7 +450,8 @@ export function RegisterAsCounselorForm({ id, person, onSubmit, onComplete }: Pr
                   <p className="leading-none">Preciso de ajuda de custo</p>
                   <InputDescription>
                     A ajuda de custo será fornecida exclusivamente aos
-                    conselheiros que não residem na cidade onde o evento ocorrerá.
+                    conselheiros que não residem na cidade onde o evento
+                    ocorrerá.
                   </InputDescription>
                 </div>
               </div>
@@ -435,13 +471,15 @@ export function RegisterAsCounselorForm({ id, person, onSubmit, onComplete }: Pr
               className="col-span-2"
               label="Banco"
               disabled={isBanksLoading}
-              data={banks?.map(b => ({
-                value: b.id.toString(),
-                label: `${b.code || 'N/A'} - ${b.full_name}`
-              })) || []}
+              data={
+                banks?.map((b) => ({
+                  value: b.id.toString(),
+                  label: `${b.code || 'N/A'} - ${b.full_name}`
+                })) || []
+              }
               {...form.getInputProps('banco_id')}
             />
-            
+
             <Input.Wrapper
               label="Agência"
               error={form.errors.agencia}
@@ -450,7 +488,7 @@ export function RegisterAsCounselorForm({ id, person, onSubmit, onComplete }: Pr
             >
               <Input type="number" {...form.getInputProps('agencia')} />
             </Input.Wrapper>
-            
+
             <Input.Wrapper
               label="Conta corrente"
               error={form.errors.conta}
@@ -459,7 +497,7 @@ export function RegisterAsCounselorForm({ id, person, onSubmit, onComplete }: Pr
             >
               <Input type="number" {...form.getInputProps('conta')} />
             </Input.Wrapper>
-            
+
             <TextInput
               withAsterisk
               className="col-span-2"
@@ -467,10 +505,7 @@ export function RegisterAsCounselorForm({ id, person, onSubmit, onComplete }: Pr
               {...form.getInputProps('nome_titular')}
             />
 
-            <Input.Wrapper
-              label="CPF do Titular"
-              className="col-span-2"
-            >
+            <Input.Wrapper label="CPF do Titular" className="col-span-2">
               <Input
                 component={IMaskInput}
                 mask="000.000.000-00"
@@ -491,7 +526,7 @@ export function RegisterAsCounselorForm({ id, person, onSubmit, onComplete }: Pr
               placeholder="Selecione o arquivo (jpg. jpeg, png, pdf)"
               {...form.getInputProps('comprovante_residencia')}
             />
-            
+
             <FileInput
               withAsterisk
               className="col-span-2"
@@ -500,7 +535,7 @@ export function RegisterAsCounselorForm({ id, person, onSubmit, onComplete }: Pr
               placeholder="Selecione o arquivo (jpg. jpeg, png, pdf)"
               {...form.getInputProps('comprovante_conselho')}
             />
-            
+
             <FileInput
               withAsterisk
               className="col-span-2"

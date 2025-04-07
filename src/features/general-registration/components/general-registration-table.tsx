@@ -1,23 +1,23 @@
 'use client'
 
 import {
+  ActionIcon,
   Avatar,
+  Menu,
   Table,
   TableTbody,
   TableTd,
   TableTh,
   TableThead,
-  TableTr,
-  ActionIcon,
-  Menu
+  TableTr
 } from '@mantine/core'
 import { MoreHorizontal, UserPlus } from 'lucide-react'
 import { useState } from 'react'
-import { People } from '../types'
+import { Peoples } from '../types'
 import { RegisterAsCounselorDrawer } from './register-as-counselor-drawer'
 
 interface RegistrationTableProps {
-  data: People[]
+  data: Peoples[]
 }
 
 const REGISTRATION_TYPE = {
@@ -26,7 +26,7 @@ const REGISTRATION_TYPE = {
 } as const
 
 export function GeneralRegistrationTable({ data }: RegistrationTableProps) {
-  const [selectedPerson, setSelectedPerson] = useState<People | null>(null)
+  const [selectedPerson, setSelectedPerson] = useState<Peoples | null>(null)
   const [drawerOpened, setDrawerOpened] = useState(false)
 
   return (

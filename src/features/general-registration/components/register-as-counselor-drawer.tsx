@@ -1,15 +1,15 @@
 'use client'
 
-import { Button } from '@mantine/core'
 import { FormDrawer } from '@/components/ui/form-drawer'
-import { RegisterAsCounselorForm } from './register-as-counselor-form'
-import { People } from '../types'
+import { Button } from '@mantine/core'
 import { useState } from 'react'
+import { Peoples } from '../types'
+import { RegisterAsCounselorForm } from './register-as-counselor-form'
 
 interface Props {
   opened: boolean
   onClose: () => void
-  person: People | null
+  person: Peoples | null
 }
 
 export function RegisterAsCounselorDrawer({ opened, onClose, person }: Props) {

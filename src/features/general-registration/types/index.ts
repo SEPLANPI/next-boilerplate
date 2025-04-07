@@ -1,4 +1,4 @@
-export interface People {
+export interface Peoples {
   id: string
   nome: string
   cpf: string
