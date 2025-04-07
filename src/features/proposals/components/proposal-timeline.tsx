@@ -49,7 +49,9 @@ export default function ProposalTimeline({ proposta }: { proposta: Proposal }) {
           >
             <div className="flex overflow-auto">
               <Text className="text-gray-400" truncate fw={400}>
-                {item.dados_antigos?.conteudo || 'Sem conteúdo'}
+                {item.dados_antigos?.conteudo
+                  ? 'Visualizar registro de atualização'	
+                  : 'Proposta criada'}
               </Text>
             </div>
             <Text className="text-gray-400" size="xs">
@@ -67,6 +69,8 @@ export default function ProposalTimeline({ proposta }: { proposta: Proposal }) {
 
 const getShortName = (fullName?: string) => {
   if (!fullName) return ''
-  const names = fullName.split(' ')
+  const capitalize = (word: string) =>
+    word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()
+  const names = fullName.split(' ').map(capitalize)
   return names.length > 1 ? `${names[0]} ${names[names.length - 1]}` : names[0]
 }

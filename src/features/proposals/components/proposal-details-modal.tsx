@@ -39,7 +39,7 @@ export default function ProposalDetailsModal({
           </Text>
           <Text variant="h2" size="xs" className="text-gray-400">
             Alterado em {dayjs(log.criado_em).format(`DD/MM/YYYY [às] HH:mm`)}{' '}
-            por {log.alterado_por.nome}
+            por {capitalizeName(log.alterado_por.nome)}
           </Text>
         </div>
         <Text
@@ -52,4 +52,20 @@ export default function ProposalDetailsModal({
       </div>
     </Modal>
   )
+}
+
+function capitalizeName(name: string): string {
+  if (!name || typeof name !== 'string') {
+    return ''
+  }
+
+  const lowerCaseName = name.toLowerCase()
+  const words = lowerCaseName.split(' ')
+
+  const capitalizedWords = words.map((word) => {
+    if (word.length === 0) return ''
+    return word.charAt(0).toUpperCase() + word.slice(1)
+  })
+
+  return capitalizedWords.join(' ')
 }

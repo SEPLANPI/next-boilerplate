@@ -16,7 +16,7 @@ export default function ProposalDetails({ proposta }: { proposta: Proposal }) {
             <Text variant="h2" size="xs" className="text-gray-600">
               Criado em{' '}
               {dayjs(proposta.criado_em).format(`DD/MM/YYYY [às] HH:mm`)} por{' '}
-              {proposta.autor.nome}
+              {capitalizeName(proposta.autor.nome)}
             </Text>
           </div>
           <ProposalEditDrawer proposal={proposta} />
@@ -34,4 +34,20 @@ export default function ProposalDetails({ proposta }: { proposta: Proposal }) {
       </div>
     </div>
   )
+}
+
+function capitalizeName(name: string): string {
+  if (!name || typeof name !== 'string') {
+    return ''
+  }
+
+  const lowerCaseName = name.toLowerCase()
+  const words = lowerCaseName.split(' ')
+
+  const capitalizedWords = words.map((word) => {
+    if (word.length === 0) return ''
+    return word.charAt(0).toUpperCase() + word.slice(1)
+  })
+
+  return capitalizedWords.join(' ')
 }
