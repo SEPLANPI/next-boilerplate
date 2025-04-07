@@ -5,7 +5,7 @@ import { Metadata } from 'next'
 import { Logo } from '@/components/ui/logo/logo'
 
 export const metadata: Metadata = {
-  title: '123'
+  title: 'Bem vindo a votação'
 }
 
 export default async function WelcomeVotingPage({
@@ -20,7 +20,7 @@ export default async function WelcomeVotingPage({
         <Logo />
       </div>
       <div className="w-full">
-        <h1 className="mx-auto mb-4 text-center font-montserrat text-xl font-bold">
+        <h1 className="mx-auto mb-4 text-center font-montserrat text-lg font-bold">
           Sua Voz, Nosso Futuro.
         </h1>
         <div className="space-y-2 text-sm text-secondary-foreground">
