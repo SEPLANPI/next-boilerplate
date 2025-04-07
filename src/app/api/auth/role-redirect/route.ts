@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
   if (!user) {
     return NextResponse.redirect(
       new URL(
-        `${env.APP_URL}/api/auth/sign-in?callbackUrl=/api/auth/role-redirect`,
+        `${env.APP_URL}/api/auth/sign-in?redirectTo=/api/auth/role-redirect`,
         request.url
       )
     )

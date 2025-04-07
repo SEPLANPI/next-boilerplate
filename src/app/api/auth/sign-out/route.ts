@@ -1,11 +1,11 @@
 import { signOut } from '@/auth'
 import { env } from '@/config/env'
+import { logger } from '@/lib/logger'
 import { getToken } from '@auth/core/jwt'
-import { redirect } from 'next/navigation'
 
 export async function GET(req: Request) {
   const searchParams = new URL(req.url).searchParams
-  const redirectTo = searchParams.get('redirectTo')
+  const redirectTo = searchParams.get('redirectTo') || ''
 
   const token = await getToken({
     req,
@@ -17,14 +17,29 @@ export async function GET(req: Request) {
     return await signOut({ redirectTo: redirectTo || '' })
   }
 
-  const url = `${env.AUTH_KEYCLOAK_ISSUER}/protocol/openid-connect/logout`
-  const params = new URLSearchParams({
-    client_id: env.AUTH_KEYCLOAK_ID,
-    id_token_hint: token.idToken as string,
-    post_logout_redirect_uri: `${env.APP_URL}/api/auth/callback-sign-out${redirectTo ? `?redirectTo=${redirectTo}` : ''}`
+  try {
+    const url = `${env.AUTH_KEYCLOAK_ISSUER}/protocol/openid-connect/logout`
+
+    await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: new URLSearchParams({
+        client_id: env.AUTH_KEYCLOAK_ID,
+        client_secret: env.AUTH_KEYCLOAK_SECRET,
+        refresh_token: token.refreshToken as string
+      }).toString()
+    })
+  } catch (error) {
+    logger.error('Erro ao realizar logout no Keycloak:', {
+      name: (error as Error).name,
+      message: (error as Error).message,
+      stack: (error as Error).stack
+    })
+  }
+
+  return await signOut({
+    redirectTo: redirectTo || ''
   })
-
-  const keycloakLogoutUrl = `${url}?${params}`
-
-  redirect(keycloakLogoutUrl)
 }
