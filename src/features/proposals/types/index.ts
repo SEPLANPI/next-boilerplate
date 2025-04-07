@@ -4,7 +4,7 @@ export type Proposal = {
     eixo: Axis
     status: 'PENDENTE' | 'APROVADA' | 'REJEITADA' | 'EM_VOTACAO' | 'CANCELADA'
     conteudo: string
-    autor: string
+    autor: Author
     tipo_autor: string
     criado_em: string
     historicos: Log[]
