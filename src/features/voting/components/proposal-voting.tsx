@@ -2,24 +2,32 @@
 
 import { useState } from 'react'
 import { Input, Button } from '@mantine/core'
+import { notifications } from '@mantine/notifications'
+import { submitVotes } from '../actions/submit-votes'
+import { buildErrorMessage } from '@/utils/format-django-errors'
 import { RemainingPointsCoins } from './remaining-points-coins'
 import { ProposalModal } from './proposal-modal'
 
 interface ProposalVotingProps {
   proposals: Array<{
     id: string
-    nome: string
-    descricao: string
+    titulo: string
+    conteudo: string
   }>
+  registrationId: string
 }
 
-export function ProposalVoting({ proposals }: ProposalVotingProps) {
+export function ProposalVoting({
+  proposals,
+  registrationId
+}: ProposalVotingProps) {
   const [votes, setVotes] = useState<Record<string, number>>(
     Object.fromEntries(proposals.map((p) => [p.id, 0]))
   )
   const [selectedProposal, setSelectedProposal] = useState<
     (typeof proposals)[0] | null
   >(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
   const totalPoints = Object.values(votes).reduce((sum, v) => sum + v, 0)
   const remainingPoints = 100 - totalPoints
 
@@ -40,8 +48,33 @@ export function ProposalVoting({ proposals }: ProposalVotingProps) {
       return
     }
 
-    // TODO: Implement vote submission
-    console.log('Votes:', votes)
+    setIsSubmitting(true)
+    const result = await submitVotes({
+      inscricao: registrationId,
+      votos: Object.entries(votes)
+        .map(([id, pontos]) => ({
+          proposta_id: id,
+          pontos
+        }))
+        .filter(({ pontos }) => pontos > 0)
+    })
+
+    if (result?.error) {
+      notifications.show({
+        message: buildErrorMessage(result.error),
+        color: 'red'
+      })
+      setIsSubmitting(false)
+
+      return
+    }
+
+    notifications.show({
+      message: 'Votos registrados com sucesso!',
+      color: 'green'
+    })
+
+    setIsSubmitting(false)
   }
 
   return (
@@ -61,7 +94,7 @@ export function ProposalVoting({ proposals }: ProposalVotingProps) {
               className="w-full cursor-pointer text-sm"
               onClick={() => setSelectedProposal(proposal)}
             >
-              {proposal.nome}
+              {proposal.titulo}
             </h6>
             <Input
               type="number"
@@ -75,22 +108,24 @@ export function ProposalVoting({ proposals }: ProposalVotingProps) {
         ))}
       </div>
 
-      {selectedProposal && (
-        <ProposalModal
-          isOpen={!!selectedProposal}
-          onClose={() => setSelectedProposal(null)}
-          proposal={selectedProposal}
-          currentPoints={votes[selectedProposal.id]}
-          remainingPoints={remainingPoints + votes[selectedProposal.id]}
-          onPointsConfirm={(points) =>
-            handleVoteChange(selectedProposal.id, points.toString())
-          }
-        />
-      )}
+      <ProposalModal
+        isOpen={!!selectedProposal}
+        onClose={() => setSelectedProposal(null)}
+        proposal={selectedProposal}
+        currentPoints={selectedProposal ? votes[selectedProposal.id] : 0}
+        remainingPoints={
+          selectedProposal ? remainingPoints + votes[selectedProposal.id] : 0
+        }
+        onPointsConfirm={(points) =>
+          selectedProposal &&
+          handleVoteChange(selectedProposal.id, points.toString())
+        }
+      />
 
       <Button
         onClick={handleSubmit}
         disabled={totalPoints !== 100}
+        loading={isSubmitting}
         className="w-full"
       >
         Confirmar distribuição

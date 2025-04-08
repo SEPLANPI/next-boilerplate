@@ -9,9 +9,9 @@ interface ProposalModalProps {
   onClose: () => void
   proposal: {
     id: string
-    nome: string
-    descricao: string
-  }
+    titulo: string
+    conteudo: string
+  } | null
   currentPoints: number
   onPointsConfirm: (points: number) => void
   remainingPoints: number
@@ -59,20 +59,20 @@ export function ProposalModal({
       classNames={{
         title: 'text-secondary-foreground font-semibold'
       }}
-      size="md"
+      size="lg"
     >
       <div className="mb-6 flex flex-col space-y-4">
         <div>
           <span className="text-xs font-semibold text-secondary-foreground">
             Título
           </span>
-          <p className="text-sm">{proposal.nome}</p>
+          <p className="text-sm">{proposal?.titulo}</p>
         </div>
         <div>
           <span className="text-xs font-semibold text-secondary-foreground">
             Descrição
           </span>
-          <p className="text-sm">{proposal.descricao}</p>
+          <p className="text-sm">{proposal?.conteudo}</p>
         </div>
       </div>
       <div className="flex items-center gap-4">

@@ -13,7 +13,7 @@ export default async function WelcomeVotingPage({
 }: {
   params: { eventId: string }
 }) {
-  const identificationPageUrl = `/votacao/${eventId}/identificacao`
+  const identificationPageUrl = `/votacao/evento/${eventId}/identificacao`
   return (
     <WelcomeVotingLayout>
       <div className="mx-auto">

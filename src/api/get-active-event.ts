@@ -5,6 +5,7 @@ import { ServerResult } from '@/types/server-result'
 
 export type Event = {
   id: string
+  nome: string
 }
 
 export async function getActiveEvent(): Promise<ServerResult<Event>> {

@@ -28,7 +28,6 @@ export async function registerPerson(
     if (!response.ok) {
       const error: DjangoError = await response.json()
 
-      console.log(error)
       return { error }
     }
 

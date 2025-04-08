@@ -7,7 +7,7 @@ import {
   DashboardMainSection
 } from '@/components/layouts/dashboard-layout/content'
 import { DashboardHeader } from '@/components/layouts/dashboard-layout/header'
-import QRCodeButton from '@/features/admin-voting/components/generate-qrcode-button'
+import { QRCodeButton } from '@/features/admin-voting/components/generate-qrcode-button'
 import { Vote } from 'lucide-react'
 
 export default async function Votacao() {

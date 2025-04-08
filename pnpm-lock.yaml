@@ -29,6 +29,9 @@ importers:
       '@tanstack/react-query':
         specifier: ^5.59.8
         version: 5.66.9(react@18.3.1)
+      '@types/qrcode':
+        specifier: ^1.5.5
+        version: 1.5.5
       '@ui/mantine-config':
         specifier: github:SEPLANPI/ui-mantine-config
         version: https://codeload.github.com/SEPLANPI/ui-mantine-config/tar.gz/88065c1c0a4e2e6c1814b802e37b05d1302142b6(@mantine/core@7.17.0(@mantine/hooks@7.17.0(react@18.3.1))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1))
@@ -511,6 +514,9 @@ packages:
 
   '@types/prop-types@15.7.14':
     resolution: {integrity: sha512-gNMvNH49DJ7OJYv+KAKn0Xp45p8PLl6zo2YnvDIbTd4J6MER2BmWN49TG7n9LvkyihINxeKW8+3bfS2yDC9dzQ==}
+
+  '@types/qrcode@1.5.5':
+    resolution: {integrity: sha512-CdfBi/e3Qk+3Z/fXYShipBT13OJ2fDO2Q2w5CIP5anLTLIndQG9z6P1cnm+8zCWSpm5dnxMFd/uREtb0EXuQzg==}
 
   '@types/raf@3.4.3':
     resolution: {integrity: sha512-c4YAvMedbPZ5tEyxzQdMoOhhJ4RD3rngZIdwC2/qDN3d7JpEhB6fiBRKVY1lg5B7Wk+uPBjn5f39j1/2MY1oOw==}
@@ -2894,6 +2900,10 @@ snapshots:
       undici-types: 6.20.0
 
   '@types/prop-types@15.7.14': {}
+
+  '@types/qrcode@1.5.5':
+    dependencies:
+      '@types/node': 22.13.5
 
   '@types/raf@3.4.3':
     optional: true

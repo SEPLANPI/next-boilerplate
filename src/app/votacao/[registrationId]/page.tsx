@@ -11,17 +11,16 @@ export const metadata: Metadata = {
 
 interface VotingPageProps {
   params: {
-    axisId: string
     registrationId: string
   }
 }
 
 export default async function VotingPage({
-  params: { axisId }
+  params: { registrationId }
 }: VotingPageProps) {
-  const { data, error } = await getAxisVotingInfo(axisId)
+  const { data, error } = await getAxisVotingInfo(registrationId)
 
-  if (error) {
+  if (error || !data) {
     return <FetchError error={buildErrorMessage(error)} />
   }
 
@@ -47,7 +46,7 @@ export default async function VotingPage({
           height={144}
         />
         <div className="flex flex-col space-y-4 rounded-md bg-white p-6 shadow-md">
-          <h1 className="font-montserrat text-lg font-bold">
+          <h1 className="font-montserrat font-bold sm:text-lg">
             Votação das Propostas
           </h1>
           <p className="text-sm text-secondary-foreground">
@@ -57,7 +56,11 @@ export default async function VotingPage({
           </p>
         </div>
         <div className="flex flex-col space-y-4 rounded-md bg-white p-6 shadow-md">
-          <ProposalVoting proposals={data.propostas} />
+          <h1 className="font-montserrat font-bold sm:text-lg">{data.nome}</h1>
+          <ProposalVoting
+            proposals={data.propostas}
+            registrationId={registrationId}
+          />
         </div>
       </div>
     </div>

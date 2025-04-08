@@ -21,7 +21,6 @@ export async function ConselheiroLayout({ children }: PropsWithChildren) {
   const response = await api.get('/conselheiros/status/')
 
   if (!response.ok) {
-    console.log(await response.text())
     return <div>Erro ao carregar dados do conselheiro</div>
   }
 
