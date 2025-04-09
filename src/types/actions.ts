@@ -1,5 +1,6 @@
 interface ErrorResponse {
   detail?: string
+  error?: string
   non_field_errors?: string[]
   field_errors?: Record<string, string[]>
 }

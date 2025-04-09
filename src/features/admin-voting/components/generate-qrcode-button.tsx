@@ -108,11 +108,12 @@ export function QRCodeButton() {
     <Button
       onClick={generateAndDownloadPDF}
       variant="default"
+      size="xs"
       leftSection={<QrCode className="size-4" />}
       disabled={!event}
       loading={isGenerating}
     >
-      {isGenerating ? 'Gerando QR Code...' : 'Gerar QR Code'}
+      Gerar QR Code
     </Button>
   )
 }

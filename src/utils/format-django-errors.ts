@@ -35,6 +35,13 @@ export function formatDjangoErrors(error: DjangoError): FormattedError[] {
     })
   }
 
+  if (error.error) {
+    formattedErrors.push({
+      type: 'global',
+      message: error.error
+    })
+  }
+
   if (error.non_field_errors && error.non_field_errors.length > 0) {
     error.non_field_errors.forEach((errorMsg) => {
       formattedErrors.push({

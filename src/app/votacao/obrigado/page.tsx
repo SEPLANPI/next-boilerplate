@@ -16,7 +16,7 @@ export default function VotingThanksPage() {
           <Image
             src="/votacao/sucesso.png"
             alt="Senhor"
-            className="mx-auto w-44"
+            className="mx-auto w-44 sm:w-52"
             quality={100}
             width={350}
             height={320}
