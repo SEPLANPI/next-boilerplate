@@ -39,9 +39,9 @@ function CheckListItem({ children }: PropsWithChildren) {
 export default function LandingPage() {
   return (
     <div className="font-montserrat">
-      <section className="relative flex h-[320px] flex-col p-8 sm:h-[420px] md:h-[660px] md:py-0">
+      <section className="relative flex h-[360px] flex-col p-8 sm:h-[420px] md:h-[660px] md:py-0">
         <Header />
-        <main className="relative z-10 mx-auto flex w-full max-w-[1120px] flex-1 flex-col justify-center gap-4 text-white">
+        <main className="relative z-10 mx-auto mt-10 flex w-full max-w-[1120px] flex-1 flex-col justify-center gap-4 text-white">
           <h1 className="max-w-xs text-2xl font-bold md:max-w-md md:text-4xl">
             Planejando um futuro sustentável e inclusivo
           </h1>

@@ -90,10 +90,10 @@ export function Nav({ isFloating = false }: { isFloating: boolean }) {
               </ul>
             </nav>
             <Button {...BUTTON_PROPS} fullWidth>
-              <span className="block text-[9px] font-normal">
-                Acesso exclusivo
-              </span>
-              <span className="text-xs font-semibold">Conselheiros</span>
+              <div className="flex flex-col">
+                <span className="text-[9px] font-normal">Acesso exclusivo</span>
+                <span className="text-xs font-semibold">Conselheiros</span>
+              </div>
             </Button>
           </div>
         </Drawer>
