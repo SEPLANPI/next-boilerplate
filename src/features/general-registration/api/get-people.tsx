@@ -5,11 +5,11 @@ import { api } from '@/lib/server-api'
 import { DjangoError } from '@/types/actions'
 import { ServerResult } from '@/types/server-result'
 import { generalRegistrationSearchParams } from '../lib/search-params'
-import { Peoples } from '../types'
+import { Person } from '../types'
 
 type GetGeneralRegistrationsResponse = {
   count: number
-  results: Peoples[]
+  results: Person[]
 }
 
 export async function getPeople(): Promise<

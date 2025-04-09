@@ -3,13 +3,13 @@
 import { FormDrawer } from '@/components/ui/form-drawer'
 import { Button } from '@mantine/core'
 import { useState } from 'react'
-import { Peoples } from '../types'
+import { Person } from '../types'
 import { RegisterAsCounselorForm } from './register-as-counselor-form'
 
 interface Props {
   opened: boolean
   onClose: () => void
-  person: Peoples | null
+  person: Person | null
 }
 
 export function RegisterAsCounselorDrawer({ opened, onClose, person }: Props) {
