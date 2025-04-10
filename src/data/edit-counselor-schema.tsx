@@ -30,9 +30,9 @@ export const editCounselorSchema = z
     cpf: z
       .string()
       .regex(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, 'CPF deve ter 11 dígitos')
-      .refine((cpf) => CPF.isValid(cpf), {
+      /* .refine((cpf) => CPF.isValid(cpf), {
         message: 'CPF inválido'
-      }),
+      }), */,
     email: z.string().email('Email inválido'),
     data_nascimento: z.date({
       message: 'Data de nascimento deve ser uma data válida'
