@@ -1,23 +1,22 @@
 'use client'
 
 import { FormDrawer } from '@/components/ui/form-drawer'
-import { Person } from '@/features/general-registration/types'
+import { CounselorInfo } from '@/features/counselors/types'
 import { Button } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { Pencil } from 'lucide-react'
 import { useState } from 'react'
 import { EditCounselorForm } from './edit-counselor-form'
 interface Props {
-  opened: boolean
-  onClose: () => void
-  person: Person | null
+  opened?: boolean
+  counselor: CounselorInfo | undefined
+  onClose?: () => void
 }
 
-export default function EditCounselorDrawer({ person }: Props) {
+export default function EditCounselorDrawer({ counselor }: Props) {
   const [opened, { open, close }] = useDisclosure(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const formId = 'edit-counselor-form'
-
   return (
     <>
       <Button
@@ -33,8 +32,10 @@ export default function EditCounselorDrawer({ person }: Props) {
         <FormDrawer.Header>Editar Conselheiro</FormDrawer.Header>
         <FormDrawer.Content>
           <EditCounselorForm
-            person={person}
+            counselor={counselor}
             id={formId}
+            isSubmitting={isSubmitting}
+            setIsSubmitting={setIsSubmitting}
             onComplete={(success) => {
               setIsSubmitting(false)
               if (success) {
@@ -49,7 +50,7 @@ export default function EditCounselorDrawer({ person }: Props) {
               Cancelar
             </Button>
             <Button type="submit" form={formId} loading={isSubmitting}>
-              Cadastrar
+              Salvar
             </Button>
           </div>
         </FormDrawer.Footer>

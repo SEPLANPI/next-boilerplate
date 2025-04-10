@@ -1,43 +1,38 @@
 'use client'
 
 import { API } from '@/constants/messages'
-import { Person } from '@/features/general-registration/types'
+import { CounselorInfo } from '@/features/counselors/types'
 import { AddressType } from '@/features/register-counselor/types/counselor'
 import { dayjs } from '@/lib/dayjs'
 import { notifications } from '@mantine/notifications'
 import { useState } from 'react'
+import { editCounselor } from '../actions/editCounselor'
 import { BaseEditCounselorForm, FormValues } from './base-edit-counselor-form'
 
 interface EditCounselorFormProps {
   id: string
-  person: Person | null
+  counselor: CounselorInfo | undefined
+  isSubmitting?: boolean
+  setIsSubmitting: (isSubmitting: boolean) => void
   onComplete?: (success: boolean) => void
 }
 
 export function EditCounselorForm({
   id,
-  person,
-  onComplete
+  counselor,
+  onComplete,
+  isSubmitting,
+  setIsSubmitting
 }: EditCounselorFormProps) {
-  const [error, setError] = useState<string | null>(null)
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [error, setError] = useState<string>()
 
   async function handleSubmit(values: FormValues) {
     try {
       setIsSubmitting(true)
-      //   const { error } = await updateInviteLink(invitation.id, values)
-
-      //   if (error) {
-      //     setIsSubmitting(false)
-      //     setError(buildErrorMessage(error))
-      //     onComplete?.(false)
-      //     return
-      //   }
       const formData = new FormData()
-      formData.append('id', person?.id || '')
       formData.append('nome', values.nome)
       formData.append('cpf', values.cpf)
-      formData.append('pessoa_id', person?.id || '')
+      formData.append('pessoa_id', counselor?.id || '')
       formData.append('rg', values.rg)
       formData.append('telefone', values.telefone)
       formData.append('email', values.email)
@@ -77,7 +72,7 @@ export function EditCounselorForm({
         formData.append('banco_agencia', values.agencia || '')
         formData.append('banco_conta', values.conta || '')
         formData.append('banco_nome_titular', values.nome_titular || '')
-        formData.append('banco_cpf_titular', person?.cpf || '')
+        formData.append('banco_cpf_titular', counselor?.cpf || '')
 
         if (values.comprovante_residencia instanceof File) {
           formData.append(
@@ -92,9 +87,24 @@ export function EditCounselorForm({
           formData.append('comprovante_bancario', values.comprovante_bancario)
         }
       }
+
+      const { error } = await editCounselor(formData, counselor?.id)
+      console.log('PUT ERROR:', error)
+      if (error) {
+        notifications.show({
+          message: 'Falha ao editar conselheiro: ' + error,
+          title: 'Erro',
+          color: 'red'
+        })
+        setError(API.UNEXPECTED_FETCH_ERROR)
+        onComplete?.(false)
+        return
+      }
+
       setIsSubmitting(false)
       notifications.show({
-        message: 'Convite atualizado com sucesso',
+        title: 'Sucesso',
+        message: 'Conselheiro editado com sucesso',
         color: 'green'
       })
       setError('')
@@ -109,7 +119,7 @@ export function EditCounselorForm({
     <BaseEditCounselorForm
       id={id}
       onSubmit={handleSubmit}
-      person={person}
+      counselor={counselor}
       error={error}
       isSubmitting={isSubmitting}
     />

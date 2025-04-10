@@ -2,7 +2,7 @@
 
 import { RadioCard } from '@/components/ui/radio-card'
 import { editCounselorSchema } from '@/data/edit-counselor-schema'
-import { Person } from '@/features/general-registration/types'
+import { CounselorInfo } from '@/features/counselors/types'
 import { getBanksFilterOptions } from '@/features/register-counselor/api/client/get-banks-filter-options'
 import { getCouncils } from '@/features/register-counselor/api/client/get-councils'
 import { getMunicipalitiesFilterOptions } from '@/features/register-counselor/api/client/get-municipalities-filter-options'
@@ -31,7 +31,6 @@ import { notifications } from '@mantine/notifications'
 import { useQuery } from '@tanstack/react-query'
 import { PropsWithChildren, useEffect, useMemo } from 'react'
 import { IMaskInput } from 'react-imask'
-// import { convertPersonToCounselor } from '../actions/convert-person-to-counselor'
 
 const dateParser: DateInputProps['dateParser'] = (input) => {
   return dayjs(input, 'DD/MM/YYYY').toDate()
@@ -39,7 +38,7 @@ const dateParser: DateInputProps['dateParser'] = (input) => {
 
 interface Props {
   id?: string
-  person: Person | null
+  counselor: CounselorInfo | undefined
   isSubmitting?: boolean
   error?: string | null
   onSubmit: (values: FormValues) => void
@@ -84,7 +83,7 @@ function SectionHeader({ title }: { title: string }) {
 
 export function BaseEditCounselorForm({
   id,
-  person,
+  counselor,
   onSubmit,
   isSubmitting,
   error,
@@ -106,11 +105,78 @@ export function BaseEditCounselorForm({
     }),
     []
   )
+
+  useEffect(() => {
+    if (counselor) {
+      form.reset()
+
+      form.setFieldValue('nome', counselor.nome || '')
+      form.setFieldValue('cpf', counselor.cpf || '')
+      form.setFieldValue('rg', counselor.rg || '')
+      form.setFieldValue(
+        'data_nascimento',
+        counselor.data_nascimento ? new Date(counselor.data_nascimento) : null
+      )
+      form.setFieldValue('telefone', counselor.telefone || '')
+      form.setFieldValue('email', counselor.email || '')
+      form.setFieldValue('poder_publico', counselor.poder_publico || false)
+      form.setFieldValue('tipo_membro', counselor.tipo_membro || '')
+
+      form.setFieldValue(
+        'endereco.tipo_endereco',
+        counselor.endereco.tipo_zona === 'RURAL' ||
+          counselor.endereco.tipo_zona === 'URBANA'
+          ? counselor.endereco.tipo_zona
+          : AddressType.URBAN
+      )
+
+      if (counselor.endereco.tipo_zona === AddressType.URBAN) {
+        form.setFieldValue('endereco.rua', counselor.endereco.logradouro || '')
+        form.setFieldValue('endereco.numero', counselor.endereco.numero || '')
+        form.setFieldValue(
+          'endereco.complemento',
+          counselor.endereco.complemento || ''
+        )
+        form.setFieldValue('endereco.bairro', counselor.endereco.bairro || '')
+      } else {
+        form.setFieldValue(
+          'endereco.referencia',
+          counselor.endereco.referencia || ''
+        )
+      }
+
+      form.setFieldValue('endereco.cep', counselor.endereco.cep || '')
+      form.setFieldValue(
+        'endereco.municipio_id',
+        counselor.endereco.municipio?.id?.toString() || ''
+      )
+
+      form.setFieldValue('conselho_id', counselor.conselho.id || '')
+      form.setFieldValue('tipo_conselho', counselor.conselho.nome || '')
+
+      // Campos condicionais para ajuda de custo
+      if (counselor.ajuda_custo) {
+        form.setFieldValue('ajuda_custo', counselor.ajuda_custo)
+        form.setFieldValue(
+          'banco_id',
+          counselor.dados_bancarios.banco.id?.toString() || ''
+        )
+        form.setFieldValue('agencia', counselor.dados_bancarios.agencia || '')
+        form.setFieldValue('conta', counselor.dados_bancarios.conta || '')
+        form.setFieldValue(
+          'nome_titular',
+          counselor.dados_bancarios.nome_titular || ''
+        )
+      }
+    }
+  }, [counselor])
+
   const form = useForm<FormValues>({
     initialValues,
     validate: zodResolver(editCounselorSchema),
     transformValues: (values) => ({
       ...values,
+      cpf: values.cpf.replace(/\D/g, ''),
       telefone: values.telefone.replace(/\D/g, ''),
       endereco: {
         ...values.endereco,
@@ -175,7 +241,6 @@ export function BaseEditCounselorForm({
   }, [zipCodeData, zipCodeError, municipalities])
 
   const isSociedadeCivil = form.values.tipo_conselho === 'SOCIEDADE_CIVIL'
-
   return (
     <form id={id} onSubmit={form.onSubmit(onSubmit)} className="space-y-8">
       <Section>
@@ -184,7 +249,6 @@ export function BaseEditCounselorForm({
           label="Nome Completo"
           withAsterisk
           className="col-span-2"
-          value={person?.nome}
           error={form.errors.nome}
           key={form.key('nome')}
           {...form.getInputProps('nome')}
@@ -193,15 +257,14 @@ export function BaseEditCounselorForm({
           withAsterisk
           label="CPF"
           className="col-span-2 sm:col-span-1"
-          error={form.errors.cpf}
-          key={form.key('cpf')}
-          {...form.getInputProps('cpf')}
         >
           <Input
             component={IMaskInput}
             mask="000.000.000-00"
             placeholder="000.000.000-00"
-            value={person?.cpf}
+            key={form.key('cpf')}
+            {...form.getInputProps('cpf')}
+            error={form.errors.cpf}
           />
         </Input.Wrapper>
         <DateInput
@@ -439,7 +502,7 @@ export function BaseEditCounselorForm({
                 component={IMaskInput}
                 mask="000.000.000-00"
                 placeholder="000.000.000-00"
-                value={person?.cpf}
+                value={counselor?.cpf}
                 disabled
               />
             </Input.Wrapper>
