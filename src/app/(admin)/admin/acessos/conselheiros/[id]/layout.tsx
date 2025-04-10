@@ -3,6 +3,7 @@ import {
   DashboardBreadcrumbs
 } from '@/components/layouts/dashboard-layout/breadcrumbs'
 import { DashboardHeader } from '@/components/layouts/dashboard-layout/header'
+import CounselorEditDrawer from '@/features/counselors/components/counselor-edit-drawer'
 import { CounselorTabs } from '@/features/registration-monitoring/components/counselor-tabs'
 import { ValidateCounselorModal } from '@/features/registration-monitoring/components/validate-counselor-modal'
 import { Users } from 'lucide-react'
@@ -35,7 +36,10 @@ export default function AdminCounselorVoewLayout({
       </DashboardHeader>
       <div className="flex items-center justify-between border-b-2 pl-4 pr-8">
         <CounselorTabs />
-        <ValidateCounselorModal counselorId={params.id} />
+        <div className='flex gap-2'>
+          <CounselorEditDrawer  />
+          <ValidateCounselorModal counselorId={params.id} />
+        </div>
       </div>
       {children}
     </>
