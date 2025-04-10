@@ -71,7 +71,7 @@ export async function OverviewPageContent() {
             }}
             orientation="vertical"
             dataKey="name"
-            yAxisProps={{ width: 200 }}
+            yAxisProps={{ width: 200, tickMargin: 20 }}
             barProps={{ radius: 6 }}
             series={[{ name: 'total', color: 'govGreen.6' }]}
           />
