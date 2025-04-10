@@ -13,7 +13,7 @@ export async function getCounselorById(
       const error: DjangoError = await response.json()
       return { error: error }
     }
-    const data = await response.json()
+    const data: CounselorInfo = await response.json()
     return { data }
   } catch (error) {
     return { error: API.UNEXPECTED_FETCH_ERROR }
