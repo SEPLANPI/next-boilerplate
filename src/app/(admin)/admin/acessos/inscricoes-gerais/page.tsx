@@ -13,7 +13,7 @@ import { GeneralRegistrationListView } from '@/features/general-registration/com
 import { generalRegistrationSearchParams } from '@/features/general-registration/lib/search-params'
 import { RegistrationTableSkeleton } from '@/features/registration-monitoring/components/registration-table-skeleton'
 import { Divider } from '@mantine/core'
-import { Users } from 'lucide-react'
+import { DoorOpen } from 'lucide-react'
 import { Metadata } from 'next'
 import { SearchParams } from 'nuqs'
 import { Suspense } from 'react'
@@ -35,7 +35,7 @@ export default async function InscricoesGerais({
   const items: BreadcrumbItem[] = [
     {
       label: 'Acessos',
-      icon: Users
+      icon: DoorOpen
     }
   ]
 

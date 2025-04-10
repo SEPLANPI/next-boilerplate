@@ -4,18 +4,13 @@ import Link from 'next/link'
 import React, { ComponentType, memo, useMemo } from 'react'
 
 export interface BreadcrumbItem {
-  // Label for the breadcrumb
   label: string
-  // Optional link URL for clickable breadcrumb
   href?: string
-  // Optional icon for the breadcrumb
   icon?: ComponentType<LucideProps>
 }
 
 interface DashboardBreadcrumbsProps {
-  // Array of breadcrumb items
   items: BreadcrumbItem[]
-  // Custom separator, default is '/'
   separator?: React.ReactNode
 }
 
@@ -26,8 +21,8 @@ export const DashboardBreadcrumbs: React.FC<DashboardBreadcrumbsProps> = memo(
         items.map(({ href, label, icon: Icon }, index) => {
           const isLastItem = index === items.length - 1
           const content = (
-            <div className='flex items-center space-x-1 text-xs'>
-              {Icon && <Icon className="size-3 text-secondary-foreground" />}
+            <div className="flex items-center space-x-2 text-xs">
+              {Icon && <Icon className="size-4 text-secondary-foreground" />}
               <span
                 className={`text-secondary-foreground ${isLastItem ? 'font-semibold' : ''}`}
               >

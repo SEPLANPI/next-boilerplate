@@ -6,9 +6,5 @@ export default function Dashboard({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  return <DashboardLayout config={sidebarConfig}>
-    
-    {children}
-    
-    </DashboardLayout>
+  return <DashboardLayout config={sidebarConfig}>{children}</DashboardLayout>
 }

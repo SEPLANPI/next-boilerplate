@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
 
   if (user.roles.includes('admin')) {
     return NextResponse.redirect(
-      new URL(`${env.APP_URL}/admin/acessos/conselheiros`, request.url)
+      new URL(`${env.APP_URL}/admin/acessos/visao-geral`, request.url)
     )
   }
 

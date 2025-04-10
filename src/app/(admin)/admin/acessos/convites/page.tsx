@@ -14,7 +14,7 @@ import { InvitationsListView } from '@/features/invitations/components/invitatio
 import { InvitationsTableSkeleton } from '@/features/invitations/components/invitations-table-skeleton'
 import { invitationsSearchParams } from '@/features/invitations/lib/search-params'
 import { Divider } from '@mantine/core'
-import { Users } from 'lucide-react'
+import { DoorOpen } from 'lucide-react'
 import { Metadata } from 'next'
 import { SearchParams } from 'nuqs/server'
 import { Suspense } from 'react'
@@ -35,7 +35,7 @@ export default async function Convites({
   const items: BreadcrumbItem[] = [
     {
       label: 'Acessos',
-      icon: Users
+      icon: DoorOpen
     }
   ]
   return (
