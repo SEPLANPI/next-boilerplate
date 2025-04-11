@@ -106,6 +106,8 @@ export function BaseEditCounselorForm({
     []
   )
 
+  
+
   useEffect(() => {
     if (counselor) {
       form.reset()
@@ -168,8 +170,11 @@ export function BaseEditCounselorForm({
       )
 
       form.setFieldValue('conselho_id', counselor.conselho.id || '')
-      form.setFieldValue('tipo_membro', counselor.poder_publico || false)
-      form.setFieldValue('tipo_conselho', counselor.tipo_membro || '')
+      form.setFieldValue(
+        'tipo_conselho',
+        counselor.poder_publico ? 'PODER_PUBLICO' : 'SOCIEDADE_CIVIL'
+      )
+      form.setFieldValue('tipo_membro', counselor.tipo_membro || '')
 
       if (counselor.ajuda_custo) {
         form.setFieldValue('ajuda_custo', counselor.ajuda_custo)
@@ -186,7 +191,6 @@ export function BaseEditCounselorForm({
       }
     }
   }, [counselor])
-
   const form = useForm<FormValues>({
     initialValues,
     validate: zodResolver(editCounselorSchema),
@@ -266,6 +270,7 @@ export function BaseEditCounselorForm({
           withAsterisk
           className="col-span-2"
           error={form.errors.nome}
+          disabled
           key={form.key('nome')}
           {...form.getInputProps('nome')}
         />
@@ -278,6 +283,7 @@ export function BaseEditCounselorForm({
             component={IMaskInput}
             mask="000.000.000-00"
             placeholder="000.000.000-00"
+            disabled
             key={form.key('cpf')}
             {...form.getInputProps('cpf')}
             error={form.errors.cpf}
@@ -289,6 +295,7 @@ export function BaseEditCounselorForm({
           className="col-span-2 sm:col-span-1"
           label="Data de Nascimento"
           valueFormat="DD/MM/YYYY"
+          disabled
           key={form.key('data_nascimento')}
           {...form.getInputProps('data_nascimento')}
         />
@@ -296,6 +303,7 @@ export function BaseEditCounselorForm({
           label="Email"
           className="col-span-2"
           placeholder="seu@email.com"
+          disabled
           withAsterisk
           {...form.getInputProps('email')}
         />
@@ -527,7 +535,6 @@ export function BaseEditCounselorForm({
           <Section>
             <SectionHeader title="Documentos" />
             <FileInput
-              withAsterisk
               className="col-span-2"
               label="Comprovante de Residência"
               accept="image/jpg, image/png, image/jpeg, application/pdf"
@@ -536,7 +543,6 @@ export function BaseEditCounselorForm({
             />
 
             <FileInput
-              withAsterisk
               className="col-span-2"
               label="Comprovante do Conselho"
               accept="image/jpg, image/png, image/jpeg, application/pdf"
@@ -545,7 +551,6 @@ export function BaseEditCounselorForm({
             />
 
             <FileInput
-              withAsterisk
               className="col-span-2"
               label="Comprovante Bancário"
               accept="image/jpg, image/png, image/jpeg, application/pdf"

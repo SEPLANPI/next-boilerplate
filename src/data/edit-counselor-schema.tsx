@@ -89,27 +89,6 @@ export const editCounselorSchema = z
           message: 'Nome do titular é obrigatório',
           path: ['nome_titular']
         })
-      }
-      if (!data.comprovante_residencia) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: 'Comprovante de residência é obrigatório',
-          path: ['comprovante_residencia']
-        })
-      }
-      if (!data.comprovante_conselho) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: 'Comprovante do conselho é obrigatório',
-          path: ['comprovante_conselho']
-        })
-      }
-      if (!data.comprovante_bancario) {
-        ctx.addIssue({
-          code: z.ZodIssueCode.custom,
-          message: 'Comprovante bancário é obrigatório',
-          path: ['comprovante_bancario']
-        })
-      }
+      } 
     }
   })
