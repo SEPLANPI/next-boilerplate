@@ -12,7 +12,7 @@ export const Section = ({
   id?: string
 }>) => {
   return (
-    <section id={id} className={cn('px-8 py-8 sm:py-16 md:py-36', className)}>
+    <section id={id} className={cn('px-8 py-8 sm:py-16 md:py-28', className)}>
       <div className={cn('mx-auto max-w-[1120px]', containerClassName)}>
         {children}
       </div>

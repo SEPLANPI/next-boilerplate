@@ -33,7 +33,7 @@ export default function AdminCounselorVoewLayout({
       <DashboardHeader>
         <DashboardBreadcrumbs items={items} />
       </DashboardHeader>
-      <div className="flex items-center justify-between border-b-2 pl-4 pr-8">
+      <div className="flex items-center justify-between border-b pl-4 pr-8">
         <CounselorTabs />
         <ValidateCounselorModal counselorId={params.id} />
       </div>

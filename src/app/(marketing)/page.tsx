@@ -6,7 +6,6 @@ import { Accordion, AccordionItem, Anchor, Button } from '@mantine/core'
 import {
   ArrowUpRight,
   BookOpen,
-  Boxes,
   Calendar,
   Check,
   FileText,
@@ -43,7 +42,7 @@ function CheckListItem({ children }: PropsWithChildren) {
 
 export default function LandingPage() {
   return (
-    <div className="">
+    <div className="text-stone-600 text-sm sm:text-lg">
       <section className="relative flex h-[360px] flex-col p-8 sm:h-[420px] md:h-[660px] md:py-0">
         <Header />
         <main className="relative z-10 mx-auto mt-10 flex w-full max-w-[1120px] flex-1 flex-col justify-center gap-4 text-white">
@@ -80,13 +79,61 @@ export default function LandingPage() {
           alt="gradiente azul claro e escuro com as listras do piauí"
         />
       </section>
-
       <div className="flex h-3 items-stretch sm:h-4">
         <span className="flex-1 bg-govYellow-400" />
         <span className="flex-1 bg-[#EF4123]" />
         <span className="flex-1 bg-blue-700" />
       </div>
-
+      <div className="h-[144px]"></div>
+      <Section containerClassName="bg-lime-50 p-6 sm:p-12 rounded-xl grid grid-cols-1 gap-8 sm:grid-cols-2">
+        <div className="flex flex-col items-start space-y-4 sm:space-y-8">
+          <span className="hidden rounded-full border border-lime-600 bg-lime-100 px-2.5 py-1.5 text-[10px] font-bold text-lime-600 sm:block">
+            ONDE ESTAMOS AGORA
+          </span>
+          <div className="flex flex-col space-y-3">
+            <h2 className="text-[22px] font-bold text-lime-700 sm:text-[29px]">
+              Vale dos Guaribas
+            </h2>
+            <div className="flex flex-col space-y-2">
+              <p>Picos é o coração do Vale do Guaribas!</p>
+              <p>
+                <span className="font-semibold">Venha participar</span> de um{' '}
+                <span className="font-semibold">evento único</span> , que traz o
+                governo mais perto de você. Aproveite para se engajar nas
+                discussões, fazer novas conexões e contribuir para o futuro da
+                nossa região.
+              </p>
+              <p>
+                Não perca a chance de ter acesso a serviços gratuitos,
+                participar das oficinas de planejamento e enviar propostas que
+                moldarão o futuro do Piauí.
+              </p>
+            </div>
+          </div>
+          <Button
+            component={Link}
+            href="/inscrever-se"
+            color="#C5D300"
+            className="w-fit font-sans text-gray-900"
+          >
+            Quero garantir minha vaga
+          </Button>
+        </div>
+        <div className="relative col-start-1 row-start-1 sm:col-start-2">
+          <span className="w-fit rounded-full border border-lime-600 bg-lime-100 px-2.5 py-1.5 text-[10px] font-bold text-lime-600 sm:hidden">
+            ONDE ESTAMOS AGORA
+          </span>
+          <Image
+            src="/lp/mapa.svg"
+            alt="Mapa do Piauí com destaque para o Vale do Guaribas"
+            width={434}
+            height={611}
+            quality={100}
+            className="mx-auto w-3/5 sm:absolute sm:right-0 sm:top-1/2 sm:w-full sm:-translate-y-1/2"
+          />
+        </div>
+      </Section>
+      <div className="h-[144px]"></div>
       <Section>
         <div className="flex flex-col gap-8 md:col-span-2">
           <h2 className="mx-auto text-center text-[22px] font-bold leading-[32px] xs:text-[34px] xs:leading-[46px] sm:text-[46px] sm:leading-[56px]">
@@ -110,8 +157,8 @@ export default function LandingPage() {
             multiple
             defaultValue={['feira']}
             classNames={{
-              root: 'gap-5',
-              item: 'shadow-md p-6 sm:p-8 rounded-lg border border-gray-50 text-secondary-foreground   ',
+              root: 'space-y-5',
+              item: 'shadow-md p-6 sm:p-8 rounded-lg border border-gray-50',
               control:
                 'flex items-center justify-between flex-row-reverse w-full text-[18px] sm:text-[29px]',
               panel: 'pt-6 text-sm sm:text-lg',
@@ -245,7 +292,6 @@ export default function LandingPage() {
           </Accordion>
         </div>
       </Section>
-
       <Section id="sobre">
         <div className="grid grid-cols-1 items-center gap-10 sm:grid-cols-2 md:grid-cols-3">
           <div className="flex flex-col gap-8 md:col-span-2">
@@ -278,7 +324,6 @@ export default function LandingPage() {
           />
         </div>
       </Section>
-
       <Section
         id="ppa"
         className="bg-gradient-to-r from-[#389CF8] to-[#0352AA] text-white"
@@ -332,7 +377,6 @@ export default function LandingPage() {
           </div>
         </div>
       </Section>
-
       <Section id="eixos" containerClassName="flex flex-col items-center">
         <h3 className="mb-8 text-center font-sans text-sm font-extrabold tracking-widest text-blue-900">
           EIXOS ESTRATÉGICOS
@@ -405,7 +449,6 @@ export default function LandingPage() {
           </Card.Root>
         </div>
       </Section>
-
       <Section
         containerClassName="flex flex-col items-center"
         className="!py-0"
@@ -526,7 +569,6 @@ export default function LandingPage() {
           </div>
         </div>
       </Section>
-
       <Section id="sobre" className="relative">
         <Image
           className="absolute left-0 top-0 z-0 h-full object-cover"
@@ -564,7 +606,6 @@ export default function LandingPage() {
           </div>
         </div>
       </Section>
-
       <Section
         id="como-funciona"
         className="bg-green-800 text-white"
