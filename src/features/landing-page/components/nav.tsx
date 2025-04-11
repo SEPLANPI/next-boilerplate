@@ -48,16 +48,7 @@ export function Nav({ isFloating = false }: { isFloating: boolean }) {
                     className={LINK_CLASSES_MOBILE}
                     onClick={close}
                   >
-                    Informações do Evento
-                  </Anchor>
-                </li>
-                <li>
-                  <Anchor
-                    href="#servicos"
-                    className={LINK_CLASSES_MOBILE}
-                    onClick={close}
-                  >
-                    Serviços
+                    Onde estamos
                   </Anchor>
                 </li>
                 <li>
@@ -66,7 +57,7 @@ export function Nav({ isFloating = false }: { isFloating: boolean }) {
                     className={LINK_CLASSES_MOBILE}
                     onClick={close}
                   >
-                    Sobre o Diálogos
+                    Sobre
                   </Anchor>
                 </li>
                 <li>
@@ -80,11 +71,11 @@ export function Nav({ isFloating = false }: { isFloating: boolean }) {
                 </li>
                 <li>
                   <Anchor
-                    href="#cronograma"
+                    href="#ppa"
                     className={LINK_CLASSES_MOBILE}
                     onClick={close}
                   >
-                    Cronograma
+                    PPA
                   </Anchor>
                 </li>
                 <li>
@@ -93,16 +84,7 @@ export function Nav({ isFloating = false }: { isFloating: boolean }) {
                     className={LINK_CLASSES_MOBILE}
                     onClick={close}
                   >
-                    Eixos Estratégicos
-                  </Anchor>
-                </li>
-                <li>
-                  <Anchor
-                    href="#como-participar"
-                    className={LINK_CLASSES_MOBILE}
-                    onClick={close}
-                  >
-                    Como Participar
+                    Eixos
                   </Anchor>
                 </li>
               </ul>
