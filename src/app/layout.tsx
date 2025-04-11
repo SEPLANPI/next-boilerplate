@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { ColorSchemeScript } from '@mantine/core'
 import './globals.css'
+import '@mantine/carousel/styles.css'
 import '@mantine/dates/styles.css'
 import '@mantine/notifications/styles.css'
 import '@mantine/charts/styles.css'

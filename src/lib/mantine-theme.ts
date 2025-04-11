@@ -145,16 +145,16 @@ export const theme = createTheme({
       '#0b7285'
     ],
     green: [
-      '#ECFFF4',
-      '#D3FFE5',
-      '#AAFFCE',
-      '#69FFA9',
-      '#21FF7C',
-      '#00F25A',
-      '#00CA47',
-      '#009E3A',
-      '#007932',
-      '#02652C'
+      '#F0FDF4',
+      '#DCFCE7',
+      '#BBF7D0',
+      '#86EFAC',
+      '#4ADE80',
+      '#22C55E',
+      '#16A34A',
+      '#15803D',
+      '#166534',
+      '#14532D'
     ],
     govGreen: [
       '#F2FFF6',

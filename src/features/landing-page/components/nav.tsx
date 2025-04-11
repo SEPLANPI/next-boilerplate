@@ -44,34 +44,34 @@ export function Nav({ isFloating = false }: { isFloating: boolean }) {
               <ul className="flex flex-col">
                 <li>
                   <Anchor
-                    href="#sobre"
+                    href="#event-info"
                     className={LINK_CLASSES_MOBILE}
                     onClick={close}
                   >
-                    Sobre
+                    Informações do Evento
                   </Anchor>
                 </li>
                 <li>
                   <Anchor
-                    href="#ppa"
+                    href="#services"
                     className={LINK_CLASSES_MOBILE}
                     onClick={close}
                   >
-                    PPA
+                    Serviços
                   </Anchor>
                 </li>
                 <li>
                   <Anchor
-                    href="#eixos"
+                    href="#about-dialogos"
                     className={LINK_CLASSES_MOBILE}
                     onClick={close}
                   >
-                    Eixos
+                    Sobre o Diálogos
                   </Anchor>
                 </li>
                 <li>
                   <Anchor
-                    href="#como-funciona"
+                    href="#event-structure"
                     className={LINK_CLASSES_MOBILE}
                     onClick={close}
                   >
@@ -80,7 +80,25 @@ export function Nav({ isFloating = false }: { isFloating: boolean }) {
                 </li>
                 <li>
                   <Anchor
-                    href="#como-participar"
+                    href="#schedule"
+                    className={LINK_CLASSES_MOBILE}
+                    onClick={close}
+                  >
+                    Cronograma
+                  </Anchor>
+                </li>
+                <li>
+                  <Anchor
+                    href="#strategic-axes"
+                    className={LINK_CLASSES_MOBILE}
+                    onClick={close}
+                  >
+                    Eixos Estratégicos
+                  </Anchor>
+                </li>
+                <li>
+                  <Anchor
+                    href="#participation-guide"
                     className={LINK_CLASSES_MOBILE}
                     onClick={close}
                   >
@@ -108,7 +126,16 @@ export function Nav({ isFloating = false }: { isFloating: boolean }) {
           <li>
             <Anchor
               data-isfloating={isFloating}
-              href="#sobre"
+              href="#event-info"
+              className={LINK_CLASSES_DESKTOP}
+            >
+              Onde estamos
+            </Anchor>
+          </li>
+          <li>
+            <Anchor
+              data-isfloating={isFloating}
+              href="#about-dialogos"
               className={LINK_CLASSES_DESKTOP}
             >
               Sobre
@@ -117,25 +144,7 @@ export function Nav({ isFloating = false }: { isFloating: boolean }) {
           <li>
             <Anchor
               data-isfloating={isFloating}
-              href="#ppa"
-              className={LINK_CLASSES_DESKTOP}
-            >
-              PPA
-            </Anchor>
-          </li>
-          <li>
-            <Anchor
-              data-isfloating={isFloating}
-              href="#eixos"
-              className={LINK_CLASSES_DESKTOP}
-            >
-              Eixos
-            </Anchor>
-          </li>
-          <li>
-            <Anchor
-              data-isfloating={isFloating}
-              href="#como-funciona"
+              href="#event-structure"
               className={LINK_CLASSES_DESKTOP}
             >
               Como Funciona
@@ -144,10 +153,19 @@ export function Nav({ isFloating = false }: { isFloating: boolean }) {
           <li>
             <Anchor
               data-isfloating={isFloating}
-              href="#como-participar"
+              href="#pluriannual-plan"
               className={LINK_CLASSES_DESKTOP}
             >
-              Como Participar
+              PPA
+            </Anchor>
+          </li>
+          <li>
+            <Anchor
+              data-isfloating={isFloating}
+              href="#strategic-axes"
+              className={LINK_CLASSES_DESKTOP}
+            >
+              Eixos
             </Anchor>
           </li>
         </ul>
