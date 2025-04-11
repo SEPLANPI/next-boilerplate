@@ -146,10 +146,7 @@ export function BaseEditCounselorForm({
       if (counselor.endereco.tipo_zona === AddressType.URBAN) {
         form.setFieldValue('endereco.rua', counselor.endereco.logradouro || '')
         form.setFieldValue('endereco.numero', counselor.endereco.numero || '')
-        form.setFieldValue(
-          'endereco.complemento',
-          counselor.endereco.complemento || ''
-        )
+
         form.setFieldValue('endereco.bairro', counselor.endereco.bairro || '')
       } else {
         form.setFieldValue(
@@ -157,8 +154,14 @@ export function BaseEditCounselorForm({
           counselor.endereco.referencia || ''
         )
       }
+      form.setFieldValue('endereco.complemento', counselor.endereco.complemento)
 
-      form.setFieldValue('endereco.cep', counselor.endereco.cep || '')
+      form.setFieldValue(
+        'endereco.cep',
+        counselor.endereco.cep
+          ? counselor.endereco.cep.replace(/^(\d{5})(\d{3})$/, '$1-$2')
+          : ''
+      )
       form.setFieldValue(
         'endereco.municipio_id',
         counselor.endereco.municipio?.id?.toString() || ''
