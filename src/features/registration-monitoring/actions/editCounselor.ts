@@ -19,7 +19,7 @@ export async function editCounselor(
             return { error }
         }
 
-        revalidatePath('/admin/acessos/conselheiros/[id]')
+        revalidatePath(`/admin/acessos/conselheiros/${id}/dados`)
 
         return { data: { success: true } }
     } catch (error) {
