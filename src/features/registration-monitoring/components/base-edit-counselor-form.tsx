@@ -257,6 +257,7 @@ export function BaseEditCounselorForm({
   }, [zipCodeData, zipCodeError, municipalities])
 
   const isSociedadeCivil = form.values.tipo_conselho === 'SOCIEDADE_CIVIL'
+
   return (
     <form id={id} onSubmit={form.onSubmit(onSubmit)} className="space-y-8">
       <Section>
