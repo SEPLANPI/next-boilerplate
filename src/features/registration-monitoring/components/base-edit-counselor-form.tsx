@@ -168,9 +168,9 @@ export function BaseEditCounselorForm({
       )
 
       form.setFieldValue('conselho_id', counselor.conselho.id || '')
-      form.setFieldValue('tipo_conselho', counselor.conselho.nome || '')
+      form.setFieldValue('tipo_membro', counselor.poder_publico || false)
+      form.setFieldValue('tipo_conselho', counselor.tipo_membro || '')
 
-      // Campos condicionais para ajuda de custo
       if (counselor.ajuda_custo) {
         form.setFieldValue('ajuda_custo', counselor.ajuda_custo)
         form.setFieldValue(
@@ -239,7 +239,6 @@ export function BaseEditCounselorForm({
     if (zipCodeData) {
       form.setFieldValue('endereco.rua', zipCodeData.logradouro)
       form.setFieldValue('endereco.bairro', zipCodeData.bairro)
-      form.setFieldValue('endereco.complemento', zipCodeData.complemento)
 
       if (zipCodeData.localidade && municipalities) {
         const municipality = municipalities.find(
