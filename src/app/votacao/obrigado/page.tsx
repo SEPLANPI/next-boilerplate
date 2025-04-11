@@ -21,9 +21,7 @@ export default function VotingThanksPage() {
             width={350}
             height={320}
           />
-          <h1 className="font-montserrat font-bold sm:text-lg">
-            Voto registrado com sucesso!
-          </h1>
+          <h1 className="font-bold sm:text-lg">Voto registrado com sucesso!</h1>
           <div className="space-y-2 text-sm text-secondary-foreground">
             <p>Muito obrigado por participar do Diálogos pelo Piauí.</p>
             <p>

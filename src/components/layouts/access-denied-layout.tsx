@@ -23,7 +23,7 @@ export async function AccessDeniedLayout({
         </div>
 
         <div className="flex flex-col items-start gap-4">
-          <h1 className="font-montserrat text-4xl font-bold">{title}</h1>
+          <h1 className="text-4xl font-bold">{title}</h1>
           <p className="text-secondary-foreground">{description}</p>
         </div>
 

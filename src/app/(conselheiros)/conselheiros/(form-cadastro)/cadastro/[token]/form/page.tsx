@@ -41,9 +41,7 @@ export default async function CadastroConselheiroForm({
           height={144}
         />
         <div className="flex flex-col space-y-4 rounded-md bg-white p-6 shadow-md">
-          <h1 className="font-montserrat text-xl font-bold">
-            Cadastro de Conselheiros
-          </h1>
+          <h1 className="text-xl font-bold">Cadastro de Conselheiros</h1>
           <p className="text-secondary-foreground">
             Preencha os dados abaixo para realizar seu cadastro e participar do
             evento.

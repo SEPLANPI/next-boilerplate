@@ -46,9 +46,7 @@ export default async function VotingPage({
           height={144}
         />
         <div className="flex flex-col space-y-4 rounded-md bg-white p-6 shadow-md">
-          <h1 className="font-montserrat font-bold sm:text-lg">
-            Votação das Propostas
-          </h1>
+          <h1 className="font-bold sm:text-lg">Votação das Propostas</h1>
           <p className="text-sm text-secondary-foreground">
             Aqui você pode participar das decisões importantes do nosso estado.
             Escolha as ideias que você acha mais importantes e coloque mais
@@ -56,7 +54,7 @@ export default async function VotingPage({
           </p>
         </div>
         <div className="flex flex-col space-y-4 rounded-md bg-white p-6 shadow-md">
-          <h1 className="font-montserrat font-bold sm:text-lg">{data.nome}</h1>
+          <h1 className="font-bold sm:text-lg">{data.nome}</h1>
           <ProposalVoting
             proposals={data.propostas}
             registrationId={registrationId}

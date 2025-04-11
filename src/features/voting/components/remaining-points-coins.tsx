@@ -36,9 +36,7 @@ export function RemainingPointsCoins({
         <span className="text-sm text-secondary-foreground">
           Pontos restantes:{' '}
         </span>
-        <span className="font-montserrat font-bold text-green-700">
-          {remainingPoints}
-        </span>
+        <span className="font-bold text-green-700">{remainingPoints}</span>
       </div>
     </div>
   )

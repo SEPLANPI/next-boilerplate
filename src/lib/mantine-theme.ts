@@ -281,7 +281,7 @@ export const theme = createTheme({
   focusClassName: '',
   headings: {
     fontFamily:
-      'Roboto, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji',
+      'Figtree, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji',
     fontWeight: '700',
     textWrap: 'wrap',
     sizes: {

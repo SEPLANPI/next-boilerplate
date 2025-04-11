@@ -1,9 +1,13 @@
 import { Card } from '@/features/landing-page/components/card'
 import { Header } from '@/features/landing-page/components/header'
 import { Section } from '@/features/landing-page/components/section'
-import { Anchor, Button } from '@mantine/core'
+import { AccordionControl, AccordionPanel, Divider } from '@mantine/core'
+import { Accordion, AccordionItem, Anchor, Button } from '@mantine/core'
 import {
+  ArrowUpRight,
   BookOpen,
+  Boxes,
+  Calendar,
   Check,
   FileText,
   HeartPulse,
@@ -12,6 +16,7 @@ import {
   Leaf,
   ListChecks,
   Mail,
+  MapPin,
   Presentation,
   School,
   Settings,
@@ -38,16 +43,16 @@ function CheckListItem({ children }: PropsWithChildren) {
 
 export default function LandingPage() {
   return (
-    <div className="font-montserrat">
+    <div className="">
       <section className="relative flex h-[360px] flex-col p-8 sm:h-[420px] md:h-[660px] md:py-0">
         <Header />
         <main className="relative z-10 mx-auto mt-10 flex w-full max-w-[1120px] flex-1 flex-col justify-center gap-4 text-white">
           <h1 className="max-w-xs text-2xl font-bold md:max-w-md md:text-4xl">
-            Planejando um futuro sustentável e inclusivo
+            O futuro do Piauí começa onde você está
           </h1>
           <p className="max-w-xs text-sm md:max-w-md md:text-lg">
-            Aproximando a gestão pública da sociedade para construir um futuro
-            mais justo e sustentável.
+            Estamos no território Vale do Guaribas para ouvir você e construir
+            juntos os próximos passos do nosso estado.
           </p>
           <Button
             component={Link}
@@ -55,7 +60,7 @@ export default function LandingPage() {
             color="#C5D300"
             className="w-fit font-sans text-gray-900"
           >
-            Junte-se a nós
+            Quero Participar do Evento
           </Button>
         </main>
         <Image
@@ -81,6 +86,165 @@ export default function LandingPage() {
         <span className="flex-1 bg-[#EF4123]" />
         <span className="flex-1 bg-blue-700" />
       </div>
+
+      <Section>
+        <div className="flex flex-col gap-8 md:col-span-2">
+          <h2 className="mx-auto text-center text-[22px] font-bold leading-[32px] xs:text-[34px] xs:leading-[46px] sm:text-[46px] sm:leading-[56px]">
+            <span className="block">Veja o que preparamos para</span>
+            <span className="block">
+              você em{' '}
+              <span className="relative italic">
+                Picos
+                <Image
+                  src="/lp/city-highlight.svg"
+                  className="absolute right-0 top-4 -z-10 w-[calc(100%+16px)]"
+                  alt="Linha"
+                  width={260}
+                  height={76}
+                />
+              </span>
+            </span>
+          </h2>
+          <Accordion
+            unstyled
+            multiple
+            defaultValue={['feira']}
+            classNames={{
+              root: 'gap-5',
+              item: 'shadow-md p-6 sm:p-8 rounded-lg border border-gray-50 text-secondary-foreground   ',
+              control:
+                'flex items-center justify-between flex-row-reverse w-full text-[18px] sm:text-[29px]',
+              panel: 'pt-6 text-sm sm:text-lg',
+              content: 'space-y-6'
+            }}
+          >
+            <AccordionItem value="feira">
+              <AccordionControl>
+                <div className="flex space-x-3">
+                  <Image
+                    src="/lp/icons/boxes.svg"
+                    alt="Icone caixas"
+                    width={32}
+                    height={32}
+                  />
+                  <h3 className="text-left font-bold">Feira de Serviços</h3>
+                </div>
+              </AccordionControl>
+              <AccordionPanel>
+                Feira de serviços gratuitos para a população:
+                <ul className="list-disc pl-8">
+                  <li>
+                    Emissão de documentos, vacinação, carreta da saúde, cursos
+                    profissionalizantes, linha de crédito e muito mais
+                  </li>
+                </ul>
+                <Divider />
+                <div className="flex flex-col space-y-1.5">
+                  <span className="flex items-center space-x-1.5">
+                    <MapPin className="size-4 text-lime-600" />
+                    <span>Complexo Esportivo da COHAB</span>
+                  </span>
+                  <span className="flex items-center space-x-1.5">
+                    <Calendar className="size-4 text-lime-600" />
+                    <span>
+                      <span className="font-semibold">11/04</span> das 8h às 17h
+                    </span>
+                  </span>
+                  <span className="flex items-center space-x-1.5">
+                    <Calendar className="size-4 text-lime-600" />
+                    <span>
+                      <span className="font-semibold">12/04</span> das 8h às 17h
+                    </span>
+                  </span>
+                </div>
+                <Divider />
+                <Link
+                  className="flex items-center space-x-2 italic"
+                  href="/lp/feira_de_servicos.pdf"
+                  target="_blank"
+                >
+                  <span>Conheça os serviços</span>
+                  <ArrowUpRight className="size-4" />
+                </Link>
+              </AccordionPanel>
+            </AccordionItem>
+            <AccordionItem value="plenaria">
+              <AccordionControl>
+                <div className="flex space-x-3">
+                  <Image
+                    src="/lp/icons/presentation.svg"
+                    alt="Icone apresentação"
+                    width={32}
+                    height={32}
+                  />
+                  <h3 className="text-left font-bold">
+                    Plenária com o Governador
+                  </h3>
+                </div>
+              </AccordionControl>
+              <AccordionPanel>
+                <p className="block">
+                  Um momento de transparência e participação ativa entre governo
+                  e população.
+                </p>
+                <Divider />
+                <div className="flex flex-col space-y-1.5">
+                  <span className="flex items-center space-x-1.5">
+                    <MapPin className="size-4 text-lime-600" />
+                    <span>
+                      <span className="font-semibold">Espaço Versalhes:</span>{' '}
+                      Rua Projetada, 278, Bairro Aroeriras do Matadouro
+                    </span>
+                  </span>
+                  <span className="flex items-center space-x-1.5">
+                    <Calendar className="size-4 text-lime-600" />
+                    <span>
+                      <span className="font-semibold">12/04</span> das 14h às
+                      17h
+                    </span>
+                  </span>
+                </div>
+              </AccordionPanel>
+            </AccordionItem>
+            <AccordionItem value="oficinas">
+              <AccordionControl>
+                <div className="flex space-x-3">
+                  <Image
+                    src="/lp/icons/lightbulb.svg"
+                    alt="Icone caixas"
+                    width={32}
+                    height={32}
+                  />
+                  <h3 className="text-left font-bold">Oficinas PPA</h3>
+                </div>
+              </AccordionControl>
+              <AccordionPanel>
+                <p className="block">
+                  Educação, saúde, meio ambiente, socioeconômico,
+                  infraestrutura, tecnologia, segurança e outros temas
+                  fundamentais para o futuro do Vale do Guaribas e do Piauí,
+                  discutidos com seriedade e compromisso por técnicos, gestores
+                  e pelo povo.
+                </p>
+                <Divider />
+                <div className="flex flex-col space-y-1.5">
+                  <span className="flex items-center space-x-1.5">
+                    <MapPin className="size-4 text-lime-600" />
+                    <span>UFPI</span>
+                  </span>
+                  <span className="flex items-center space-x-1.5">
+                    <Calendar className="size-4 text-lime-600" />
+                    <span>
+                      <span className="font-semibold">12/04</span> das 8h às
+                      12h30
+                    </span>
+                  </span>
+                </div>
+              </AccordionPanel>
+            </AccordionItem>
+          </Accordion>
+        </div>
+      </Section>
 
       <Section id="sobre">
         <div className="grid grid-cols-1 items-center gap-10 sm:grid-cols-2 md:grid-cols-3">
