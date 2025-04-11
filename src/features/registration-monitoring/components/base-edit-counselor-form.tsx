@@ -122,7 +122,15 @@ export function BaseEditCounselorForm({
         'data_nascimento',
         counselor.data_nascimento ? new Date(counselor.data_nascimento) : null
       )
-      form.setFieldValue('telefone', counselor.telefone || '')
+      form.setFieldValue(
+        'telefone',
+        counselor.telefone
+          ? counselor.telefone.replace(
+              /^(\d{2})(\d)(\d{4})(\d{4})$/,
+              '($1) $2$3-$4'
+            )
+          : ''
+      )
       form.setFieldValue('email', counselor.email || '')
       form.setFieldValue('poder_publico', counselor.poder_publico || false)
       form.setFieldValue('tipo_membro', counselor.tipo_membro || '')
