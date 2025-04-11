@@ -1,7 +1,8 @@
 import { FetchError } from '@/components/errors/fetch-error'
-import { getRegistrationOverview } from '../api/get-registration-overview'
 import { BarChart } from '@mantine/charts'
 import { ScrollArea } from '@mantine/core'
+import { getRegistrationOverview } from '../api/get-registration-overview'
+import ExportButton from './overview-export-button'
 
 export async function OverviewPageContent() {
   const { data, error } = await getRegistrationOverview()
@@ -22,6 +23,7 @@ export async function OverviewPageContent() {
 
   return (
     <>
+      <ExportButton />
       <div className="mb-6 flex w-full space-x-6">
         <div className="flex flex-1 flex-col items-center justify-center gap-1 rounded-md border bg-white p-6 shadow">
           <span className="text-4xl font-semibold">{data.total_inscritos}</span>
