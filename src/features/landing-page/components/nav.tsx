@@ -44,7 +44,7 @@ export function Nav({ isFloating = false }: { isFloating: boolean }) {
               <ul className="flex flex-col">
                 <li>
                   <Anchor
-                    href="#event-info"
+                    href="#onde-estamos"
                     className={LINK_CLASSES_MOBILE}
                     onClick={close}
                   >
@@ -53,7 +53,7 @@ export function Nav({ isFloating = false }: { isFloating: boolean }) {
                 </li>
                 <li>
                   <Anchor
-                    href="#services"
+                    href="#servicos"
                     className={LINK_CLASSES_MOBILE}
                     onClick={close}
                   >
@@ -62,7 +62,7 @@ export function Nav({ isFloating = false }: { isFloating: boolean }) {
                 </li>
                 <li>
                   <Anchor
-                    href="#about-dialogos"
+                    href="#sobre"
                     className={LINK_CLASSES_MOBILE}
                     onClick={close}
                   >
@@ -71,7 +71,7 @@ export function Nav({ isFloating = false }: { isFloating: boolean }) {
                 </li>
                 <li>
                   <Anchor
-                    href="#event-structure"
+                    href="#como-funciona"
                     className={LINK_CLASSES_MOBILE}
                     onClick={close}
                   >
@@ -80,7 +80,7 @@ export function Nav({ isFloating = false }: { isFloating: boolean }) {
                 </li>
                 <li>
                   <Anchor
-                    href="#schedule"
+                    href="#cronograma"
                     className={LINK_CLASSES_MOBILE}
                     onClick={close}
                   >
@@ -89,7 +89,7 @@ export function Nav({ isFloating = false }: { isFloating: boolean }) {
                 </li>
                 <li>
                   <Anchor
-                    href="#strategic-axes"
+                    href="#eixos"
                     className={LINK_CLASSES_MOBILE}
                     onClick={close}
                   >
@@ -98,7 +98,7 @@ export function Nav({ isFloating = false }: { isFloating: boolean }) {
                 </li>
                 <li>
                   <Anchor
-                    href="#participation-guide"
+                    href="#como-participar"
                     className={LINK_CLASSES_MOBILE}
                     onClick={close}
                   >
@@ -126,7 +126,7 @@ export function Nav({ isFloating = false }: { isFloating: boolean }) {
           <li>
             <Anchor
               data-isfloating={isFloating}
-              href="#event-info"
+              href="#onde-estamos"
               className={LINK_CLASSES_DESKTOP}
             >
               Onde estamos
@@ -135,7 +135,7 @@ export function Nav({ isFloating = false }: { isFloating: boolean }) {
           <li>
             <Anchor
               data-isfloating={isFloating}
-              href="#about-dialogos"
+              href="#sobre"
               className={LINK_CLASSES_DESKTOP}
             >
               Sobre
@@ -144,7 +144,7 @@ export function Nav({ isFloating = false }: { isFloating: boolean }) {
           <li>
             <Anchor
               data-isfloating={isFloating}
-              href="#event-structure"
+              href="#como-funciona"
               className={LINK_CLASSES_DESKTOP}
             >
               Como Funciona
@@ -153,7 +153,7 @@ export function Nav({ isFloating = false }: { isFloating: boolean }) {
           <li>
             <Anchor
               data-isfloating={isFloating}
-              href="#pluriannual-plan"
+              href="#ppa"
               className={LINK_CLASSES_DESKTOP}
             >
               PPA
@@ -162,7 +162,7 @@ export function Nav({ isFloating = false }: { isFloating: boolean }) {
           <li>
             <Anchor
               data-isfloating={isFloating}
-              href="#strategic-axes"
+              href="#eixos"
               className={LINK_CLASSES_DESKTOP}
             >
               Eixos
