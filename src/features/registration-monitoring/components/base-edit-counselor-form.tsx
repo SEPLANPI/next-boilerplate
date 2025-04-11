@@ -111,7 +111,12 @@ export function BaseEditCounselorForm({
       form.reset()
 
       form.setFieldValue('nome', counselor.nome || '')
-      form.setFieldValue('cpf', counselor.cpf || '')
+      form.setFieldValue(
+        'cpf',
+        counselor.cpf
+          ? counselor.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4')
+          : ''
+      )
       form.setFieldValue('rg', counselor.rg || '')
       form.setFieldValue(
         'data_nascimento',
