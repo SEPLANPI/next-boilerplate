@@ -67,8 +67,8 @@ export default function LandingPage() {
           </h1>
           <p className="max-w-xs text-sm md:max-w-md md:text-lg">
             Estamos no território{' '}
-            <span className="font-semibold">Vale dos Guaribas</span> para ouvir
-            você e construir juntos os próximos passos do nosso estado.
+            <span className="font-semibold">Vale do Rio Guaribas</span> para
+            ouvir você e construir juntos os próximos passos do nosso estado.
           </p>
           <Button
             component={Link}
@@ -112,10 +112,10 @@ export default function LandingPage() {
           </TitleBadge>
           <div className="flex flex-col space-y-3">
             <h2 className="text-[22px] font-bold text-lime-700 sm:text-[29px]">
-              Vale dos Guaribas
+              Vale do Rio Guaribas
             </h2>
             <div className="flex flex-col space-y-2">
-              <p>Picos é o coração do Vale do Guaribas!</p>
+              <p>Picos é o coração do Vale do Rio Guaribas!</p>
               <p>
                 <span className="font-semibold">Venha participar</span> de um{' '}
                 <span className="font-semibold">evento único</span> , que traz o
@@ -146,7 +146,7 @@ export default function LandingPage() {
 
           <Image
             src="/lp/mapa.svg"
-            alt="Mapa do Piauí com destaque para o Vale do Guaribas"
+            alt="Mapa do Piauí com destaque para o Vale do Rio Guaribas"
             width={434}
             height={611}
             quality={100}
@@ -290,7 +290,7 @@ export default function LandingPage() {
                 <p className="block">
                   Educação, saúde, meio ambiente, socioeconômico,
                   infraestrutura, tecnologia, segurança e outros temas
-                  fundamentais para o futuro do Vale do Guaribas e do Piauí,
+                  fundamentais para o futuro do Vale do Rio Guaribas e do Piauí,
                   discutidos com seriedade e compromisso por técnicos, gestores
                   e pelo povo.
                 </p>
@@ -556,7 +556,9 @@ export default function LandingPage() {
                   <span className="text-sm font-bold uppercase">ABRIL</span>
                 </div>
                 <div className="flex flex-col space-y-1">
-                  <span className="font-bold uppercase">VALE DOS GUARIBAS</span>
+                  <span className="font-bold uppercase">
+                    VALE DO RIO GUARIBAS
+                  </span>
                   <span className="text-sm">Picos</span>
                 </div>
               </div>
