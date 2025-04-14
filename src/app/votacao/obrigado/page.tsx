@@ -13,17 +13,7 @@ export default function VotingThanksPage() {
           height={144}
         />
         <div className="flex flex-col space-y-4 rounded-md bg-white p-6 shadow-md">
-          <Image
-            src="/votacao/sucesso.png"
-            alt="Senhor"
-            className="mx-auto w-44 sm:w-52"
-            quality={100}
-            width={350}
-            height={320}
-          />
-          <h1 className="font-montserrat font-bold sm:text-lg">
-            Voto registrado com sucesso!
-          </h1>
+          <h1 className="font-bold sm:text-lg">Voto registrado com sucesso!</h1>
           <div className="space-y-2 text-sm text-secondary-foreground">
             <p>Muito obrigado por participar do Diálogos pelo Piauí.</p>
             <p>

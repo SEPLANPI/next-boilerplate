@@ -15,9 +15,7 @@ export default function Successo() {
           <Check className="size-6 text-white" />
         </span>
       </span>
-      <h1 className="font-montserrat text-2xl font-bold">
-        Cadastro concluído com sucesso!
-      </h1>
+      <h1 className="text-2xl font-bold">Cadastro concluído com sucesso!</h1>
       <p className="max-w-md text-center text-secondary-foreground">
         Agradecemos sua participação. Sua inscrição foi realizada com sucesso.
       </p>

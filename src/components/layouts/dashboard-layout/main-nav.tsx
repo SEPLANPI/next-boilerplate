@@ -16,12 +16,12 @@ export function MainNav({ config }: MainNavProps) {
 
   return (
     <aside
-      className={`flex h-full flex-col overflow-hidden border-r-2 bg-white transition-all duration-300 ${
+      className={`flex h-full flex-col overflow-hidden border-r bg-white transition-all duration-300 ${
         collapsed ? 'w-16' : 'w-64'
       }`}
     >
       <div
-        className={`mb-2 h-12 border-b-2 ${collapsed ? 'flex flex-col items-center justify-center gap-2' : 'flex items-center justify-between px-4'}`}
+        className={`mb-2 h-12 border-b ${collapsed ? 'flex flex-col items-center justify-center gap-2' : 'flex items-center justify-between px-4'}`}
       >
         <div
           className={`flex items-center ${collapsed ? 'justify-center' : 'space-x-2'} `}

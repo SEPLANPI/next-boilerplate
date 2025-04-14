@@ -20,7 +20,7 @@ export default async function WelcomeVotingPage({
         <Logo />
       </div>
       <div className="w-full">
-        <h1 className="mx-auto mb-4 text-center font-montserrat text-lg font-bold">
+        <h1 className="mx-auto mb-4 text-center text-lg font-bold">
           Sua Voz, Nosso Futuro.
         </h1>
         <div className="space-y-2 text-sm text-secondary-foreground">

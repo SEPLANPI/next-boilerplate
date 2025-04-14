@@ -48,6 +48,18 @@ export const theme = createTheme({
       '#1F2937',
       '#111827'
     ],
+    stone: [
+      '#FAFAF9',
+      '#F5F5F4',
+      '#E7E5E4',
+      '#D6D3D1',
+      '#A8A29E',
+      '#78716C',
+      '#57534E',
+      '#44403C',
+      '#292524',
+      '#1C1917'
+    ],
     red: [
       '#FFF3F1',
       '#FFE4DF',
@@ -133,16 +145,16 @@ export const theme = createTheme({
       '#0b7285'
     ],
     green: [
-      '#ECFFF4',
-      '#D3FFE5',
-      '#AAFFCE',
-      '#69FFA9',
-      '#21FF7C',
-      '#00F25A',
-      '#00CA47',
-      '#009E3A',
-      '#007932',
-      '#02652C'
+      '#F0FDF4',
+      '#DCFCE7',
+      '#BBF7D0',
+      '#86EFAC',
+      '#4ADE80',
+      '#22C55E',
+      '#16A34A',
+      '#15803D',
+      '#166534',
+      '#14532D'
     ],
     govGreen: [
       '#F2FFF6',
@@ -157,16 +169,16 @@ export const theme = createTheme({
       '#003D16'
     ],
     lime: [
-      '#f4fce3',
-      '#e9fac8',
-      '#d8f5a2',
-      '#c0eb75',
-      '#a9e34b',
-      '#94d82d',
-      '#82c91e',
-      '#74b816',
-      '#66a80f',
-      '#5c940d'
+      '#F7FEE7',
+      '#ECFCCB',
+      '#D9F99D',
+      '#BEF264',
+      '#A3E635',
+      '#84CC16',
+      '#65A30D',
+      '#4D7C0F',
+      '#3F6212',
+      '#365314'
     ],
     yellow: [
       '#FEFCE8',
@@ -281,7 +293,7 @@ export const theme = createTheme({
   focusClassName: '',
   headings: {
     fontFamily:
-      'Roboto, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji',
+      'Figtree, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji',
     fontWeight: '700',
     textWrap: 'wrap',
     sizes: {
@@ -369,7 +381,8 @@ export const theme = createTheme({
     },
     Table: {
       classNames: {
-        thead: 'bg-gray-100 text-secondary-foreground rounded-t-md'
+        thead: 'bg-gray-100 text-secondary-foreground rounded-t-md',
+        th: 'font-semibold'
       }
     }
   },

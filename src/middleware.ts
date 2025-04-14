@@ -14,7 +14,7 @@ export default auth((req) => {
 
   if (req.auth?.error) {
     const sessionExpiredUrl = new URL('/sessao-expirada', req.nextUrl.origin)
-    sessionExpiredUrl.searchParams.set('redirectTo', req.nextUrl.origin)
+    sessionExpiredUrl.searchParams.set('redirectTo', req.nextUrl.pathname)
     return NextResponse.redirect(sessionExpiredUrl)
   }
 

@@ -13,7 +13,7 @@ export default function ValidadeCPFPage() {
         <Logo />
       </div>
       <div className="w-full">
-        <h1 className="mx-auto mb-2 font-montserrat text-lg font-bold">
+        <h1 className="mx-auto mb-2 text-lg font-bold">
           Identifique-se para votar
         </h1>
         <div className="space-y-2 text-sm text-secondary-foreground">

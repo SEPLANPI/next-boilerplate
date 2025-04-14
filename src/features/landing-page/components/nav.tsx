@@ -44,11 +44,29 @@ export function Nav({ isFloating = false }: { isFloating: boolean }) {
               <ul className="flex flex-col">
                 <li>
                   <Anchor
+                    href="#onde-estamos"
+                    className={LINK_CLASSES_MOBILE}
+                    onClick={close}
+                  >
+                    Onde estamos
+                  </Anchor>
+                </li>
+                <li>
+                  <Anchor
                     href="#sobre"
                     className={LINK_CLASSES_MOBILE}
                     onClick={close}
                   >
                     Sobre
+                  </Anchor>
+                </li>
+                <li>
+                  <Anchor
+                    href="#como-funciona"
+                    className={LINK_CLASSES_MOBILE}
+                    onClick={close}
+                  >
+                    Como Funciona
                   </Anchor>
                 </li>
                 <li>
@@ -67,24 +85,6 @@ export function Nav({ isFloating = false }: { isFloating: boolean }) {
                     onClick={close}
                   >
                     Eixos
-                  </Anchor>
-                </li>
-                <li>
-                  <Anchor
-                    href="#como-funciona"
-                    className={LINK_CLASSES_MOBILE}
-                    onClick={close}
-                  >
-                    Como Funciona
-                  </Anchor>
-                </li>
-                <li>
-                  <Anchor
-                    href="#como-participar"
-                    className={LINK_CLASSES_MOBILE}
-                    onClick={close}
-                  >
-                    Como Participar
                   </Anchor>
                 </li>
               </ul>
@@ -108,10 +108,28 @@ export function Nav({ isFloating = false }: { isFloating: boolean }) {
           <li>
             <Anchor
               data-isfloating={isFloating}
+              href="#onde-estamos"
+              className={LINK_CLASSES_DESKTOP}
+            >
+              Onde estamos
+            </Anchor>
+          </li>
+          <li>
+            <Anchor
+              data-isfloating={isFloating}
               href="#sobre"
               className={LINK_CLASSES_DESKTOP}
             >
               Sobre
+            </Anchor>
+          </li>
+          <li>
+            <Anchor
+              data-isfloating={isFloating}
+              href="#como-funciona"
+              className={LINK_CLASSES_DESKTOP}
+            >
+              Como Funciona
             </Anchor>
           </li>
           <li>
@@ -130,24 +148,6 @@ export function Nav({ isFloating = false }: { isFloating: boolean }) {
               className={LINK_CLASSES_DESKTOP}
             >
               Eixos
-            </Anchor>
-          </li>
-          <li>
-            <Anchor
-              data-isfloating={isFloating}
-              href="#como-funciona"
-              className={LINK_CLASSES_DESKTOP}
-            >
-              Como Funciona
-            </Anchor>
-          </li>
-          <li>
-            <Anchor
-              data-isfloating={isFloating}
-              href="#como-participar"
-              className={LINK_CLASSES_DESKTOP}
-            >
-              Como Participar
             </Anchor>
           </li>
         </ul>

@@ -25,7 +25,7 @@ export default async function CadastroConselheiro() {
           className="w-44"
           alt="senhor sorrindo em fundo verde"
         />
-        <div className="flex flex-col items-center space-y-3 text-center font-montserrat">
+        <div className="flex flex-col items-center space-y-3 text-center">
           <h1 className="text-xl font-bold">Bem vindo(a), Conselheiro(a)!</h1>
           <p className="text-sm text-secondary-foreground">
             Preencha os dados abaixo para realizar seu cadastro e participar do

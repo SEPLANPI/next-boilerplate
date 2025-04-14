@@ -100,7 +100,7 @@ function CardMetric({ label, value, className = '' }: CardMetricProps) {
   return (
     <div className={`flex flex-col ${className}`}>
       <span className="text-xs text-secondary-foreground">{label}</span>
-      <span className="font-montserrat text-3xl font-semibold">{value}</span>
+      <span className="text-3xl font-semibold">{value}</span>
     </div>
   )
 }

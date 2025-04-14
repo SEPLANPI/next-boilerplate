@@ -1,11 +1,11 @@
 import type { Metadata } from 'next'
 import { ColorSchemeScript } from '@mantine/core'
 import './globals.css'
+import '@mantine/carousel/styles.css'
 import '@mantine/dates/styles.css'
 import '@mantine/notifications/styles.css'
 import '@mantine/charts/styles.css'
-import { Montserrat } from 'next/font/google'
-import localFont from 'next/font/local'
+import { Figtree } from 'next/font/google'
 import { Providers } from './providers'
 
 export const metadata: Metadata = {
@@ -15,24 +15,7 @@ export const metadata: Metadata = {
   }
 }
 
-const roboto = localFont({
-  src: [
-    {
-      path: './roboto-italic.ttf',
-      style: 'italic'
-    },
-    {
-      path: './roboto-normal.ttf',
-      style: 'normal'
-    }
-  ]
-})
-
-const montserrat = Montserrat({
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700', '800'],
-  variable: '--font-montserrat'
-})
+const figtree = Figtree({ subsets: ['latin'] })
 
 export default function RootLayout({
   children
@@ -45,7 +28,7 @@ export default function RootLayout({
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <ColorSchemeScript />
       </head>
-      <body className={`${roboto.className} ${montserrat.variable} antialised`}>
+      <body className={`${figtree.className} antialised`}>
         <Providers>{children}</Providers>
       </body>
     </html>

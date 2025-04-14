@@ -16,7 +16,7 @@ export function SignInGovpiButton() {
       }
     >
       Entrar com
-      <span className="font-montserrat font-bold">&nbsp;gov.pi cidadão</span>
+      <span className="font-bold">&nbsp;gov.pi cidadão</span>
     </Button>
   )
 }
