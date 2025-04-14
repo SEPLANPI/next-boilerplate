@@ -106,8 +106,6 @@ export function BaseEditCounselorForm({
     []
   )
 
-  
-
   useEffect(() => {
     if (counselor) {
       form.reset()

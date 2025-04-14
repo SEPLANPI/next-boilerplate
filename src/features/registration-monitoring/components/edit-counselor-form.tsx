@@ -6,13 +6,14 @@ import { AddressType } from '@/features/register-counselor/types/counselor'
 import { dayjs } from '@/lib/dayjs'
 import { notifications } from '@mantine/notifications'
 import { useState } from 'react'
-import { editCounselor } from '../actions/editCounselor'
+import { editAdminCounselor, editCounselor } from '../actions/editCounselor'
 import { BaseEditCounselorForm, FormValues } from './base-edit-counselor-form'
 
 interface EditCounselorFormProps {
   id: string
   counselor: CounselorInfo | undefined
   isSubmitting?: boolean
+  admin?: boolean
   setIsSubmitting: (isSubmitting: boolean) => void
   onComplete?: (success: boolean) => void
 }
@@ -22,6 +23,7 @@ export function EditCounselorForm({
   counselor,
   onComplete,
   isSubmitting,
+  admin = true,
   setIsSubmitting
 }: EditCounselorFormProps) {
   const [error, setError] = useState<string>()
@@ -88,17 +90,30 @@ export function EditCounselorForm({
         }
       }
 
-      const { error } = await editCounselor(formData, counselor?.id)
-      console.log('PUT ERROR:', error)
-      if (error) {
-        notifications.show({
-          message: 'Falha ao editar conselheiro: ' + error,
-          title: 'Erro',
-          color: 'red'
-        })
-        setError(API.UNEXPECTED_FETCH_ERROR)
-        onComplete?.(false)
-        return
+      if (admin) {
+        const { error } = await editAdminCounselor(formData, counselor?.id)
+        if (error) {
+          notifications.show({
+            message: 'Falha ao editar conselheiro: ' + error,
+            title: 'Erro',
+            color: 'red'
+          })
+          setError(API.UNEXPECTED_FETCH_ERROR)
+          onComplete?.(false)
+          return
+        }
+      } else {
+        const { error } = await editCounselor(formData)
+        if (error) {
+          notifications.show({
+            message: 'Falha ao editar conselheiro: ' + error,
+            title: 'Erro',
+            color: 'red'
+          })
+          setError(API.UNEXPECTED_FETCH_ERROR)
+          onComplete?.(false)
+          return
+        }
       }
 
       setIsSubmitting(false)

@@ -1,7 +1,7 @@
-import { PropsWithChildren } from 'react'
-import { Header } from './header'
+import { getMeusDados } from '@/features/counselors/api/get-meusDados'
+import EditCounselorDrawer from '@/features/registration-monitoring/components/counselor-edit-drawer'
 import { api } from '@/lib/server-api'
-import { StatusBadge } from './status-badge'
+import { formatDate } from '@/utils/format-date'
 import {
   Alert,
   Divider,
@@ -9,7 +9,9 @@ import {
   HoverCardDropdown,
   HoverCardTarget
 } from '@mantine/core'
-import { formatDate } from '@/utils/format-date'
+import { PropsWithChildren } from 'react'
+import { Header } from './header'
+import { StatusBadge } from './status-badge'
 
 type Status = {
   status: 'PENDENTE' | 'REJEITADO' | 'APROVADO'
@@ -19,6 +21,10 @@ type Status = {
 
 export async function ConselheiroLayout({ children }: PropsWithChildren) {
   const response = await api.get('/conselheiros/status/')
+  const {data: counselor, error: error} = await getMeusDados()
+  if (error) {
+    return <div>Erro ao carregar dados do conselheiro</div>
+  }
 
   if (!response.ok) {
     return <div>Erro ao carregar dados do conselheiro</div>
@@ -29,6 +35,7 @@ export async function ConselheiroLayout({ children }: PropsWithChildren) {
   return (
     <div className="flex min-h-screen flex-col">
       <Header>
+        <EditCounselorDrawer admin={false} counselor={counselor} />
         <HoverCard width={320} shadow="md">
           <HoverCardTarget>
             <StatusBadge status={data.status} />

@@ -10,10 +10,11 @@ import { EditCounselorForm } from './edit-counselor-form'
 interface Props {
   opened?: boolean
   counselor: CounselorInfo | undefined
+  admin?: boolean
   onClose?: () => void
 }
 
-export default function EditCounselorDrawer({ counselor }: Props) {
+export default function EditCounselorDrawer({ counselor, admin }: Props) {
   const [opened, { open, close }] = useDisclosure(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const formId = 'edit-counselor-form'
@@ -34,6 +35,7 @@ export default function EditCounselorDrawer({ counselor }: Props) {
           <EditCounselorForm
             counselor={counselor}
             id={formId}
+            admin={admin}
             isSubmitting={isSubmitting}
             setIsSubmitting={setIsSubmitting}
             onComplete={(success) => {
