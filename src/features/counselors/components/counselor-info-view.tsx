@@ -2,7 +2,7 @@ import DownloadButtons from '@/features/counselors/components/download-buttons'
 import { CounselorInfo } from '@/features/counselors/types'
 import { dayjs } from '@/lib/dayjs'
 import { Box, Grid, GridCol, Text } from '@mantine/core'
-import console from 'console'
+import { File } from 'lucide-react'
 
 interface CounselorInfoViewProps {
   data: CounselorInfo
@@ -54,7 +54,9 @@ function docsSection(docsData: CounselorInfo) {
                 {getDocType(doc.tipo_documento)}
               </Text>
               <div className="flex gap-2">
-                <Box className="min-h-12 min-w-16 rounded-sm bg-gray-100" />
+                  <File color="gray" className='size-10 stroke-1'/>
+                {/* <Box className="flex min-h-12 min-w-16 items-center justify-center rounded-sm">
+                </Box> */}
                 <div className="w-full items-center overflow-hidden text-ellipsis whitespace-nowrap pt-1">
                   <Text size="sm" truncate>
                     {doc.arquivo.nome}
