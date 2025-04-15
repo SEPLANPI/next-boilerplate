@@ -21,7 +21,7 @@ type Status = {
 
 export async function ConselheiroLayout({ children }: PropsWithChildren) {
   const response = await api.get('/conselheiros/status/')
-  const {data: counselor, error: error} = await getMeusDados()
+  const { data: counselor, error: error } = await getMeusDados()
   if (error) {
     return <div>Erro ao carregar dados do conselheiro</div>
   }
@@ -35,7 +35,9 @@ export async function ConselheiroLayout({ children }: PropsWithChildren) {
   return (
     <div className="flex min-h-screen flex-col">
       <Header>
-        <EditCounselorDrawer admin={false} counselor={counselor} />
+        {data.status !== 'APROVADO' && (
+          <EditCounselorDrawer admin={false} counselor={counselor} />
+        )}
         <HoverCard width={320} shadow="md">
           <HoverCardTarget>
             <StatusBadge status={data.status} />
