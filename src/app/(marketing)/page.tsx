@@ -66,9 +66,9 @@ export default function LandingPage() {
             O futuro do Piauí começa onde você está
           </h1>
           <p className="max-w-xs text-sm md:max-w-md md:text-lg">
-            Estamos no território{' '}
-            <span className="font-semibold">Vale do Rio Guaribas</span> para
-            ouvir você e construir juntos os próximos passos do nosso estado.
+            Estamos no território <span className="font-semibold">Cocais</span>{' '}
+            para ouvir você e construir juntos os próximos passos do nosso
+            estado.
           </p>
           <Button
             component={Link}
@@ -101,9 +101,9 @@ export default function LandingPage() {
         <span className="flex-1 bg-[#EF4123]" />
         <span className="flex-1 bg-blue-700" />
       </div>
-      <div className="h-[32px] sm:h-[64px] md:h-[144px]"></div>
       <Section
         id="onde-estamos"
+        spacing="lg"
         containerClassName="bg-lime-50 p-6 sm:p-12 rounded-xl grid grid-cols-1 gap-8 sm:grid-cols-2"
       >
         <div className="flex flex-col items-start space-y-4 sm:space-y-8">
@@ -112,10 +112,10 @@ export default function LandingPage() {
           </TitleBadge>
           <div className="flex flex-col space-y-3">
             <h2 className="text-[22px] font-bold text-lime-700 sm:text-[29px]">
-              Vale do Rio Guaribas
+              Cocais
             </h2>
             <div className="flex flex-col space-y-2">
-              <p>Picos é o coração do Vale do Rio Guaribas!</p>
+              <p>Piripiri é o coração do Cocais!</p>
               <p>
                 <span className="font-semibold">Venha participar</span> de um{' '}
                 <span className="font-semibold">evento único</span> , que traz o
@@ -154,165 +154,6 @@ export default function LandingPage() {
           />
         </div>
       </Section>
-      <div className="h-[32px] sm:h-[64px] md:h-[144px]"></div>
-      <Section>
-        <div className="flex flex-col gap-8 md:col-span-2">
-          <h2 className="mx-auto text-center text-[22px] font-bold leading-[32px] xs:text-[34px] xs:leading-[46px] sm:text-[46px] sm:leading-[56px]">
-            <span className="block">Veja o que preparamos para</span>
-            <span className="block">
-              você em{' '}
-              <span className="relative italic">
-                Picos
-                <Image
-                  src="/lp/city-highlight.svg"
-                  className="absolute bottom-0 right-0 -z-10 w-[calc(100%+16px)]"
-                  alt="Linha"
-                  width={260}
-                  height={76}
-                />
-              </span>
-            </span>
-          </h2>
-          <Accordion
-            unstyled
-            multiple
-            defaultValue={['feira']}
-            classNames={{
-              root: 'space-y-5',
-              item: 'shadow-md p-6 sm:p-8 rounded-lg border border-gray-50',
-              control:
-                'flex items-center justify-between flex-row-reverse w-full text-[18px] sm:text-[29px]',
-              panel: 'pt-6 text-sm sm:text-lg',
-              content: 'space-y-6'
-            }}
-          >
-            <AccordionItem value="feira">
-              <AccordionControl>
-                <div className="flex space-x-3">
-                  <Image
-                    src="/lp/icons/boxes.svg"
-                    alt="Icone caixas"
-                    width={32}
-                    height={32}
-                  />
-                  <h3 className="text-left font-bold">Feira de Serviços</h3>
-                </div>
-              </AccordionControl>
-              <AccordionPanel>
-                Feira de serviços gratuitos para a população:
-                <ul className="list-disc pl-8">
-                  <li>
-                    Emissão de documentos, vacinação, carreta da saúde, cursos
-                    profissionalizantes, linha de crédito e muito mais
-                  </li>
-                </ul>
-                <Divider />
-                <div className="flex flex-col space-y-1.5">
-                  <span className="flex items-center space-x-1.5">
-                    <MapPin className="size-4 text-lime-600" />
-                    <span>Complexo Esportivo da COHAB</span>
-                  </span>
-                  <span className="flex items-center space-x-1.5">
-                    <Calendar className="size-4 text-lime-600" />
-                    <span>
-                      <span className="font-semibold">11/04</span> das 8h às 17h
-                    </span>
-                  </span>
-                  <span className="flex items-center space-x-1.5">
-                    <Calendar className="size-4 text-lime-600" />
-                    <span>
-                      <span className="font-semibold">12/04</span> das 8h às 17h
-                    </span>
-                  </span>
-                </div>
-                <Divider />
-                <Link
-                  className="flex items-center space-x-2 italic"
-                  href="/lp/feira_de_servicos.pdf"
-                  target="_blank"
-                >
-                  <span>Conheça os serviços</span>
-                  <ArrowUpRight className="size-4" />
-                </Link>
-              </AccordionPanel>
-            </AccordionItem>
-            <AccordionItem value="plenaria">
-              <AccordionControl>
-                <div className="flex space-x-3">
-                  <Image
-                    src="/lp/icons/presentation.svg"
-                    alt="Icone apresentação"
-                    width={32}
-                    height={32}
-                  />
-                  <h3 className="text-left font-bold">
-                    Plenária com o Governador
-                  </h3>
-                </div>
-              </AccordionControl>
-              <AccordionPanel>
-                <p className="block">
-                  Um momento de transparência e participação ativa entre governo
-                  e população.
-                </p>
-                <Divider />
-                <div className="flex flex-col space-y-1.5">
-                  <span className="flex items-center space-x-1.5">
-                    <MapPin className="size-4 text-lime-600" />
-                    <span>
-                      <span className="font-semibold">Espaço Versalhes:</span>{' '}
-                      Rua Projetada, 278, Bairro Aroeriras do Matadouro
-                    </span>
-                  </span>
-                  <span className="flex items-center space-x-1.5">
-                    <Calendar className="size-4 text-lime-600" />
-                    <span>
-                      <span className="font-semibold">12/04</span> das 14h às
-                      17h
-                    </span>
-                  </span>
-                </div>
-              </AccordionPanel>
-            </AccordionItem>
-            <AccordionItem value="oficinas">
-              <AccordionControl>
-                <div className="flex space-x-3">
-                  <Image
-                    src="/lp/icons/lightbulb.svg"
-                    alt="Icone caixas"
-                    width={32}
-                    height={32}
-                  />
-                  <h3 className="text-left font-bold">Oficinas PPA</h3>
-                </div>
-              </AccordionControl>
-              <AccordionPanel>
-                <p className="block">
-                  Educação, saúde, meio ambiente, socioeconômico,
-                  infraestrutura, tecnologia, segurança e outros temas
-                  fundamentais para o futuro do Vale do Rio Guaribas e do Piauí,
-                  discutidos com seriedade e compromisso por técnicos, gestores
-                  e pelo povo.
-                </p>
-                <Divider />
-                <div className="flex flex-col space-y-1.5">
-                  <span className="flex items-center space-x-1.5">
-                    <MapPin className="size-4 text-lime-600" />
-                    <span>UFPI</span>
-                  </span>
-                  <span className="flex items-center space-x-1.5">
-                    <Calendar className="size-4 text-lime-600" />
-                    <span>
-                      <span className="font-semibold">12/04</span> das 8h às
-                      12h30
-                    </span>
-                  </span>
-                </div>
-              </AccordionPanel>
-            </AccordionItem>
-          </Accordion>
-        </div>
-      </Section>
       <Section className="relative !py-0">
         <div className="absolute bottom-0 left-0 -z-10 h-1/2 w-full bg-stone-50"></div>
         <div className="relative flex flex-col items-center space-y-8 rounded-xl bg-lime-700 px-6 py-20 text-center sm:px-8">
@@ -349,10 +190,10 @@ export default function LandingPage() {
         containerClassName="text-center flex flex-col items-center"
       >
         <h2 className="md:16 mx-auto mb-8 text-center text-[22px] font-bold leading-[32px] xs:text-[34px] xs:leading-[46px] sm:text-[46px] sm:leading-[56px]">
-          <span className="font-black text-lime-600">Por que</span> participar
-          do Diálogos pelo Piauí?
+          <span className="text-lime-600">Por que</span> participar do Diálogos
+          pelo Piauí?
         </h2>
-        <div className="grid grid-cols-2 gap-5 sm:grid-cols-4">
+        <div className="grid grid-cols-1 gap-5 xs:grid-cols-2 sm:grid-cols-4">
           <div className="flex flex-col items-center space-y-5 rounded-lg bg-white px-6 py-8">
             <Image
               src="/lp/icons/hand-coins.svg"
@@ -470,8 +311,8 @@ export default function LandingPage() {
           </Card.Root>
           <Image
             className="row-span-2 hidden h-full rounded-md object-cover md:block"
-            alt="Senhor dando jóia com fundo verde"
-            src="/lp/senhor-fundo-verde.png"
+            alt="Imagens do evento"
+            src="/lp/como-funciona.png"
             width={704}
             height={1064}
             quality={100}
@@ -524,14 +365,15 @@ export default function LandingPage() {
           </Card.Root>
         </div>
       </Section>
-      <Section className="!pb-0">
+      <Section className="!pb-0" spacing="lg">
         <h2 className="mb-8 text-[22px] font-bold leading-[32px] xs:text-[34px] xs:leading-[46px] sm:text-[46px] sm:leading-[56px] md:mb-16">
           Cronograma
         </h2>
       </Section>
-      <div className="mb-8 w-screen sm:mb-16 md:mb-28">
+      <div className="mb-32 w-screen sm:mb-36 md:mb-[200px]">
         <div className="">
           <Carousel
+            initialSlide={1}
             height={260}
             slideSize="260px"
             slideGap="md"
@@ -546,7 +388,7 @@ export default function LandingPage() {
             }}
           >
             <CarouselSlide>
-              <div className="flex h-[260px] w-full flex-col justify-between rounded-md bg-lime-600 p-6 text-white">
+              <div className="flex h-[260px] w-full flex-col justify-between rounded-md bg-stone-50 p-6">
                 <div>
                   <div className="space-x-2 font-bold leading-tight">
                     <span className="text-[64px]">11</span>
@@ -564,7 +406,7 @@ export default function LandingPage() {
               </div>
             </CarouselSlide>
             <CarouselSlide>
-              <div className="flex h-[260px] w-full flex-col justify-between rounded-md bg-stone-50 p-6">
+              <div className="flex h-[260px] w-full flex-col justify-between rounded-md bg-lime-600 p-6 text-white">
                 <div>
                   <div className="space-x-2 font-bold leading-tight">
                     <span className="text-[64px]">25</span>
@@ -780,11 +622,11 @@ export default function LandingPage() {
           </div>
           <Image
             className="hidden h-full rounded-md object-cover md:block"
-            src="/lp/senhor-fundo-verde.png"
+            src="/lp/como-participar.png"
             width={900}
             height={900}
             quality={100}
-            alt="Senhor com paisagem verde ao fundo com caixas verdes ao lado"
+            alt="Dentista com criança"
           />
         </div>
       </Section>
@@ -796,11 +638,11 @@ export default function LandingPage() {
           </h2>
           <Image
             className="col-span-1 hidden h-full rounded-md object-cover md:block"
-            src="/lp/senhor-fundo-verde.png"
+            src="/lp/ppa.png"
             width={900}
             height={900}
             quality={100}
-            alt="Senhor com paisagem verde ao fundo com caixas verdes ao lado"
+            alt="Mulher com criança"
           />
           <div className="flex flex-col items-center gap-8 text-center md:col-span-2 md:items-start md:text-left">
             <div className="flex flex-col space-y-4">
@@ -849,66 +691,88 @@ export default function LandingPage() {
           focado em um aspecto essencial do desenvolvimento do estado.
         </p>
         <div className="mt-8 grid w-full grid-cols-1 gap-4 sm:grid-cols-12">
-          <Card.Root className="bg-green-800 text-white sm:col-span-6 md:col-span-4">
-            <Card.Icon className="bg-white/20">
-              <Leaf className="size-4" />
+          <Card.Root className="bg-white shadow-md sm:col-span-6 md:col-span-4">
+            <Card.Icon className="bg-green-100">
+              <Leaf className="size-4 text-green-800" />
             </Card.Icon>
             <Card.Title>
               Mudanças Climáticas, Meio Ambiente e Recursos Hídricos
             </Card.Title>
-            <Card.Subtitle>Piauí Verde</Card.Subtitle>
+            <Card.Subtitle>
+              <ul className="list-disc pl-6">
+                <li>Piauí Verde</li>
+              </ul>
+            </Card.Subtitle>
           </Card.Root>
-          <Card.Root className="bg-gray-100 sm:col-span-6 md:col-span-4">
-            <Card.Icon className="bg-gray-200">
-              <Landmark className="size-4 text-gray-700" />
+          <Card.Root className="bg-white shadow-md sm:col-span-6 md:col-span-4">
+            <Card.Icon className="bg-stone-100">
+              <Landmark className="size-4 text-stone-800" />
             </Card.Icon>
             <Card.Title>
               Infraestrutura, Inclusão Produtiva e Transição Energética
             </Card.Title>
-            <Card.Subtitle>Piauí Integrado</Card.Subtitle>
+            <Card.Subtitle>
+              <ul className="list-disc pl-6">
+                <li>Piauí Integrado</li>
+              </ul>
+            </Card.Subtitle>
           </Card.Root>
-          <Card.Root className="bg-govYellow-400 sm:col-span-4">
-            <Card.Icon className="bg-white/20">
-              <TrendingUp className="size-4" />
+          <Card.Root className="bg-white shadow-md sm:col-span-4">
+            <Card.Icon className="bg-yellow-100">
+              <TrendingUp className="size-4 text-yellow-800" />
             </Card.Icon>
             <Card.Title>Desenvolvimento Socioeconômico</Card.Title>
             <Card.Subtitle>
-              <span className="block">Piauí Produtivo</span>
-              <span className="block">Avança Piauí</span>
+              <ul className="list-disc pl-6">
+                <li>Piauí Produtivo</li>
+                <li>Avança Piauí</li>
+              </ul>
             </Card.Subtitle>
           </Card.Root>
-          <Card.Root className="bg-blue-700 text-white sm:col-span-4 md:col-span-3">
-            <Card.Icon className="bg-white/20">
-              <BookOpen className="size-4" />
+          <Card.Root className="bg-white shadow-md sm:col-span-4 md:col-span-3">
+            <Card.Icon className="bg-blue-100">
+              <BookOpen className="size-4 text-blue-800" />
             </Card.Icon>
             <Card.Title>Educação Inclusiva e de Qualidade</Card.Title>
-            <Card.Subtitle>Piauí Educação</Card.Subtitle>
+            <Card.Subtitle>
+              <ul className="list-disc pl-6">
+                <li>Piauí Educação</li>
+              </ul>
+            </Card.Subtitle>
           </Card.Root>
-          <Card.Root className="bg-orange-50 sm:col-span-4 md:col-span-3">
+          <Card.Root className="bg-white shadow-md sm:col-span-4 md:col-span-3">
             <Card.Icon className="bg-orange-100">
-              <Users className="size-4 text-orange-500" />
+              <Users className="size-4 text-orange-800" />
             </Card.Icon>
             <Card.Title>Redução das Desigualdades</Card.Title>
-            <Card.Subtitle>Piauí Inclusivo</Card.Subtitle>
+            <Card.Subtitle>
+              <ul className="list-disc pl-6">
+                <li>Piauí Inclusivo</li>
+              </ul>
+            </Card.Subtitle>
           </Card.Root>
-          <Card.Root className="bg-green-50 sm:col-span-6 md:col-span-3">
-            <Card.Icon className="bg-green-100">
-              <HeartPulse className="size-4 text-green-600" />
+          <Card.Root className="bg-white shadow-md sm:col-span-6 md:col-span-3">
+            <Card.Icon className="bg-emerald-100">
+              <HeartPulse className="size-4 text-emerald-800" />
             </Card.Icon>
             <Card.Title>Saúde e Bem-Estar</Card.Title>
             <Card.Subtitle>
-              <span className="block">Piauí Saudável</span>
-              <span className="block">
-                Piauí com mais Cultura, Esporte e Lazer
-              </span>
+              <ul className="list-disc pl-6">
+                <li>Piauí Saudável</li>
+                <li>Piauí com mais Cultura, Esporte e Lazer</li>
+              </ul>
             </Card.Subtitle>
           </Card.Root>
-          <Card.Root className="bg-red-600 text-white sm:col-span-6 md:col-span-3">
-            <Card.Icon className="bg-white/20">
-              <ShieldCheck className="size-4" />
+          <Card.Root className="bg-white shadow-md sm:col-span-6 md:col-span-3">
+            <Card.Icon className="bg-red-100">
+              <ShieldCheck className="size-4 text-red-800" />
             </Card.Icon>
             <Card.Title>Justiça e Segurança</Card.Title>
-            <Card.Subtitle>Piauí Seguro</Card.Subtitle>
+            <Card.Subtitle>
+              <ul className="list-disc pl-6">
+                <li>Piauí Seguro</li>
+              </ul>
+            </Card.Subtitle>
           </Card.Root>
         </div>
       </Section>
@@ -916,10 +780,10 @@ export default function LandingPage() {
       <Section
         id="participe"
         className="!pt-0"
-        containerClassName="p-8 rounded-xl border border-stone-200"
+        containerClassName="p-0 rounded-xl border border-stone-200 relative overflow-hidden"
       >
         <div className="flex items-center justify-between gap-8">
-          <div className="flex max-w-2xl flex-col gap-4 md:col-span-2">
+          <div className="flex max-w-2xl flex-col gap-4 p-8 md:col-span-2">
             <h2 className="text-[22px] font-bold sm:text-[29px]">
               Participe do Diálogos pelo Piauí!
             </h2>
@@ -933,12 +797,12 @@ export default function LandingPage() {
             </Button>
           </div>
           <Image
-            className="hidden w-[234px] rounded-md object-cover md:block"
-            src="/lp/senhora-bola-verde.png"
+            className="absolute right-0 top-0 h-full w-full object-cover"
+            src="/lp/participar.png"
             width={900}
             height={900}
             quality={100}
-            alt="Senhora sorrindo em fundo verde e logo do diálogos ao lado"
+            alt="Pessoas no evento do diálogos"
           />
         </div>
       </Section>
