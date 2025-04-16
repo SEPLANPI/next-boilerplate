@@ -24,7 +24,11 @@ export function EventSelect() {
     setValue(eventId)
   }, [eventId])
 
-  const { data: events, error } = useQuery({
+  const {
+    data: events,
+    error,
+    isLoading
+  } = useQuery({
     queryKey: ['active-event'],
     queryFn: getEvents,
     staleTime: 24 * 60 * 60 * 1000,
@@ -35,11 +39,11 @@ export function EventSelect() {
     onDropdownClose: () => combobox.resetSelectedOption()
   })
 
-  if (error || !events) {
+  if (error) {
     return <div>{error?.message || API.UNEXPECTED_FETCH_ERROR}</div>
   }
 
-  const options = events.map((event) => (
+  const options = events?.map((event) => (
     <Combobox.Option value={event.id.toString()} key={event.id}>
       {event.nome}
     </Combobox.Option>
@@ -79,6 +83,7 @@ export function EventSelect() {
           rightSection={<Combobox.Chevron />}
           rightSectionPointerEvents="none"
           onClick={() => combobox.toggleDropdown()}
+          disabled={isLoading}
         >
           {value ? (
             <p className="truncate">{getOptionLabel(value)}</p>
