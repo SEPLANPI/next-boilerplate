@@ -210,7 +210,7 @@ export default function LandingPage() {
               width={48}
               height={48}
             />
-            <p>Envio de propostas para o futuro da sua cidade</p>
+            <p>Envio de propostas para o futuro do seu território</p>
           </div>
           <div className="flex flex-1 flex-col items-center space-y-5 rounded-lg bg-white px-6 py-8">
             <Image
@@ -797,7 +797,7 @@ export default function LandingPage() {
             </Button>
           </div>
           <Image
-            className="absolute right-0 top-0 h-full w-full object-cover"
+            className="absolute right-0 top-0 -z-10 h-full w-full object-cover"
             src="/lp/participar.png"
             width={900}
             height={900}
