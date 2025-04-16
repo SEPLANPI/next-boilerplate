@@ -6,7 +6,8 @@ import {
   InputBase,
   Combobox,
   useCombobox,
-  ScrollArea
+  ScrollArea,
+  Alert
 } from '@mantine/core'
 import { useParams, useRouter, usePathname } from 'next/navigation'
 import { useQuery } from '@tanstack/react-query'
@@ -40,7 +41,14 @@ export function EventSelect() {
   })
 
   if (error) {
-    return <div>{error?.message || API.UNEXPECTED_FETCH_ERROR}</div>
+    return (
+      <Alert
+        classNames={{
+          title: 'text-xs'
+        }}
+        title={error.message || API.UNEXPECTED_FETCH_ERROR}
+      />
+    )
   }
 
   const options = events?.map((event) => (
