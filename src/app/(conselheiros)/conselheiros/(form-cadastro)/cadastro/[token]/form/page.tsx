@@ -62,6 +62,7 @@ export default async function CadastroConselheiroForm({
             </span>
             <Button
               component={Link}
+              prefetch={false}
               href={`/api/auth/sign-out?redirectTo=/conselheiros/cadastro/${params.token}/`}
               size="sm"
               variant="subtle"
