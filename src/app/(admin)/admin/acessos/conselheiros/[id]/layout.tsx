@@ -3,11 +3,12 @@ import {
   DashboardBreadcrumbs
 } from '@/components/layouts/dashboard-layout/breadcrumbs'
 import { DashboardHeader } from '@/components/layouts/dashboard-layout/header'
+import CounselorEditView from '@/features/registration-monitoring/components/counselor-edit-view'
 import { CounselorTabs } from '@/features/registration-monitoring/components/counselor-tabs'
 import { ValidateCounselorModal } from '@/features/registration-monitoring/components/validate-counselor-modal'
 import { Users } from 'lucide-react'
 
-export default function AdminCounselorVoewLayout({
+export default async function AdminCounselorVoewLayout({
   children,
   params
 }: {
@@ -35,7 +36,10 @@ export default function AdminCounselorVoewLayout({
       </DashboardHeader>
       <div className="flex items-center justify-between border-b pl-4 pr-8">
         <CounselorTabs />
-        <ValidateCounselorModal counselorId={params.id} />
+        <div className="flex gap-2">
+          <CounselorEditView id={params.id} />
+          <ValidateCounselorModal counselorId={params.id} />
+        </div>
       </div>
       {children}
     </>

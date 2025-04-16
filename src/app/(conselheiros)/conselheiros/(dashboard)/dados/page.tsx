@@ -3,6 +3,7 @@ import { getMeusDados } from '@/features/counselors/api/get-meusDados'
 import { Metadata } from 'next'
 import { CounselorInfoView } from '@/features/counselors/components/counselor-info-view'
 import { Card } from '@mantine/core'
+import EditCounselorDrawer from '@/features/registration-monitoring/components/counselor-edit-drawer'
 
 export const metadata: Metadata = {
   title: 'Dados'
