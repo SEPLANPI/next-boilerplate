@@ -40,14 +40,9 @@ export async function getProposals(
   }
 }
 
-export async function getProposal(
-  id: string,
-  eventId: string
-): Promise<ServerResult<Proposal>> {
+export async function getProposal(id: string): Promise<ServerResult<Proposal>> {
   try {
-    const response = await api.get(
-      `/propostas/${id}/detalhes/?evento_id=${eventId}`
-    )
+    const response = await api.get(`/propostas/${id}/detalhes/`)
 
     if (!response.ok) {
       const error: DjangoError = await response.json()

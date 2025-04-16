@@ -28,7 +28,7 @@ export async function GeneralRegistrationListView({
 
   return (
     <>
-      <GeneralRegistrationTable data={data.results} params={params} />
+      <GeneralRegistrationTable data={data.results} />
       <UrlPaginationFooter
         totalItems={data.count}
         itemsPerPage={PAGINATION.DEFAULT_PAGE_SIZE}

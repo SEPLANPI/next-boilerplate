@@ -34,7 +34,6 @@ export async function VotingListView({ params }: VotingListViewProps) {
       <VotingTable
         data={data.propostas}
         totalPontos={data.total_geral_pontos}
-        params={params}
       />
     </>
   )
