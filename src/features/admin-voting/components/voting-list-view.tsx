@@ -3,8 +3,12 @@ import { getVoting } from '../api/get-voting'
 import { VotingTable } from './voting-table'
 import { VotingStats } from './voting-stats'
 
-export async function VotingListView() {
-  const { data, error } = await getVoting()
+interface VotingListViewProps {
+  params: { eventId: string }
+}
+
+export async function VotingListView({ params }: VotingListViewProps) {
+  const { data, error } = await getVoting(params.eventId)
 
   if (!data || error) {
     return <FetchError title="Erro ao carregar votações" error={error} />
@@ -30,6 +34,7 @@ export async function VotingListView() {
       <VotingTable
         data={data.propostas}
         totalPontos={data.total_geral_pontos}
+        params={params}
       />
     </>
   )

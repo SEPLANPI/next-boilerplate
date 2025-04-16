@@ -6,6 +6,7 @@ import { createInviteLink } from '../actions/create-invite-link'
 import { buildErrorMessage } from '@/utils/format-django-errors'
 import { API } from '@/constants/messages'
 import { BaseInvitationForm } from './base-invitation-form'
+import { useParams } from 'next/navigation'
 
 interface CreateInvitationFormProps {
   id: string

@@ -4,8 +4,12 @@ import { PAGINATION } from '@/constants/pagination'
 import { getProposals } from '../api/get-proposals'
 import { ProposalsTable } from './proposals-table'
 
-export async function ProposalsListView() {
-  const { data, error } = await getProposals()
+interface ProposalsListViewProps {
+  params: { eventId: string }
+}
+
+export async function ProposalsListView({ params }: ProposalsListViewProps) {
+  const { data, error } = await getProposals(params.eventId)
 
   if (!data || error) {
     return <FetchError title="Erro ao carregar propostas" error={error} />
@@ -23,7 +27,7 @@ export async function ProposalsListView() {
 
   return (
     <>
-      <ProposalsTable data={data.results} />
+      <ProposalsTable data={data.results} params={params} />
       <UrlPaginationFooter
         totalItems={data.count}
         itemsPerPage={PAGINATION.DEFAULT_PAGE_SIZE}

@@ -12,19 +12,19 @@ export const sidebarConfig: SidebarConfig = {
       items: [
         {
           label: 'Acessos',
-          href: '/admin/acessos/conselheiros',
+          href: '/:eventId/admin/acessos/conselheiros',
           match: '/admin/acessos',
           icon: DoorOpen
         },
         {
           label: 'Propostas',
-          href: '/admin/propostas',
+          href: '/:eventId/admin/propostas',
           match: '/admin/propostas',
           icon: ClipboardList
         },
         {
           label: 'Votação',
-          href: '/admin/votacao',
+          href: '/:eventId/admin/votacao',
           match: '/admin/votacao',
           icon: Vote
         }

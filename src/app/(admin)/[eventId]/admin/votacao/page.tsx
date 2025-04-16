@@ -25,12 +25,14 @@ export const metadata: Metadata = {
 }
 
 export default async function Votacoes({
-  searchParams
+  searchParams,
+  params
 }: {
   searchParams: Promise<SearchParams>
+  params: { eventId: string }
 }) {
-  const params = await votingSearchParams.parse(searchParams)
-  const suspenseKey = `voting-${JSON.stringify(params)}`
+  const paramsParsed = await votingSearchParams.parse(searchParams)
+  const suspenseKey = `voting-${JSON.stringify(paramsParsed)}`
 
   const items: BreadcrumbItem[] = [
     {
@@ -55,7 +57,7 @@ export default async function Votacoes({
             </Suspense>
           </div>
           <Suspense fallback={<VotingTableSkeleton />} key={suspenseKey}>
-            <VotingListView />
+            <VotingListView params={params} />
           </Suspense>
         </DashboardMainSection>
       </DashboardContent>

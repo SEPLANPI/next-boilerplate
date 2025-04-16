@@ -12,14 +12,14 @@ export const routingConfig: RoutingConfiguration = {
   },
   routes: [
     {
-      path: '/admin/*',
+      path: '/:eventId/admin/*',
       isPublic: false,
       auth: {
         requiredRoles: ['admin']
       },
       overrides: [
         {
-          path: '/admin/acesso-negado',
+          path: '/:eventId/admin/acesso-negado',
           isPublic: true
         }
       ]

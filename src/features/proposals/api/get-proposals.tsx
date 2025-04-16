@@ -12,9 +12,9 @@ type GetProposalResponse = {
   results: Proposal[]
 }
 
-export async function getProposals(): Promise<
-  ServerResult<GetProposalResponse>
-> {
+export async function getProposals(
+  eventId: string
+): Promise<ServerResult<GetProposalResponse>> {
   try {
     const { page, search, sort, eixos, status } = proposalsSearchParams.all()
     const params = buildParams({
@@ -23,7 +23,8 @@ export async function getProposals(): Promise<
       eixo: eixos,
       status_atual: status,
       ordering: sort,
-      page_size: PAGINATION.DEFAULT_PAGE_SIZE
+      page_size: PAGINATION.DEFAULT_PAGE_SIZE,
+      evento_id: eventId
     })
     const response = await api.get(`/listar-propostas/?${params.toString()}`)
 
@@ -39,9 +40,14 @@ export async function getProposals(): Promise<
   }
 }
 
-export async function getProposal(id: string): Promise<ServerResult<Proposal>> {
+export async function getProposal(
+  id: string,
+  eventId: string
+): Promise<ServerResult<Proposal>> {
   try {
-    const response = await api.get(`/propostas/${id}/detalhes/`)
+    const response = await api.get(
+      `/propostas/${id}/detalhes/?evento_id=${eventId}`
+    )
 
     if (!response.ok) {
       const error: DjangoError = await response.json()

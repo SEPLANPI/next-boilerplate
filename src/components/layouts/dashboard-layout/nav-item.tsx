@@ -1,7 +1,7 @@
 'use client'
 
 import { Tooltip, Anchor } from '@mantine/core'
-import { usePathname } from 'next/navigation'
+import { useParams, usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { NavigationItem } from '@/types/sidebar'
 
@@ -23,16 +23,23 @@ const NAV_LINK_COLLAPSED_STYLES = {
 
 export function NavItem({ item, collapsed }: NavItemProps) {
   const pathname = usePathname()
-  const isActive = item.match
-    ? pathname.startsWith(item.match)
-    : pathname.endsWith(item.href)
+  const params = useParams()
+
+  const href = item.href.replace(
+    /:(\w+)/g,
+    (_, param) => params[param] as string
+  )
+
+  const isActive =
+    pathname.startsWith(href) || (item.match && pathname.includes(item.match))
+
   const IconComponent = item.icon ? <item.icon className="size-4" /> : null
 
   if (collapsed) {
     return (
       <Tooltip label={item.label} position="right" withArrow openDelay={300}>
         <Anchor
-          href={item.href}
+          href={href}
           component={Link}
           data-active={isActive}
           classNames={NAV_LINK_COLLAPSED_STYLES}
@@ -46,7 +53,7 @@ export function NavItem({ item, collapsed }: NavItemProps) {
 
   return (
     <Anchor
-      href={item.href}
+      href={href}
       component={Link}
       data-active={isActive}
       classNames={NAV_LINK_STYLES}

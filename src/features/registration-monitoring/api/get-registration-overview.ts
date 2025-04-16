@@ -18,11 +18,13 @@ export interface RegistrationOverview {
   }[]
 }
 
-export async function getRegistrationOverview(): Promise<
-  ServerResult<RegistrationOverview>
-> {
+export async function getRegistrationOverview(
+  eventId: string
+): Promise<ServerResult<RegistrationOverview>> {
   try {
-    const response = await api.get('/monitoramento/inscricoes/')
+    const response = await api.get(
+      `/monitoramento/inscricoes/?evento_id=${eventId}`
+    )
     if (!response.ok) {
       const error: DjangoError = await response.json()
       return { error: error }

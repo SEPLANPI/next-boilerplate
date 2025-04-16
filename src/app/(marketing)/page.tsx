@@ -310,9 +310,9 @@ export default function LandingPage() {
             </Card.Subtitle>
           </Card.Root>
           <Image
-            className="row-span-2 hidden h-full rounded-md object-cover md:block"
+            className="row-span-2 hidden h-full rounded-md object-cover object-right md:block"
             alt="Imagens do evento"
-            src="/lp/como-funciona.png"
+            src="/lp/como-funciona.jpg"
             width={704}
             height={1064}
             quality={100}
@@ -432,10 +432,8 @@ export default function LandingPage() {
                   <span className="text-sm font-bold uppercase">MAIO</span>
                 </div>
                 <div className="flex flex-col space-y-1">
-                  <span className="font-bold uppercase">
-                    VALE DOS RIOS PIAUÍ E ITAUEIRAS
-                  </span>
-                  <span className="text-sm">Floriano</span>
+                  <span className="font-bold uppercase">CARNAUBAIS</span>
+                  <span className="text-sm">Campo Maior</span>
                 </div>
               </div>
             </CarouselSlide>
@@ -450,11 +448,14 @@ export default function LandingPage() {
                   <span className="text-sm font-bold uppercase">MAIO</span>
                 </div>
                 <div className="flex flex-col space-y-1">
-                  <span className="font-bold uppercase">CARNAUBAIS</span>
-                  <span className="text-sm">Campo Maior</span>
+                  <span className="font-bold uppercase">
+                    VALE DOS RIOS PIAUÍ E ITAUEIRAS
+                  </span>
+                  <span className="text-sm">Floriano</span>
                 </div>
               </div>
             </CarouselSlide>
+
             <CarouselSlide>
               <div className="flex h-[260px] w-full flex-col justify-between rounded-md bg-stone-50 p-6">
                 <div>
@@ -695,84 +696,54 @@ export default function LandingPage() {
             <Card.Icon className="bg-green-100">
               <Leaf className="size-4 text-green-800" />
             </Card.Icon>
-            <Card.Title>
-              Mudanças Climáticas, Meio Ambiente e Recursos Hídricos
-            </Card.Title>
+            <Card.Title>Meio Ambiente</Card.Title>
             <Card.Subtitle>
-              <ul className="list-disc pl-6">
-                <li>Piauí Verde</li>
-              </ul>
+              Eixo Mudanças Climáticas, Meio Ambiente e Recursos Hídricos
             </Card.Subtitle>
           </Card.Root>
           <Card.Root className="bg-white shadow-md sm:col-span-6 md:col-span-4">
             <Card.Icon className="bg-stone-100">
               <Landmark className="size-4 text-stone-800" />
             </Card.Icon>
-            <Card.Title>
-              Infraestrutura, Inclusão Produtiva e Transição Energética
-            </Card.Title>
+            <Card.Title>Infraestrutura</Card.Title>
             <Card.Subtitle>
-              <ul className="list-disc pl-6">
-                <li>Piauí Integrado</li>
-              </ul>
+              Eixo Infraestrutura, Inclusão Produtiva e Transição Energética
             </Card.Subtitle>
           </Card.Root>
           <Card.Root className="bg-white shadow-md sm:col-span-4">
             <Card.Icon className="bg-yellow-100">
               <TrendingUp className="size-4 text-yellow-800" />
             </Card.Icon>
-            <Card.Title>Desenvolvimento Socioeconômico</Card.Title>
-            <Card.Subtitle>
-              <ul className="list-disc pl-6">
-                <li>Piauí Produtivo</li>
-                <li>Avança Piauí</li>
-              </ul>
-            </Card.Subtitle>
+            <Card.Title>Desenvolvimento Econômico e Produtivo</Card.Title>
+            <Card.Subtitle>Eixo Desenvolvimento Socioeconômico</Card.Subtitle>
           </Card.Root>
           <Card.Root className="bg-white shadow-md sm:col-span-4 md:col-span-3">
             <Card.Icon className="bg-blue-100">
               <BookOpen className="size-4 text-blue-800" />
             </Card.Icon>
-            <Card.Title>Educação Inclusiva e de Qualidade</Card.Title>
-            <Card.Subtitle>
-              <ul className="list-disc pl-6">
-                <li>Piauí Educação</li>
-              </ul>
-            </Card.Subtitle>
+            <Card.Title>Educação</Card.Title>
+            <Card.Subtitle>Educação Inclusiva e de Qualidade</Card.Subtitle>
           </Card.Root>
           <Card.Root className="bg-white shadow-md sm:col-span-4 md:col-span-3">
             <Card.Icon className="bg-orange-100">
               <Users className="size-4 text-orange-800" />
             </Card.Icon>
-            <Card.Title>Redução das Desigualdades</Card.Title>
-            <Card.Subtitle>
-              <ul className="list-disc pl-6">
-                <li>Piauí Inclusivo</li>
-              </ul>
-            </Card.Subtitle>
+            <Card.Title>Inclusão Social, Raça e Gênero</Card.Title>
+            <Card.Subtitle>Eixo Redução das Desigualdades</Card.Subtitle>
           </Card.Root>
           <Card.Root className="bg-white shadow-md sm:col-span-6 md:col-span-3">
             <Card.Icon className="bg-emerald-100">
               <HeartPulse className="size-4 text-emerald-800" />
             </Card.Icon>
-            <Card.Title>Saúde e Bem-Estar</Card.Title>
-            <Card.Subtitle>
-              <ul className="list-disc pl-6">
-                <li>Piauí Saudável</li>
-                <li>Piauí com mais Cultura, Esporte e Lazer</li>
-              </ul>
-            </Card.Subtitle>
+            <Card.Title>Saúde, Esporte, Cultura e Lazer</Card.Title>
+            <Card.Subtitle>Eixo Saúde e Bem-Estar</Card.Subtitle>
           </Card.Root>
           <Card.Root className="bg-white shadow-md sm:col-span-6 md:col-span-3">
             <Card.Icon className="bg-red-100">
               <ShieldCheck className="size-4 text-red-800" />
             </Card.Icon>
-            <Card.Title>Justiça e Segurança</Card.Title>
-            <Card.Subtitle>
-              <ul className="list-disc pl-6">
-                <li>Piauí Seguro</li>
-              </ul>
-            </Card.Subtitle>
+            <Card.Title>Segurança Pública</Card.Title>
+            <Card.Subtitle>Eixo Justiça e Segurança</Card.Subtitle>
           </Card.Root>
         </div>
       </Section>

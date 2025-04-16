@@ -24,10 +24,15 @@ export const metadata: Metadata = {
 
 interface PropostasProps {
   searchParams: SearchParams
+  params: { eventId: string }
 }
-export default async function Propostas({ searchParams }: PropostasProps) {
-  const params = await proposalsSearchParams.parse(searchParams)
-  const suspenseKey = JSON.stringify(params)
+
+export default async function Propostas({
+  searchParams,
+  params
+}: PropostasProps) {
+  const paramsParsed = await proposalsSearchParams.parse(searchParams)
+  const suspenseKey = JSON.stringify(paramsParsed)
   const items: BreadcrumbItem[] = [
     {
       label: 'Propostas',
@@ -47,7 +52,7 @@ export default async function Propostas({ searchParams }: PropostasProps) {
             <ProposalsModal />
           </div>
           <Suspense fallback={<ProposalsTableSkeleton />} key={suspenseKey}>
-            <ProposalsListView />
+            <ProposalsListView params={params} />
           </Suspense>
         </DashboardMainSection>
       </DashboardContent>

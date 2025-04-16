@@ -12,9 +12,9 @@ type GetInvitationsResponse = {
   results: Invitation[]
 }
 
-export async function getInvitations(): Promise<
-  ServerResult<GetInvitationsResponse>
-> {
+export async function getInvitations(
+  eventId: string
+): Promise<ServerResult<GetInvitationsResponse>> {
   try {
     const { page, search, usado, sort } = invitationsSearchParams.all()
     const params = buildParams({
@@ -22,9 +22,11 @@ export async function getInvitations(): Promise<
       search,
       usado,
       ordering: sort,
-      page_size: PAGINATION.DEFAULT_PAGE_SIZE
+      page_size: PAGINATION.DEFAULT_PAGE_SIZE,
+      evento_id: eventId
     })
-    const response = await api.get(`/convites/?${params}`)
+
+    const response = await api.get(`/convites/?${params.toString()}`)
 
     if (!response.ok) {
       const error: DjangoError = await response.json()

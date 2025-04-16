@@ -3,6 +3,8 @@ import { BaseUser } from '@/types/auth'
 import { auth } from '@/auth'
 import { env } from '@/config/env'
 import { routingConfig } from '@/config/routing'
+import { cookies } from 'next/headers'
+import { getEvents } from '@/api/get-events'
 
 export async function GET(request: NextRequest) {
   const session = await auth()
@@ -17,9 +19,33 @@ export async function GET(request: NextRequest) {
     )
   }
 
+  const cookieStore = cookies()
+  let eventId = cookieStore.get('selectedEventId')?.value
+
+  if (!eventId) {
+    const { data: events, error } = await getEvents()
+    if (!error && events) {
+      const activeEvent = events
+        .filter((e) => !e.evento_finalizado)
+        .sort(
+          (a, b) =>
+            new Date(a.inicio_inscricao).getTime() -
+            new Date(b.inicio_inscricao).getTime()
+        )[0]
+
+      if (activeEvent) {
+        eventId = activeEvent.id
+        cookieStore.set('selectedEventId', eventId)
+      }
+    }
+  }
+
   if (user.roles.includes('admin')) {
     return NextResponse.redirect(
-      new URL(`${env.APP_URL}/admin/acessos/visao-geral`, request.url)
+      new URL(
+        `${env.APP_URL}/${eventId}/admin/acessos/visao-geral`,
+        request.url
+      )
     )
   }
 

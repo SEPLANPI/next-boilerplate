@@ -24,13 +24,15 @@ export const metadata: Metadata = {
 
 interface CadastrosProps {
   searchParams: SearchParams
+  params: { eventId: string }
 }
 
 export default async function InscricoesGerais({
-  searchParams
+  searchParams,
+  params
 }: CadastrosProps) {
-  const params = await generalRegistrationSearchParams.parse(searchParams)
-  const suspenseKey = `registration-${JSON.stringify(params)}`
+  const paramsParsed = await generalRegistrationSearchParams.parse(searchParams)
+  const suspenseKey = `registration-${JSON.stringify(paramsParsed)}`
 
   const items: BreadcrumbItem[] = [
     {
@@ -54,7 +56,7 @@ export default async function InscricoesGerais({
             </Suspense>
           </div>
           <Suspense fallback={<RegistrationTableSkeleton />} key={suspenseKey}>
-            <GeneralRegistrationListView />
+            <GeneralRegistrationListView params={params} />
           </Suspense>
         </DashboardMainSection>
       </DashboardContent>

@@ -4,8 +4,14 @@ import { PAGINATION } from '@/constants/pagination'
 import { getPeople } from '../api/get-people'
 import { GeneralRegistrationTable } from './general-registration-table'
 
-export async function GeneralRegistrationListView() {
-  const { data, error } = await getPeople()
+interface GeneralRegistrationListViewProps {
+  params: { eventId: string }
+}
+
+export async function GeneralRegistrationListView({
+  params
+}: GeneralRegistrationListViewProps) {
+  const { data, error } = await getPeople(params.eventId)
   if (!data || error) {
     return <FetchError title="Erro ao carregar cadastros" error={error} />
   }
@@ -22,7 +28,7 @@ export async function GeneralRegistrationListView() {
 
   return (
     <>
-      <GeneralRegistrationTable data={data.results} />
+      <GeneralRegistrationTable data={data.results} params={params} />
       <UrlPaginationFooter
         totalItems={data.count}
         itemsPerPage={PAGINATION.DEFAULT_PAGE_SIZE}

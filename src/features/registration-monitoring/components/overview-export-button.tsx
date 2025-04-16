@@ -2,6 +2,7 @@
 import { clientApi } from '@/lib/client-api'
 import { Button, Menu, Text } from '@mantine/core'
 import { Download } from 'lucide-react'
+import { useParams } from 'next/navigation'
 import { useState } from 'react'
 
 type FileType = {
@@ -9,6 +10,7 @@ type FileType = {
 }
 
 export default function ExportButton() {
+  const { eventId } = useParams<{ eventId: string }>()
   const [opened, setOpened] = useState(false)
   const [loading, setLoading] = useState(false)
 
@@ -16,7 +18,9 @@ export default function ExportButton() {
     try {
       setLoading(true)
 
-      const response = await clientApi.get(`/exportar/${tipo}/excel/`)
+      const response = await clientApi.get(
+        `/exportar/${tipo}/excel/?evento_id=${eventId}`
+      )
 
       const today = new Date().toISOString().split('T')[0]
       const fileName = `dados-${tipo}-${today}.xlsx`

@@ -4,8 +4,14 @@ import { FetchError } from '@/components/errors/fetch-error'
 import { UrlPaginationFooter } from '@/components/ui/pagination-footer/url-pagination-footer'
 import { PAGINATION } from '@/constants/pagination'
 
-export async function RegistrationListView() {
-  const { data, error } = await getRegistrations()
+interface RegistrationListViewProps {
+  params: { eventId: string }
+}
+
+export async function RegistrationListView({
+  params
+}: RegistrationListViewProps) {
+  const { data, error } = await getRegistrations(params.eventId)
 
   if (!data || error) {
     return <FetchError title="Erro ao carregar cadastros" error={error} />
@@ -23,7 +29,7 @@ export async function RegistrationListView() {
 
   return (
     <>
-      <RegistrationTable data={data.results} />
+      <RegistrationTable data={data.results} params={params} />
       <UrlPaginationFooter
         totalItems={data.count}
         itemsPerPage={PAGINATION.DEFAULT_PAGE_SIZE}

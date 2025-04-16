@@ -4,8 +4,14 @@ import { ScrollArea } from '@mantine/core'
 import { getRegistrationOverview } from '../api/get-registration-overview'
 import ExportButton from './overview-export-button'
 
-export async function OverviewPageContent() {
-  const { data, error } = await getRegistrationOverview()
+interface OverviewPageContentProps {
+  params: { eventId: string }
+}
+
+export async function OverviewPageContent({
+  params
+}: OverviewPageContentProps) {
+  const { data, error } = await getRegistrationOverview(params.eventId)
 
   if (error || !data) {
     return <FetchError error={error} />

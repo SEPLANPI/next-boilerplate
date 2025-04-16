@@ -30,16 +30,16 @@ const PROPOSALS_STATUS = {
 
 interface ProposalsTableProps {
   data: Proposal[]
+  params: { eventId: string }
 }
 
-export function ProposalsTable({ data }: ProposalsTableProps) {
+export function ProposalsTable({ data, params }: ProposalsTableProps) {
   const [opened, { open, close }] = useDisclosure(false)
-  const [item, setItem] = useState<Proposal>()
 
   const router = useRouter()
 
   function handleRowClick(proposal: Proposal) {
-    router.push(`/admin/propostas/${proposal.id}`)
+    router.push(`/${params.eventId}/admin/propostas/${proposal.id}`)
   }
 
   return (
@@ -119,7 +119,7 @@ export function ProposalsTable({ data }: ProposalsTableProps) {
           body: { paddingLeft: '24px', paddingRight: '24px' }
         }}
       >
-        <ProposalsForm onClose={close} items={item} edit={true} />
+        <ProposalsForm onClose={close} edit={true} />
       </Drawer>
     </>
   )

@@ -12,9 +12,9 @@ type GetGeneralRegistrationsResponse = {
   results: Person[]
 }
 
-export async function getPeople(): Promise<
-  ServerResult<GetGeneralRegistrationsResponse>
-> {
+export async function getPeople(
+  eventId: string
+): Promise<ServerResult<GetGeneralRegistrationsResponse>> {
   try {
     const {
       page,
@@ -33,7 +33,8 @@ export async function getPeople(): Promise<
       tipo_inscricao: tipo_inscricao,
       tipo_membro: tipo_membro,
       page_size: PAGINATION.DEFAULT_PAGE_SIZE,
-      eixos: eixos
+      eixos: eixos,
+      evento_id: eventId
     })
     const response = await api.get(`/pessoas/?${params.toString()}`)
 

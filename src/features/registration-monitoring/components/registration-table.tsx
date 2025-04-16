@@ -22,13 +22,14 @@ const REGISTRATION_STATUS = {
 
 interface RegistrationTableProps {
   data: Registration[]
+  params: { eventId: string }
 }
 
-export function RegistrationTable({ data }: RegistrationTableProps) {
+export function RegistrationTable({ data, params }: RegistrationTableProps) {
   const router = useRouter()
 
   function handleNavigateToRegistration(id: string) {
-    router.push(`/admin/acessos/conselheiros/${id}/dados`)
+    router.push(`/${params.eventId}/admin/acessos/conselheiros/${id}/dados`)
   }
 
   return (

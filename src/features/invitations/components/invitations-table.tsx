@@ -34,9 +34,10 @@ const INVITATION_STATUS = {
 
 interface InvitationsTableProps {
   data: Invitation[]
+  params: { eventId: string }
 }
 
-export function InvitationsTable({ data }: InvitationsTableProps) {
+export function InvitationsTable({ data, params }: InvitationsTableProps) {
   const { copy } = useClipboard()
   const [deleteOpened, { open: openDelete, close: closeDelete }] =
     useDisclosure(false)
@@ -84,7 +85,7 @@ export function InvitationsTable({ data }: InvitationsTableProps) {
                 <TableTd className="flex justify-center">
                   {invitation.usado ? (
                     <Link
-                      href={`/admin/acessos/conselheiros/${invitation.conselheiro.id}/dados`}
+                      href={`/${params.eventId}/admin/acessos/conselheiros/${invitation.conselheiro.id}/dados`}
                     >
                       <Tooltip label={invitation.conselheiro.nome}>
                         <Avatar

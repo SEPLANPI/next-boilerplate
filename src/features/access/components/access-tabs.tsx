@@ -7,8 +7,11 @@ import {
   FileSpreadsheet,
   UserPlus
 } from 'lucide-react'
+import { useParams } from 'next/navigation'
 
 export function AccessTabs() {
+  const { eventId } = useParams<{ eventId: string }>()
+
   const accessTabItems: TabItem[] = [
     { value: 'visao-geral', icon: ChartColumnBig, label: 'Visão Geral' },
     { value: 'inscricoes-gerais', icon: FilePen, label: 'Inscrições Gerais' },
@@ -19,7 +22,7 @@ export function AccessTabs() {
   return (
     <NavigationTabs
       items={accessTabItems}
-      basePath={`/admin/acessos`}
+      basePath={`/${eventId}/admin/acessos`}
       defaultValue="conselheiros"
     />
   )

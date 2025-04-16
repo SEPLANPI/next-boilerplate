@@ -11,7 +11,7 @@ import { Suspense } from 'react'
 import { OverviewPageContent } from '@/features/registration-monitoring/components/overview-page-content'
 import { OverviewPageSkeleton } from '@/features/registration-monitoring/components/overview-page-skeleton'
 
-export default function Dashboard() {
+export default function Dashboard({ params }: { params: { eventId: string } }) {
   const items: BreadcrumbItem[] = [
     {
       label: 'Acessos',
@@ -28,7 +28,7 @@ export default function Dashboard() {
       </DashboardHeader>
       <DashboardContent className="p-6">
         <Suspense fallback={<OverviewPageSkeleton />}>
-          <OverviewPageContent />
+          <OverviewPageContent params={params} />
         </Suspense>
       </DashboardContent>
     </>

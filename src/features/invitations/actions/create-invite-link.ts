@@ -4,6 +4,7 @@ import { API } from '@/constants/messages'
 import { api } from '@/lib/server-api'
 import { revalidatePath } from 'next/cache'
 import { ActionState, DjangoError } from '@/types/actions'
+import { cookies } from 'next/headers'
 
 type CreateInviteLinkInput = {
   identificador: string
@@ -12,9 +13,19 @@ type CreateInviteLinkInput = {
 export async function createInviteLink(
   input: CreateInviteLinkInput
 ): Promise<ActionState<{ token: string }>> {
+  const cookieStore = cookies()
+  const eventId = cookieStore.get('selectedEventId')?.value
+
+  if (!eventId) {
+    return { error: 'Evento não selecionado' }
+  }
+
   try {
     const response = await api.post(`/convites/`, {
-      body: input
+      body: {
+        ...input,
+        evento_id: eventId
+      }
     })
 
     if (!response.ok) {

@@ -12,9 +12,9 @@ type GetRegistrationsResponse = {
   results: Registration[]
 }
 
-export async function getRegistrations(): Promise<
-  ServerResult<GetRegistrationsResponse>
-> {
+export async function getRegistrations(
+  eventId: string
+): Promise<ServerResult<GetRegistrationsResponse>> {
   try {
     const { page, search, sort, eixos, status } = registrationSearchParams.all()
     const params = buildParams({
@@ -23,14 +23,17 @@ export async function getRegistrations(): Promise<
       eixo: eixos,
       status_atual: status,
       ordering: sort,
-      page_size: PAGINATION.DEFAULT_PAGE_SIZE
+      page_size: PAGINATION.DEFAULT_PAGE_SIZE,
+      evento_id: eventId
     })
+
     const response = await api.get(
       `/validacao-conselheiro/listar-conselheiros/?${params.toString()}`
     )
 
     if (!response.ok) {
       const error: DjangoError = await response.json()
+      console.log(error)
       return { error }
     }
 

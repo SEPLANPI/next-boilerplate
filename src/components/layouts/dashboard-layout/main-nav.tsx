@@ -7,6 +7,7 @@ import { UserMenu } from './user-menu'
 import { useSidebar } from '@/contexts/sidebar-context'
 import { MainNavProps } from '@/types/sidebar'
 import Image from 'next/image'
+import { EventSelect } from './event-select'
 
 export function MainNav({ config }: MainNavProps) {
   const { collapsed, toggleCollapsed } = useSidebar()
@@ -56,6 +57,11 @@ export function MainNav({ config }: MainNavProps) {
           </ActionIcon>
         )}
       </div>
+      {!collapsed && (
+        <div className="px-4 pb-4 pt-2">
+          <EventSelect />
+        </div>
+      )}
       {collapsed && (
         <ActionIcon
           onClick={() => toggleCollapsed()}

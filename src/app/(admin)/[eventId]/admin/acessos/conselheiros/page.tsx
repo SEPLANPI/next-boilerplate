@@ -8,36 +8,38 @@ import {
 } from '@/components/layouts/dashboard-layout/content'
 import { DashboardHeader } from '@/components/layouts/dashboard-layout/header'
 import { AccessTabs } from '@/features/access/components/access-tabs'
-import { CreateInvitationModal } from '@/features/invitations/components/create-invitation-modal'
-import { InvitationFilters } from '@/features/invitations/components/invitation-filters'
-import { InvitationsListView } from '@/features/invitations/components/invitations-list-view'
-import { InvitationsTableSkeleton } from '@/features/invitations/components/invitations-table-skeleton'
-import { invitationsSearchParams } from '@/features/invitations/lib/search-params'
+import { RegistrationFilters } from '@/features/registration-monitoring/components/registration-filters'
+import { RegistrationListView } from '@/features/registration-monitoring/components/registration-list-view'
+import { RegistrationTableSkeleton } from '@/features/registration-monitoring/components/registration-table-skeleton'
+import { registrationSearchParams } from '@/features/registration-monitoring/lib/search-params'
 import { Divider } from '@mantine/core'
 import { DoorOpen } from 'lucide-react'
 import { Metadata } from 'next'
-import { SearchParams } from 'nuqs/server'
+import { SearchParams } from 'nuqs'
 import { Suspense } from 'react'
 
 export const metadata: Metadata = {
-  title: 'Convites'
+  title: 'Conselheiros'
 }
 
-export default async function Convites({
-  searchParams
-}: {
-  searchParams: Promise<SearchParams>
-}) {
-  const params = await invitationsSearchParams.parse(searchParams)
+interface CadastrosProps {
+  searchParams: SearchParams
+  params: { eventId: string }
+}
 
-  const suspenseKey = `invitation-${JSON.stringify(params)}`
-
+export default async function Cadastros({
+  searchParams,
+  params
+}: CadastrosProps) {
+  const parsedParams = await registrationSearchParams.parse(searchParams)
+  const suspenseKey = `registration-${JSON.stringify(parsedParams)}`
   const items: BreadcrumbItem[] = [
     {
       label: 'Acessos',
       icon: DoorOpen
     }
   ]
+
   return (
     <>
       <DashboardHeader>
@@ -47,14 +49,13 @@ export default async function Convites({
       </DashboardHeader>
       <DashboardContent>
         <DashboardMainSection>
-          <div className="mb-5 flex justify-between space-x-4">
+          <div className="mb-5">
             <Suspense>
-              <InvitationFilters />
+              <RegistrationFilters />
             </Suspense>
-            <CreateInvitationModal />
           </div>
-          <Suspense fallback={<InvitationsTableSkeleton />} key={suspenseKey}>
-            <InvitationsListView />
+          <Suspense fallback={<RegistrationTableSkeleton />} key={suspenseKey}>
+            <RegistrationListView params={params} />
           </Suspense>
         </DashboardMainSection>
       </DashboardContent>

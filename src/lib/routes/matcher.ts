@@ -12,7 +12,12 @@ export function matchRoute(path: string, routes: string[]): boolean {
       return normalizedPath.startsWith(baseRoute)
     }
 
-    return normalizedPath === normalizedRoute
+    const paramRegex = /:(\w+)/g
+    const routeRegex = new RegExp(
+      '^' + normalizedRoute.replace(paramRegex, '([^/]+)') + '$'
+    )
+
+    return routeRegex.test(normalizedPath)
   })
 }
 
@@ -38,13 +43,13 @@ export function determineRouteAccess(
   hasPermission: boolean
   accessDeniedPath?: string
 } {
-  let matchedConfig = routingConfig.routes.find(route =>
+  let matchedConfig = routingConfig.routes.find((route) =>
     matchRoute(path, [route.path])
   )
 
   // Check for overrides
   if (matchedConfig?.overrides) {
-    const override = matchedConfig.overrides.find(override =>
+    const override = matchedConfig.overrides.find((override) =>
       matchRoute(path, [override.path])
     )
     if (override) {
@@ -60,15 +65,20 @@ export function determineRouteAccess(
   }
 
   const isPublic = matchedConfig.isPublic ?? routingConfig.defaults.isPublic
-  const requiredRoles = matchedConfig.auth?.requiredRoles ?? routingConfig.defaults.requiredRoles
+  const requiredRoles =
+    matchedConfig.auth?.requiredRoles ?? routingConfig.defaults.requiredRoles
 
-  const hasPermission = requiredRoles.every(role => userRoles.includes(role))
+  const hasPermission = requiredRoles.every((role) => userRoles.includes(role))
 
-  let accessDeniedPath = routingConfig.defaults.redirects.defaultAccessDeniedPath
+  let accessDeniedPath =
+    routingConfig.defaults.redirects.defaultAccessDeniedPath
   if (!hasPermission && requiredRoles.length > 0) {
     const roleSpecificPath = requiredRoles
-      .map(role => routingConfig.defaults.redirects.accessDeniedPageByRequiredRole[role])
-      .find(path => path !== undefined)
+      .map(
+        (role) =>
+          routingConfig.defaults.redirects.accessDeniedPageByRequiredRole[role]
+      )
+      .find((path) => path !== undefined)
     if (roleSpecificPath) {
       accessDeniedPath = roleSpecificPath
     }

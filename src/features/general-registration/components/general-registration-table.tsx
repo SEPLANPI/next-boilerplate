@@ -21,8 +21,8 @@ interface RegistrationTableProps {
 }
 
 const REGISTRATION_TYPE = {
-  votante: { value: 'votante', label: 'Votante' },
-  ouvinte: { value: 'ouvinte', label: 'Ouvinte' }
+  votante: { value: 'votante', label: 'Oficina e Plenária' },
+  ouvinte: { value: 'ouvinte', label: 'Plenária' }
 } as const
 
 export function GeneralRegistrationTable({ data }: RegistrationTableProps) {
@@ -69,9 +69,13 @@ export function GeneralRegistrationTable({ data }: RegistrationTableProps) {
                   </span>
                 </TableTd>
                 <TableTd w="25%">
-                  <span className="rounded-full border p-1.5 text-xs text-secondary-foreground">
-                    {registration.inscricao.eixo?.nome || 'Eixo não informado'}
-                  </span>
+                  {registration.inscricao.eixo ? (
+                    <span className="rounded-full border p-1.5 text-xs text-secondary-foreground">
+                      {registration.inscricao.eixo?.nome}
+                    </span>
+                  ) : (
+                    '-'
+                  )}
                 </TableTd>
                 <TableTd>
                   {registration.inscricao.tipo_inscricao === 'votante' && (

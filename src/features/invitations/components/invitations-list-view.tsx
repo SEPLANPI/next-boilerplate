@@ -4,8 +4,14 @@ import { FetchError } from '@/components/errors/fetch-error'
 import { UrlPaginationFooter } from '@/components/ui/pagination-footer/url-pagination-footer'
 import { PAGINATION } from '@/constants/pagination'
 
-export async function InvitationsListView() {
-  const { data, error } = await getInvitations()
+interface InvitationsListViewProps {
+  params: { eventId: string }
+}
+
+export async function InvitationsListView({
+  params
+}: InvitationsListViewProps) {
+  const { data, error } = await getInvitations(params.eventId)
 
   if (!data || error) {
     return <FetchError title="Erro ao carregar convites" error={error} />
@@ -23,7 +29,7 @@ export async function InvitationsListView() {
 
   return (
     <>
-      <InvitationsTable data={data.results} />
+      <InvitationsTable data={data.results} params={params} />
       <UrlPaginationFooter
         totalItems={data.count}
         itemsPerPage={PAGINATION.DEFAULT_PAGE_SIZE}

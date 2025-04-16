@@ -29,7 +29,7 @@ export async function validateCounselor(
       return { error }
     }
 
-    revalidatePath(`/admin/acessos/conselheiros/${input.counselorId}`)
+    revalidatePath(`/[eventId]/admin/acessos/conselheiros/${input.counselorId}`)
 
     return { data: null }
   } catch (error) {
