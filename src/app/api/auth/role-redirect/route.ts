@@ -5,6 +5,7 @@ import { env } from '@/config/env'
 import { routingConfig } from '@/config/routing'
 import { cookies } from 'next/headers'
 import { getEvents } from '@/api/get-events'
+import { buildErrorMessage } from '@/utils/format-django-errors'
 
 export async function GET(request: NextRequest) {
   const session = await auth()
@@ -24,20 +25,52 @@ export async function GET(request: NextRequest) {
 
   if (!eventId) {
     const { data: events, error } = await getEvents()
-    if (!error && events) {
-      const activeEvent = events
-        .filter((e) => !e.evento_finalizado)
-        .sort(
-          (a, b) =>
-            new Date(a.inicio_inscricao).getTime() -
-            new Date(b.inicio_inscricao).getTime()
-        )[0]
-
-      if (activeEvent) {
-        eventId = activeEvent.id
-        cookieStore.set('selectedEventId', eventId)
-      }
+    if (error) {
+      return NextResponse.redirect(
+        new URL(
+          `${env.APP_URL}/error?message=${buildErrorMessage(error) || 'Erro ao carregar eventos'}`,
+          request.url
+        )
+      )
     }
+
+    if (!events || events.length === 0) {
+      return NextResponse.redirect(
+        new URL(
+          `${env.APP_URL}/error?message=Nenhum evento disponível`,
+          request.url
+        )
+      )
+    }
+
+    const activeEvent = events
+      .filter((e) => !e.evento_finalizado)
+      .sort(
+        (a, b) =>
+          new Date(a.inicio_inscricao).getTime() -
+          new Date(b.inicio_inscricao).getTime()
+      )[0]
+
+    if (activeEvent) {
+      eventId = activeEvent.id
+      cookieStore.set('selectedEventId', eventId)
+    } else {
+      return NextResponse.redirect(
+        new URL(
+          `${env.APP_URL}/error?message=Nenhum evento ativo encontrado`,
+          request.url
+        )
+      )
+    }
+  }
+
+  if (!eventId) {
+    return NextResponse.redirect(
+      new URL(
+        `${env.APP_URL}/error?message=Nenhum evento selecionado`,
+        request.url
+      )
+    )
   }
 
   if (user.roles.includes('admin')) {

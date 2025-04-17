@@ -2,22 +2,31 @@ import { routingConfig } from '@/config/routing'
 import { Role } from '@/types/roles'
 import { RouteConfig } from '@/types/routing'
 
+function routeToRegexPattern(route: string): string {
+  let pattern = route.replace(/[.+?^${}()|[\]\\]/g, '\\$&')
+
+  if (pattern.endsWith('/*')) {
+    pattern = pattern.replace(/\/\*$/, '')
+    pattern = `^${pattern}(?:/.*)?$`
+  } else {
+    pattern = `^${pattern}$`
+  }
+
+  pattern = pattern.replace(/:(\w+)/g, '([^/]+)')
+
+  return pattern
+}
+
 export function matchRoute(path: string, routes: string[]): boolean {
+  const normalizedPath = path === '/' ? path : path.replace(/\/$/, '')
+
   return routes.some((route) => {
-    const normalizedPath = path.replace(/\/$/, '')
-    const normalizedRoute = route.replace(/\/$/, '')
+    const normalizedRoute = route === '/' ? route : route.replace(/\/$/, '')
 
-    if (route.endsWith('/*')) {
-      const baseRoute = normalizedRoute.replace('/*', '')
-      return normalizedPath.startsWith(baseRoute)
-    }
+    const regexPattern = routeToRegexPattern(normalizedRoute)
+    const regex = new RegExp(regexPattern)
 
-    const paramRegex = /:(\w+)/g
-    const routeRegex = new RegExp(
-      '^' + normalizedRoute.replace(paramRegex, '([^/]+)') + '$'
-    )
-
-    return routeRegex.test(normalizedPath)
+    return regex.test(normalizedPath)
   })
 }
 
