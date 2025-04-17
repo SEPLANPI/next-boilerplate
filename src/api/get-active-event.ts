@@ -17,8 +17,8 @@ export async function getActiveEvent(): Promise<ServerResult<Event>> {
       return { error }
     }
 
-    const data: Event = await response.json()
-    return { data }
+    const data: Event[] = await response.json()
+    return { data: data[0] }
   } catch (error) {
     return { error: API.UNEXPECTED_FETCH_ERROR }
   }
