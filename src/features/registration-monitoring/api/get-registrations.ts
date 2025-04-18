@@ -33,7 +33,6 @@ export async function getRegistrations(
 
     if (!response.ok) {
       const error: DjangoError = await response.json()
-      console.log(error)
       return { error }
     }
 
