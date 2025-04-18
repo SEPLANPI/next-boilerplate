@@ -34,6 +34,8 @@ export async function getInvitations(
     }
 
     const data: GetInvitationsResponse = await response.json()
+
+    console.log(data)
     return { data }
   } catch (error) {
     return { error: API.UNEXPECTED_FETCH_ERROR }
