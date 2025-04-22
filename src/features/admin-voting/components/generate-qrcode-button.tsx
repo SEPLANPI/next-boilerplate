@@ -5,44 +5,15 @@ import QRCode from 'qrcode'
 import { jsPDF } from 'jspdf'
 import { Button } from '@mantine/core'
 import { QrCode } from 'lucide-react'
-import { useQuery } from '@tanstack/react-query'
-import { getActiveEvent } from '@/api/client/get-active-event'
 import { notifications } from '@mantine/notifications'
 
-export function QRCodeButton() {
+export function QRCodeButton({ eventId }: { eventId: string }) {
   const [isGenerating, setIsGenerating] = React.useState(false)
-  const { data: event, error } = useQuery({
-    queryKey: ['active-event'],
-    queryFn: getActiveEvent,
-    staleTime: 24 * 60 * 60 * 1000,
-    gcTime: 7 * 24 * 60 * 60 * 1000
-  })
 
-  if (error) {
-    notifications.show({
-      id: 'event-error',
-      title: 'Erro ao buscar evento',
-      message: 'Não foi possível carregar o evento ativo',
-      color: 'red'
-    })
-  }
-
-  const url = event
-    ? `${process.env.NEXT_PUBLIC_APP_URL}/votacao/evento/${event.id}`
-    : ''
+  const url = `${process.env.NEXT_PUBLIC_APP_URL}/votacao/evento/${eventId}`
   const imageUrl = '/votacao/folder.png'
 
   const generateAndDownloadPDF = async () => {
-    if (!event) {
-      notifications.show({
-        id: 'no-event',
-        title: 'Nenhum evento ativo',
-        message: 'É necessário ter um evento ativo para gerar o QR Code',
-        color: 'red'
-      })
-      return
-    }
-
     setIsGenerating(true)
     try {
       const qrDataUrl = await QRCode.toDataURL(url, {
@@ -90,7 +61,7 @@ export function QRCodeButton() {
 
       pdf.addImage(finalImage, 'PNG', 0, 0, 210, 297)
 
-      pdf.save(`${event.nome} - QR code votação.pdf`)
+      pdf.save('Diálogos - QR code votação.pdf')
     } catch (error) {
       console.error('Error generating QR code:', error)
       notifications.show({

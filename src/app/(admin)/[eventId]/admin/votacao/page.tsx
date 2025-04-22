@@ -46,7 +46,7 @@ export default async function Votacoes({
       <DashboardHeader>
         <DashboardBreadcrumbs items={items} />
         <DashboardHeaderActions>
-          <QRCodeButton />
+          <QRCodeButton eventId={params.eventId} />
         </DashboardHeaderActions>
       </DashboardHeader>
       <DashboardContent>
