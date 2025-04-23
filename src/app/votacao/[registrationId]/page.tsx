@@ -25,7 +25,7 @@ export default async function VotingPage({
   }
 
   return (
-    <div className="relative flex min-h-[100dvh] w-full items-center justify-center p-5">
+    <div className="relative flex min-h-[100dvh] w-full items-center justify-center p-4">
       <div className="fixed left-0 top-0 z-0 h-[100dvh] w-full">
         <Image
           src="/conselheiro-form/bg.png"
@@ -53,8 +53,8 @@ export default async function VotingPage({
             pontos nelas.
           </p>
         </div>
-        <div className="flex flex-col space-y-4 rounded-md bg-white p-6 shadow-md">
-          <h1 className="font-bold sm:text-lg">{data.nome}</h1>
+        <div className="flex flex-col rounded-md bg-white p-6 shadow-md">
+          <h1 className="mb-4 font-bold sm:text-lg">{data.nome}</h1>
           <ProposalVoting
             proposals={data.propostas}
             registrationId={registrationId}

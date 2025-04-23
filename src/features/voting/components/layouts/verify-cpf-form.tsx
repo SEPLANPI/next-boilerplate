@@ -44,6 +44,8 @@ export function VerifyCPFForm() {
     }
   }
 
+  console.log(form.getValues().cpf)
+
   return (
     <div className="flex flex-col items-center justify-center space-y-4">
       {error && <Alert color="red" title={error} className="w-full" />}
@@ -55,6 +57,7 @@ export function VerifyCPFForm() {
             mask="000.000.000-00"
             placeholder="000.000.000-00"
             {...form.getInputProps('cpf')}
+            onChange={() => {}}
             onAccept={form.getInputProps('cpf').onChange}
           />
         </Input.Wrapper>
