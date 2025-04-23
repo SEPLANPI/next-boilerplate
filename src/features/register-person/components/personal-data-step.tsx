@@ -48,9 +48,11 @@ export function PersonalDataStep({
       >
         <Input
           component={IMaskInput}
+          unmask={true}
           mask="000.000.000-00"
           placeholder="000.000.000-00"
           {...form.getInputProps('cpf')}
+          onAccept={form.getInputProps('cpf').onChange}
         />
       </Input.Wrapper>
       <DateInput
@@ -60,6 +62,7 @@ export function PersonalDataStep({
         valueFormat="DD/MM/YYYY"
         key={form.key('data_nascimento')}
         {...form.getInputProps('data_nascimento')}
+        placeholder="DD/MM/YYYY"
       />
       <Input.Wrapper
         label="Telefone"
@@ -70,8 +73,10 @@ export function PersonalDataStep({
         <Input
           component={IMaskInput}
           mask="(00) 00000-0000"
+          unmask={true}
           placeholder="(00) 00000-0000"
           {...form.getInputProps('telefone')}
+          onAccept={form.getInputProps('telefone').onChange}
         />
       </Input.Wrapper>
       <TextInput

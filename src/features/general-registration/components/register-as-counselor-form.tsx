@@ -115,15 +115,7 @@ export function RegisterAsCounselorForm({
 
   const form = useForm<FormValues>({
     initialValues,
-    validate: zodResolver(registerAsCounselorSchema),
-    transformValues: (values) => ({
-      ...values,
-      telefone: values.telefone.replace(/\D/g, ''),
-      endereco: {
-        ...values.endereco,
-        cep: values.endereco.cep.replace(/\D/g, '')
-      }
-    })
+    validate: zodResolver(registerAsCounselorSchema)
   })
 
   const { data: municipalities, isLoading: isMunicipalitiesLoading } = useQuery(
@@ -148,7 +140,7 @@ export function RegisterAsCounselorForm({
     queryFn: getCouncils
   })
 
-  const zipCode = form.getTransformedValues().endereco.cep
+  const zipCode = form.getValues().endereco.cep
   const { data: zipCodeData, error: zipCodeError } = useZipCode(zipCode)
 
   useEffect(() => {
@@ -310,6 +302,7 @@ export function RegisterAsCounselorForm({
             mask="(00) 00000-0000"
             placeholder="(00) 00000-0000"
             {...form.getInputProps('telefone')}
+            onAccept={form.getInputProps('telefone').onChange}
           />
         </Input.Wrapper>
       </Section>
@@ -336,10 +329,11 @@ export function RegisterAsCounselorForm({
         >
           <Input
             component={IMaskInput}
-            unmask={false}
+            unmask={true}
             mask="00000-000"
             placeholder="00000-000"
             {...form.getInputProps('endereco.cep')}
+            onAccept={form.getInputProps('endereco.cep').onChange}
           />
         </Input.Wrapper>
 

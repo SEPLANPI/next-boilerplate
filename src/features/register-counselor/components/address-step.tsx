@@ -24,7 +24,7 @@ export function AddressStep({ form }: { form: UseFormReturnType<FormValues> }) {
     }
   )
 
-  const zipCode = form.getTransformedValues().endereco.cep
+  const zipCode = form.getValues().endereco.cep
   const { data: zipCodeData, error: zipCodeError } = useZipCode(zipCode)
 
   useEffect(() => {
@@ -86,9 +86,11 @@ export function AddressStep({ form }: { form: UseFormReturnType<FormValues> }) {
       >
         <Input
           component={IMaskInput}
+          unmask={true}
           mask="00000-000"
           placeholder="00000-000"
           {...form.getInputProps('endereco.cep')}
+          onAccept={form.getInputProps('endereco.cep').onChange}
         />
       </Input.Wrapper>
       <Select

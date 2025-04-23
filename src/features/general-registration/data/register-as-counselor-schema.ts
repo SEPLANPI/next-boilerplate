@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 const baseAddressSchema = z.object({
-  cep: z.string().regex(/^\d{5}-\d{3}$/, 'CEP inválido'),
+  cep: z.string().min(8, 'CEP inválido'),
   municipio_id: z.string().min(1, 'Município inválido')
 })
 
@@ -33,12 +33,7 @@ export const registerAsCounselorSchema = z
       .string()
       .min(7, 'RG deve ter pelo menos 7 dígitos')
       .max(20, 'RG inválido'),
-    telefone: z
-      .string()
-      .regex(
-        /^\(\d{2}\)\s\d{5}-\d{4}$/,
-        'Telefone deve estar no formato (00) 00000-0000'
-      ),
+    telefone: z.string().length(11, 'Telefone deve ter 11 dígitos'),
     endereco: addressSchema,
     conselho_id: z.string().min(1, 'Selecione um conselho'),
     tipo_conselho: z.enum(['PODER_PUBLICO', 'SOCIEDADE_CIVIL']),

@@ -2,7 +2,7 @@ import { CPF } from '@/utils/cpf'
 import { z } from 'zod'
 
 const baseAddressSchema = z.object({
-  cep: z.string().regex(/^\d{5}-\d{3}$/, 'CEP inválido'),
+  cep: z.string().length(8, 'CEP inválido'),
   municipio_id: z.string().min(1, 'Município inválido')
 })
 
@@ -29,10 +29,10 @@ export const editCounselorSchema = z
     nome: z.string().min(10, 'Nome deve ter pelo menos 10 caracteres'),
     cpf: z
       .string()
-      .regex(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, 'CPF deve ter 11 dígitos')
-      /* .refine((cpf) => CPF.isValid(cpf), {
+      .length(11, 'CPF deve ter 11 dígitos')
+      .refine((cpf) => CPF.isValid(cpf), {
         message: 'CPF inválido'
-      }), */,
+      }),
     email: z.string().email('Email inválido'),
     data_nascimento: z.date({
       message: 'Data de nascimento deve ser uma data válida'
@@ -41,12 +41,7 @@ export const editCounselorSchema = z
       .string()
       .min(7, 'RG deve ter pelo menos 7 dígitos')
       .max(20, 'RG inválido'),
-    telefone: z
-      .string()
-      .regex(
-        /^\(\d{2}\)\s\d{5}-\d{4}$/,
-        'Telefone deve estar no formato (00) 00000-0000'
-      ),
+    telefone: z.string().length(11, 'Telefone deve ter 11 dígitos'),
     endereco: addressSchema,
     conselho_id: z.string().min(1, 'Selecione um conselho'),
     tipo_conselho: z.enum(['PODER_PUBLICO', 'SOCIEDADE_CIVIL']),
@@ -89,6 +84,6 @@ export const editCounselorSchema = z
           message: 'Nome do titular é obrigatório',
           path: ['nome_titular']
         })
-      } 
+      }
     }
   })

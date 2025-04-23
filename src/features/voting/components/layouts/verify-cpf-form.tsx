@@ -12,7 +12,7 @@ import { CPF } from '@/utils/cpf'
 const cpfSchema = z.object({
   cpf: z
     .string()
-    .regex(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, 'CPF deve ter 11 dígitos')
+    .length(11, 'CPF deve ter 11 dígitos')
     .refine((cpf) => CPF.isValid(cpf), {
       message: 'CPF inválido'
     })
@@ -28,10 +28,7 @@ export function VerifyCPFForm() {
     validate: zodResolver(cpfSchema),
     initialValues: {
       cpf: ''
-    },
-    transformValues: (values) => ({
-      cpf: values.cpf.replace(/\D/g, '')
-    })
+    }
   })
 
   async function handleSubmit(values: VerifyCPFFormValues) {
@@ -54,9 +51,11 @@ export function VerifyCPFForm() {
         <Input.Wrapper label="CPF" withAsterisk error={form.errors.cpf}>
           <Input
             component={IMaskInput}
+            unmask={true}
             mask="000.000.000-00"
             placeholder="000.000.000-00"
             {...form.getInputProps('cpf')}
+            onAccept={form.getInputProps('cpf').onChange}
           />
         </Input.Wrapper>
         <Button type="submit" loading={isSubmitting} fullWidth>

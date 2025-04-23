@@ -95,15 +95,7 @@ export function RegisterCounselorForm() {
 
   const form = useForm<FormValues>({
     initialValues,
-    validate: zodResolver(counselorSchema),
-    transformValues: (values) => ({
-      ...values,
-      telefone: values.telefone.replace(/\D/g, ''),
-      endereco: {
-        ...values.endereco,
-        cep: values.endereco.cep.replace(/\D/g, '')
-      }
-    })
+    validate: zodResolver(counselorSchema)
   })
 
   const isSociedadeCivil = form.values.tipo_conselho === 'SOCIEDADE_CIVIL'

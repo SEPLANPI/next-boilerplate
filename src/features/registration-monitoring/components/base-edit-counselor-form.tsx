@@ -87,6 +87,7 @@ export function BaseEditCounselorForm({
   onSubmit,
   isSubmitting,
   error,
+  
   onComplete
 }: Props) {
   const initialValues = useMemo(
@@ -111,26 +112,13 @@ export function BaseEditCounselorForm({
       form.reset()
 
       form.setFieldValue('nome', counselor.nome || '')
-      form.setFieldValue(
-        'cpf',
-        counselor.cpf
-          ? counselor.cpf.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4')
-          : ''
-      )
+      form.setFieldValue('cpf', counselor.cpf || '')
       form.setFieldValue('rg', counselor.rg || '')
       form.setFieldValue(
         'data_nascimento',
         counselor.data_nascimento ? new Date(counselor.data_nascimento) : null
       )
-      form.setFieldValue(
-        'telefone',
-        counselor.telefone
-          ? counselor.telefone.replace(
-              /^(\d{2})(\d)(\d{4})(\d{4})$/,
-              '($1) $2$3-$4'
-            )
-          : ''
-      )
+      form.setFieldValue('telefone', counselor.telefone || '')
       form.setFieldValue('email', counselor.email || '')
       form.setFieldValue('poder_publico', counselor.poder_publico || false)
       form.setFieldValue('tipo_membro', counselor.tipo_membro || '')
@@ -156,12 +144,7 @@ export function BaseEditCounselorForm({
       }
       form.setFieldValue('endereco.complemento', counselor.endereco.complemento)
 
-      form.setFieldValue(
-        'endereco.cep',
-        counselor.endereco.cep
-          ? counselor.endereco.cep.replace(/^(\d{5})(\d{3})$/, '$1-$2')
-          : ''
-      )
+      form.setFieldValue('endereco.cep', counselor.endereco.cep || '')
       form.setFieldValue(
         'endereco.municipio_id',
         counselor.endereco.municipio?.id?.toString() || ''
@@ -191,16 +174,7 @@ export function BaseEditCounselorForm({
   }, [counselor])
   const form = useForm<FormValues>({
     initialValues,
-    validate: zodResolver(editCounselorSchema),
-    transformValues: (values) => ({
-      ...values,
-      cpf: values.cpf.replace(/\D/g, ''),
-      telefone: values.telefone.replace(/\D/g, ''),
-      endereco: {
-        ...values.endereco,
-        cep: values.endereco.cep.replace(/\D/g, '')
-      }
-    })
+    validate: zodResolver(editCounselorSchema)
   })
 
   const { data: municipalities, isLoading: isMunicipalitiesLoading } = useQuery(
@@ -225,7 +199,7 @@ export function BaseEditCounselorForm({
     queryFn: getCouncils
   })
 
-  const zipCode = form.getTransformedValues().endereco.cep
+  const zipCode = form.getValues().endereco.cep
   const { data: zipCodeData, error: zipCodeError } = useZipCode(zipCode)
 
   useEffect(() => {
@@ -323,6 +297,7 @@ export function BaseEditCounselorForm({
             mask="(00) 00000-0000"
             placeholder="(00) 00000-0000"
             {...form.getInputProps('telefone')}
+            onAccept={form.getInputProps('telefone').onChange}
           />
         </Input.Wrapper>
       </Section>
@@ -349,10 +324,11 @@ export function BaseEditCounselorForm({
         >
           <Input
             component={IMaskInput}
-            unmask={false}
+            unmask={true}
             mask="00000-000"
             placeholder="00000-000"
             {...form.getInputProps('endereco.cep')}
+            onAccept={form.getInputProps('endereco.cep').onChange}
           />
         </Input.Wrapper>
 

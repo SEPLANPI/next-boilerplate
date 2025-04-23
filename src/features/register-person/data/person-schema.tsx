@@ -11,7 +11,7 @@ export const personSchema = z
     nome: z.string().min(3, 'Nome deve ter pelo menos 3 caracteres'),
     cpf: z
       .string()
-      .regex(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, 'CPF deve ter 11 dígitos')
+      .length(11, 'CPF deve ter 11 caracteres')
       .refine((cpf) => CPF.isValid(cpf), {
         message: 'CPF inválido'
       }),
@@ -20,9 +20,7 @@ export const personSchema = z
         message: 'Data de nascimento deve ser uma data válida'
       })
       .nullable(),
-    telefone: z
-      .string()
-      .regex(/^\(\d{2}\)\s\d{5}-\d{4}$/, 'Telefone deve ter 11 dígitos'),
+    telefone: z.string().length(11, 'Telefone deve ter 11 dígitos'),
     email: z.string().email('Email inválido').optional().or(z.literal('')),
     municipio_id: z.string().min(1, 'Município é obrigatório'),
 

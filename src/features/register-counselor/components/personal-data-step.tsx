@@ -71,9 +71,11 @@ export function PersonalDataStep({
       >
         <Input
           component={IMaskInput}
+          unmask={true}
           mask="(00) 00000-0000"
           placeholder="(00) 00000-0000"
           {...form.getInputProps('telefone')}
+          onAccept={form.getInputProps('telefone').onChange}
         />
       </Input.Wrapper>
     </>
