@@ -47,7 +47,7 @@ function TitleBadge({
   return (
     <span
       className={cn(
-        'w-fit rounded-full border border-lime-600 bg-lime-100 px-2.5 py-1.5 text-[10px] font-bold uppercase text-lime-600 sm:block',
+        'w-fit rounded-full border border-lime-600 bg-lime-100 px-2.5 py-1.5 text-[10px] font-semibold uppercase text-lime-600 sm:block',
         className
       )}
     >
@@ -111,7 +111,7 @@ export default function LandingPage() {
             ONDE ESTAMOS AGORA
           </TitleBadge>
           <div className="flex flex-col space-y-3">
-            <h2 className="text-[22px] font-bold text-lime-700 sm:text-[29px]">
+            <h2 className="text-[22px] font-semibold text-lime-700 sm:text-[29px]">
               Cocais
             </h2>
             <div className="flex flex-col space-y-2">
@@ -154,42 +154,137 @@ export default function LandingPage() {
           />
         </div>
       </Section>
-      <Section className="relative !py-0">
-        <div className="absolute bottom-0 left-0 -z-10 h-1/2 w-full bg-stone-50"></div>
-        <div className="relative flex flex-col items-center space-y-8 rounded-xl bg-lime-700 px-6 py-20 text-center sm:px-8">
-          <Image
-            src="/lp/cta-inscricao-bg.png"
-            fill
-            alt="Fundo com icones"
-            className="object-cover"
-          />
-          <div className="max-w-[718px]">
-            <h2 className="mb-5 text-[22px] font-bold text-white sm:text-[29px]">
-              Inscreva-se agora e faça parte dessa transformação!
-            </h2>
-            <p className="text-white">
-              Não perca a chance de contribuir para o futuro do nosso estado!
-              Inscreva-se para participar das oficinas, feiras de serviços e
-              muito mais.
-            </p>
-          </div>
-          <div className="flex flex-wrap items-center justify-center gap-5">
-            <Button
-              color="lime.2"
-              className="text-stone-950"
-              component={Link}
-              href="/inscrever-se"
-            >
-              Quero me inscrever agora
-            </Button>
+      <Section className="relative">
+        <Image
+          src="/lp/bg-servicos.png"
+          fill
+          alt="Fundo com icones"
+          className="absolute -z-10 object-cover"
+        />
+        <div className="flex flex-col gap-8 md:col-span-2">
+          <h2 className="mx-auto text-center text-[22px] font-bold leading-[32px] xs:text-[34px] xs:leading-[46px] sm:text-[46px] sm:leading-[56px]">
+            <span className="block">Veja o que preparamos para</span>
+            <span className="block">
+              você em{' '}
+              <span className="relative italic">
+                Piripiri
+                <Image
+                  src="/lp/city-highlight.svg"
+                  className="absolute right-0 top-4 -z-10 w-[calc(100%+16px)]"
+                  alt="Linha"
+                  width={260}
+                  height={76}
+                />
+              </span>
+            </span>
+          </h2>
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
+            <div className="flex flex-col gap-6 rounded-lg border border-stone-100 bg-white p-8">
+              <h3 className="flex items-start gap-2">
+                <span className="text-6xl font-bold text-lime-600">25</span>
+                <span className="mt-2 text-4xl font-bold">abr</span>
+              </h3>
+              <div className="flex flex-col gap-1.5">
+                <h4 className="font-semibold">Feira de Seviços</h4>
+                <span className="flex items-center space-x-1.5">
+                  <Calendar className="size-4 flex-shrink-0 text-lime-600" />
+                  <span>8h às 12h e 16h às 20h</span>
+                </span>
+                <span className="flex items-center space-x-1.5">
+                  <MapPin className="size-4 flex-shrink-0 text-lime-600" />
+                  <span>
+                    Praça da Bandeira, em frente à Igreja Matriz Nossa Senhora
+                    dos Remédios
+                  </span>
+                </span>
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <h4 className="font-semibold">Capacitações Setoriais</h4>
+                <span className="flex items-center space-x-1.5">
+                  <Calendar className="size-4 flex-shrink-0 text-lime-600" />
+                  <span>8h às 12h e 14h às 18h</span>
+                </span>
+                <span className="flex items-center space-x-1.5">
+                  <MapPin className="size-4 flex-shrink-0 text-lime-600" />
+                  <span>Faculdade Chrisfapi</span>
+                </span>
+              </div>
+            </div>
+            <div className="flex flex-col gap-6 rounded-lg border border-stone-100 bg-white p-8">
+              <h3 className="flex items-start gap-2">
+                <span className="text-6xl font-bold text-lime-600">26</span>
+                <span className="mt-2 text-4xl font-bold">abr</span>
+              </h3>
+              <div className="flex flex-col gap-1.5">
+                <h4 className="font-semibold">Feira de Seviços</h4>
+                <span className="flex items-center space-x-1.5">
+                  <Calendar className="size-4 flex-shrink-0 text-lime-600" />
+                  <span>8h às 12h e 16h às 20h</span>
+                </span>
+                <span className="flex items-center space-x-1.5">
+                  <MapPin className="size-4 flex-shrink-0 text-lime-600" />
+                  <span>
+                    Praça da Bandeira, em frente à Igreja Matriz Nossa Senhora
+                    dos Remédios
+                  </span>
+                </span>
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <h4 className="font-semibold">
+                  Oficinas de Planejamento Participativo
+                </h4>
+                <span className="flex items-center space-x-1.5">
+                  <Calendar className="size-4 flex-shrink-0 text-lime-600" />
+                  <span>8h às 13h</span>
+                </span>
+                <span className="flex items-center space-x-1.5">
+                  <MapPin className="size-4 flex-shrink-0 text-lime-600" />
+                  <span>Faculdade Chrisfapi</span>
+                </span>
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <h4 className="font-semibold">Plenária com o Governador</h4>
+                <span className="flex items-center space-x-1.5">
+                  <Calendar className="size-4 flex-shrink-0 text-lime-600" />
+                  <span>15h às 17h</span>
+                </span>
+                <span className="flex items-center space-x-1.5">
+                  <MapPin className="size-4 flex-shrink-0 text-lime-600" />
+                  <span>AABB de Piripiri</span>
+                </span>
+              </div>
+            </div>
           </div>
         </div>
+      </Section>
+      <Section
+        className="relative bg-green-900 !py-6"
+        containerClassName="flex justify-between items-center gap-5 sm:flex-row flex-col "
+      >
+        <Image
+          src="/lp/cta-servicos-bg.png"
+          fill
+          alt="Fundo com icones"
+          className="object-cover"
+        />
+        <h4 className="text-lg font-semibold text-white sm:text-xl">
+          Conheça os serviços disponíveis no evento.
+        </h4>
+        <Button
+          variant="outline"
+          color="lime.1"
+          component={Link}
+          href="/lp/feira_de_servicos.pdf"
+          target="_blank"
+        >
+          Ver tudo que me espera
+        </Button>
       </Section>
       <Section
         className="bg-stone-50"
         containerClassName="text-center flex flex-col items-center"
       >
-        <h2 className="md:16 mx-auto mb-8 text-center text-[22px] font-bold leading-[32px] xs:text-[34px] xs:leading-[46px] sm:text-[46px] sm:leading-[56px]">
+        <h2 className="md:16 mx-auto mb-8 text-center text-[22px] font-semibold leading-[32px] xs:text-[34px] xs:leading-[46px] sm:text-[46px] sm:leading-[56px]">
           <span className="text-lime-600">Por que</span> participar do Diálogos
           pelo Piauí?
         </h2>
@@ -232,28 +327,36 @@ export default function LandingPage() {
           </div>
         </div>
       </Section>
-      <Section
-        className="relative bg-green-900 !py-6"
-        containerClassName="flex justify-between items-center gap-5 sm:flex-row flex-col "
-      >
-        <Image
-          src="/lp/cta-servicos-bg.png"
-          fill
-          alt="Fundo com icones"
-          className="object-cover"
-        />
-        <h4 className="text-lg font-bold text-white sm:text-xl">
-          Conheça os serviços disponíveis no evento.
-        </h4>
-        <Button
-          variant="outline"
-          color="white"
-          component={Link}
-          href="/lp/feira_de_servicos.pdf"
-          target="_blank"
-        >
-          Ver tudo que me espera
-        </Button>
+      <Section className="relative !py-0">
+        <div className="absolute left-0 top-0 -z-10 h-1/2 w-full bg-stone-50"></div>
+        <div className="relative flex flex-col items-center space-y-8 rounded-xl bg-lime-700 px-6 py-20 text-center sm:px-8">
+          <Image
+            src="/lp/cta-inscricao-bg.png"
+            fill
+            alt="Fundo com icones"
+            className="object-cover"
+          />
+          <div className="max-w-[718px]">
+            <h2 className="mb-5 text-[22px] font-semibold text-white sm:text-[29px]">
+              Inscreva-se agora e faça parte dessa transformação!
+            </h2>
+            <p className="text-white">
+              Não perca a chance de contribuir para o futuro do nosso estado!
+              Inscreva-se para participar das oficinas, feiras de serviços e
+              muito mais.
+            </p>
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-5">
+            <Button
+              color="lime.2"
+              className="text-stone-950"
+              component={Link}
+              href="/inscrever-se"
+            >
+              Quero me inscrever agora
+            </Button>
+          </div>
+        </div>
       </Section>
 
       <Section id="sobre">
@@ -268,12 +371,12 @@ export default function LandingPage() {
           />
           <div className="flex flex-col gap-8 md:col-span-2">
             <TitleBadge>O QUE É?</TitleBadge>
-            <h2 className="text-xl font-bold md:text-4xl">
+            <h2 className="text-xl font-semibold md:text-4xl">
               <span className="block">Diálogos pelo Piauí:</span>
               <span>O Governo mais perto de você</span>
             </h2>
             <p className="text-sm sm:text-base">
-              O <span className="font-bold">Diálogos pelo Piauí</span> é uma
+              O <span className="font-semibold">Diálogos pelo Piauí</span> é uma
               iniciativa do Governo do Estado que promove a escuta ativa da
               sociedade para garantir que o planejamento governamental esteja
               alinhado com as reais necessidades da população. O evento percorre
@@ -291,7 +394,7 @@ export default function LandingPage() {
         className="bg-green-900 text-white"
         containerClassName="flex flex-col items-center"
       >
-        <h2 className="mx-auto mb-8 text-center text-[22px] font-bold leading-[32px] xs:text-[34px] xs:leading-[46px] sm:text-[46px] sm:leading-[56px] md:mb-16">
+        <h2 className="mx-auto mb-8 text-center text-[22px] font-semibold leading-[32px] xs:text-[34px] xs:leading-[46px] sm:text-[46px] sm:leading-[56px] md:mb-16">
           Como Funciona o Evento
         </h2>
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
@@ -366,7 +469,7 @@ export default function LandingPage() {
         </div>
       </Section>
       <Section className="!pb-0" spacing="lg">
-        <h2 className="mb-8 text-[22px] font-bold leading-[32px] xs:text-[34px] xs:leading-[46px] sm:text-[46px] sm:leading-[56px] md:mb-16">
+        <h2 className="mb-8 text-[22px] font-semibold leading-[32px] xs:text-[34px] xs:leading-[46px] sm:text-[46px] sm:leading-[56px] md:mb-16">
           Cronograma
         </h2>
       </Section>
@@ -600,7 +703,7 @@ export default function LandingPage() {
         <div className="grid grid-cols-1 items-center gap-10 md:grid-cols-3">
           <div className="flex flex-col gap-8 md:col-span-2">
             <TitleBadge>COMO PARTICIPAR?</TitleBadge>
-            <h2 className="text-[22px] font-bold sm:text-[29px]">
+            <h2 className="text-[22px] font-semibold sm:text-[29px]">
               Juntos, podemos construir um Piauí mais{' '}
               <span className="text-lime-600">inclusivo</span>,{' '}
               <span className="text-lime-600">sustentável</span> e{' '}
@@ -608,8 +711,8 @@ export default function LandingPage() {
             </h2>
             <p className="text-sm sm:text-base">
               A participação no{' '}
-              <span className="font-bold">Diálogos pelo Piauí</span> é aberta a
-              toda a sociedade. Veja como você pode contribuir:
+              <span className="font-semibold">Diálogos pelo Piauí</span> é
+              aberta a toda a sociedade. Veja como você pode contribuir:
             </p>
             <ul className="space-y-4">
               <CheckListItem>
@@ -634,7 +737,7 @@ export default function LandingPage() {
 
       <Section id="ppa" className="bg-lime-700 text-white">
         <div className="grid grid-cols-1 items-center gap-x-8 md:grid-cols-3">
-          <h2 className="mx-auto mb-8 text-[22px] font-bold leading-[32px] xs:text-[34px] xs:leading-[46px] sm:text-[46px] sm:leading-[56px] md:col-span-3 md:mb-16">
+          <h2 className="mx-auto mb-8 text-[22px] font-semibold leading-[32px] xs:text-[34px] xs:leading-[46px] sm:text-[46px] sm:leading-[56px] md:col-span-3 md:mb-16">
             Plano Plurianual
           </h2>
           <Image
@@ -684,7 +787,7 @@ export default function LandingPage() {
         </div>
       </Section>
       <Section id="eixos" containerClassName="flex flex-col items-center">
-        <h2 className="mx-auto mb-8 text-center text-[22px] font-bold leading-[32px] xs:text-[34px] xs:leading-[46px] sm:text-[46px] sm:leading-[56px] md:mb-16">
+        <h2 className="mx-auto mb-8 text-center text-[22px] font-semibold leading-[32px] xs:text-[34px] xs:leading-[46px] sm:text-[46px] sm:leading-[56px] md:mb-16">
           Eixos Estratégicos
         </h2>
         <p className="max-w-3xl text-center text-sm xs:text-base">
@@ -755,7 +858,7 @@ export default function LandingPage() {
       >
         <div className="flex items-center justify-between gap-8">
           <div className="flex max-w-2xl flex-col gap-4 p-8 md:col-span-2">
-            <h2 className="text-[22px] font-bold sm:text-[29px]">
+            <h2 className="text-[22px] font-semibold sm:text-[29px]">
               Participe do Diálogos pelo Piauí!
             </h2>
             <p className="text-sm sm:text-base">
