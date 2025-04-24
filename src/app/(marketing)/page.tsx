@@ -82,8 +82,8 @@ export default function LandingPage() {
         <Image
           className="absolute left-0 top-0 z-0 hidden h-full object-cover sm:block"
           src="/lp/banner.png"
-          sizes={'200vw'}
           quality={100}
+          priority
           fill
           alt="uma senhora e um senhor em um gradiente azul claro e escuro com as listras do piauí"
         />
