@@ -1,7 +1,7 @@
 import { Card } from '@/features/landing-page/components/card'
 import { Header } from '@/features/landing-page/components/header'
 import { Section } from '@/features/landing-page/components/section'
-import { Button } from '@mantine/core'
+import { Button, Anchor } from '@mantine/core'
 import {
   BookOpen,
   Calendar,
