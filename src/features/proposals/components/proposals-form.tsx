@@ -16,6 +16,7 @@ interface ProposalsFormValues {
     | 'REJEITADA'
     | 'EM_VOTACAO'
     | 'CANCELADA'
+    | 'ELEITA'
   titulo: string
   conteudo: string
   evento_id?: number
@@ -191,11 +192,12 @@ export default function ProposalsForm({
           label="Status"
           allowDeselect={false}
           data={[
-            { value: 'APROVADA', label: 'Aprovada' },
+            { value: 'PENDENTE', label: 'Pendente' },
             { value: 'REJEITADA', label: 'Rejeitada' },
+            { value: 'APROVADA', label: 'Aprovada' },
             { value: 'EM_VOTACAO', label: 'Em votação' },
-            { value: 'CANCELADA', label: 'Cancelada' },
-            { value: 'PENDENTE', label: 'Pendente' }
+            { value: 'ELEITA', label: 'Eleita' },
+            { value: 'CANCELADA', label: 'Cancelada' }
           ]}
           key={form.key('status')}
           {...form.getInputProps('status')}

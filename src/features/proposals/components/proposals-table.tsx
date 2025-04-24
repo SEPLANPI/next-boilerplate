@@ -16,7 +16,6 @@ import {
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useRouter } from 'next/navigation'
-import { useState } from 'react'
 import { Proposal } from '../types'
 import ProposalsForm from './proposals-form'
 
@@ -25,7 +24,8 @@ const PROPOSALS_STATUS = {
   EM_VOTACAO: { color: 'blue' as MantineColor, label: 'Em votação' },
   CANCELADA: { color: 'gray' as MantineColor, label: 'Cancelada' },
   REJEITADA: { color: 'red' as MantineColor, label: 'Rejeitada' },
-  PENDENTE: { color: 'amber' as MantineColor, label: 'Pendente' }
+  PENDENTE: { color: 'amber' as MantineColor, label: 'Pendente' },
+  ELEITA: { color: 'purple' as MantineColor, label: 'Eleita' }
 } as const
 
 interface ProposalsTableProps {
@@ -34,7 +34,7 @@ interface ProposalsTableProps {
 }
 
 export function ProposalsTable({ data, params }: ProposalsTableProps) {
-  const [opened, { open, close }] = useDisclosure(false)
+  const [opened, { close }] = useDisclosure(false)
 
   const router = useRouter()
 
