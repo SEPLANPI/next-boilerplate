@@ -18,8 +18,8 @@ export async function registerCounselor(
       return { error }
     }
 
-    revalidatePath('/admin/acessos/conselheiros')
-    revalidatePath('/admin/acessos/convites')
+    revalidatePath('/admin/conselheiros/cadastros')
+    revalidatePath('/admin/conselheiros/convites')
 
     return { data: { success: true } }
   } catch (error) {

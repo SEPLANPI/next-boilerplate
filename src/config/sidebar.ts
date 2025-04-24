@@ -1,7 +1,7 @@
 'use client'
 
 import { SidebarConfig } from '@/types/sidebar'
-import { ClipboardList, DoorOpen, Vote } from 'lucide-react'
+import { BarChartBig, ClipboardList, FileUser, Users, Vote } from 'lucide-react'
 
 export const sidebarConfig: SidebarConfig = {
   app: {
@@ -9,15 +9,34 @@ export const sidebarConfig: SidebarConfig = {
   },
   sections: [
     {
+      title: 'Inscrições',
       items: [
         {
-          label: 'Acessos',
-          href: '/:eventId/admin/acessos/conselheiros',
-          match: '/admin/acessos',
-          icon: DoorOpen
+          label: 'Visão Geral',
+          href: '/:eventId/admin/visao-geral',
+          match: '/admin/visao-geral',
+          icon: BarChartBig
         },
         {
-          label: 'Propostas',
+          label: 'Inscrições Abertas',
+          href: '/:eventId/admin/inscricoes-abertas',
+          match: '/admin/inscricoes-abertas',
+          icon: FileUser
+        },
+        {
+          label: 'Conselheiros',
+          href: '/:eventId/admin/conselheiros/cadastros',
+          match: '/admin/conselheiros',
+          icon: Users
+        }
+      ]
+    },
+
+    {
+      title: 'Votação',
+      items: [
+        {
+          label: 'Gerenciar Propostas',
           href: '/:eventId/admin/propostas',
           match: '/admin/propostas',
           icon: ClipboardList

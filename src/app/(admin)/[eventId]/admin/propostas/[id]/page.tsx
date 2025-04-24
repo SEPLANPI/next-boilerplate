@@ -12,7 +12,11 @@ import { getProposal } from '@/features/proposals/api/get-proposals'
 import ProposalDetails from '@/features/proposals/components/proposal-details'
 import { ClipboardList } from 'lucide-react'
 
-export default async function Proposta({ params }: { params: { id: string } }) {
+export default async function Proposta({
+  params
+}: {
+  params: { eventId: string; id: string }
+}) {
   const { data: propostaData, error: error } = await getProposal(params.id)
   if (propostaData === undefined) {
     return (
@@ -33,7 +37,7 @@ export default async function Proposta({ params }: { params: { id: string } }) {
   const items: BreadcrumbItem[] = [
     {
       label: 'Propostas',
-      href: '/admin/propostas',
+      href: `/${params.eventId}/admin/propostas`,
       icon: ClipboardList
     },
     {

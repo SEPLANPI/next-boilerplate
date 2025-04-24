@@ -63,8 +63,8 @@ export function GeneralRegistrationTable({ data }: RegistrationTableProps) {
                     </div>
                   </div>
                 </TableTd>
-                <TableTd w="15%">
-                  <span className="rounded-full border p-1.5 text-xs text-secondary-foreground">
+                <TableTd>
+                  <span className="whitespace-nowrap rounded-full border p-1.5 text-xs text-secondary-foreground">
                     {type.label}
                   </span>
                 </TableTd>

@@ -21,7 +21,7 @@ export async function updateInviteLink(
       return { error }
     }
 
-    revalidatePath('/admin/acessos/convites')
+    revalidatePath('/admin/convites')
     return { data: null }
   } catch (error: any) {
     return { data: null, error: error.response?.data }

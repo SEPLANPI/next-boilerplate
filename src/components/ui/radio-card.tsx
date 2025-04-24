@@ -20,13 +20,15 @@ export function RadioCard({
     >
       <div className="flex w-full items-start">
         <div className="flex flex-1 flex-col space-y-1">
-          <div className="flex items-center space-x-3">
+          <div className="flex items-start space-x-3">
             <Radio.Indicator />
-            <span className="font-medium">{label}</span>
+            <div className="flex flex-col">
+              <span className="font-medium">{label}</span>
+              {description && (
+                <p className="text-sm text-muted-foreground">{description}</p>
+              )}
+            </div>
           </div>
-          {description && (
-            <p className="pl-7 text-sm text-muted-foreground">{description}</p>
-          )}
         </div>
         {disabled && disabledTooltip && (
           <Tooltip label={disabledTooltip}>

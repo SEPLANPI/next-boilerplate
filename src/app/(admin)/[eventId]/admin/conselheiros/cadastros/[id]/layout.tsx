@@ -4,7 +4,7 @@ import {
 } from '@/components/layouts/dashboard-layout/breadcrumbs'
 import { DashboardHeader } from '@/components/layouts/dashboard-layout/header'
 import CounselorEditView from '@/features/registration-monitoring/components/counselor-edit-view'
-import { CounselorTabs } from '@/features/registration-monitoring/components/counselor-tabs'
+import { CounselorDataTabs } from '@/features/registration-monitoring/components/counselor-data-tabs'
 import { ValidateCounselorModal } from '@/features/registration-monitoring/components/validate-counselor-modal'
 import { Users } from 'lucide-react'
 
@@ -17,12 +17,8 @@ export default async function AdminCounselorViewLayout({
 }) {
   const items: BreadcrumbItem[] = [
     {
-      label: 'Acessos',
-      icon: Users
-    },
-    {
       label: 'Conselheiros',
-      href: `/${params.eventId}/admin/acessos/conselheiros`
+      href: `/${params.eventId}/admin/conselheiros/cadastros`
     },
     {
       label: 'Dados do Conselheiro'
@@ -35,7 +31,7 @@ export default async function AdminCounselorViewLayout({
         <DashboardBreadcrumbs items={items} />
       </DashboardHeader>
       <div className="flex items-center justify-between border-b pl-4 pr-8">
-        <CounselorTabs />
+        <CounselorDataTabs />
         <div className="flex gap-2">
           <CounselorEditView id={params.id} />
           <ValidateCounselorModal counselorId={params.id} />

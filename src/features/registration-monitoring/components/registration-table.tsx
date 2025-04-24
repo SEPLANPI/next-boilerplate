@@ -29,7 +29,7 @@ export function RegistrationTable({ data, params }: RegistrationTableProps) {
   const router = useRouter()
 
   function handleNavigateToRegistration(id: string) {
-    router.push(`/${params.eventId}/admin/acessos/conselheiros/${id}/dados`)
+    router.push(`/${params.eventId}/admin/conselheiros/cadastros/${id}/dados`)
   }
 
   return (

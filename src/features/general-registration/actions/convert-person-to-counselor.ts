@@ -19,7 +19,7 @@ export async function convertPersonToCounselor(
 
   const data: { id: string } = await response.json()
 
-  revalidatePath('/admin/acessos/conselheiros')
-  revalidatePath('/admin/acessos/inscricoes-gerais')
-  redirect(`/admin/acessos/conselheiros/${data.id}/dados`)
+  revalidatePath('/admin/conselheiros/cadastros')
+  revalidatePath('/admin/inscricoes-abertas')
+  redirect(`/admin/conselheiros/cadastros/${data.id}/dados`)
 }

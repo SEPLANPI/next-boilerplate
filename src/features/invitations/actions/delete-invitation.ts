@@ -14,7 +14,7 @@ export async function deleteInvitation(id: string): Promise<ActionState<void>> {
       return { error }
     }
 
-    revalidatePath('/admin/acessos/convites')
+    revalidatePath('/admin/convites')
     return { data: undefined }
   } catch (error) {
     console.error(error)

@@ -79,7 +79,7 @@ export function MainNav({ config }: MainNavProps) {
               (collapsed ? (
                 <Divider className="mb-2" />
               ) : (
-                <span className="mb-2 block text-xs font-semibold uppercase text-muted-foreground">
+                <span className="mb-2 block text-[10px] font-semibold uppercase text-muted-foreground">
                   {section.title}
                 </span>
               ))}

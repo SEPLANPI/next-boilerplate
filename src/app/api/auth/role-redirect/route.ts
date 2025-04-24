@@ -75,10 +75,7 @@ export async function GET(request: NextRequest) {
 
   if (user.roles.includes('admin')) {
     return NextResponse.redirect(
-      new URL(
-        `${env.APP_URL}/${eventId}/admin/acessos/visao-geral`,
-        request.url
-      )
+      new URL(`${env.APP_URL}/${eventId}/admin/visao-geral`, request.url)
     )
   }
 

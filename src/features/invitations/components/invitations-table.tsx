@@ -85,7 +85,7 @@ export function InvitationsTable({ data, params }: InvitationsTableProps) {
                 <TableTd className="flex justify-center">
                   {invitation.usado ? (
                     <Link
-                      href={`/${params.eventId}/admin/acessos/conselheiros/${invitation.conselheiro.id}/dados`}
+                      href={`/${params.eventId}/admin/conselheiros/cadastros/${invitation.conselheiro.id}/dados`}
                     >
                       <Tooltip label={invitation.conselheiro.nome}>
                         <Avatar

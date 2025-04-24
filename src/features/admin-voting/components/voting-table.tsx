@@ -57,12 +57,12 @@ export function VotingTable({ data, totalPontos }: VotingTableProps) {
             <TableTr key={proposal.titulo}>
               <TableTd>{proposal.titulo}</TableTd>
               <TableTd>
-                <span className="rounded-full border p-1.5 text-xs text-secondary-foreground">
+                <span className="whitespace-nowrap rounded-full border p-1.5 text-xs text-secondary-foreground">
                   {proposal.eixo.descricao}
                 </span>
               </TableTd>
               <TableTd>
-                <div className="flex w-full items-center space-x-2 text-sm">
+                <div className="flex w-40 items-center space-x-2 text-sm">
                   <Progress
                     size="md"
                     color="green"

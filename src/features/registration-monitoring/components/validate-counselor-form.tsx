@@ -9,6 +9,7 @@ import { useState } from 'react'
 import { z } from 'zod'
 import { validateCounselor } from '../actions/validate-counselor'
 import { ValidationRadioCard } from './validation-radio-card'
+import { useParams } from 'next/navigation'
 
 const validationSchema = z
   .object({
@@ -41,6 +42,7 @@ export function ValidateCounselorForm({
 }: ValidateCounselorFormProps) {
   const [error, setError] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const { eventId } = useParams<{ eventId: string }>()
 
   const form = useForm({
     validate: zodResolver(validationSchema),
@@ -56,7 +58,8 @@ export function ValidateCounselorForm({
       const { error } = await validateCounselor({
         counselorId,
         status: values.status!,
-        motivo_rejeicao: values.motivo
+        motivo_rejeicao: values.motivo,
+        eventId
       })
 
       if (error) {
@@ -81,7 +84,11 @@ export function ValidateCounselorForm({
   return (
     <>
       {error && <Alert color="red" title={error} className="mb-4" />}
-      <form id={id} onSubmit={form.onSubmit(handleSubmit)} className='flex flex-col gap-4'>
+      <form
+        id={id}
+        onSubmit={form.onSubmit(handleSubmit)}
+        className="flex flex-col gap-4"
+      >
         <Radio.Group {...form.getInputProps('status')}>
           <div className="flex gap-4">
             <ValidationRadioCard

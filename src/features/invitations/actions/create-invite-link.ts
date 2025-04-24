@@ -34,7 +34,7 @@ export async function createInviteLink(
     }
 
     const data: { token: string } = await response.json()
-    revalidatePath('/admin/acessos/convites')
+    revalidatePath('/admin/convites')
     return { data }
   } catch (error) {
     return { error: API.UNEXPECTED_FETCH_ERROR }

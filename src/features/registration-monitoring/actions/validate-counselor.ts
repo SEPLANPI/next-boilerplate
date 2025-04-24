@@ -9,6 +9,7 @@ type ValidateCounselorInput = {
   counselorId: string
   status: 'APROVADO' | 'REJEITADO'
   motivo_rejeicao?: string
+  eventId: string
 }
 
 export async function validateCounselor(
@@ -29,7 +30,9 @@ export async function validateCounselor(
       return { error }
     }
 
-    revalidatePath(`/[eventId]/admin/acessos/conselheiros/${input.counselorId}`)
+    revalidatePath(
+      `/${input.eventId}/admin/conselheiros/cadastros/${input.counselorId}`
+    )
 
     return { data: null }
   } catch (error) {

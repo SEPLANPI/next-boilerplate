@@ -1,10 +1,8 @@
 import { Card } from '@/features/landing-page/components/card'
 import { Header } from '@/features/landing-page/components/header'
 import { Section } from '@/features/landing-page/components/section'
-import { AccordionControl, AccordionPanel, Divider } from '@mantine/core'
-import { Accordion, AccordionItem, Anchor, Button } from '@mantine/core'
+import { Button } from '@mantine/core'
 import {
-  ArrowUpRight,
   BookOpen,
   Calendar,
   Check,
