@@ -49,11 +49,6 @@ export function RegisterPersonForm() {
       email: ''
     },
     validate: zodResolver(personSchema),
-    transformValues: (values) => ({
-      ...values,
-      telefone: values.telefone.replace(/\D/g, ''),
-      cpf: values.cpf.replace(/\D/g, ''),
-    })
   })
 
   const steps = useMemo(

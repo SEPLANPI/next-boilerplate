@@ -76,6 +76,7 @@ export function PersonalDataStep({
           placeholder="(00) 00000-0000"
           {...form.getInputProps('telefone')}
           onAccept={form.getInputProps('telefone').onChange}
+          onChange={() => {}}
         />
       </Input.Wrapper>
     </>

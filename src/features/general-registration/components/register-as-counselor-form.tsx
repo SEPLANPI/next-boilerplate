@@ -303,6 +303,7 @@ export function RegisterAsCounselorForm({
             placeholder="(00) 00000-0000"
             {...form.getInputProps('telefone')}
             onAccept={form.getInputProps('telefone').onChange}
+            onChange={() => {}}
           />
         </Input.Wrapper>
       </Section>
@@ -334,6 +335,8 @@ export function RegisterAsCounselorForm({
             placeholder="00000-000"
             {...form.getInputProps('endereco.cep')}
             onAccept={form.getInputProps('endereco.cep').onChange}
+            onChange={() => {}}
+
           />
         </Input.Wrapper>
 

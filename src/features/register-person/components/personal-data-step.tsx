@@ -32,6 +32,8 @@ export function PersonalDataStep({
       label: city.nome
     })) || []
 
+  console.log(form.getValues().cpf)
+
   return (
     <>
       <TextInput
@@ -52,6 +54,7 @@ export function PersonalDataStep({
           mask="000.000.000-00"
           placeholder="000.000.000-00"
           {...form.getInputProps('cpf')}
+          onChange={() => {}}
           onAccept={form.getInputProps('cpf').onChange}
         />
       </Input.Wrapper>
@@ -77,6 +80,7 @@ export function PersonalDataStep({
           placeholder="(00) 00000-0000"
           {...form.getInputProps('telefone')}
           onAccept={form.getInputProps('telefone').onChange}
+          onChange={() => {}}
         />
       </Input.Wrapper>
       <TextInput

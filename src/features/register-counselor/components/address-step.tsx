@@ -91,6 +91,8 @@ export function AddressStep({ form }: { form: UseFormReturnType<FormValues> }) {
           placeholder="00000-000"
           {...form.getInputProps('endereco.cep')}
           onAccept={form.getInputProps('endereco.cep').onChange}
+          onChange={() => {}}
+
         />
       </Input.Wrapper>
       <Select

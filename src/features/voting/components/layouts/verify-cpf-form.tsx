@@ -57,8 +57,8 @@ export function VerifyCPFForm() {
             mask="000.000.000-00"
             placeholder="000.000.000-00"
             {...form.getInputProps('cpf')}
-            onChange={() => {}}
             onAccept={form.getInputProps('cpf').onChange}
+            onChange={() => {}}
           />
         </Input.Wrapper>
         <Button type="submit" loading={isSubmitting} fullWidth>

@@ -298,6 +298,8 @@ export function BaseEditCounselorForm({
             placeholder="(00) 00000-0000"
             {...form.getInputProps('telefone')}
             onAccept={form.getInputProps('telefone').onChange}
+            onChange={() => {}}
+
           />
         </Input.Wrapper>
       </Section>
@@ -329,6 +331,8 @@ export function BaseEditCounselorForm({
             placeholder="00000-000"
             {...form.getInputProps('endereco.cep')}
             onAccept={form.getInputProps('endereco.cep').onChange}
+            onChange={() => {}}
+
           />
         </Input.Wrapper>
 
