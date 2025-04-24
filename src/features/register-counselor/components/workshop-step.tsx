@@ -5,6 +5,27 @@ import { useQuery } from '@tanstack/react-query'
 import { FormValues } from './register-counselor-form'
 import { getWorkshopsOptions } from '../api/client/get-workshops-options'
 
+const getStrategicName = (name: string) => {
+  switch (name) {
+    case 'Mudanças Climáticas, Meio Ambiente e Recursos Hídricos':
+      return 'Meio Ambiente'
+    case 'Infraestrutura, Inclusão Produtiva e Transição Energética':
+      return 'Infraestrutura'
+    case 'Desenvolvimento Socioeconômico':
+      return 'Desenvolvimento Econômico e Produtivo'
+    case 'Educação Inclusiva e de Qualidade':
+      return 'Educação'
+    case 'Redução das Desigualdades':
+      return 'Inclusão Social, Raça e Gênero'
+    case 'Saúde e Bem-Estar':
+      return 'Saúde, Esporte, Cultura e Lazer'
+    case 'Justiça e Segurança':
+      return 'Segurança Pública'
+    default:
+      return name
+  }
+}
+
 export function WorkshopStep({
   form
 }: {
@@ -20,7 +41,8 @@ export function WorkshopStep({
   const workshopOptions =
     workshops?.map((workshop) => ({
       value: workshop.id.toString(),
-      label: workshop.nome,
+      label: getStrategicName(workshop.nome),
+      description: workshop.nome,
       disabled: !workshop.vagas_disponiveis,
       disabledTooltip: 'Vagas esgotadas'
     })) || []
