@@ -9,5 +9,5 @@ export function DashboardHeader({ children }: PropsWithChildren) {
 }
 
 export function DashboardHeaderActions({ children }: PropsWithChildren) {
-  return <div className="ml-auto">{children}</div>
+  return <div className="ml-auto flex items-center space-x-2">{children}</div>
 }

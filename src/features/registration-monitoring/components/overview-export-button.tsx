@@ -64,7 +64,7 @@ export default function ExportButton() {
             onClick={() => setOpened((o) => !o)}
             loading={loading}
           >
-            Exportar Dados
+            Baixar Planilha
           </Button>
         </Menu.Target>
 

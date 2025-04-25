@@ -19,6 +19,7 @@ import { VotingListView } from '@/features/admin-voting/components/voting-list-v
 import { VotingFilters } from '@/features/admin-voting/components/voting-filters'
 import { VotingTableSkeleton } from '@/features/admin-voting/components/voting-table-skeleton'
 import { QRCodeButton } from '@/features/admin-voting/components/generate-qrcode-button'
+import VotingExportButton from '@/features/admin-voting/components/voting-export-button'
 
 export const metadata: Metadata = {
   title: 'Votação'
@@ -46,6 +47,7 @@ export default async function Votacoes({
       <DashboardHeader>
         <DashboardBreadcrumbs items={items} />
         <DashboardHeaderActions>
+          <VotingExportButton />
           <QRCodeButton eventId={params.eventId} />
         </DashboardHeaderActions>
       </DashboardHeader>
