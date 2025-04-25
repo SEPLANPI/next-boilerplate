@@ -43,7 +43,7 @@ export function RegistrationStep({
     workshops?.map((workshop) => ({
       value: workshop.id.toString(),
       label: getStrategicName(workshop.nome),
-      description: workshop.nome,
+      description: 'Eixo ' + workshop.nome,
       disabled: !workshop.vagas_disponiveis,
       disabledTooltip: 'Vagas esgotadas'
     })) || []

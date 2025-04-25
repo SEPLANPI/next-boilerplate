@@ -823,7 +823,9 @@ export default function LandingPage() {
               <BookOpen className="size-4 text-blue-800" />
             </Card.Icon>
             <Card.Title>Educação</Card.Title>
-            <Card.Subtitle>Educação Inclusiva e de Qualidade</Card.Subtitle>
+            <Card.Subtitle>
+              Eixo Educação Inclusiva e de Qualidade
+            </Card.Subtitle>
           </Card.Root>
           <Card.Root className="bg-white shadow-md sm:col-span-4 md:col-span-3">
             <Card.Icon className="bg-orange-100">
