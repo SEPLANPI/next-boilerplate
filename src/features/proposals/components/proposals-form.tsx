@@ -4,7 +4,7 @@ import { useForm } from '@mantine/form'
 import { notifications } from '@mantine/notifications'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { ActiveEvent, Axis, Proposal } from '../types'
+import { Event, Axis, Proposal } from '../types'
 
 interface ProposalsFormValues {
   id?: string
@@ -19,7 +19,7 @@ interface ProposalsFormValues {
     | 'ELEITA'
   titulo: string
   conteudo?: string
-  evento_id?: number
+  evento_id?: string
 }
 
 interface ProposalsFormProps {
@@ -35,7 +35,7 @@ export default function ProposalsForm({
 }: ProposalsFormProps) {
   const router = useRouter()
   const [eixos, setEixos] = useState<Axis[]>([])
-  const [evento, setEvento] = useState<ActiveEvent>()
+  const [eventos, setEventos] = useState<Event[]>([])
   const [loading, setLoading] = useState(false)
   const form = useForm<ProposalsFormValues>({
     initialValues: {
@@ -43,7 +43,7 @@ export default function ProposalsForm({
       titulo: items?.titulo || '',
       conteudo: items?.conteudo || '',
       eixo_id: edit ? items?.eixo.id : 0,
-      evento_id: evento?.id,
+      evento_id: items?.evento.id || '',
       status: items?.status || 'PENDENTE'
     },
     validate: {
@@ -96,13 +96,13 @@ export default function ProposalsForm({
     useEffect(() => {
       const fetchData = async () => {
         setLoading(true)
-        const [evento, eixos] = await Promise.all([
+        const [eventos, eixos] = await Promise.all([
+          clientApi.get('/eventos/'),
           clientApi.get('/eixos/'),
-          clientApi.get('/evento-ativo/')
         ])
         if (eixos.ok) {
           const data = await eixos.json()
-          setEvento(data)
+          setEixos(data)
         } else {
           notifications.show({
             title: 'Erro',
@@ -110,9 +110,9 @@ export default function ProposalsForm({
             color: 'red'
           })
         }
-        if (evento.ok) {
-          const data = await evento.json()
-          setEixos(data)
+        if (eventos.ok) {
+          const data: Event[] = await eventos.json()
+          setEventos(data)
         } else {
           notifications.show({
             title: 'Erro',
@@ -162,7 +162,10 @@ export default function ProposalsForm({
             data={
               loading
                 ? []
-                : [{ value: String(evento?.id), label: evento?.nome || '' }]
+                : eventos.map(evento => ({
+                  value: String(evento.id),
+                  label: evento.nome
+                }))
             }
             placeholder={
               loading
