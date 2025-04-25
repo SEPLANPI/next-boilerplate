@@ -43,12 +43,6 @@ export async function OverviewPageContent({
             Inscritos em Oficinas
           </span>
         </div>
-        <div className="flex flex-1 flex-col items-center justify-center gap-1 rounded-md border bg-white p-6 shadow">
-          <span className="text-4xl font-semibold">{data.ouvintes}</span>
-          <span className="text-sm text-secondary-foreground">
-            Inscritos na Plenária
-          </span>
-        </div>
       </div>
 
       <div className="mb-6 rounded-md border bg-white p-6 shadow">
