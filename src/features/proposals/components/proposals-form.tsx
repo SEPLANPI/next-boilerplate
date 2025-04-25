@@ -18,7 +18,7 @@ interface ProposalsFormValues {
     | 'CANCELADA'
     | 'ELEITA'
   titulo: string
-  conteudo: string
+  conteudo?: string
   evento_id?: number
 }
 
@@ -56,11 +56,6 @@ export default function ProposalsForm({
       titulo: (value) => {
         return value.length < 5
           ? 'Título deve ter no mínimo 5 caracteres'
-          : null
-      },
-      conteudo: (value) => {
-        return value.length < 5
-          ? 'Descrição deve ter no mínimo 5 caracteres'
           : null
       }
     }

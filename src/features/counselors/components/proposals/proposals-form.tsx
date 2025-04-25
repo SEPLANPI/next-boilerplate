@@ -10,7 +10,7 @@ import { PropostasData } from '../../api/get-minhasPropostas'
 interface ProposalsFormValues {
   id?: string
   titulo: string
-  conteudo: string
+  conteudo?: string
 }
 
 interface ProposalsFormProps {
@@ -34,9 +34,7 @@ export default function ProposalsForm({
     },
     validate: {
       titulo: (value) =>
-        value.length < 5 && 'Título deve ter no mínimo 5 caracteres',
-      conteudo: (value) =>
-        value.length < 5 && 'Descrição deve ter no mínimo 5 caracteres'
+        value.length < 5 && 'Título deve ter no mínimo 5 caracteres'
     }
   })
 
