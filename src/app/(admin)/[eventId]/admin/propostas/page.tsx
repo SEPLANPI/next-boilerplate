@@ -41,9 +41,8 @@ export default async function Propostas({
   ]
   return (
     <>
-      <DashboardHeader>
+      <DashboardHeader> 
         <DashboardBreadcrumbs items={items} />
-        <Divider orientation="vertical" className="my-auto h-6" />
       </DashboardHeader>
       <DashboardContent>
         <DashboardMainSection>
