@@ -47,8 +47,7 @@ jobs:
           BUILD_DIR="builds/$(date +%Y%m%d_%H%M%S)"
           mkdir -p ${BUILD_DIR}
 
-          cp -r .next/standalone/* ${BUILD_DIR}/
-          cp -r .next/standalone/.next ${BUILD_DIR}/
+          cp -r -a .next/standalone/* ${BUILD_DIR}/
           cp -r public ${BUILD_DIR}/
           cp package.json ${BUILD_DIR}/
           cp .env.local ${BUILD_DIR}/.env.local
