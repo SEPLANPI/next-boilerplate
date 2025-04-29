@@ -16,8 +16,12 @@ jobs:
       - name: Verificando mudanças no package.json
         id: check_changes
         run: |
-          if git diff --quiet HEAD^ HEAD package.json; then
-            echo "changed=false" >> $GITHUB_OUTPUT
+          if git rev-parse --verify HEAD^ >/dev/null 2>&1; then
+            if git diff --quiet HEAD^ HEAD package.json; then
+              echo "changed=false" >> $GITHUB_OUTPUT
+            else
+              echo "changed=true" >> $GITHUB_OUTPUT
+            fi
           else
             echo "changed=true" >> $GITHUB_OUTPUT
           fi
@@ -31,6 +35,10 @@ jobs:
         if: steps.check_changes.outputs.changed == 'true'
         run: npm ci --legacy-peer-deps
 
+      - name: Create environment file
+        run: |
+          echo "${{ secrets.ENV_CONTENT }}" > .env.local
+
       - name: Compilando aplicação
         run: npm run build
 
@@ -42,8 +50,8 @@ jobs:
           cp -r .next/standalone/* ${BUILD_DIR}/
           cp -r public ${BUILD_DIR}/
           cp -r .next/static ${BUILD_DIR}/.next/
-          cp .env.local ${BUILD_DIR}/
           cp package.json ${BUILD_DIR}/
+          cp .env.local ${BUILD_DIR}/
 
           ln -sfn $(pwd)/${BUILD_DIR} current
 
