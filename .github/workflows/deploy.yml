@@ -29,7 +29,7 @@ jobs:
 
       - name: Instalando dependências
         if: steps.check_changes.outputs.changed == 'true'
-        run: npm ci
+        run: npm ci --legacy-peer-deps
 
       - name: Compilando aplicação
         run: npm run build
