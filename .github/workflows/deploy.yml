@@ -49,7 +49,7 @@ jobs:
 
           cp -r .next/standalone/* ${BUILD_DIR}/
           cp -r .next/standalone/.next ${BUILD_DIR}/
-          cp -r .next/static .next/standalone/.next/
+          cp -r .next/static ${BUILD_DIR}/.next/
           cp -r public ${BUILD_DIR}/
           cp package.json ${BUILD_DIR}/
           cp .env.local ${BUILD_DIR}/.env.local
