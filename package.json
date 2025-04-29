@@ -6,11 +6,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "node .next/standalone/server.js",
+    "start": "node server.js",
     "lint": "next lint",
     "lint:fix": "next lint --fix",
-    "format": "prettier --write .",
-    "start:dev": "NODE_ENV=development node .next/standalone/server.js"
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@auth/core": "^0.37.4",
