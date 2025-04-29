@@ -18,6 +18,15 @@ jobs:
         with:
           node-version: '18'
 
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.npm
+            ${{ github.workspace }}/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+
       - name: Instalando dependências
         run: npm ci --legacy-peer-deps
 
@@ -35,10 +44,9 @@ jobs:
       - name: Preparando diretório de build
         run: |
           BUILD_DIR="builds/$(date +%Y%m%d_%H%M%S)"
-          mkdir -p ${BUILD_DIR}/.next
+          mkdir -p ${BUILD_DIR}
 
-          cp -r .next/* ${BUILD_DIR}/.next/
-
+          cp -r .next/standalone/* ${BUILD_DIR}/
           cp -r public ${BUILD_DIR}/
           cp package.json ${BUILD_DIR}/
           cp .env.local ${BUILD_DIR}/.env.local
