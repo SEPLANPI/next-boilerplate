@@ -1,0 +1,58 @@
+name: Implantação da Aplicação
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Verificando mudanças no package.json
+        id: check_changes
+        run: |
+          if git diff --quiet HEAD^ HEAD package.json; then
+            echo "changed=false" >> $GITHUB_OUTPUT
+          else
+            echo "changed=true" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Configurando Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Instalando dependências
+        if: steps.check_changes.outputs.changed == 'true'
+        run: npm ci
+
+      - name: Compilando aplicação
+        run: npm run build
+
+      - name: Preparando diretório de build
+        run: |
+          BUILD_DIR="builds/$(date +%Y%m%d_%H%M%S)"
+          mkdir -p ${BUILD_DIR}/.next/static
+
+          cp -r .next/standalone/* ${BUILD_DIR}/
+          cp -r public ${BUILD_DIR}/
+          cp -r .next/static ${BUILD_DIR}/.next/
+          cp .env.local ${BUILD_DIR}/
+          cp package.json ${BUILD_DIR}/
+
+          ln -sfn $(pwd)/${BUILD_DIR} current
+
+      - name: Reiniciando aplicação no PM2
+        run: |
+          pm2 delete dialogos-client 2>/dev/null || true
+          pm2 start ecosystem.config.cjs --only dialogos-client
+          pm2 save
+
+      - name: Limpando builds antigos
+        run: |
+          find builds/ -maxdepth 1 -type d -mtime +7 -exec rm -rf {} \;

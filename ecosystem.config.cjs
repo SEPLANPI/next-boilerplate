@@ -2,6 +2,7 @@ module.exports = {
   apps: [
     {
       name: 'dialogos-client',
+      cwd: 'current',
       script: 'npm',
       args: 'start',
       env: {
