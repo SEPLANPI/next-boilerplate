@@ -42,7 +42,7 @@ jobs:
 
       - name: Preparando diretório de build
         run: |
-          BUILD_DIR="builds/$(date +%Y%m%d_%H%M%S)"
+          BUILD_DIR="/home/${USER}/builds/$(date +%Y%m%d_%H%M%S)"
           mkdir -p ${BUILD_DIR}
 
           cp -r .next/standalone/* ${BUILD_DIR}/
