@@ -53,6 +53,7 @@ jobs:
           cp -r .next/static ${BUILD_DIR}/.next/
           cp -r public ${BUILD_DIR}/
           cp package.json ${BUILD_DIR}/
+          cp ecosystem.config.cjs ${BUILD_DIR}/
           cp .env.local ${BUILD_DIR}/.env.local
 
           ln -sfn ${BUILD_DIR} ${CURRENT_LINK}
