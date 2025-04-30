@@ -7,6 +7,7 @@ import '@mantine/notifications/styles.css'
 import '@mantine/charts/styles.css'
 import { Figtree } from 'next/font/google'
 import { Providers } from './providers'
+import { PostHogProvider } from '../components/posthog-provider'
 
 export const metadata: Metadata = {
   title: {
