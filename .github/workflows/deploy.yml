@@ -42,7 +42,10 @@ jobs:
 
       - name: Preparando diretório de build
         run: |
-          BUILD_DIR="/home/${USER}/builds/$(date +%Y%m%d_%H%M%S)"
+          BASE_DIR="/home/${USER}/dialogos-cliente"
+          BUILD_DIR="${BASE_DIR}/builds/$(date +%Y%m%d_%H%M%S)"
+          CURRENT_LINK="${BASE_DIR}/current"
+
           mkdir -p ${BUILD_DIR}
 
           cp -r .next/standalone/* ${BUILD_DIR}/
@@ -52,14 +55,15 @@ jobs:
           cp package.json ${BUILD_DIR}/
           cp .env.local ${BUILD_DIR}/.env.local
 
-          ln -sfn $(pwd)/${BUILD_DIR} current
+          ln -sfn ${BUILD_DIR} ${CURRENT_LINK}
 
       - name: Reiniciando aplicação no PM2
         run: |
+          cd /home/${USER}/dialogos-cliente/current
           pm2 delete dialogos-client 2>/dev/null || true
           pm2 start ecosystem.config.cjs --only dialogos-client
           pm2 save
 
       - name: Limpando builds antigos
         run: |
-          find builds/ -maxdepth 1 -type d -mtime +7 -exec rm -rf {} \;
+          find /home/${USER}/dialogos-cliente/builds/ -maxdepth 1 -type d -mtime +7 -exec rm -rf {} \;
