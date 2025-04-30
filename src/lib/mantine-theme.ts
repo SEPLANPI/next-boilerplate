@@ -381,8 +381,8 @@ export const theme = createTheme({
     },
     Table: {
       classNames: {
-        thead: 'bg-gray-100 text-secondary-foreground rounded-t-md',
-        th: 'font-semibold'
+        thead: 'bg-gray-100 text-secondary-foreground [&>tr]:border-0',
+        th: 'font-semibold last:rounded-r-md first:rounded-l-md'
       }
     }
   },
