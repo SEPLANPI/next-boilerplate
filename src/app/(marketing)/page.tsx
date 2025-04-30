@@ -64,9 +64,9 @@ export default function LandingPage() {
             O futuro do Piauí começa onde você está
           </h1>
           <p className="max-w-xs text-sm md:max-w-md md:text-lg">
-            Estamos no território <span className="font-semibold">Cocais</span>{' '}
-            para ouvir você e construir juntos os próximos passos do nosso
-            estado.
+            Estamos no território{' '}
+            <span className="font-semibold">Carnaubais</span> para ouvir você e
+            construir juntos os próximos passos do nosso estado.
           </p>
           <Button
             component={Link}
@@ -99,7 +99,7 @@ export default function LandingPage() {
         <span className="flex-1 bg-[#EF4123]" />
         <span className="flex-1 bg-blue-700" />
       </div>
-      <Section
+      {/* <Section
         id="onde-estamos"
         spacing="lg"
         containerClassName="bg-lime-50 p-6 sm:p-12 rounded-xl grid grid-cols-1 gap-8 sm:grid-cols-2"
@@ -277,7 +277,7 @@ export default function LandingPage() {
         >
           Ver tudo que me espera
         </Button>
-      </Section>
+      </Section> */}
       <Section
         className="bg-stone-50"
         containerClassName="text-center flex flex-col items-center"
@@ -474,7 +474,7 @@ export default function LandingPage() {
       <div className="mb-32 w-screen sm:mb-36 md:mb-[200px]">
         <div className="">
           <Carousel
-            initialSlide={1}
+            initialSlide={2}
             height={260}
             slideSize="260px"
             slideGap="md"
@@ -507,7 +507,7 @@ export default function LandingPage() {
               </div>
             </CarouselSlide>
             <CarouselSlide>
-              <div className="flex h-[260px] w-full flex-col justify-between rounded-md bg-lime-600 p-6 text-white">
+              <div className="flex h-[260px] w-full flex-col justify-between rounded-md bg-stone-50 p-6">
                 <div>
                   <div className="space-x-2 font-bold leading-tight">
                     <span className="text-[64px]">25</span>
@@ -523,7 +523,7 @@ export default function LandingPage() {
               </div>
             </CarouselSlide>
             <CarouselSlide>
-              <div className="flex h-[260px] w-full flex-col justify-between rounded-md bg-stone-50 p-6">
+              <div className="flex h-[260px] w-full flex-col justify-between rounded-md bg-lime-600 p-6 text-white">
                 <div>
                   <div className="space-x-2 font-bold leading-tight">
                     <span className="text-[64px]">16</span>
