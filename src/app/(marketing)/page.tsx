@@ -56,7 +56,7 @@ function TitleBadge({
 
 export default function LandingPage() {
   return (
-    <div className="text-sm text-stone-600 sm:text-lg">
+    <div className="overflow-x-clip text-sm text-stone-600 sm:text-lg">
       <section className="relative flex h-[360px] flex-col p-8 sm:h-[420px] md:h-[660px] md:py-0">
         <Header />
         <main className="relative z-10 mx-auto mt-10 flex w-full max-w-[1120px] flex-1 flex-col justify-center gap-4 text-white">
@@ -472,7 +472,7 @@ export default function LandingPage() {
         </h2>
       </Section>
       <div className="mb-32 w-screen sm:mb-36 md:mb-[200px]">
-        <div className="">
+        <div>
           <Carousel
             initialSlide={2}
             height={260}
