@@ -13,7 +13,8 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
         ui_host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
         capture_pageview: false,
         capture_pageleave: true,
-        debug: false
+        debug: false,
+        persistence: 'localStorage'
       })
     }
   }, [])

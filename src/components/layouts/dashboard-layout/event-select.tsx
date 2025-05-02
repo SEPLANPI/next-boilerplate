@@ -43,6 +43,7 @@ export function EventSelect() {
   if (error) {
     return (
       <Alert
+        color="red"
         classNames={{
           title: 'text-xs'
         }}
