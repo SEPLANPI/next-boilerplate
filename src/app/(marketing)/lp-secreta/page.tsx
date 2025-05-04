@@ -90,7 +90,7 @@ export default function LandingPage() {
       >
         <div className="grid grid-cols-1 items-center gap-10 sm:grid-cols-2 md:grid-cols-12">
           <Image
-            className="w-full mx-auto max-w-[50%] sm:max-w-none rounded-md object-cover md:col-span-5"
+            className="w-full mx-auto xs:max-w-[70%] max-w-[80%] sm:max-w-none rounded-md object-cover md:col-span-5"
             src="/lp/senhor-fundo-verde.png"
             width={900}
             height={900}
