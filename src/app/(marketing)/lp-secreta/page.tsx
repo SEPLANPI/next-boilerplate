@@ -126,9 +126,39 @@ export default function LandingPage() {
         </div>
       </Section>
       <TerritorialContextSection />
+      <Section className="relative !pb-0">
+        <div className="absolute left-0 bottom-0 -z-10 h-2/5 w-full bg-stone-50"></div>
+        <div className="relative flex flex-col items-center space-y-8 rounded-xl bg-lime-700 px-6 py-20 text-center sm:px-8">
+          <Image
+            src="/lp/cta-inscricao-bg.png"
+            fill
+            alt="Fundo com icones"
+            className="object-cover"
+          />
+          <div className="max-w-[718px]">
+            <h2 className="mb-5 text-[22px] font-semibold text-white sm:text-[29px]">
+              Inscreva-se agora e faça parte dessa transformação!
+            </h2>
+            <p className="text-white">
+              Não perca a chance de contribuir para o futuro do nosso estado!
+              Inscreva-se para participar das oficinas, feiras de serviços e
+              muito mais.
+            </p>
+          </div>
+          <div className="flex flex-wrap items-center justify-center gap-5">
+            <Button
+              color="lime.2"
+              className="text-stone-950"
+              component={Link}
+              href="/inscrever-se"
+            >
+              Quero me inscrever agora
+            </Button>
+          </div>
+        </div>
+      </Section>
       <Section
-      spacing='lg'
-        className="bg-stone-50 !pb-0"
+        className="bg-stone-50"
         containerClassName="text-center flex flex-col items-center"
       >
         <h2 className="md:16 mx-auto mb-8 text-center text-[22px] font-semibold leading-[32px] xs:text-[34px] xs:leading-[46px] sm:text-[46px] sm:leading-[56px]">
@@ -174,44 +204,23 @@ export default function LandingPage() {
           </div>
         </div>
       </Section>
-      <Section className="relative ">
-        <div className="absolute left-0 top-0 -z-10 h-1/2 w-full bg-stone-50"></div>
-        <div className="relative flex flex-col items-center space-y-8 rounded-xl bg-lime-700 px-6 py-20 text-center sm:px-8">
-          <Image
-            src="/lp/cta-inscricao-bg.png"
-            fill
-            alt="Fundo com icones"
-            className="object-cover"
-          />
-          <div className="max-w-[718px]">
-            <h2 className="mb-5 text-[22px] font-semibold text-white sm:text-[29px]">
-              Inscreva-se agora e faça parte dessa transformação!
-            </h2>
-            <p className="text-white">
-              Não perca a chance de contribuir para o futuro do nosso estado!
-              Inscreva-se para participar das oficinas, feiras de serviços e
-              muito mais.
-            </p>
-          </div>
-          <div className="flex flex-wrap items-center justify-center gap-5">
-            <Button
-              color="lime.2"
-              className="text-stone-950"
-              component={Link}
-              href="/inscrever-se"
-            >
-              Quero me inscrever agora
-            </Button>
-          </div>
-        </div>
-      </Section>
       <Section
         id="como-funciona"
         className="bg-green-900 text-white"
         containerClassName="flex flex-col items-center"
       >
         <h2 className="mx-auto mb-8 text-center text-[22px] font-semibold leading-[32px] xs:text-[34px] xs:leading-[46px] sm:text-[46px] sm:leading-[56px] md:mb-16">
-          Como Funciona o Evento
+          Como Funciona o {''}
+          <span className="relative">
+           Evento
+                <Image
+                  src="/lp/how-works-highlight.svg"
+                  className="max-w-none absolute -left-2 -bottom-[20%] z-10 w-[calc(100%+16px)]"
+                  alt="Linha"
+                  width={260}
+                  height={76}           
+                />
+              </span>
         </h2>
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3">
           <Card.Root className="border border-white/20 bg-white/15 text-white">
