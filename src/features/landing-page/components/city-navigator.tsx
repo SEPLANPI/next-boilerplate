@@ -106,7 +106,7 @@ export function CityNavigator() {
             animate="center"
             exit="exit"
             transition={{ type: 'tween', duration: 0.3 }}
-            className="flex h-[300px] flex-col items-start xs:h-[260px] sm:h-[360px] md:h-[312px]"
+            className="flex h-[300px] flex-col items-start xs:h-[280px] sm:h-[360px] md:h-[320px]"
           >
             <ActivePanel />
           </motion.div>
