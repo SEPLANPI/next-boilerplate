@@ -274,7 +274,7 @@ export const theme = createTheme({
     dark: 8
   },
   primaryColor: 'govGreen',
-  autoContrast: false,
+  autoContrast: true,
   luminanceThreshold: 0.3,
   fontFamily:
     'Figtree, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji',
