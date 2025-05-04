@@ -8,19 +8,17 @@ import { CityNavigator } from './city-navigator'
 export function TerritorialContextSection() {
   return (
     <CityContextProvider>
-      <div className="w-full bg-stone-50 py-[144px]">
         <Section
           id="onde-estamos"
           spacing="lg"
           className="bg-lime-100 !py-12"
-          containerClassName="rounded-xl grid grid-cols-1 gap-8 sm:gap-16 sm:grid-cols-2"
+          containerClassName="rounded-xl grid grid-cols-1 gap-8 sm:grid-cols-12"
         >
-          <div className="relative col-start-1 row-start-1">
+          <CityNavigator />
+          <div className="relative col-start-1 row-start-1  sm:col-start-8 sm:col-span-5">
             <Map />
           </div>
-          <CityNavigator />
         </Section>
-      </div>
     </CityContextProvider>
   )
 }

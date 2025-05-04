@@ -25,8 +25,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { PropsWithChildren } from 'react'
 import { Carousel, CarouselSlide } from '@mantine/carousel'
-import { cn } from '@/lib/utils'
 import { TerritorialContextSection } from '@/features/landing-page/components/territorial-context-section'
+import { TitleBadge } from '@/features/landing-page/components/title-badge'
 
 function CheckListItem({ children }: PropsWithChildren) {
   return (
@@ -39,21 +39,6 @@ function CheckListItem({ children }: PropsWithChildren) {
   )
 }
 
-function TitleBadge({
-  children,
-  className
-}: PropsWithChildren<{ className?: string }>) {
-  return (
-    <span
-      className={cn(
-        'w-fit rounded-full border border-lime-600 bg-lime-100 px-2.5 py-1.5 text-[10px] font-semibold uppercase text-lime-600 sm:block',
-        className
-      )}
-    >
-      {children}
-    </span>
-  )
-}
 
 export default function LandingPage() {
   return (
@@ -100,9 +85,50 @@ export default function LandingPage() {
         <span className="flex-1 bg-[#EF4123]" />
         <span className="flex-1 bg-blue-700" />
       </div>
+      <Section id="sobre" 
+
+      >
+        <div className="grid grid-cols-1 items-center gap-10 sm:grid-cols-2 md:grid-cols-12">
+          <Image
+            className="w-full mx-auto max-w-[50%] sm:max-w-none rounded-md object-cover md:col-span-5"
+            src="/lp/senhor-fundo-verde.png"
+            width={900}
+            height={900}
+            quality={100}
+            alt="Senhor com paisagem verde ao fundo com caixas verdes ao lado"
+          />
+          <div className="flex flex-col gap-8 md:col-span-7">
+            <TitleBadge>O QUE É?</TitleBadge>
+            <h2 className="text-xl font-semibold md:text-4xl">
+              <span className="block">Diálogos pelo Piauí:</span>
+              <span>O Governo mais perto de você</span>
+            </h2>
+            <p className="text-sm sm:text-base">
+              O <span className="font-semibold">Diálogos pelo Piauí</span> é uma
+              iniciativa do Governo do Estado que promove a escuta ativa da
+              sociedade para garantir que o planejamento governamental esteja
+              alinhado com as reais necessidades da população. O evento percorre
+              os 12 Territórios de Desenvolvimento (TDs) do estado, criando um
+              espaço de participação cidadã na revisão do Plano Plurianual (PPA)
+              2024-2027. Através de oficinas temáticas e plenárias, a população
+              pode contribuir com propostas para as políticas públicas,
+              fortalecendo a transparência e a governança participativa.
+            </p>
+            <Button
+            component={Link}
+            href="/inscrever-se"
+            color="lime.5"
+            className="w-fit"
+          >
+            Quero garantir minha vaga
+          </Button>
+          </div>
+        </div>
+      </Section>
       <TerritorialContextSection />
       <Section
-        className="bg-stone-50"
+      spacing='lg'
+        className="bg-stone-50 !pb-0"
         containerClassName="text-center flex flex-col items-center"
       >
         <h2 className="md:16 mx-auto mb-8 text-center text-[22px] font-semibold leading-[32px] xs:text-[34px] xs:leading-[46px] sm:text-[46px] sm:leading-[56px]">
@@ -148,7 +174,7 @@ export default function LandingPage() {
           </div>
         </div>
       </Section>
-      <Section className="relative !py-0">
+      <Section className="relative ">
         <div className="absolute left-0 top-0 -z-10 h-1/2 w-full bg-stone-50"></div>
         <div className="relative flex flex-col items-center space-y-8 rounded-xl bg-lime-700 px-6 py-20 text-center sm:px-8">
           <Image
@@ -176,37 +202,6 @@ export default function LandingPage() {
             >
               Quero me inscrever agora
             </Button>
-          </div>
-        </div>
-      </Section>
-
-      <Section id="sobre">
-        <div className="grid grid-cols-1 items-center gap-10 sm:grid-cols-2 md:grid-cols-3">
-          <Image
-            className="h-full rounded-md object-cover"
-            src="/lp/senhor-fundo-verde.png"
-            width={900}
-            height={900}
-            quality={100}
-            alt="Senhor com paisagem verde ao fundo com caixas verdes ao lado"
-          />
-          <div className="flex flex-col gap-8 md:col-span-2">
-            <TitleBadge>O QUE É?</TitleBadge>
-            <h2 className="text-xl font-semibold md:text-4xl">
-              <span className="block">Diálogos pelo Piauí:</span>
-              <span>O Governo mais perto de você</span>
-            </h2>
-            <p className="text-sm sm:text-base">
-              O <span className="font-semibold">Diálogos pelo Piauí</span> é uma
-              iniciativa do Governo do Estado que promove a escuta ativa da
-              sociedade para garantir que o planejamento governamental esteja
-              alinhado com as reais necessidades da população. O evento percorre
-              os 12 Territórios de Desenvolvimento (TDs) do estado, criando um
-              espaço de participação cidadã na revisão do Plano Plurianual (PPA)
-              2024-2027. Através de oficinas temáticas e plenárias, a população
-              pode contribuir com propostas para as políticas públicas,
-              fortalecendo a transparência e a governança participativa.
-            </p>
           </div>
         </div>
       </Section>

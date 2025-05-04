@@ -10,7 +10,3 @@ export interface City {
   territory: string
   value: CityValue
 }
-
-export interface CityPanelProps {
-  className?: string
-}

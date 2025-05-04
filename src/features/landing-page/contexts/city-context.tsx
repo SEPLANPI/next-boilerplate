@@ -44,6 +44,8 @@ type CityContextType = {
   progress: number
   isFirst: boolean
   isLast: boolean
+  slideDirection: number
+  setSlideDirection: (direction: number) => void
 }
 
 const CityContext = createContext<CityContextType | undefined>(undefined)
@@ -52,6 +54,7 @@ export function CityContextProvider({ children }: { children: ReactNode }) {
   const [selectedCity, setSelectedCity] = useState<City | null>(
     cityByValue['campo-maior']
   )
+  const [slideDirection, setSlideDirection] = useState(0)
 
   const activeCity = selectedCity?.value || 'campo-maior'
   const currentIndex = cityOrder.indexOf(activeCity)
@@ -61,6 +64,7 @@ export function CityContextProvider({ children }: { children: ReactNode }) {
 
   const handleNextCity = () => {
     if (currentIndex < cityOrder.length - 1) {
+      setSlideDirection(1)
       const nextValue = cityOrder[currentIndex + 1]
       setSelectedCity(cityByValue[nextValue])
     }
@@ -68,22 +72,33 @@ export function CityContextProvider({ children }: { children: ReactNode }) {
 
   const handlePrevCity = () => {
     if (currentIndex > 0) {
+      setSlideDirection(-1)
       const prevValue = cityOrder[currentIndex - 1]
       setSelectedCity(cityByValue[prevValue])
     }
+  }
+
+  const handleSetSelectedCity = (city: City | null) => {
+    if (city) {
+      const newIndex = cityOrder.indexOf(city.value)
+      setSlideDirection(newIndex > currentIndex ? 1 : -1)
+    }
+    setSelectedCity(city)
   }
 
   return (
     <CityContext.Provider
       value={{
         selectedCity,
-        setSelectedCity,
+        setSelectedCity: handleSetSelectedCity,
         activeCity,
         handleNextCity,
         handlePrevCity,
         progress,
         isFirst,
-        isLast
+        isLast,
+        slideDirection,
+        setSlideDirection
       }}
     >
       {children}
