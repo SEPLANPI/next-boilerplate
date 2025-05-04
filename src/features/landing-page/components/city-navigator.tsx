@@ -7,7 +7,6 @@ import { useCityContext } from '../contexts/city-context'
 import { CampoMaiorPanel } from './city-panels/campo-maior-panel'
 import { PicosPanel } from './city-panels/picos-panel'
 import { PiripiriPanel } from './city-panels/piripiri-panel'
-import { useState } from 'react'
 
 const slideVariants = {
   enter: (direction: number) => ({
@@ -82,28 +81,18 @@ export function CityNavigator() {
     handlePrevCity,
     progress,
     isFirst,
-    isLast
+    isLast,
+    slideDirection
   } = useCityContext()
-  const [slideDirection, setSlideDirection] = useState(0)
 
   const ActivePanel = CITY_PANELS[activeCity]
 
-  const handleNext = () => {
-    setSlideDirection(1)
-    handleNextCity()
-  }
-
-  const handlePrev = () => {
-    setSlideDirection(-1)
-    handlePrevCity()
-  }
-
   return (
-    <div className="flex flex-col items-start overflow-hidden rounded-lg bg-white p-5 shadow-xl sm:p-8">
+    <div className="sm:col-span-7 flex flex-col items-start overflow-hidden rounded-lg bg-white p-5 shadow-xl sm:p-8">
       <ProgressBar
         progress={progress}
-        onNext={handleNext}
-        onPrev={handlePrev}
+        onNext={handleNextCity}
+        onPrev={handlePrevCity}
         isFirst={isFirst}
         isLast={isLast}
       />
@@ -117,7 +106,7 @@ export function CityNavigator() {
             animate="center"
             exit="exit"
             transition={{ type: 'tween', duration: 0.3 }}
-            className="flex h-[300px] flex-col items-start space-y-3 xs:h-[240px] sm:h-[360px] md:h-[312px]"
+            className="flex h-[300px] flex-col items-start xs:h-[260px] sm:h-[360px] md:h-[312px]"
           >
             <ActivePanel />
           </motion.div>

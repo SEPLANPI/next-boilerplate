@@ -13,14 +13,6 @@ export function Map() {
   const ref = useRef(null)
   const { selectedCity, setSelectedCity } = useCityContext()
 
-  const imageProps = {
-    alt: 'Mapa do Piauí com destaque para o Vale do Rio Guaribas',
-    fill: true,
-    quality: 100,
-    className: 'object-contain',
-    src: '/lp/mapa.svg'
-  } as const
-
   const getSlideAnimation = (position: City['position']) => {
     switch (position) {
       case 'top':
@@ -43,7 +35,13 @@ export function Map() {
       whileInView="visible"
       className="relative mx-auto aspect-[434/611] max-h-[50vh] overflow-visible sm:absolute sm:top-1/2 sm:max-h-none sm:w-[90%] sm:-translate-y-1/2"
     >
-      <Image {...imageProps} />
+      <Image
+        alt="Mapa do Piauí com destaque para o Vale do Rio Guaribas"
+        fill
+        quality={100}
+        className="object-contain"
+        src="/lp/mapa.svg"
+      />
       {piauiCities.map((city, index) => (
         <div
           key={city.value}
@@ -108,7 +106,7 @@ export function Map() {
                 transition: { duration: 0.2 }
               }}
               whileTap={{ scale: 0.98 }}
-              onClick={() => setSelectedCity?.(city)}
+              onClick={() => setSelectedCity(city)}
             >
               <span className="flex items-center gap-1.5">
                 {index === piauiCities.length - 1 ? (
