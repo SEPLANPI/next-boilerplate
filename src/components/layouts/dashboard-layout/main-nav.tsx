@@ -11,9 +11,6 @@ import { EventSelect } from './event-select'
 
 export function MainNav({ config }: MainNavProps) {
   const { collapsed, toggleCollapsed } = useSidebar()
-  const defaultLogo = (
-    <span className="text-xl font-extrabold text-green-900">PI</span>
-  )
 
   return (
     <aside
@@ -27,25 +24,22 @@ export function MainNav({ config }: MainNavProps) {
         <div
           className={`flex items-center ${collapsed ? 'justify-center' : 'space-x-2'} `}
         >
-          {collapsed ? (
-            <Image
-              src={'/logo/icon/verde-verde.png'}
-              alt={config.app.name}
-              width={120}
-              height={120}
-              className="size-10"
-              quality={100}
-            />
-          ) : (
-            <Image
-              src={'/logo/horizontal/verde-verde.png'}
-              alt={config.app.name}
-              width={205}
-              height={56}
-              className="h-7 w-auto"
-              quality={100}
-            />
-          )}
+          <Image
+            src={config.app.logos.collapsed}
+            alt={config.app.name}
+            width={120}
+            height={120}
+            className={`size-10 ${!collapsed && 'hidden'}`}
+            quality={100}
+          />
+          <Image
+            src={config.app.logos.expanded}
+            alt={config.app.name}
+            width={300}
+            height={56}
+            className={`h-7 w-auto ${collapsed && 'hidden'}`}
+            quality={100}
+          />
         </div>
         {!collapsed && (
           <ActionIcon

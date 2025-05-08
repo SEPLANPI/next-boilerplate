@@ -5,7 +5,11 @@ import { BarChartBig, ClipboardList, FileUser, Users, Vote } from 'lucide-react'
 
 export const sidebarConfig: SidebarConfig = {
   app: {
-    name: 'Diálogos'
+    name: 'Diálogos',
+    logos: {
+      collapsed: '/logo/icon/verde-verde.png',
+      expanded: '/logo/horizontal/verde-verde.png'
+    }
   },
   sections: [
     {

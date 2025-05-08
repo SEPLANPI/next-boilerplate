@@ -17,7 +17,10 @@ export interface NavigationSection {
 
 export interface AppConfig {
   name: string
-  logo?: string
+  logos: {
+    collapsed: string
+    expanded: string
+  }
 }
 
 export interface SidebarConfig {
