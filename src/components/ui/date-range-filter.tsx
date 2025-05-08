@@ -172,7 +172,7 @@ export function DateRangeFilter({
                 </Button>
               </div>
               {tempRange.fromDate && tempRange.toDate ? (
-                <p className="text-xs font-medium text-secondary-foreground">
+                <p className="text-xs font-medium">
                   {dayjs(tempRange.fromDate).format('D [de] MMMM[, ]YYYY')} -{' '}
                   {dayjs(tempRange.toDate).format('D [de] MMMM[, ]YYYY')}
                 </p>

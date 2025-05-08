@@ -34,7 +34,7 @@ function StepStatus({ status }: { status: StepStatus }) {
   if (status === 'error') {
     return <CircleAlert className="size-5 text-red-600" />
   }
-  return <CircleDotDashed className="size-5 text-secondary-foreground" />
+  return <CircleDotDashed className="size-5" />
 }
 
 export type FormValues = InitialFormValues<typeof personSchema>
@@ -48,7 +48,7 @@ export function RegisterPersonForm() {
       ...createInitialFormValues(personSchema),
       email: ''
     },
-    validate: zodResolver(personSchema),
+    validate: zodResolver(personSchema)
   })
 
   const steps = useMemo(
@@ -143,7 +143,8 @@ export function RegisterPersonForm() {
       PLENARIA: 'ouvinte'
     } as const
 
-    const registrationType =  registrationMap[values.tipo_inscricao as RegistrationType] 
+    const registrationType =
+      registrationMap[values.tipo_inscricao as RegistrationType]
 
     const payload = {
       nome: values.nome,
@@ -152,10 +153,13 @@ export function RegisterPersonForm() {
       email: values.email || null,
       municipio_id: values.municipio_id,
       tipo_inscricao: registrationType,
-      data_nascimento: values.data_nascimento instanceof Date 
-        ? values.data_nascimento.toISOString().split('T')[0]
-        : null,
-      ...(values.tipo_inscricao === 'OFICINA' ? { eixo_id: values.eixo_id } : {}),
+      data_nascimento:
+        values.data_nascimento instanceof Date
+          ? values.data_nascimento.toISOString().split('T')[0]
+          : null,
+      ...(values.tipo_inscricao === 'OFICINA'
+        ? { eixo_id: values.eixo_id }
+        : {})
     }
 
     const result = await registerPerson(payload)

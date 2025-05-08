@@ -22,7 +22,7 @@ export function ValidateCounselorModal({
         title="Validar Cadastro"
         centered
         classNames={{
-          title: 'text-secondary-foreground font-semibold'
+          title: ' font-semibold'
         }}
       >
         <ValidateCounselorForm

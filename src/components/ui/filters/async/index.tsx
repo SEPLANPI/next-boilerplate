@@ -69,9 +69,7 @@ export function AsyncFilter<T extends object = DefaultOption>({
           {isFetching ? (
             <div className="flex flex-col items-center space-y-4 p-6">
               <Loader size="sm" />
-              <span className="text-sm font-semibold text-secondary-foreground">
-                Carregando...
-              </span>
+              <span className="text-sm font-semibold">Carregando...</span>
             </div>
           ) : error ? (
             <Alert color="red" title="Erro ao carregar opções" className="m-2">

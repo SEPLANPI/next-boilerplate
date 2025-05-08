@@ -19,7 +19,7 @@ export function PersonalDataStep({
 
   return (
     <>
-      <p className="col-span-2 text-sm text-secondary-foreground">
+      <p className="col-span-2 text-sm">
         Os seus dados cadastrados no GovPI Cidadão serão importados
         automaticamente para esta etapa do formulário. Certifique-se de que as
         informações estão corretas. Caso necessário, atualize seu cadastro

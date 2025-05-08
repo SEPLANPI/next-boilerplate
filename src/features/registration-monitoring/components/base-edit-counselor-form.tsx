@@ -75,7 +75,7 @@ function SectionHeader({ title }: { title: string }) {
   return (
     <div className="col-span-2 mb-4 flex flex-row items-center justify-between gap-2 rounded-sm bg-gray-100 px-3 py-2">
       <div>
-        <h2 className="text-sm font-bold text-secondary-foreground">{title}</h2>
+        <h2 className="text-sm font-bold">{title}</h2>
       </div>
     </div>
   )
@@ -87,7 +87,7 @@ export function BaseEditCounselorForm({
   onSubmit,
   isSubmitting,
   error,
-  
+
   onComplete
 }: Props) {
   const initialValues = useMemo(
@@ -299,7 +299,6 @@ export function BaseEditCounselorForm({
             {...form.getInputProps('telefone')}
             onAccept={form.getInputProps('telefone').onChange}
             onChange={() => {}}
-
           />
         </Input.Wrapper>
       </Section>
@@ -332,7 +331,6 @@ export function BaseEditCounselorForm({
             {...form.getInputProps('endereco.cep')}
             onAccept={form.getInputProps('endereco.cep').onChange}
             onChange={() => {}}
-
           />
         </Input.Wrapper>
 

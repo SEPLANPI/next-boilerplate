@@ -38,7 +38,7 @@ function SectionSkeleton({
     <>
       <div className="mb-4 flex flex-row items-center justify-between gap-2 rounded-sm bg-gray-100 px-3 py-2">
         <div>
-          <h2 className="text-sm font-bold text-gray-600">{title}</h2>
+          <h2 className="text-sm font-bold">{title}</h2>
         </div>
       </div>
       <div className="grid grid-cols-12 px-2">

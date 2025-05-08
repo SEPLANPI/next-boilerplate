@@ -16,15 +16,12 @@ export function CreateInvitationModal() {
         title="Gerar link de Cadastro"
         centered
         classNames={{
-          title: 'text-secondary-foreground font-semibold'
+          title: ' font-semibold'
         }}
       >
         <CreateInvitationForm id="create-invitation" />
       </Modal>
-      <Button
-        onClick={open}
-        leftSection={<Link className="size-4" />}
-      >
+      <Button onClick={open} leftSection={<Link className="size-4" />}>
         Criar link de convite
       </Button>
     </>

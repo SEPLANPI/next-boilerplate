@@ -70,12 +70,16 @@ export function ProposalsTable({ data, params }: ProposalsTableProps) {
                 onClick={() => handleRowClick(proposal)}
               >
                 <TableTd w="50%">
-                  <Text size="sm" truncate className="max-w-[650px]">
+                  <Text
+                    size="sm"
+                    truncate
+                    className="text-content-emphasis max-w-[650px]"
+                  >
                     {proposal.titulo}
                   </Text>
                 </TableTd>
                 <TableTd w="40%">
-                  <span className="rounded-full border p-1.5 text-xs text-secondary-foreground">
+                  <span className="rounded-full border p-1.5 text-xs">
                     {proposal.eixo.nome}
                   </span>
                 </TableTd>

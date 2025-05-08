@@ -55,9 +55,11 @@ export function VotingTable({ data, totalPontos }: VotingTableProps) {
 
           return (
             <TableTr key={proposal.titulo}>
-              <TableTd>{proposal.titulo}</TableTd>
+              <TableTd className="text-content-emphasis">
+                {proposal.titulo}
+              </TableTd>
               <TableTd>
-                <span className="whitespace-nowrap rounded-full border p-1.5 text-xs text-secondary-foreground">
+                <span className="whitespace-nowrap rounded-full border p-1.5 text-xs">
                   {proposal.eixo.descricao}
                 </span>
               </TableTd>

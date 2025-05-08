@@ -16,7 +16,7 @@ export default function Successo() {
         </span>
       </span>
       <h1 className="text-2xl font-bold">Cadastro concluído com sucesso!</h1>
-      <p className="max-w-md text-center text-secondary-foreground">
+      <p className="max-w-md text-center">
         Agradecemos sua participação. Sua inscrição foi realizada com sucesso.
       </p>
       <Button component={Link} href="/conselheiros/dados">

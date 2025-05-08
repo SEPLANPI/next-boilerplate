@@ -14,7 +14,7 @@ export default function VotingThanksPage() {
         />
         <div className="flex flex-col space-y-4 rounded-md bg-white p-6 shadow-md">
           <h1 className="font-bold sm:text-lg">Voto registrado com sucesso!</h1>
-          <div className="space-y-2 text-sm text-secondary-foreground">
+          <div className="space-y-2 text-sm">
             <p>Muito obrigado por participar do Diálogos pelo Piauí.</p>
             <p>
               Sua opinião foi registrada e vai ajudar a construir soluções

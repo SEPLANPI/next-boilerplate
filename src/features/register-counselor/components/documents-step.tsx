@@ -10,7 +10,7 @@ export function DocumentsStep({
 }) {
   return (
     <>
-      <p className="col-span-2 text-sm font-semibold text-secondary-foreground">
+      <p className="col-span-2 text-sm font-semibold">
         O participante deve anexar os seguintes arquivos:
       </p>
       <FileInput

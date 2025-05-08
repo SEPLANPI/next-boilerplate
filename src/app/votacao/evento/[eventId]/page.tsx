@@ -23,7 +23,7 @@ export default async function WelcomeVotingPage({
         <h1 className="mx-auto mb-4 text-center text-lg font-bold">
           Sua Voz, Nosso Futuro.
         </h1>
-        <div className="space-y-2 text-sm text-secondary-foreground">
+        <div className="space-y-2 text-sm">
           <p>
             Aqui você pode participar das decisões importantes do nosso estado.
           </p>

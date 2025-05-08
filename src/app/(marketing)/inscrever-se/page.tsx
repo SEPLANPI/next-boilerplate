@@ -31,7 +31,7 @@ export default function Register() {
         />
         <div className="flex flex-col space-y-4 rounded-md bg-white p-6 shadow-md">
           <h1 className="text-xl font-bold">Cadastro de Participantes</h1>
-          <p className="text-secondary-foreground">
+          <p className="">
             Preencha os dados abaixo para garantir sua participação no evento e
             contribuir com ideias para um futuro mais justo e sustentável.
           </p>

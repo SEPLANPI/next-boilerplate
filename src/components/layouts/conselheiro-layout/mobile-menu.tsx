@@ -56,9 +56,7 @@ export function MobileMenu({ items }: MobileMenuProps) {
             <p className="w-full truncate text-xs font-medium">
               {data?.user.name}
             </p>
-            <span className="w-full truncate text-xs text-secondary-foreground">
-              {data?.user.email}
-            </span>
+            <span className="w-full truncate text-xs">{data?.user.email}</span>
           </div>
         </div>
         <Menu.Item component={Link} href="/api/auth/sign-out?redirectTo=/">

@@ -101,7 +101,7 @@ export function ValueRangeFilter({
             <>
               <Divider
                 orientation="vertical"
-                className="m-2 border-govBlue-300"
+                className="border-govBlue-300 m-2"
               />
               <p className="text-xs font-semibold uppercase">
                 {formatValueRange()}
@@ -118,7 +118,7 @@ export function ValueRangeFilter({
               <div
                 data-in-range={isInRange(item.value)}
                 key={item.value}
-                className="w-2 flex-1 rounded-sm bg-gray-300 transition-colors data-[in-range=true]:bg-govBlue-600"
+                className="data-[in-range=true]:bg-govBlue-600 w-2 flex-1 rounded-sm bg-gray-300 transition-colors"
                 style={{
                   height: `${(item.count / maxCount) * 100}px` // Scale height to max 100px
                 }}
@@ -139,9 +139,7 @@ export function ValueRangeFilter({
           <div className="flex items-center space-x-2">
             <TextInput
               leftSection={
-                <span className="mt-0.5 block text-sm font-medium text-secondary-foreground">
-                  R$
-                </span>
+                <span className="mt-0.5 block text-sm font-medium">R$</span>
               }
               value={tempRange.fromValue?.toLocaleString()}
               onChange={handleFromValueChange}
@@ -150,9 +148,7 @@ export function ValueRangeFilter({
             <Minus className="size-3" />
             <TextInput
               leftSection={
-                <span className="mt-0.5 block text-sm font-medium text-secondary-foreground">
-                  R$
-                </span>
+                <span className="mt-0.5 block text-sm font-medium">R$</span>
               }
               value={tempRange.toValue?.toLocaleString()}
               onChange={handleToValueChange}

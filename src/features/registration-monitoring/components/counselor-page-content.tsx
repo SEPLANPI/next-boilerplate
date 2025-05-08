@@ -22,9 +22,7 @@ export async function CounselorPageContent({ id }: { id: string }) {
         <div className="flex w-full items-center justify-between">
           <div className="flex flex-col space-y-1">
             <h1 className="text-lg font-semibold">{data.nome}</h1>
-            <p className="text-sm text-secondary-foreground">
-              {data.conselho.nome}
-            </p>
+            <p className="text-sm">{data.conselho.nome}</p>
           </div>
           <CounselorStatusBadge status={data.status_atual} />
         </div>

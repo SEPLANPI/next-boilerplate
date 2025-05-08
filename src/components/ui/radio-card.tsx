@@ -14,7 +14,7 @@ export function RadioCard({
 }) {
   return (
     <Radio.Card
-      className="flex items-center space-x-4 rounded border p-3 text-sm text-secondary-foreground transition-colors disabled:bg-gray-50 disabled:text-gray-500 data-[checked=true]:border-govGreen-600 data-[checked=true]:bg-govGreen-50/50"
+      className="data-[checked=true]:border-primary-600 data-[checked=true]:bg-primary-50/50 flex items-center space-x-4 rounded border p-3 text-sm transition-colors disabled:bg-gray-50 disabled:text-gray-500"
       value={value}
       disabled={disabled}
     >

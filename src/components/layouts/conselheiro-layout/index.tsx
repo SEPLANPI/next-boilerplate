@@ -46,9 +46,7 @@ export async function ConselheiroLayout({ children }: PropsWithChildren) {
             <div className="flex flex-col space-y-2">
               {data.motivo_rejeicao && (
                 <>
-                  <p className="text-sm text-secondary-foreground">
-                    {data.motivo_rejeicao}
-                  </p>
+                  <p className="text-sm">{data.motivo_rejeicao}</p>
                   <Divider />
                 </>
               )}
@@ -56,7 +54,7 @@ export async function ConselheiroLayout({ children }: PropsWithChildren) {
                 <span className="text-xs font-semibold">
                   Última atualização
                 </span>
-                <span className="text-sm text-secondary-foreground">
+                <span className="text-sm">
                   {formatDate(
                     data.validado_em,
                     'DD [de] MMMM [de] YYYY [às] HH:mm'

@@ -57,21 +57,17 @@ export function ProposalModal({
       onClose={onClose}
       title="Visualizar proposta"
       classNames={{
-        title: 'text-secondary-foreground font-semibold'
+        title: ' font-semibold'
       }}
       size="lg"
     >
       <div className="mb-6 flex flex-col space-y-4">
         <div>
-          <span className="text-xs font-semibold text-secondary-foreground">
-            Título
-          </span>
+          <span className="text-xs font-semibold">Título</span>
           <p className="text-sm">{proposal?.titulo}</p>
         </div>
         <div>
-          <span className="text-xs font-semibold text-secondary-foreground">
-            Descrição
-          </span>
+          <span className="text-xs font-semibold">Descrição</span>
           <p className="text-sm">{proposal?.conteudo}</p>
         </div>
       </div>
@@ -101,7 +97,7 @@ export function ProposalModal({
           Confirmar pontos
         </Button>
       </div>
-      <p className="mt-2 text-center text-xs text-secondary-foreground">
+      <p className="mt-2 text-center text-xs">
         Você tem <span className="font-semibold">{remainingPoints}</span> pontos
         restantes
       </p>

@@ -74,7 +74,7 @@ export function AxisCards() {
 
       <AxisCard className="col-span-3">
         <AxisCard.Header>
-          <span className="bg-emerald-50 text-emerald-600 flex size-7 items-center justify-center rounded-full">
+          <span className="flex size-7 items-center justify-center rounded-full bg-emerald-50 text-emerald-600">
             <HeartPulse className="size-4" />
           </span>
           <AxisCard.Title>Saúde</AxisCard.Title>
@@ -152,7 +152,7 @@ export function AxisCards() {
 
       <AxisCard className="col-span-4">
         <AxisCard.Header>
-          <span className="flex size-7 items-center justify-center rounded-full bg-gray-50 text-gray-600">
+          <span className="flex size-7 items-center justify-center rounded-full bg-gray-50">
             <Landmark className="size-4" />
           </span>
           <AxisCard.Title>Infraestrutura</AxisCard.Title>

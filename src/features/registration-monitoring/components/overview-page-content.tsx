@@ -32,16 +32,16 @@ export async function OverviewPageContent({
       <ExportButton />
       <div className="mb-6 flex w-full space-x-6">
         <div className="flex flex-1 flex-col items-center justify-center gap-1 rounded-md border bg-white p-6 shadow">
-          <span className="text-4xl font-semibold">{data.total_inscritos}</span>
-          <span className="text-sm text-secondary-foreground">
-            Total de Inscritos
+          <span className="text-content-emphasis text-4xl font-semibold">
+            {data.total_inscritos}
           </span>
+          <span className="text-sm">Total de Inscritos</span>
         </div>
         <div className="flex flex-1 flex-col items-center justify-center gap-1 rounded-md border bg-white p-6 shadow">
-          <span className="text-4xl font-semibold">{data.total_votantes}</span>
-          <span className="text-sm text-secondary-foreground">
-            Inscritos em Oficinas
+          <span className="text-content-emphasis text-4xl font-semibold">
+            {data.total_votantes}
           </span>
+          <span className="text-sm">Inscritos em Oficinas</span>
         </div>
       </div>
 
@@ -55,7 +55,7 @@ export async function OverviewPageContent({
           dataKey="name"
           yAxisProps={{ width: 50 }}
           barProps={{ radius: 6 }}
-          series={[{ name: 'total', color: 'govGreen.6' }]}
+          series={[{ name: 'total', color: 'primary.6' }]}
         />
       </div>
 
@@ -75,7 +75,7 @@ export async function OverviewPageContent({
             dataKey="name"
             yAxisProps={{ width: 200, tickMargin: 20 }}
             barProps={{ radius: 6 }}
-            series={[{ name: 'total', color: 'govGreen.6' }]}
+            series={[{ name: 'total', color: 'primary.6' }]}
           />
         </ScrollArea>
       </div>

@@ -7,8 +7,7 @@ import {
   InputWrapper,
   Table,
   VariantColorsResolver,
-  Badge,
-  virtualColor
+  Badge
 } from '@mantine/core'
 
 const variantColorResolver: VariantColorsResolver = (button) => {
@@ -189,6 +188,19 @@ export const theme = createTheme({
       '#00531E',
       '#003D16'
     ],
+    //govGreen
+    primary: [
+      '#F2FFF6',
+      '#E0FFE9',
+      '#C4FFD7',
+      '#97FFBA',
+      '#61FF9A',
+      '#009E3A',
+      '#00822F',
+      '#006A26',
+      '#00531E',
+      '#003D16'
+    ],
     lime: [
       '#F7FEE7',
       '#ECFCCB',
@@ -288,22 +300,7 @@ export const theme = createTheme({
       '#065F46',
       '#064E3B',
       '#022C22'
-    ],
-    'content-emphasis': virtualColor({
-      name: 'content-emphasis',
-      light: 'var(--mantine-color-gray-8)',
-      dark: 'var(--mantine-color-gray-8)'
-    }),
-    'content-default': virtualColor({
-      name: 'content-default',
-      light: 'var(--mantine-color-gray-6)',
-      dark: 'var(--mantine-color-gray-6)'
-    }),
-    'content-muted': virtualColor({
-      name: 'content-muted',
-      light: 'var(--mantine-color-gray-5)',
-      dark: 'var(--mantine-color-gray-5)'
-    })
+    ]
   },
   primaryShade: {
     light: 6,
@@ -408,7 +405,6 @@ export const theme = createTheme({
     xl: '0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)',
     '2xl': '0 25px 50px -12px rgb(0 0 0 / 0.25)'
   },
-  other: {},
   components: {
     Badge: Badge.extend({
       classNames: (theme, props) => {
@@ -431,13 +427,14 @@ export const theme = createTheme({
     }),
     InputWrapper: InputWrapper.extend({
       classNames: {
-        label: 'text-secondary-foreground'
+        label: ''
       }
     }),
     Input: Input.extend({
       classNames: (theme, props) => {
         return {
-          input: '[&:not(:focus)]:border-gray-200 shadow-xs'
+          input:
+            'transition [&:not(:focus)]:border-gray-200 shadow-xs placeholder:text-content-muted'
         }
       }
     }),
@@ -448,7 +445,7 @@ export const theme = createTheme({
         }
       }),
       classNames: {
-        thead: 'bg-gray-100 text-secondary-foreground [&>tr]:border-0',
+        thead: 'bg-gray-100  [&>tr]:border-0',
         th: 'font-semibold last:rounded-r-md first:rounded-l-md'
       }
     }),

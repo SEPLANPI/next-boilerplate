@@ -66,8 +66,10 @@ export function RegistrationTable({ data, params }: RegistrationTableProps) {
                     variant="filled"
                   />
                   <div className="flex flex-col">
-                    <span className="font-medium">{registration.nome}</span>
-                    <span className="text-sm text-gray-600">
+                    <span className="text-content-emphasis font-medium">
+                      {registration.nome}
+                    </span>
+                    <span className="text-sm">
                       {registration.cpf || 'CPF não informado'}
                     </span>
                   </div>
@@ -79,7 +81,7 @@ export function RegistrationTable({ data, params }: RegistrationTableProps) {
                 </Badge>
               </TableTd>
               <TableTd>
-                <span className="rounded-full border p-1.5 text-xs text-secondary-foreground">
+                <span className="rounded-full border p-1.5 text-xs">
                   {registration.eixo.nome}
                 </span>
               </TableTd>

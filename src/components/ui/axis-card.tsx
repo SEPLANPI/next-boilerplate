@@ -66,13 +66,7 @@ interface CardTitleProps {
 }
 
 function CardTitle({ children, className = '' }: CardTitleProps) {
-  return (
-    <h3
-      className={`text-md font-semibold text-secondary-foreground ${className}`}
-    >
-      {children}
-    </h3>
-  )
+  return <h3 className={`text-md font-semibold ${className}`}>{children}</h3>
 }
 AxisCard.Title = CardTitle
 
@@ -99,7 +93,7 @@ interface CardMetricProps {
 function CardMetric({ label, value, className = '' }: CardMetricProps) {
   return (
     <div className={`flex flex-col ${className}`}>
-      <span className="text-xs text-secondary-foreground">{label}</span>
+      <span className="text-xs">{label}</span>
       <span className="text-3xl font-semibold">{value}</span>
     </div>
   )
@@ -119,9 +113,7 @@ function CardBadgeGroup({
 }: CardBadgeGroupProps) {
   return (
     <div className={`flex flex-col space-y-2 ${className}`}>
-      {label && (
-        <span className="text-xs text-secondary-foreground">{label}</span>
-      )}
+      {label && <span className="text-xs">{label}</span>}
       {children}
     </div>
   )

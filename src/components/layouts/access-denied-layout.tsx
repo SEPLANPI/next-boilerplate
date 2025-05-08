@@ -24,11 +24,11 @@ export async function AccessDeniedLayout({
 
         <div className="flex flex-col items-start gap-4">
           <h1 className="text-4xl font-bold">{title}</h1>
-          <p className="text-secondary-foreground">{description}</p>
+          <p className="">{description}</p>
         </div>
 
         {suggestions && suggestions.length > 0 && (
-          <div className="flex flex-col items-start gap-2 text-secondary-foreground">
+          <div className="flex flex-col items-start gap-2">
             <p className="font-medium">O que você pode fazer:</p>
             <ul className="ml-5 list-disc space-y-1">
               {suggestions.map((suggestion, index) => (

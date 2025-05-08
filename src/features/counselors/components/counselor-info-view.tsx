@@ -45,16 +45,11 @@ function docsSection(docsData: CounselorInfo) {
         {docsData.documentos.map((doc) => (
           <>
             <GridCol className="p-2" span={12}>
-              <Text
-                fw={600}
-                size="sm"
-                className="pb-1 text-gray-600"
-                key={doc.id}
-              >
+              <Text fw={600} size="sm" className="pb-1" key={doc.id}>
                 {getDocType(doc.tipo_documento)}
               </Text>
               <div className="flex gap-2">
-                  <File color="gray" className='size-10 stroke-1'/>
+                <File color="gray" className="size-10 stroke-1" />
                 {/* <Box className="flex min-h-12 min-w-16 items-center justify-center rounded-sm">
                 </Box> */}
                 <div className="w-full items-center overflow-hidden text-ellipsis whitespace-nowrap pt-1">
@@ -83,7 +78,7 @@ function bankInfoSection(bankData: CounselorInfo) {
         <Grid className="flex">
           <GridCol span={6}>
             <div className="overflow-hidden text-ellipsis whitespace-nowrap">
-              <span className="text-sm font-semibold text-gray-600">Banco</span>
+              <span className="text-sm font-semibold">Banco</span>
               <Text size="sm" truncate lineClamp={2}>
                 {bankData.dados_bancarios.banco.nome}
               </Text>
@@ -91,9 +86,7 @@ function bankInfoSection(bankData: CounselorInfo) {
           </GridCol>
           <GridCol span={6}>
             <div className="overflow-hidden text-ellipsis whitespace-nowrap">
-              <span className="text-sm font-semibold text-gray-600">
-                Número
-              </span>
+              <span className="text-sm font-semibold">Número</span>
               <Text size="sm" truncate lineClamp={2}>
                 {bankData.dados_bancarios.banco.codigo}
               </Text>
@@ -101,9 +94,7 @@ function bankInfoSection(bankData: CounselorInfo) {
           </GridCol>
           <GridCol span={6}>
             <div className="overflow-hidden text-ellipsis whitespace-nowrap">
-              <span className="text-sm font-semibold text-gray-600">
-                Agência
-              </span>
+              <span className="text-sm font-semibold">Agência</span>
               <Text size="sm" truncate>
                 {bankData.dados_bancarios.agencia}
               </Text>
@@ -111,9 +102,7 @@ function bankInfoSection(bankData: CounselorInfo) {
           </GridCol>
           <GridCol span={6}>
             <div className="overflow-hidden text-ellipsis whitespace-nowrap">
-              <span className="text-sm font-semibold text-gray-600">
-                Conta Corrente
-              </span>
+              <span className="text-sm font-semibold">Conta Corrente</span>
               <Text size="sm" truncate>
                 {bankData.dados_bancarios.conta}
               </Text>
@@ -121,7 +110,7 @@ function bankInfoSection(bankData: CounselorInfo) {
           </GridCol>
           <GridCol span={12}>
             <div className="overflow-hidden text-ellipsis whitespace-nowrap">
-              <span className="text-sm font-semibold text-gray-600">
+              <span className="text-sm font-semibold">
                 CPF do Titular da Conta
               </span>
               <Text size="sm" truncate>
@@ -131,9 +120,7 @@ function bankInfoSection(bankData: CounselorInfo) {
           </GridCol>
           <GridCol span={12}>
             <div className="overflow-hidden text-ellipsis whitespace-nowrap">
-              <span className="text-sm font-semibold text-gray-600">
-                Nome do titular
-              </span>
+              <span className="text-sm font-semibold">Nome do titular</span>
               <Text size="sm" truncate>
                 {bankData.dados_bancarios.nome_titular}
               </Text>
@@ -153,9 +140,7 @@ function eventSection(eventData: CounselorInfo) {
         <Grid className="flex">
           <GridCol span={12}>
             <div className="overflow-hidden text-ellipsis whitespace-nowrap">
-              <span className="text-sm font-semibold text-gray-600">
-                Nome do evento
-              </span>
+              <span className="text-sm font-semibold">Nome do evento</span>
               <Text size="sm" truncate lineClamp={2}>
                 {eventData.inscricoes[0].evento.nome || 'Não informado'}
               </Text>
@@ -163,7 +148,7 @@ function eventSection(eventData: CounselorInfo) {
           </GridCol>
           <GridCol span={12}>
             <div className="overflow-hidden text-ellipsis whitespace-nowrap">
-              <span className="text-sm font-semibold text-gray-600">
+              <span className="text-sm font-semibold">
                 Eixo de Participação
               </span>
               <Text size="sm" truncate lineClamp={2}>
@@ -173,9 +158,7 @@ function eventSection(eventData: CounselorInfo) {
           </GridCol>
           <GridCol span={12}>
             <div className="overflow-hidden text-ellipsis whitespace-nowrap">
-              <span className="text-sm font-semibold text-gray-600">
-                Data do evento
-              </span>
+              <span className="text-sm font-semibold">Data do evento</span>
               <Text size="sm" truncate lineClamp={2}>
                 {eventData.inscricoes[0].evento.data_evento &&
                 dayjs(eventData.inscricoes[0].evento.data_evento).isValid()
@@ -188,9 +171,7 @@ function eventSection(eventData: CounselorInfo) {
           </GridCol>
           <GridCol span={12}>
             <div className="overflow-hidden text-ellipsis whitespace-nowrap">
-              <span className="text-sm font-semibold text-gray-600">
-                Localização
-              </span>
+              <span className="text-sm font-semibold">Localização</span>
               <Text size="sm" truncate>
                 {eventData.inscricoes[0].evento.municipio.nome ||
                   'Não informado'}
@@ -211,7 +192,7 @@ function councilSection(councilData: CounselorInfo) {
         <Grid className="flex">
           <GridCol span={12}>
             <div className="overflow-hidden text-ellipsis whitespace-nowrap">
-              <span className="text-sm font-semibold text-gray-600">
+              <span className="text-sm font-semibold">
                 Representante de qual Conselho?
               </span>
               <Text size="sm" truncate lineClamp={2}>
@@ -221,7 +202,7 @@ function councilSection(councilData: CounselorInfo) {
           </GridCol>
           <GridCol span={12}>
             <div className="overflow-hidden text-ellipsis whitespace-nowrap">
-              <span className="text-sm font-semibold text-gray-600">
+              <span className="text-sm font-semibold">
                 Representação no conselho
               </span>
               <Text size="sm" truncate lineClamp={2}>
@@ -233,7 +214,7 @@ function councilSection(councilData: CounselorInfo) {
           </GridCol>
           <GridCol span={12}>
             <div className="overflow-hidden text-ellipsis whitespace-nowrap">
-              <span className="text-sm font-semibold text-gray-600">
+              <span className="text-sm font-semibold">
                 Composição no conselho
               </span>
               <Text size="sm" truncate>
@@ -257,9 +238,7 @@ function adressSection(adressData: CounselorInfo) {
             <>
               <GridCol span={6}>
                 <div className="overflow-hidden text-ellipsis whitespace-nowrap">
-                  <span className="text-sm font-semibold text-gray-600">
-                    Rua/Avenida
-                  </span>
+                  <span className="text-sm font-semibold">Rua/Avenida</span>
                   <Text size="sm" truncate lineClamp={2}>
                     {adressData.endereco.logradouro}
                   </Text>
@@ -267,9 +246,7 @@ function adressSection(adressData: CounselorInfo) {
               </GridCol>
               <GridCol span={6}>
                 <div className="overflow-hidden text-ellipsis whitespace-nowrap">
-                  <span className="text-sm font-semibold text-gray-600">
-                    Número
-                  </span>
+                  <span className="text-sm font-semibold">Número</span>
                   <Text size="sm" truncate lineClamp={2}>
                     {adressData.endereco.numero}
                   </Text>
@@ -277,9 +254,7 @@ function adressSection(adressData: CounselorInfo) {
               </GridCol>
               <GridCol span={6}>
                 <div className="overflow-hidden text-ellipsis whitespace-nowrap">
-                  <span className="text-sm font-semibold text-gray-600">
-                    Bairro
-                  </span>
+                  <span className="text-sm font-semibold">Bairro</span>
                   <Text size="sm" truncate>
                     {adressData.endereco.bairro}
                   </Text>
@@ -288,16 +263,14 @@ function adressSection(adressData: CounselorInfo) {
             </>
           )}
           <GridCol span={6}>
-            <span className="text-sm font-semibold text-gray-600">CEP</span>
+            <span className="text-sm font-semibold">CEP</span>
             <Text size="sm" truncate lineClamp={2}>
               {adressData.endereco.cep.replace(/(\d{5})(\d{3})/, '$1-$2')}
             </Text>
           </GridCol>
           <GridCol span={12}>
             <div className="overflow-hidden text-ellipsis whitespace-nowrap">
-              <span className="text-sm font-semibold text-gray-600">
-                Cidade
-              </span>
+              <span className="text-sm font-semibold">Cidade</span>
               <Text size="sm" truncate>
                 {adressData.endereco.municipio.nome}
               </Text>
@@ -305,18 +278,14 @@ function adressSection(adressData: CounselorInfo) {
           </GridCol>
           {adressData.endereco.tipo_zona === 'URBANA' ? (
             <GridCol span={12}>
-              <span className="text-sm font-semibold text-gray-600">
-                Complemento
-              </span>
+              <span className="text-sm font-semibold">Complemento</span>
               <Text size="sm" truncate lineClamp={2}>
                 {adressData.endereco.complemento || 'Não informado'}
               </Text>
             </GridCol>
           ) : (
             <GridCol span={12}>
-              <span className="text-sm font-semibold text-gray-600">
-                Referência
-              </span>
+              <span className="text-sm font-semibold">Referência</span>
               <Text size="sm" truncate lineClamp={2}>
                 {adressData.endereco.referencia || 'Não informado'}
               </Text>
@@ -336,7 +305,7 @@ function personalSection(personalData: CounselorInfo) {
         <Grid className="flex">
           <GridCol span={6}>
             <div className="overflow-hidden text-ellipsis whitespace-nowrap">
-              <span className="text-sm font-semibold text-gray-600">Nome</span>
+              <span className="text-sm font-semibold">Nome</span>
               <Text size="sm" truncate lineClamp={2}>
                 {personalData.nome}
               </Text>
@@ -344,9 +313,7 @@ function personalSection(personalData: CounselorInfo) {
           </GridCol>
           <GridCol span={6}>
             <div className="overflow-hidden text-ellipsis whitespace-nowrap">
-              <span className="text-sm font-semibold text-gray-600">
-                Data de Nascimento
-              </span>
+              <span className="text-sm font-semibold">Data de Nascimento</span>
               <Text size="sm" truncate lineClamp={2}>
                 {dayjs(personalData.data_nascimento).format('DD/MM/YYYY')}
               </Text>
@@ -354,7 +321,7 @@ function personalSection(personalData: CounselorInfo) {
           </GridCol>
           <GridCol span={6}>
             <div className="overflow-hidden text-ellipsis whitespace-nowrap">
-              <span className="text-sm font-semibold text-gray-600">
+              <span className="text-sm font-semibold">
                 R.G (Registro Geral)
               </span>
               <Text size="sm" truncate>
@@ -363,7 +330,7 @@ function personalSection(personalData: CounselorInfo) {
             </div>
           </GridCol>
           <GridCol span={6}>
-            <span className="text-sm font-semibold text-gray-600">CPF</span>
+            <span className="text-sm font-semibold">CPF</span>
             <Text size="sm" truncate lineClamp={2}>
               {personalData.cpf.replace(
                 /(\d{3})(\d{3})(\d{3})(\d{2})/,
@@ -373,16 +340,14 @@ function personalSection(personalData: CounselorInfo) {
           </GridCol>
           <GridCol span={6}>
             <div className="overflow-hidden text-ellipsis whitespace-nowrap">
-              <span className="text-sm font-semibold text-gray-600">Email</span>
+              <span className="text-sm font-semibold">Email</span>
               <Text size="sm" truncate>
                 {personalData.email}
               </Text>
             </div>
           </GridCol>
           <GridCol span={6}>
-            <span className="text-sm font-semibold text-gray-600">
-              Telefone
-            </span>
+            <span className="text-sm font-semibold">Telefone</span>
             <Text size="sm" truncate lineClamp={2}>
               {personalData.telefone.replace(
                 /(\d{2})(\d{5})(\d{4})/,
@@ -428,7 +393,7 @@ function SectionHeader({ title }: { title: string }) {
   return (
     <div className="mb-4 flex flex-row items-center justify-between gap-2 rounded-sm bg-gray-100 px-3 py-2">
       <div>
-        <h2 className="text-sm font-bold text-gray-600">{title}</h2>
+        <h2 className="text-sm font-bold">{title}</h2>
       </div>
       {/* <div>
         <Pencil size={16} />

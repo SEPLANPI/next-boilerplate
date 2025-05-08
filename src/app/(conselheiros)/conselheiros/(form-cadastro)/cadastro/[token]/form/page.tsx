@@ -42,7 +42,7 @@ export default async function CadastroConselheiroForm({
         />
         <div className="flex flex-col space-y-4 rounded-md bg-white p-6 shadow-md">
           <h1 className="text-xl font-bold">Cadastro de Conselheiros</h1>
-          <p className="text-secondary-foreground">
+          <p className="">
             Preencha os dados abaixo para realizar seu cadastro e participar do
             evento.
           </p>
@@ -56,9 +56,7 @@ export default async function CadastroConselheiroForm({
               alt="Avatar do usuário"
               variant="filled"
             />
-            <span className="ml-3 text-sm text-secondary-foreground">
-              {displayName}
-            </span>
+            <span className="ml-3 text-sm">{displayName}</span>
             <Button
               component={Link}
               prefetch={false}

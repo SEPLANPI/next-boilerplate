@@ -89,7 +89,7 @@ export function ProposalVoting({
           <RemainingPointsCoins remainingPoints={remainingPoints} />
         </div>
 
-        <p className="text-sm text-secondary-foreground">
+        <p className="text-sm">
           Você tem 100 pontos para distribuir entre as propostas da oficina em
           que está inscrita.
         </p>

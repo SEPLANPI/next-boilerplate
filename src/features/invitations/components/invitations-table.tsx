@@ -81,7 +81,9 @@ export function InvitationsTable({ data, params }: InvitationsTableProps) {
 
             return (
               <TableTr key={invitation.id}>
-                <TableTd>{invitation.identificador}</TableTd>
+                <TableTd className="text-content-emphasis">
+                  {invitation.identificador}
+                </TableTd>
                 <TableTd className="flex justify-center">
                   {invitation.usado ? (
                     <Link

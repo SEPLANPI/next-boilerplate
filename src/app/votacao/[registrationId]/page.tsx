@@ -47,7 +47,7 @@ export default async function VotingPage({
         />
         <div className="flex flex-col space-y-4 rounded-md bg-white p-6 shadow-md">
           <h1 className="font-bold sm:text-lg">Votação das Propostas</h1>
-          <p className="text-sm text-secondary-foreground">
+          <p className="text-sm">
             Aqui você pode participar das decisões importantes do nosso estado.
             Escolha as ideias que você acha mais importantes e coloque mais
             pontos nelas.

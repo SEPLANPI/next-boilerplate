@@ -27,7 +27,7 @@ export default async function CadastroConselheiro() {
         />
         <div className="flex flex-col items-center space-y-3 text-center">
           <h1 className="text-xl font-bold">Bem vindo(a), Conselheiro(a)!</h1>
-          <p className="text-sm text-secondary-foreground">
+          <p className="text-sm">
             Preencha os dados abaixo para realizar seu cadastro e participar do
             evento.
           </p>
@@ -39,7 +39,7 @@ export default async function CadastroConselheiro() {
         </p>
         <SignInGovpiButton />
         <Divider className="w-full" />
-        <p className="text-sm text-secondary-foreground">
+        <p className="text-sm">
           Você será redirecionado(a) para uma página externa (gov.pi), para
           realizar o seu login ou para criar uma nova conta.
         </p>

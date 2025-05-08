@@ -1,6 +1,6 @@
 'use client'
 
-import { ActionIcon, Divider } from '@mantine/core'
+import { ActionIcon, Divider, useMantineTheme } from '@mantine/core'
 import { NavItem } from './nav-item'
 import { PanelLeftClose, PanelLeftOpen } from 'lucide-react'
 import { UserMenu } from './user-menu'
@@ -11,6 +11,9 @@ import { EventSelect } from './event-select'
 
 export function MainNav({ config }: MainNavProps) {
   const { collapsed, toggleCollapsed } = useSidebar()
+  const theme = useMantineTheme()
+
+  console.log(theme.other)
 
   return (
     <aside

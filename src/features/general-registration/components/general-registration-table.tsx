@@ -55,21 +55,21 @@ export function GeneralRegistrationTable({ data }: RegistrationTableProps) {
                       variant="filled"
                     />
                     <div className="flex flex-col">
-                      <span className="font-medium">{registration.nome}</span>
-                      <span className="text-sm text-gray-600">
+                      <span className="font-medium text-content-emphasis">{registration.nome}</span>
+                      <span className="text-sm ">
                         {registration.cpf || 'CPF não informado'}
                       </span>
                     </div>
                   </div>
                 </TableTd>
                 <TableTd>
-                  <span className="whitespace-nowrap rounded-full border p-1.5 text-xs text-secondary-foreground">
+                  <span className="whitespace-nowrap rounded-full border p-1.5 text-xs">
                     {type.label}
                   </span>
                 </TableTd>
                 <TableTd w="25%">
                   {registration.inscricao.eixo ? (
-                    <span className="rounded-full border p-1.5 text-xs text-secondary-foreground">
+                    <span className="rounded-full border p-1.5 text-xs">
                       {registration.inscricao.eixo?.nome}
                     </span>
                   ) : (

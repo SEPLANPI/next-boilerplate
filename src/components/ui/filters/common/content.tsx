@@ -56,7 +56,7 @@ export function BaseContent<T>({
       <ul className="max-h-96 w-full overflow-y-auto overflow-x-clip">
         {showSelectedOnTop && selectedOptions.length > 0 && (
           <>
-            <span className="block p-2 text-xs font-semibold text-secondary-foreground">
+            <span className="block p-2 text-xs font-semibold">
               Selecionados
             </span>
             {selectedOptions.map(renderCheckboxItem)}

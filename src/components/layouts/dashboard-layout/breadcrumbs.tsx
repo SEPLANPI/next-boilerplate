@@ -22,10 +22,8 @@ export const DashboardBreadcrumbs: React.FC<DashboardBreadcrumbsProps> = memo(
           const isLastItem = index === items.length - 1
           const content = (
             <div className="flex items-center space-x-2 text-xs">
-              {Icon && <Icon className="size-4 text-secondary-foreground" />}
-              <span
-                className={`text-secondary-foreground ${isLastItem ? 'font-semibold' : ''}`}
-              >
+              {Icon && <Icon className="size-4" />}
+              <span className={` ${isLastItem ? 'font-semibold' : ''}`}>
                 {label}
               </span>
             </div>

@@ -16,7 +16,7 @@ export default function ValidadeCPFPage() {
         <h1 className="mx-auto mb-2 text-lg font-bold">
           Identifique-se para votar
         </h1>
-        <div className="space-y-2 text-sm text-secondary-foreground">
+        <div className="space-y-2 text-sm">
           <p>Para votar, informe seu CPF utilizado na inscrição do evento.</p>
           <p>Apenas participantes inscritos poderão acessar a votação.</p>
         </div>

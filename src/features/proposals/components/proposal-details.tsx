@@ -13,7 +13,7 @@ export default function ProposalDetails({ proposta }: { proposta: Proposal }) {
             <Text variant="h1" fw={800} size="xl">
               {proposta.titulo}
             </Text>
-            <Text variant="h2" size="xs" className="text-gray-600">
+            <Text variant="h2" size="xs" className="">
               Criado em{' '}
               {dayjs(proposta.criado_em).format(`DD/MM/YYYY [às] HH:mm`)} por{' '}
               {capitalizeName(proposta.autor.nome)}

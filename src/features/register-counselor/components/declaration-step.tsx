@@ -17,7 +17,7 @@ export function DeclarationStep({
         label="Aceito os termos e condições do evento, conforme descrito no regulamento."
         {...form.getInputProps('aceite_termos', { type: 'checkbox' })}
       />
-      <div className="space-y-4 text-sm text-secondary-foreground">
+      <div className="space-y-4 text-sm">
         <h6 className="font-semibold">Observações Importantes</h6>
         <ul className="list-disc pl-6">
           <li>
