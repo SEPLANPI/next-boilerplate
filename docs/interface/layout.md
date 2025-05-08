@@ -23,8 +23,9 @@ O layout do painel fornece uma barra lateral de navegação responsiva e colaps�
 ## Localização do Arquivo
 
 O arquivo de configuração da barra lateral deve ser criado em:
+
 ```typescript
-src/config/sidebar.ts
+src / config / sidebar.ts
 ```
 
 ## Tipos de Navegação
@@ -35,6 +36,7 @@ Existem dois tipos de itens de navegação:
 2. **Grupos de Navegação**: Itens de navegação aninhados com sub-itens
 
 ### Exemplo de Link Simples
+
 ```typescript
 {
   label: 'Painel',
@@ -44,6 +46,7 @@ Existem dois tipos de itens de navegação:
 ```
 
 ### Exemplo de Grupo de Navegação
+
 ```typescript
 {
   label: 'Configurações',
@@ -118,6 +121,7 @@ interface SidebarConfig {
 ### Barra Lateral Colapsável
 
 A barra lateral pode ser alternada entre os estados expandido e colapsado:
+
 - Expandida: 256px de largura (w-64)
 - Colapsada: 80px de largura (w-20)
 
@@ -202,7 +206,7 @@ export function MainNav() {
   return (
     <aside className="h-full w-full border-r bg-gray-50 p-4">
       <div className="mb-4 flex items-center space-x-2">
-        <span className="font-montserrat text-xl font-semibold">
+        <span className=" text-xl font-semibold">
           GOV<span className="font-extrabold text-green-900">PI</span>
         </span>
         <Divider orientation="vertical" />

@@ -1,7 +1,7 @@
 'use client'
 
 import { Tooltip, Anchor } from '@mantine/core'
-import { usePathname } from 'next/navigation'
+import { useParams, usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { NavigationItem } from '@/types/sidebar'
 
@@ -11,10 +11,10 @@ interface NavItemProps {
 }
 
 const NAV_LINK_BASE_STYLES =
-  'rounded flex items-center text-gray-700 [&:not([data-active=true])]:hover:bg-gray-200 data-[active=true]:text-govBlue-600 data-[active=true]:bg-govBlue-50 '
+  'rounded flex items-center text-gray-700 [&:not([data-active=true])]:hover:bg-gray-100 data-[active=true]:text-primary-700 data-[active=true]:bg-primary-50 '
 
 const NAV_LINK_STYLES = {
-  root: `${NAV_LINK_BASE_STYLES} block whitespace-nowrap no-underline space-x-2 font-medium text-sm w-full px-3 py-2 font-normal data-[active=true]:font-semibold `
+  root: `${NAV_LINK_BASE_STYLES} block whitespace-nowrap no-underline space-x-2 text-sm w-full px-3 py-2 font-normal data-[active=true]:font-semibold `
 }
 
 const NAV_LINK_COLLAPSED_STYLES = {
@@ -23,14 +23,23 @@ const NAV_LINK_COLLAPSED_STYLES = {
 
 export function NavItem({ item, collapsed }: NavItemProps) {
   const pathname = usePathname()
-  const isActive = pathname.endsWith(item.href)
+  const params = useParams()
+
+  const href = item.href.replace(
+    /:(\w+)/g,
+    (_, param) => params[param] as string
+  )
+
+  const isActive =
+    pathname.startsWith(href) || (item.match && pathname.includes(item.match))
+
   const IconComponent = item.icon ? <item.icon className="size-4" /> : null
 
   if (collapsed) {
     return (
       <Tooltip label={item.label} position="right" withArrow openDelay={300}>
         <Anchor
-          href={item.href}
+          href={href}
           component={Link}
           data-active={isActive}
           classNames={NAV_LINK_COLLAPSED_STYLES}
@@ -44,7 +53,7 @@ export function NavItem({ item, collapsed }: NavItemProps) {
 
   return (
     <Anchor
-      href={item.href}
+      href={href}
       component={Link}
       data-active={isActive}
       classNames={NAV_LINK_STYLES}

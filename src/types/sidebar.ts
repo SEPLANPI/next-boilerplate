@@ -5,6 +5,7 @@ export interface NavigationItem {
   label: string
   href: string
   icon: ComponentType<LucideProps>
+  match?: string
 }
 
 export interface NavigationSection {
@@ -14,7 +15,10 @@ export interface NavigationSection {
 
 export interface AppConfig {
   name: string
-  logo?: string
+  logos: {
+    collapsed: string
+    expanded: string
+  }
 }
 
 export interface SidebarConfig {

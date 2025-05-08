@@ -1,7 +1,7 @@
 import { JWT } from 'next-auth/jwt'
 import { env } from '@/config/env'
-import { calculateExpiryTime } from '../utils'
 import { logger } from '@/lib/logger'
+import { enrichTokenWithUserData, updateTokens } from './token-handlers'
 
 export async function refreshAccessToken(token: JWT) {
   try {
@@ -40,23 +40,21 @@ export async function refreshAccessToken(token: JWT) {
         status: response.status,
         error: refreshedTokens
       })
-
-      return {
-        ...token,
-        error: 'RefreshAccessTokenError'
-      }
+      return { ...token, error: 'RefreshAccessTokenError' }
     }
 
-    return {
-      ...token,
+    const updatedToken = await enrichTokenWithUserData(
+      token,
+      refreshedTokens.access_token
+    )
+
+    return updateTokens(updatedToken, {
       accessToken: refreshedTokens.access_token,
-      refreshToken: refreshedTokens.refresh_token ?? token.refreshToken,
-      accessTokenExpires: calculateExpiryTime(refreshedTokens.expires_in),
-      refreshTokenExpires: calculateExpiryTime(
-        refreshedTokens.refresh_expires_in
-      ),
-      idToken: refreshedTokens.id_token
-    }
+      refreshToken: refreshedTokens.refresh_token,
+      idToken: refreshedTokens.id_token,
+      expiresIn: refreshedTokens.expires_in,
+      refreshExpiresIn: refreshedTokens.refresh_expires_in
+    })
   } catch (error) {
     logger.error('Erro ao atualizar o token', {
       userId: token.user?.id,

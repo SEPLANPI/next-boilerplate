@@ -1,4 +1,4 @@
-import * as z from 'zod'
+import { z } from 'zod'
 
 const createEnv = () => {
   const EnvSchema = z.object({
@@ -28,8 +28,8 @@ const createEnv = () => {
       `Configuração de ambiente inválida.
 As seguintes variáveis estão ausentes ou inválidas:
 ${Object.entries(parsedEnv.error.flatten().fieldErrors)
-        .map(([key, errors]) => `- ${key}: ${errors.join(', ')}`)
-        .join('\n')}`
+  .map(([key, errors]) => `- ${key}: ${errors.join(', ')}`)
+  .join('\n')}`
     )
   }
 

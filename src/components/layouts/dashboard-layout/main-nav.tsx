@@ -10,49 +10,57 @@ import Image from 'next/image'
 
 export function MainNav({ config }: MainNavProps) {
   const { collapsed, toggleCollapsed } = useSidebar()
-  const defaultLogo = (
-    <span className="text-xl font-extrabold text-green-900">PI</span>
-  )
 
   return (
     <aside
-      className={`flex h-full flex-col overflow-hidden border-r bg-gray-50 transition-all duration-300 ${
+      className={`flex h-full flex-col overflow-hidden border-r bg-white transition-all duration-300 ${
         collapsed ? 'w-16' : 'w-64'
       }`}
     >
       <div
-        className={`mb-2 border-b py-2 ${collapsed ? 'flex flex-col items-center gap-2' : 'flex items-center justify-between px-4'}`}
+        className={`mb-2 h-12 border-b ${collapsed ? 'flex flex-col items-center justify-center gap-2' : 'flex items-center justify-between px-4'}`}
       >
         <div
-          className={`flex items-center ${collapsed ? 'justify-center' : 'space-x-2'} `}
+          className={`flex items-center ${collapsed ? 'justify-center' : ''} `}
         >
-          {config.app.logo ? (
-            <Image
-              src={config.app.logo}
-              alt={config.app.name}
-              width={120}
-              height={120}
-              className="size-10"
-              quality={100}
-            />
-          ) : (
-            defaultLogo
-          )}
-          {!collapsed && (
-            <>
-              <Divider orientation="vertical" className="my-auto h-6" />
-              <span className="font-medium">{config.app.name}</span>
-            </>
-          )}
+          <Image
+            src={config.app.logos.collapsed}
+            alt={config.app.name}
+            width={120}
+            height={120}
+            className={`size-10 ${!collapsed && 'hidden'}`}
+            quality={100}
+          />
+          <Image
+            src={config.app.logos.expanded}
+            alt={config.app.name}
+            width={300}
+            height={56}
+            className={`h-7 w-auto ${collapsed && 'hidden'}`}
+            quality={100}
+          />
         </div>
-        <ActionIcon onClick={() => toggleCollapsed()} variant="ghost" size="lg">
-          {collapsed ? (
-            <PanelLeftOpen className="size-4" />
-          ) : (
+        {!collapsed && (
+          <ActionIcon
+            onClick={() => toggleCollapsed()}
+            variant="ghost"
+            size="lg"
+            className="ml-2"
+          >
             <PanelLeftClose className="size-4" />
-          )}
-        </ActionIcon>
+          </ActionIcon>
+        )}
       </div>
+      {collapsed && (
+        <ActionIcon
+          onClick={() => toggleCollapsed()}
+          variant="ghost"
+          size="lg"
+          className="mx-auto mb-2"
+        >
+          <PanelLeftOpen className="size-4" />
+        </ActionIcon>
+      )}
       <nav className="flex-1 space-y-2 overflow-y-auto overflow-x-clip px-4">
         {config.sections.map((section, index) => (
           <section className="flex flex-col" key={section.title || index}>
@@ -60,7 +68,7 @@ export function MainNav({ config }: MainNavProps) {
               (collapsed ? (
                 <Divider className="mb-2" />
               ) : (
-                <span className="mb-2 block text-xs font-semibold uppercase text-muted-foreground">
+                <span className="mb-2 block text-xxs font-semibold uppercase text-content-muted">
                   {section.title}
                 </span>
               ))}

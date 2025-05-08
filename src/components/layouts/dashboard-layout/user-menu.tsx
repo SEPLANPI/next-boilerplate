@@ -24,7 +24,6 @@ export function UserMenu() {
       <Menu.Label>Conta</Menu.Label>
       <div className="flex items-stretch justify-start space-x-2 px-3 py-2">
         <Avatar
-          radius="xl"
           color="initials"
           key={data?.user.name}
           name={data?.user.name}
@@ -35,13 +34,11 @@ export function UserMenu() {
           <p className="w-full truncate text-xs font-medium">
             {data?.user.name}
           </p>
-          <span className="w-full truncate text-xs text-secondary-foreground">
-            {data?.user.email}
-          </span>
+          <span className="w-full truncate text-xs">{data?.user.email}</span>
         </div>
       </div>
       <Menu.Divider />
-      <Menu.Item component={Link} href="/api/auth/sign-out">
+      <Menu.Item component={Link} href="/api/auth/sign-out?redirectTo=/">
         Sair
       </Menu.Item>
     </Menu.Dropdown>
@@ -59,11 +56,11 @@ export function UserMenu() {
         >
           <Menu.Target>
             <UnstyledButton
-              className={`${open ? 'ring-4' : ''
-                } h-min rounded-full ring-gray-300 hover:ring-4`}
+              className={`${
+                open ? 'ring-4' : ''
+              } h-min rounded-full ring-gray-300 hover:ring-4`}
             >
               <Avatar
-                radius="xl"
                 size="sm"
                 color="initials"
                 key={data?.user.name}
@@ -90,7 +87,6 @@ export function UserMenu() {
       <Menu.Target>
         <button className="flex w-full cursor-pointer items-center justify-start space-x-2 rounded p-2 hover:bg-gray-200">
           <Avatar
-            radius="xl"
             size="sm"
             color="initials"
             key={data?.user.name}

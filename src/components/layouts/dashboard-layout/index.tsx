@@ -15,9 +15,7 @@ export function DashboardLayout({ children, config }: DashboardLayoutProps) {
         <div className="sticky top-0 h-[100dvh] overflow-y-auto">
           <MainNav config={config} />
         </div>
-        <div className="flex-1 overflow-y-auto">
-          <main className="p-5">{children}</main>
-        </div>
+        <div className="flex flex-1 flex-col overflow-y-auto">{children}</div>
       </div>
     </SidebarProvider>
   )

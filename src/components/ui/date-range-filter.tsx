@@ -108,7 +108,7 @@ export function DateRangeFilter({
             <>
               <Divider
                 orientation="vertical"
-                className="m-2 border-govBlue-300"
+                className="border-govBlue-300 m-2"
               />
               <p className="text-xs font-semibold uppercase">
                 {formatDateRange()}
@@ -172,12 +172,12 @@ export function DateRangeFilter({
                 </Button>
               </div>
               {tempRange.fromDate && tempRange.toDate ? (
-                <p className="text-xs font-medium text-secondary-foreground">
+                <p className="text-xs font-medium">
                   {dayjs(tempRange.fromDate).format('D [de] MMMM[, ]YYYY')} -{' '}
                   {dayjs(tempRange.toDate).format('D [de] MMMM[, ]YYYY')}
                 </p>
               ) : (
-                <p className="text-xs font-medium text-muted-foreground">
+                <p className="text-xs font-medium text-content-muted">
                   Escolha um intervalo de datas
                 </p>
               )}

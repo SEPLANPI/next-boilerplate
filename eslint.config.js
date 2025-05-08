@@ -1,22 +1,19 @@
-import js from '@eslint/js'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
-import tseslint from 'typescript-eslint'
-import react from 'eslint-plugin-react'
-import { FlatCompat } from '@eslint/eslintrc'
-import prettierConfig from 'eslint-plugin-prettier/recommended'
-
-const compat = new FlatCompat()
+import js from '@eslint/js';
+import tseslint from 'typescript-eslint';
+import react from 'eslint-plugin-react';
+import reactHooks from 'eslint-plugin-react-hooks';
+import reactRefresh from 'eslint-plugin-react-refresh';
+import prettier from 'eslint-plugin-prettier';
+import globals from 'globals';
+import nextPlugin from '@next/eslint-plugin-next';
 
 export default tseslint.config(
-  ...compat.extends('standard', 'next/core-web-vitals'),
   {
-    ignores: ['dist'],
-    extends: [
-      js.configs.recommended,
-      ...tseslint.configs.recommended,
-      prettierConfig
-    ],
+    ignores: ['node_modules/', '.next/']
+  },
+  js.configs.recommended,
+  ...tseslint.configs.recommended,
+  {
     files: ['**/*.{ts,tsx}'],
     languageOptions: {
       sourceType: 'module',
@@ -27,10 +24,9 @@ export default tseslint.config(
         }
       },
       globals: {
-        window: 'readonly',
-        document: 'readonly',
+        ...globals.browser,
+        ...globals.node,
         console: 'readonly',
-
         process: 'readonly',
         __dirname: 'readonly',
         module: 'readonly'
@@ -39,7 +35,9 @@ export default tseslint.config(
     plugins: {
       react,
       'react-hooks': reactHooks,
-      'react-refresh': reactRefresh
+      'react-refresh': reactRefresh,
+      prettier,
+      next: nextPlugin
     },
     rules: {
       'space-before-function-paren': [
@@ -54,7 +52,12 @@ export default tseslint.config(
       'react-refresh/only-export-components': [
         'warn',
         { allowConstantExport: true }
-      ]
+      ],
+      'prettier/prettier': 'error'
     }
+  },
+  {
+    files: ['**/*.{js,jsx,mjs,cjs}'],
+    ...nextPlugin.configs['core-web-vitals']
   }
-)
+);

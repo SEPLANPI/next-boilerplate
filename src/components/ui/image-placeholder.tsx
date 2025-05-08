@@ -1,9 +1,9 @@
-import { LucideImage } from "lucide-react";
-import { ComponentProps } from "react";
-import { cn } from "@/lib/utils";
+import { LucideImage } from 'lucide-react'
+import { ComponentProps } from 'react'
+import { cn } from '@/lib/utils'
 
-interface ImagePlaceholderProps extends ComponentProps<"div"> {
-  iconClassName?: string;
+interface ImagePlaceholderProps extends ComponentProps<'div'> {
+  iconClassName?: string
 }
 
 export function ImagePlaceholder({
@@ -14,15 +14,12 @@ export function ImagePlaceholder({
   return (
     <div
       className={cn(
-        "flex items-center justify-center bg-muted rounded w-full h-20",
+        'bg-muted flex h-20 w-full items-center justify-center rounded',
         className
       )}
       {...props}
     >
-      <LucideImage className={cn(
-        "text-muted-foreground size-4",
-        iconClassName
-      )} />
+      <LucideImage className={cn('size-4 text-content-muted', iconClassName)} />
     </div>
-  );
+  )
 }

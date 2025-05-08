@@ -1,36 +1,32 @@
 import { NextResponse } from 'next/server'
 import { auth } from '@/auth'
 import { determineRouteAccess } from '@/lib/routes/matcher'
-import { getUnauthorizedPath } from '@/lib/routes/get-unauthorized-path'
 import { routingConfig } from './config/routing'
 
 export default auth((req) => {
   const path = req.nextUrl.pathname
 
-  if (req.auth?.error) {
-    const signOutUrl = new URL('/api/auth/sign-out', req.nextUrl.origin)
-    return NextResponse.redirect(signOutUrl)
-  }
-
   const routeAccess = determineRouteAccess(path, req?.auth?.user?.roles || [])
 
-  if (routeAccess.type === 'public') {
+  if (routeAccess.isPublic) {
     return NextResponse.next()
   }
 
+  if (req.auth?.error) {
+    const sessionExpiredUrl = new URL('/sessao-expirada', req.nextUrl.origin)
+    sessionExpiredUrl.searchParams.set('redirectTo', req.nextUrl.pathname)
+    return NextResponse.redirect(sessionExpiredUrl)
+  }
+
   if (!req.auth) {
-    const unauthorizedPath = getUnauthorizedPath(path)
-    const newUrl = new URL(unauthorizedPath, req.nextUrl.origin)
-    newUrl.searchParams.set('callbackUrl', path)
+    const loginPath = routingConfig.defaults.redirects.loginPagePath
+    const newUrl = new URL(loginPath, req.nextUrl.origin)
+    newUrl.searchParams.set('redirectTo', path)
     return NextResponse.redirect(newUrl)
   }
 
   if (!routeAccess.hasPermission) {
-    const accessDeniedPath =
-      routeAccess.accessDeniedPath ||
-      routingConfig.defaults.unauthorized.defaultAccessDeniedPath
-
-    const newUrl = new URL(accessDeniedPath, req.nextUrl.origin)
+    const newUrl = new URL(routeAccess.accessDeniedPath!, req.nextUrl.origin)
     return NextResponse.redirect(newUrl)
   }
 
@@ -38,5 +34,7 @@ export default auth((req) => {
 })
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)']
+  matcher: [
+    '/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:jpg|jpeg|png|gif|svg|webp)).*)'
+  ]
 }

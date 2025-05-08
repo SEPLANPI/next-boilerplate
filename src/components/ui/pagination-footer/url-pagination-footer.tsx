@@ -37,7 +37,7 @@ export function UrlPaginationFooter({
 
   return (
     <div className="mt-6 flex items-center justify-between">
-      <span className="text-sm text-secondary-foreground">
+      <span className="text-sm">
         <span className="font-bold">
           {startItem} - {endItem}
         </span>{' '}

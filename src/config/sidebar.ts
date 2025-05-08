@@ -6,7 +6,10 @@ import { File } from 'lucide-react'
 export const sidebarConfig: SidebarConfig = {
   app: {
     name: 'Boilerplate',
-    logo: undefined
+    logos: {
+      collapsed: '/logo.svg',
+      expanded: '/logo.svg'
+    }
   },
   sections: [
     {

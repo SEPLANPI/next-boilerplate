@@ -4,6 +4,7 @@ import { env } from './config/env'
 import { refreshAccessToken } from './lib/auth/refresh-access-token'
 import { handleInitialSignIn } from './lib/auth/handle-initial-signin'
 import { routingConfig } from './config/routing'
+import { verifySessionActivity } from './lib/auth/verify-session'
 
 const keycloakProvider = KeycloakProvider({
   clientId: env.AUTH_KEYCLOAK_ID,
@@ -18,7 +19,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (account && user) {
         return true
       } else {
-        return routingConfig.defaults.unauthorized.defaultUnauthenticatedPath
+        return routingConfig.defaults.redirects.loginPagePath
       }
     },
     redirect: async ({ url, baseUrl }) => {
@@ -34,13 +35,22 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
       return session
     },
-    jwt: async ({ token, user, account }) => {
+    jwt: async ({ token, user, account, trigger }) => {
       if (account && user) {
         return handleInitialSignIn(token, user, account)
       }
 
-      if (Date.now() < token.accessTokenExpires) return token
-      return refreshAccessToken(token)
+      if (Date.now() > token.accessTokenExpires || trigger === 'update')
+        return refreshAccessToken(token)
+
+      if (token.accessToken) {
+        const isActive = await verifySessionActivity(token.accessToken)
+        if (!isActive) {
+          return { ...token, error: 'TokenInvalidError' }
+        }
+      }
+
+      return token
     },
     authorized: async ({ auth }) => {
       return !!auth && !auth.error

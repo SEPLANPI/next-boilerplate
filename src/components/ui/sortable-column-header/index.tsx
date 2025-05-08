@@ -62,14 +62,14 @@ export function SortableColumnHeader({
       <Menu position="bottom-start">
         <Menu.Target>
           <button
-            className="group flex h-8 items-center rounded px-[10px] hover:bg-gray-100"
+            className="group flex h-8 items-center rounded px-2.5 hover:bg-gray-100"
             aria-label={`Ordenar por ${title}`}
           >
             {title}
 
             <SortIcon
               isSorted={isSorted}
-              isDescending={isDescending} 
+              isDescending={isDescending}
               className="ml-2 h-4 w-4 transition-colors group-hover:text-gray-700"
             />
           </button>

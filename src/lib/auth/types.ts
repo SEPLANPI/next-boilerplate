@@ -1,4 +1,3 @@
-
 export interface KeycloakAccessTokenPayload {
   resource_access?: {
     [key: string]: {
@@ -9,6 +8,10 @@ export interface KeycloakAccessTokenPayload {
 
 export interface UserInfo {
   preferred_username: string
+  dataNascimento: string
+  nomeCompleto: string
+  name: string
+  email: string
 }
 
 export interface TokenRefreshRequest {
@@ -24,4 +27,13 @@ export interface TokenRefreshResponse {
   id_token: string
   expires_in: number
   refresh_expires_in: number
+}
+
+export interface TokenIntrospectionResponse {
+  active: boolean
+  exp: number
+  sub?: string
+  username?: string
+  client_id?: string
+  error?: string
 }
