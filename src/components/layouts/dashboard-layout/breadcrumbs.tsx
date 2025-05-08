@@ -33,7 +33,7 @@ export const DashboardBreadcrumbs: React.FC<DashboardBreadcrumbsProps> = memo(
               component={Link}
               key={index}
               href={href}
-              className={`flex items-center space-x-2 text-xs`}
+              className={`text-content flex items-center space-x-2 text-xs`}
             >
               {content}
             </Anchor>

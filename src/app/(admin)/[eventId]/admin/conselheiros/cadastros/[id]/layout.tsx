@@ -2,7 +2,10 @@ import {
   BreadcrumbItem,
   DashboardBreadcrumbs
 } from '@/components/layouts/dashboard-layout/breadcrumbs'
-import { DashboardHeader } from '@/components/layouts/dashboard-layout/header'
+import {
+  DashboardHeader,
+  DashboardHeaderActions
+} from '@/components/layouts/dashboard-layout/header'
 import CounselorEditView from '@/features/registration-monitoring/components/counselor-edit-view'
 import { CounselorDataTabs } from '@/features/registration-monitoring/components/counselor-data-tabs'
 import { ValidateCounselorModal } from '@/features/registration-monitoring/components/validate-counselor-modal'
@@ -17,6 +20,7 @@ export default async function AdminCounselorViewLayout({
 }) {
   const items: BreadcrumbItem[] = [
     {
+      icon: Users,
       label: 'Conselheiros',
       href: `/${params.eventId}/admin/conselheiros/cadastros`
     },
@@ -30,13 +34,13 @@ export default async function AdminCounselorViewLayout({
       <DashboardHeader>
         <DashboardBreadcrumbs items={items} />
       </DashboardHeader>
-      <div className="flex items-center justify-between border-b pl-4 pr-8">
+      <DashboardHeader>
         <CounselorDataTabs />
-        <div className="flex gap-2">
+        <DashboardHeaderActions>
           <CounselorEditView id={params.id} />
           <ValidateCounselorModal counselorId={params.id} />
-        </div>
-      </div>
+        </DashboardHeaderActions>
+      </DashboardHeader>
       {children}
     </>
   )
