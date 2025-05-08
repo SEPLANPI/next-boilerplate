@@ -80,7 +80,7 @@ export function ProposalsTable({ data, params }: ProposalsTableProps) {
                   </span>
                 </TableTd>
                 <TableTd w="15%">
-                  <Badge color={status.color} variant="light" radius="full">
+                  <Badge color={status.color} variant="light" radius="xs">
                     {status.label}
                   </Badge>
                 </TableTd>

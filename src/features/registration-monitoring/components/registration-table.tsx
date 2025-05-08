@@ -74,7 +74,7 @@ export function RegistrationTable({ data, params }: RegistrationTableProps) {
                 </div>
               </TableTd>
               <TableTd>
-                <Badge color={status.color} variant="light" radius="full">
+                <Badge color={status.color} variant="light" radius="xs">
                   {status.label}
                 </Badge>
               </TableTd>

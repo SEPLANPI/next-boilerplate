@@ -25,7 +25,7 @@ export function RadioCard({
             <div className="flex flex-col">
               <span className="font-medium">{label}</span>
               {description && (
-                <p className="text-sm text-muted-foreground">{description}</p>
+                <p className="text-content-muted text-sm">{description}</p>
               )}
             </div>
           </div>

@@ -29,7 +29,7 @@ import { EditInvitationModal } from './edit-invitation-modal'
 
 const INVITATION_STATUS = {
   USED: { color: 'blue' as MantineColor, label: 'Usado' },
-  AVAILABLE: { color: 'orange' as MantineColor, label: 'Pendente' }
+  AVAILABLE: { color: 'amber' as MantineColor, label: 'Pendente' }
 } as const
 
 interface InvitationsTableProps {
@@ -102,7 +102,7 @@ export function InvitationsTable({ data, params }: InvitationsTableProps) {
                   )}
                 </TableTd>
                 <TableTd className="w-48">
-                  <Badge color={status.color} variant="light" radius="full">
+                  <Badge color={status.color} variant="light" radius="xs">
                     {status.label}
                   </Badge>
                 </TableTd>

@@ -16,7 +16,7 @@ export default function GlobalError({ reset }: { reset: () => void }) {
       <body className="flex h-[100dvh] w-full items-center justify-center">
         <MantineProvider theme={theme}>
           <div className="flex w-full max-w-sm flex-col items-center justify-center space-y-4">
-            <h1 className="m-0 max-w-sm text-8xl font-black text-muted-foreground">
+            <h1 className="text-content-muted m-0 max-w-sm text-8xl font-black">
               500
             </h1>
             <h2 className="text-lg font-bold">Ops! Algo deu errado.</h2>

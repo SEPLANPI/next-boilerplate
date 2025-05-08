@@ -5,9 +5,10 @@ import {
   defaultVariantColorsResolver,
   Input,
   InputWrapper,
-  MantineTheme,
   Table,
-  VariantColorsResolver
+  VariantColorsResolver,
+  Badge,
+  virtualColor
 } from '@mantine/core'
 
 const variantColorResolver: VariantColorsResolver = (button) => {
@@ -41,18 +42,33 @@ export const theme = createTheme({
   black: '#000',
 
   colors: {
+    // gray: [
+    //   '#F9FAFB',
+    //   '#F3F4F6',
+    //   '#E5E7EB',
+    //   '#D1D5DB',
+    //   '#9CA3AF',
+    //   '#6B7280',
+    //   '#4B5563',
+    //   '#374151',
+    //   '#1F2937',
+    //   '#111827'
+    // ],
+    // zinc
     gray: [
-      '#F9FAFB',
-      '#F3F4F6',
-      '#E5E7EB',
-      '#D1D5DB',
-      '#9CA3AF',
-      '#6B7280',
-      '#4B5563',
-      '#374151',
-      '#1F2937',
-      '#111827'
+      'oklch(98.5% 0 0)',
+      'oklch(96.7% 0.001 286.375)',
+      'oklch(92% 0.004 286.32)',
+      'oklch(87.1% 0.006 286.286)',
+      'oklch(70.5% 0.015 286.067)',
+      'oklch(55.2% 0.016 285.938)',
+      'oklch(44.2% 0.017 285.786)',
+      'oklch(37% 0.013 285.805)',
+      'oklch(27.4% 0.006 286.033)',
+      'oklch(21% 0.006 285.885)',
+      'oklch(14.1% 0.005 285.823)'
     ],
+    // stone
     stone: [
       '#FAFAF9',
       '#F5F5F4',
@@ -272,7 +288,22 @@ export const theme = createTheme({
       '#065F46',
       '#064E3B',
       '#022C22'
-    ]
+    ],
+    'content-emphasis': virtualColor({
+      name: 'content-emphasis',
+      light: 'var(--mantine-color-gray-8)',
+      dark: 'var(--mantine-color-gray-8)'
+    }),
+    'content-default': virtualColor({
+      name: 'content-default',
+      light: 'var(--mantine-color-gray-6)',
+      dark: 'var(--mantine-color-gray-6)'
+    }),
+    'content-muted': virtualColor({
+      name: 'content-muted',
+      light: 'var(--mantine-color-gray-5)',
+      dark: 'var(--mantine-color-gray-5)'
+    })
   },
   primaryShade: {
     light: 6,
@@ -281,6 +312,7 @@ export const theme = createTheme({
   primaryColor: 'govGreen',
   autoContrast: true,
   luminanceThreshold: 0.3,
+
   fontFamily:
     'Figtree, Segoe UI, Roboto, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji',
   fontFamilyMonospace:
@@ -378,6 +410,20 @@ export const theme = createTheme({
   },
   other: {},
   components: {
+    Badge: Badge.extend({
+      classNames: (theme, props) => {
+        const defaultStyles = {
+          root: 'capitalize font-semibold h-auto tracking-wide '
+        }
+
+        if (props.size === 'md' || !props.size) {
+          return {
+            root: defaultStyles.root + 'py-0.5 px-1.5 text-xs'
+          }
+        }
+        return defaultStyles
+      }
+    }),
     Button: Button.extend({
       classNames: {
         root: 'shadow-xs'

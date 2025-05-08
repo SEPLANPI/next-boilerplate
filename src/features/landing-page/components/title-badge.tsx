@@ -1,5 +1,5 @@
-import { cn } from "@/lib/utils";
-import { PropsWithChildren } from "react";
+import { cn } from '@/lib/utils'
+import { PropsWithChildren } from 'react'
 
 export function TitleBadge({
   children,
@@ -8,7 +8,7 @@ export function TitleBadge({
   return (
     <span
       className={cn(
-        'w-fit rounded-full border border-lime-600 bg-lime-100 px-2.5 py-1.5 text-[10px] font-semibold uppercase text-lime-600 sm:block',
+        'text-xxs w-fit rounded-full border border-lime-600 bg-lime-100 px-2.5 py-1.5 font-semibold uppercase text-lime-600 sm:block',
         className
       )}
     >

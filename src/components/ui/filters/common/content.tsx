@@ -26,7 +26,7 @@ export function BaseContent<T>({
     <li key={getOptionValue(option)} className="group">
       <label
         className={`flex w-full cursor-pointer space-x-2 p-2 text-xs hover:bg-gray-100 ${
-          isDisabled(option) ? 'cursor-not-allowed text-muted-foreground' : ''
+          isDisabled(option) ? 'text-content-muted cursor-not-allowed' : ''
         }`}
       >
         <Checkbox

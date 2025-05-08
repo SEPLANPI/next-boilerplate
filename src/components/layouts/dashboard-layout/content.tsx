@@ -17,7 +17,7 @@ export function DashboardMainSection({
   className
 }: PropsWithChildren<{ className?: string }>) {
   return (
-    <div className={cn('flex-1 rounded-t-xl border bg-white p-6', className)}>
+    <div className={cn('rounded-t-4xl flex-1 border bg-white p-6', className)}>
       {children}
     </div>
   )

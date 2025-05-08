@@ -22,7 +22,7 @@ export function MainNav({ config }: MainNavProps) {
         className={`mb-2 h-12 border-b ${collapsed ? 'flex flex-col items-center justify-center gap-2' : 'flex items-center justify-between px-4'}`}
       >
         <div
-          className={`flex items-center ${collapsed ? 'justify-center' : 'space-x-2'} `}
+          className={`flex items-center ${collapsed ? 'justify-center' : ''} `}
         >
           <Image
             src={config.app.logos.collapsed}
@@ -46,6 +46,7 @@ export function MainNav({ config }: MainNavProps) {
             onClick={() => toggleCollapsed()}
             variant="ghost"
             size="lg"
+            className="ml-2"
           >
             <PanelLeftClose className="size-4" />
           </ActionIcon>
@@ -73,7 +74,7 @@ export function MainNav({ config }: MainNavProps) {
               (collapsed ? (
                 <Divider className="mb-2" />
               ) : (
-                <span className="mb-2 block text-[10px] font-semibold uppercase text-muted-foreground">
+                <span className="text-xxs text-content-muted mb-2 block font-semibold uppercase">
                   {section.title}
                 </span>
               ))}

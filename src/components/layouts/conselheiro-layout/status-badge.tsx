@@ -34,6 +34,7 @@ export function StatusBadge({ status }: StatusBadgeProps) {
       variant="light"
       color={config.color}
       leftSection={<Icon size={12} strokeWidth={3} />}
+      radius="xs"
     >
       {config.label}
     </Badge>

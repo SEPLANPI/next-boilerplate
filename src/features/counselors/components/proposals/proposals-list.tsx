@@ -15,19 +15,19 @@ function getStatusBadge(value: string) {
   switch (value) {
     case 'APROVADA':
       return (
-        <Badge variant="light" size="sm" color="green">
+        <Badge variant="light" size="sm" color="green" radius="xs">
           Aprovada
         </Badge>
       )
     case 'PENDENTE':
       return (
-        <Badge variant="light" size="sm" color="orange">
+        <Badge variant="light" size="sm" color="amber" radius="xs">
           Pendente
         </Badge>
       )
     case 'REPROVADA':
       return (
-        <Badge variant="light" size="sm" color="red">
+        <Badge variant="light" size="sm" color="red" radius="xs">
           Reprovada
         </Badge>
       )
@@ -54,7 +54,10 @@ export default function ProposalsList({ propostas }: PropostasListProps) {
   return (
     <>
       {isMobile ? (
-        <ProposalMobileList propostas={propostas} handleRowClick={handleRowClick}/>
+        <ProposalMobileList
+          propostas={propostas}
+          handleRowClick={handleRowClick}
+        />
       ) : (
         <ProposalTable propostas={propostas} handleRowClick={handleRowClick} />
       )}

@@ -119,7 +119,7 @@ export function DataListLabel({
 }: DataListLabelProps) {
   return (
     <span
-      className={cn('text-sm font-medium text-muted-foreground', className)}
+      className={cn('text-content-muted text-sm font-medium', className)}
       {...props}
     >
       {children}
