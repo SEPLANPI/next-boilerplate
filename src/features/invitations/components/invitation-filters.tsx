@@ -13,7 +13,7 @@ const statusColors: Record<InvitationStatus, string> = {
 export function InvitationFilters() {
   return (
     <div className="flex flex-1 items-center space-x-4">
-      <SearchInput className="max-w-full flex-1" />
+      <SearchInput  />
       <StaticFilter
         showSearch={false}
         showSelectedOnTop={false}

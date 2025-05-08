@@ -1,7 +1,12 @@
 import {
+  Button,
+  Checkbox,
   createTheme,
   defaultVariantColorsResolver,
   Input,
+  InputWrapper,
+  MantineTheme,
+  Table,
   VariantColorsResolver
 } from '@mantine/core'
 
@@ -288,7 +293,7 @@ export const theme = createTheme({
     to: 'cyan',
     deg: 45
   },
-  defaultRadius: 'sm',
+  defaultRadius: 'md',
   activeClassName: 'mantine-active',
   focusClassName: '',
   headings: {
@@ -338,12 +343,15 @@ export const theme = createTheme({
     xl: '1.65'
   },
   radius: {
-    xs: 'calc(0.125rem * var(--mantine-scale))',
-    sm: 'calc(0.25rem * var(--mantine-scale))',
-    md: 'calc(0.5rem * var(--mantine-scale))',
-    lg: 'calc(1rem * var(--mantine-scale))',
-    xl: 'calc(1.5rem * var(--mantine-scale))',
-    '2xl': 'calc(2rem * var(--mantine-scale))'
+    xs: 'calc(0.1875rem * var(--mantine-scale))',    // 3px
+    sm: 'calc(0.25rem * var(--mantine-scale))',      // 4px
+    md: 'calc(0.375rem * var(--mantine-scale))',     // 6px
+    lg: 'calc(0.5rem * var(--mantine-scale))',       // 8px
+    xl: 'calc(0.75rem * var(--mantine-scale))',      // 12px
+    '2xl': 'calc(1rem * var(--mantine-scale))',      // 16px
+    '3xl': 'calc(1.25rem * var(--mantine-scale))',   // 20px
+    '4xl': 'calc(1.5rem * var(--mantine-scale))',     // 24px
+    full: '9999px',
   },
   spacing: {
     xs: 'calc(0.625rem * var(--mantine-scale))',
@@ -355,36 +363,54 @@ export const theme = createTheme({
   breakpoints: {
     xs: '36em',
     sm: '48em',
-
     md: '62em',
     lg: '75em',
     xl: '88em'
   },
   shadows: {
-    xs: '0 calc(0.0625rem * var(--mantine-scale)) calc(0.1875rem * var(--mantine-scale)) rgba(0, 0, 0, 0.05), 0 calc(0.0625rem * var(--mantine-scale)) calc(0.125rem * var(--mantine-scale)) rgba(0, 0, 0, 0.1)',
-    sm: '0 calc(0.0625rem * var(--mantine-scale)) calc(0.1875rem * var(--mantine-scale)) rgba(0, 0, 0, 0.1), 0 calc(0.125rem * var(--mantine-scale)) calc(0.125rem * var(--mantine-scale)) rgba(0, 0, 0, 0.1)',
-    md: '0 calc(0.125rem * var(--mantine-scale)) calc(0.3125rem * var(--mantine-scale)) rgba(0, 0, 0, 0.1), 0 calc(0.0625rem * var(--mantine-scale)) calc(0.25rem * var(--mantine-scale)) rgba(0, 0, 0, 0.2)',
-    lg: '0 calc(0.125rem * var(--mantine-scale)) calc(0.375rem * var(--mantine-scale)) rgba(0, 0, 0, 0.1), 0 calc(0.25rem * var(--mantine-scale)) calc(0.375rem * var(--mantine-scale)) rgba(0, 0, 0, 0.2)',
-    xl: '0 calc(0.125rem * var(--mantine-scale)) calc(0.375rem * var(--mantine-scale)) rgba(0, 0, 0, 0.1), 0 calc(0.375rem * var(--mantine-scale)) calc(0.75rem * var(--mantine-scale)) rgba(0, 0, 0, 0.2)'
+    '2xs': '0 1px rgb(0 0 0 / 0.05)',
+    xs: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
+    sm: '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)',
+    md: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
+    lg: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)',
+    xl: '0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)',
+    '2xl': '0 25px 50px -12px rgb(0 0 0 / 0.25)',
   },
   other: {},
   components: {
-    Input: Input.extend({
+    Button: Button.extend({
       classNames: {
-        input: 'border-gray-300 placeholder-gray-400'
+        root: 'shadow-xs'
       }
     }),
-    InputWrapper: {
+    InputWrapper: InputWrapper.extend({
       classNames: {
         label: 'text-secondary-foreground'
       }
-    },
-    Table: {
+    }),
+    Input: Input.extend({
+      classNames: (theme, props) => {
+        return {
+          input: '[&:not(:focus)]:border-gray-200 shadow-xs'
+        }
+      }
+    }),
+    Table: Table.extend({
+      vars: (theme) => ({
+        table: {
+          '--table-border-color': theme.colors.gray[2],
+        },
+      }),
       classNames: {
         thead: 'bg-gray-100 text-secondary-foreground [&>tr]:border-0',
         th: 'font-semibold last:rounded-r-md first:rounded-l-md'
       }
-    }
+    }),
+    Checkbox: Checkbox.extend({
+      classNames: {
+        input: 'rounded-xs'
+      }
+    })
   },
   variantColorResolver: variantColorResolver
 })

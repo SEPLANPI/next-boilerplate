@@ -22,7 +22,6 @@ export function CreateInvitationModal() {
         <CreateInvitationForm id="create-invitation" />
       </Modal>
       <Button
-        className="rounded-full"
         onClick={open}
         leftSection={<Link className="size-4" />}
       >

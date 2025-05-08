@@ -1,3 +1,4 @@
+import { theme } from '@ui/mantine-config'
 import type { Config } from 'tailwindcss'
 const config: Config = {
   content: [
@@ -270,9 +271,9 @@ const config: Config = {
       xl: '88em'
     },
     extend: {
-      borderColor: {
-        DEFAULT: '#D1D5DB'
-      },
+      borderColor: ({ colors }) => ({
+        DEFAULT: colors.gray[200]
+      }),
       colors: {
         background: 'white',
         foreground: '#211F20',
@@ -287,15 +288,17 @@ const config: Config = {
         muted: {
           DEFAULT: '#e9ecef',
           foreground: '#868e96'
-        }
+        },
       },
       borderRadius: {
-        xs: 'calc(0.125rem * var(--mantine-scale))',
-        sm: 'calc(0.25rem * var(--mantine-scale))',
-        md: 'calc(0.5rem * var(--mantine-scale))',
-        lg: 'calc(1rem * var(--mantine-scale))',
-        xl: 'calc(1.5rem * var(--mantine-scale))',
-        '2xl': 'calc(2rem * var(--mantine-scale))'
+        xs: 'calc(0.1875rem * var(--mantine-scale))',    // 3px
+        sm: 'calc(0.25rem * var(--mantine-scale))',      // 4px
+        md: 'calc(0.375rem * var(--mantine-scale))',     // 6px
+        lg: 'calc(0.5rem * var(--mantine-scale))',       // 8px
+        xl: 'calc(0.75rem * var(--mantine-scale))',      // 12px
+        '2xl': 'calc(1rem * var(--mantine-scale))',      // 16px
+        '3xl': 'calc(1.25rem * var(--mantine-scale))',   // 20px
+        '4xl': 'calc(1.5rem * var(--mantine-scale))'     // 24px
       },
       spacing: {
         xs: 'calc(0.625rem * var(--mantine-scale))',
@@ -312,11 +315,14 @@ const config: Config = {
         xl: '1.65'
       },
       boxShadow: {
-        xs: '0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.05), 0 0.0625rem 0.125rem rgba(0, 0, 0, 0.1)',
-        sm: '0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0 0.625rem 0.9375rem -0.3125rem, rgba(0, 0, 0, 0.04) 0 0.4375rem 0.4375rem -0.3125rem',
-        md: '0 4px 20px rgba(238, 238, 238, 0.94)',
-        lg: '0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0 1.75rem 1.4375rem -0.4375rem, rgba(0, 0, 0, 0.04) 0 0.75rem 0.75rem -0.4375rem',
-        xl: '0 0.0625rem 0.1875rem rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.05) 0 2.25rem 1.75rem -0.4375rem, rgba(0, 0, 0, 0.04) 0 1.0625rem 1.0625rem -0.4375rem'
+        '2xs': '0 1px rgb(0 0 0 / 0.05)',
+        xs: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
+        sm: '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)',
+        md: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
+        lg: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)',
+        xl: '0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)',
+        '2xl': '0 25px 50px -12px rgb(0 0 0 / 0.25)',
+        light: '0 4px 20px rgba(238, 238, 238, 0.94)',
       }
     }
   },

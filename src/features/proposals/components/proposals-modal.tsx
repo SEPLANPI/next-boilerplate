@@ -10,7 +10,6 @@ export default function ProposalsModal() {
   return (
     <>
       <Button
-        className="rounded-xl"
         leftSection={<FilePlus size={16} />}
         onClick={open}
       >

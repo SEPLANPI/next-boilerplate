@@ -46,7 +46,6 @@ export function MobileMenu({ items }: MobileMenuProps) {
         <Menu.Label>Conta</Menu.Label>
         <div className="flex items-stretch justify-start space-x-2 px-3 py-2">
           <Avatar
-            radius="xl"
             color="initials"
             key={data?.user.name}
             name={data?.user.name}

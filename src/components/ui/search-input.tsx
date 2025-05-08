@@ -60,7 +60,7 @@ export function SearchInput({
       onChange={handleSearch}
       className={cn('w-full max-w-xs', className)}
       classNames={{
-        input: cn('rounded-full', inputClassName)
+        input: cn(inputClassName)
       }}
       placeholder={placeholder || 'Pesquisar'}
       rightSectionPointerEvents="all"

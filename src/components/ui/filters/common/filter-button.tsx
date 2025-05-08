@@ -14,7 +14,7 @@ export const FilterButton = forwardRef<HTMLButtonElement, PropsWithChildren>(
         ref={ref}
         variant="default"
         classNames={{
-          root: 'rounded-full data-[active=true]:bg-govGreen-50 data-[active=true]:text-govGreen-700'
+          root: 'data-[active=true]:bg-govGreen-50 data-[active=true]:text-govGreen-700'
         }}
         rightSection={<ChevronDown className="size-4" />}
         {...props}

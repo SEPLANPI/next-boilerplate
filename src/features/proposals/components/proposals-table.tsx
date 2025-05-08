@@ -80,14 +80,13 @@ export function ProposalsTable({ data, params }: ProposalsTableProps) {
                   </span>
                 </TableTd>
                 <TableTd w="15%">
-                  <Badge color={status.color} variant="light" radius="sm">
+                  <Badge color={status.color} variant="light" radius="full">
                     {status.label}
                   </Badge>
                 </TableTd>
                 <TableTd w="10%">
                   <Tooltip label={proposal.autor.nome}>
                     <Avatar
-                      radius="xl"
                       size="sm"
                       name={proposal.autor.nome}
                       color="initials"

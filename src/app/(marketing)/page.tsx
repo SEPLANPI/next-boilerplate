@@ -779,7 +779,7 @@ export default function LandingPage() {
           focado em um aspecto essencial do desenvolvimento do estado.
         </p>
         <div className="mt-8 grid w-full grid-cols-1 gap-4 sm:grid-cols-12">
-          <Card.Root className="bg-white shadow-md sm:col-span-6 md:col-span-4">
+          <Card.Root className="bg-white shadow-light sm:col-span-6 md:col-span-4">
             <Card.Icon className="bg-green-100">
               <Leaf className="size-4 text-green-800" />
             </Card.Icon>
@@ -788,7 +788,7 @@ export default function LandingPage() {
               Eixo Mudanças Climáticas, Meio Ambiente e Recursos Hídricos
             </Card.Subtitle>
           </Card.Root>
-          <Card.Root className="bg-white shadow-md sm:col-span-6 md:col-span-4">
+          <Card.Root className="bg-white shadow-light sm:col-span-6 md:col-span-4">
             <Card.Icon className="bg-stone-100">
               <Landmark className="size-4 text-stone-800" />
             </Card.Icon>
@@ -797,14 +797,14 @@ export default function LandingPage() {
               Eixo Infraestrutura, Inclusão Produtiva e Transição Energética
             </Card.Subtitle>
           </Card.Root>
-          <Card.Root className="bg-white shadow-md sm:col-span-4">
+          <Card.Root className="bg-white shadow-light sm:col-span-4">
             <Card.Icon className="bg-yellow-100">
               <TrendingUp className="size-4 text-yellow-800" />
             </Card.Icon>
             <Card.Title>Desenvolvimento Econômico e Produtivo</Card.Title>
             <Card.Subtitle>Eixo Desenvolvimento Socioeconômico</Card.Subtitle>
           </Card.Root>
-          <Card.Root className="bg-white shadow-md sm:col-span-4 md:col-span-3">
+          <Card.Root className="bg-white shadow-light sm:col-span-4 md:col-span-3">
             <Card.Icon className="bg-blue-100">
               <BookOpen className="size-4 text-blue-800" />
             </Card.Icon>
@@ -813,21 +813,21 @@ export default function LandingPage() {
               Eixo Educação Inclusiva e de Qualidade
             </Card.Subtitle>
           </Card.Root>
-          <Card.Root className="bg-white shadow-md sm:col-span-4 md:col-span-3">
+          <Card.Root className="bg-white shadow-light sm:col-span-4 md:col-span-3">
             <Card.Icon className="bg-orange-100">
               <Users className="size-4 text-orange-800" />
             </Card.Icon>
             <Card.Title>Inclusão Social, Raça e Gênero</Card.Title>
             <Card.Subtitle>Eixo Redução das Desigualdades</Card.Subtitle>
           </Card.Root>
-          <Card.Root className="bg-white shadow-md sm:col-span-6 md:col-span-3">
+          <Card.Root className="bg-white shadow-light sm:col-span-6 md:col-span-3">
             <Card.Icon className="bg-emerald-100">
               <HeartPulse className="size-4 text-emerald-800" />
             </Card.Icon>
             <Card.Title>Saúde, Esporte, Cultura e Lazer</Card.Title>
             <Card.Subtitle>Eixo Saúde e Bem-Estar</Card.Subtitle>
           </Card.Root>
-          <Card.Root className="bg-white shadow-md sm:col-span-6 md:col-span-3">
+          <Card.Root className="bg-white shadow-light sm:col-span-6 md:col-span-3">
             <Card.Icon className="bg-red-100">
               <ShieldCheck className="size-4 text-red-800" />
             </Card.Icon>

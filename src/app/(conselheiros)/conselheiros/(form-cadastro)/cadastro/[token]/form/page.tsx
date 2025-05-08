@@ -49,7 +49,6 @@ export default async function CadastroConselheiroForm({
           <Divider />
           <div className="flex items-center">
             <Avatar
-              radius="xl"
               size="sm"
               color="initials"
               key={displayName}

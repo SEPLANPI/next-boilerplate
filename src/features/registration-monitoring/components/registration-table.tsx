@@ -60,7 +60,6 @@ export function RegistrationTable({ data, params }: RegistrationTableProps) {
               <TableTd>
                 <div className="flex items-center gap-3">
                   <Avatar
-                    radius="xl"
                     size="sm"
                     name={registration.nome}
                     color="initials"
@@ -75,7 +74,7 @@ export function RegistrationTable({ data, params }: RegistrationTableProps) {
                 </div>
               </TableTd>
               <TableTd>
-                <Badge color={status.color} variant="light" radius="sm">
+                <Badge color={status.color} variant="light" radius="full">
                   {status.label}
                 </Badge>
               </TableTd>

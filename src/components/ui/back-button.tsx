@@ -11,7 +11,7 @@ export function BackButton() {
     <ActionIcon
       onClick={() => router.back()}
       size="md"
-      radius="xl"
+      radius="full"
       variant="default"
     >
       <ArrowLeft className="size-4" />

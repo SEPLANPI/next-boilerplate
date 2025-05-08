@@ -9,7 +9,7 @@ export default function ProposalsModal() {
 
   return (
     <>
-      <Button className="rounded-xl" leftSection={<Plus />} onClick={open}>
+      <Button  leftSection={<Plus />} onClick={open}>
         Adicionar Proposta
       </Button>
       <Modal

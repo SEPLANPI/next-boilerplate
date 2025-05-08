@@ -42,7 +42,6 @@ export async function AccessDeniedLayout({
         {session?.user && (
           <div className="flex items-center gap-4">
             <Avatar
-              radius="xl"
               color="initials"
               key={session?.user.name}
               name={session?.user.name}

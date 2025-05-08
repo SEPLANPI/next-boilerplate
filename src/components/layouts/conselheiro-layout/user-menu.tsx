@@ -24,7 +24,6 @@ export function UserMenu() {
           } h-min rounded-full ring-gray-300 hover:ring-4`}
         >
           <Avatar
-            radius="xl"
             size="sm"
             color="initials"
             key={data?.user.name}
@@ -38,7 +37,6 @@ export function UserMenu() {
         <Menu.Label>Conta</Menu.Label>
         <div className="flex items-stretch justify-start space-x-2 px-3 py-2">
           <Avatar
-            radius="xl"
             color="initials"
             key={data?.user.name}
             name={data?.user.name}

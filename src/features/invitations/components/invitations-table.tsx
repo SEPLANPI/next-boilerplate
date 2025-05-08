@@ -89,7 +89,6 @@ export function InvitationsTable({ data, params }: InvitationsTableProps) {
                     >
                       <Tooltip label={invitation.conselheiro.nome}>
                         <Avatar
-                          radius="xl"
                           size="sm"
                           name={invitation.conselheiro.nome}
                           color="initials"
@@ -103,7 +102,7 @@ export function InvitationsTable({ data, params }: InvitationsTableProps) {
                   )}
                 </TableTd>
                 <TableTd className="w-48">
-                  <Badge color={status.color} variant="light" radius="sm">
+                  <Badge color={status.color} variant="light" radius="full">
                     {status.label}
                   </Badge>
                 </TableTd>
@@ -113,7 +112,6 @@ export function InvitationsTable({ data, params }: InvitationsTableProps) {
                 <TableTd className="flex w-28 justify-center">
                   <Tooltip label={invitation.admin.nome}>
                     <Avatar
-                      radius="xl"
                       size="sm"
                       name={invitation.admin.nome}
                       color="initials"

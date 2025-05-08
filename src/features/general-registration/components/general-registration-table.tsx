@@ -49,7 +49,6 @@ export function GeneralRegistrationTable({ data }: RegistrationTableProps) {
                 <TableTd w="60%">
                   <div className="flex items-center gap-3">
                     <Avatar
-                      radius="xl"
                       size="sm"
                       name={registration.nome}
                       color="initials"

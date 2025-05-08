@@ -32,7 +32,6 @@ export function ProposalsFilters() {
   return (
     <div className="flex flex-1 items-center space-x-4">
       <SearchInput
-        className="max-w-full flex-1"
         placeholder="Pesquisar por título"
       />
       <StaticFilter
