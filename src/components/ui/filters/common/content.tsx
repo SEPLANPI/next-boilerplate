@@ -7,7 +7,8 @@ import { useSelectedItems } from './selected-items-provider'
 export function BaseContent<T>({
   options,
   renderOption,
-  getOptionId,
+  getOptionValue,
+  getOptionLabel,
   isDisabled,
   filterFn,
   showSearch = true,
@@ -18,11 +19,11 @@ export function BaseContent<T>({
 
   const filteredOptions = options.filter((option) => filterFn(option, search))
   const selectedOptions = filteredOptions.filter((option) =>
-    selectedItems.has(getOptionId(option))
+    selectedItems.has(getOptionValue(option))
   )
 
   const renderCheckboxItem = (option: T) => (
-    <li key={getOptionId(option)} className="group">
+    <li key={getOptionValue(option)} className="group">
       <label
         className={`flex w-full cursor-pointer space-x-2 p-2 text-xs hover:bg-gray-100 ${
           isDisabled(option) ? 'cursor-not-allowed text-muted-foreground' : ''
@@ -31,8 +32,8 @@ export function BaseContent<T>({
         <Checkbox
           className="mt-0.5"
           size="xs"
-          checked={selectedItems.has(getOptionId(option))}
-          onChange={() => !isDisabled(option) && toggle(getOptionId(option))}
+          checked={selectedItems.has(getOptionValue(option))}
+          onChange={() => !isDisabled(option) && toggle(getOptionValue(option))}
           disabled={isDisabled(option)}
         />
         {renderOption(option)}
@@ -65,7 +66,7 @@ export function BaseContent<T>({
         {showSelectedOnTop
           ? filteredOptions.map(
               (option) =>
-                !selectedItems.has(getOptionId(option)) &&
+                !selectedItems.has(getOptionValue(option)) &&
                 renderCheckboxItem(option)
             )
           : filteredOptions.map(renderCheckboxItem)}

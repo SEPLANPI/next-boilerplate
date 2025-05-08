@@ -12,7 +12,7 @@ export function AsyncFilter<T extends object = DefaultOption>({
   children,
   loadOptions,
   renderOption,
-  getOptionId,
+  getOptionValue,
   getOptionLabel,
   isDisabled,
   filterId,
@@ -30,10 +30,10 @@ export function AsyncFilter<T extends object = DefaultOption>({
     'id' in option && 'label' in option
 
   const handlers = {
-    getId: (option: T): string => {
-      if (getOptionId) return getOptionId(option)
+    getValue: (option: T): string => {
+      if (getOptionValue) return getOptionValue(option)
       if (isDefaultOption(option)) return option.id
-      throw new Error('getOptionId is required for non-DefaultOption types')
+      throw new Error('getOptionValue is required for non-DefaultOption types')
     },
     getLabel: (option: T): string => {
       if (getOptionLabel) return getOptionLabel(option)
@@ -81,7 +81,7 @@ export function AsyncFilter<T extends object = DefaultOption>({
             <BaseContent
               options={data || []}
               renderOption={finalRenderOption}
-              getOptionId={handlers.getId}
+              getOptionValue={handlers.getValue}
               getOptionLabel={handlers.getLabel}
               isDisabled={finalIsDisabled}
               filterFn={finalFilterFn}

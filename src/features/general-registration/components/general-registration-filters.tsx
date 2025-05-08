@@ -30,7 +30,7 @@ export function GeneralRegistrationFilters() {
         showSelectedOnTop={false}
         loadOptions={getEixosFilterOptions}
         getOptionLabel={(option) => option.nome}
-        getOptionId={(option) => option.id}
+        getOptionValue={(option) => option.id}
         filterId="eixos"
         searchParamKey="eixos"
       >

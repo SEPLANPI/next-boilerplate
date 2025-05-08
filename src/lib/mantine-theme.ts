@@ -343,15 +343,15 @@ export const theme = createTheme({
     xl: '1.65'
   },
   radius: {
-    xs: 'calc(0.1875rem * var(--mantine-scale))',    // 3px
-    sm: 'calc(0.25rem * var(--mantine-scale))',      // 4px
-    md: 'calc(0.375rem * var(--mantine-scale))',     // 6px
-    lg: 'calc(0.5rem * var(--mantine-scale))',       // 8px
-    xl: 'calc(0.75rem * var(--mantine-scale))',      // 12px
-    '2xl': 'calc(1rem * var(--mantine-scale))',      // 16px
-    '3xl': 'calc(1.25rem * var(--mantine-scale))',   // 20px
-    '4xl': 'calc(1.5rem * var(--mantine-scale))',     // 24px
-    full: '9999px',
+    xs: 'calc(0.1875rem * var(--mantine-scale))', // 3px
+    sm: 'calc(0.25rem * var(--mantine-scale))', // 4px
+    md: 'calc(0.375rem * var(--mantine-scale))', // 6px
+    lg: 'calc(0.5rem * var(--mantine-scale))', // 8px
+    xl: 'calc(0.75rem * var(--mantine-scale))', // 12px
+    '2xl': 'calc(1rem * var(--mantine-scale))', // 16px
+    '3xl': 'calc(1.25rem * var(--mantine-scale))', // 20px
+    '4xl': 'calc(1.5rem * var(--mantine-scale))', // 24px
+    full: '9999px'
   },
   spacing: {
     xs: 'calc(0.625rem * var(--mantine-scale))',
@@ -374,7 +374,7 @@ export const theme = createTheme({
     md: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
     lg: '0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)',
     xl: '0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)',
-    '2xl': '0 25px 50px -12px rgb(0 0 0 / 0.25)',
+    '2xl': '0 25px 50px -12px rgb(0 0 0 / 0.25)'
   },
   other: {},
   components: {
@@ -398,8 +398,8 @@ export const theme = createTheme({
     Table: Table.extend({
       vars: (theme) => ({
         table: {
-          '--table-border-color': theme.colors.gray[2],
-        },
+          '--table-border-color': theme.colors.gray[2]
+        }
       }),
       classNames: {
         thead: 'bg-gray-100 text-secondary-foreground [&>tr]:border-0',

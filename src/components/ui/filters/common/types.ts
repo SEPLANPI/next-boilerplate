@@ -8,7 +8,7 @@ export type DefaultOption = {
 export type IsDefaultOption<T> = T extends DefaultOption ? true : false
 
 export type OptionHandlers<T> = {
-  getId: (option: T) => string
+  getValue: (option: T) => string
   getLabel: (option: T) => string
 }
 
@@ -22,11 +22,11 @@ export type BaseFilterProps<T> = PropsWithChildren<
     showSelectedOnTop?: boolean
   } & (IsDefaultOption<T> extends true
     ? {
-        getOptionId?: (option: T) => string
+        getOptionValue?: (option: T) => string
         getOptionLabel?: (option: T) => string
       }
     : {
-        getOptionId: (option: T) => string
+        getOptionValue: (option: T) => string
         getOptionLabel: (option: T) => string
       })
 >
@@ -34,7 +34,7 @@ export type BaseFilterProps<T> = PropsWithChildren<
 export type BaseContentProps<T> = {
   options: T[]
   renderOption: (option: T) => JSX.Element
-  getOptionId: (option: T) => string
+  getOptionValue: (option: T) => string
   getOptionLabel: (option: T) => string
   isDisabled: (option: T) => boolean
   filterFn: (option: T, search: string) => boolean
