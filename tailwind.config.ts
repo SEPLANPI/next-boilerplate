@@ -276,7 +276,7 @@ const config: Config = {
       ]
     },
     fontSize: {
-      xxs: 'calc(0.625rem * var(--mantine-scale))',
+      '2xs': 'calc(0.5rem * var(--mantine-scale))',
       xs: 'calc(0.75rem * var(--mantine-scale))',
       sm: 'calc(0.875rem * var(--mantine-scale))',
       base: 'calc(1rem * var(--mantine-scale))',
@@ -319,7 +319,8 @@ const config: Config = {
         xl: 'calc(0.75rem * var(--mantine-scale))', // 12px
         '2xl': 'calc(1rem * var(--mantine-scale))', // 16px
         '3xl': 'calc(1.25rem * var(--mantine-scale))', // 20px
-        '4xl': 'calc(1.5rem * var(--mantine-scale))' // 24px
+        '4xl': 'calc(1.5rem * var(--mantine-scale))', // 24px,
+        full: '9999px'
       },
       spacing: {
         xs: 'calc(0.625rem * var(--mantine-scale))',
@@ -336,7 +337,7 @@ const config: Config = {
         xl: '1.65'
       },
       boxShadow: {
-        xxs: '0 1px rgb(0 0 0 / 0.05)',
+        '2xs': '0 1px rgb(0 0 0 / 0.05)',
         xs: '0 1px 2px 0 rgb(0 0 0 / 0.05)',
         sm: '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)',
         md: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',

@@ -358,11 +358,20 @@ export const theme = createTheme({
     }
   },
   fontSizes: {
+    '2xs': 'calc(0.675rem * var(--mantine-scale))',
     xs: 'calc(0.75rem * var(--mantine-scale))',
     sm: 'calc(0.875rem * var(--mantine-scale))',
     md: 'calc(1rem * var(--mantine-scale))',
     lg: 'calc(1.125rem * var(--mantine-scale))',
-    xl: 'calc(1.25rem * var(--mantine-scale))'
+    xl: 'calc(1.25rem * var(--mantine-scale))',
+    '2xl': 'calc(1.5rem * var(--mantine-scale))',
+    '3xl': 'calc(1.875rem * var(--mantine-scale))',
+    '4xl': 'calc(2.25rem * var(--mantine-scale))',
+    '5xl': 'calc(3rem * var(--mantine-scale))',
+    '6xl': 'calc(3.75rem * var(--mantine-scale))',
+    '7xl': 'calc(4.5rem * var(--mantine-scale))',
+    '8xl': 'calc(6rem * var(--mantine-scale))',
+    '9xl': 'calc(8rem * var(--mantine-scale))'
   },
   lineHeights: {
     xs: '1.4',
