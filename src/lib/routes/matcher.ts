@@ -1,6 +1,5 @@
 import { routingConfig } from '@/config/routing'
 import { Role } from '@/types/roles'
-import { RouteConfig } from '@/types/routing'
 
 function routeToRegexPattern(route: string): string {
   let pattern = route.replace(/[.+?^${}()|[\]\\]/g, '\\$&')
@@ -32,10 +31,10 @@ export function matchRoute(path: string, routes: string[]): boolean {
 
 export function checkPermissions(
   userRoles: Role[] = [],
-  routeAuth?: RouteConfig['auth'],
+  routeRequiredRoles?: Role[],
   defaultRoles: Role[] = []
 ): boolean {
-  const requiredRoles = routeAuth?.requiredRoles ?? defaultRoles
+  const requiredRoles = routeRequiredRoles ?? defaultRoles
 
   if (requiredRoles.length === 0) {
     return true
@@ -56,7 +55,6 @@ export function determineRouteAccess(
     matchRoute(path, [route.path])
   )
 
-  // Check for overrides
   if (matchedConfig?.overrides) {
     const override = matchedConfig.overrides.find((override) =>
       matchRoute(path, [override.path])
@@ -66,18 +64,11 @@ export function determineRouteAccess(
     }
   }
 
-  if (!matchedConfig) {
-    return {
-      isPublic: routingConfig.defaults.isPublic,
-      hasPermission: true
-    }
-  }
-
-  const isPublic = matchedConfig.isPublic ?? routingConfig.defaults.isPublic
+  const isPublic = matchedConfig?.isPublic ?? routingConfig.defaults.isPublic
   const requiredRoles =
-    matchedConfig.auth?.requiredRoles ?? routingConfig.defaults.requiredRoles
+    matchedConfig?.requiredRoles ?? routingConfig.defaults.requiredRoles
 
-  const hasPermission = requiredRoles.every((role) => userRoles.includes(role))
+  const hasPermission = checkPermissions(userRoles, requiredRoles)
 
   let accessDeniedPath =
     routingConfig.defaults.redirects.defaultAccessDeniedPath

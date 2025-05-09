@@ -6,12 +6,11 @@ export interface RouteConfig {
   // Default is inherited from global defaults
   isPublic?: boolean
 
-  auth?: {
-    // Roles that can access this route
-    requiredRoles?: Role[]
-    // Whether to inherit roles from parent routes
-    inheritRoles?: boolean
-  }
+  // Roles that can access this route
+  requiredRoles?: Role[]
+
+  // Whether to inherit roles from parent routes
+  inheritRoles?: boolean
 
   // Specific sub-routes that override the parent route's settings
   // These take precedence over wildcard matches

@@ -2,7 +2,7 @@ import { RoutingConfiguration } from '@/types/routing'
 
 export const routingConfig: RoutingConfiguration = {
   defaults: {
-    isPublic: true,
+    isPublic: false,
     requiredRoles: [],
     redirects: {
       loginPagePath: '/api/auth/sign-in',
@@ -12,33 +12,11 @@ export const routingConfig: RoutingConfiguration = {
   },
   routes: [
     {
-      path: '/:eventId/admin/*',
-      isPublic: false,
-      auth: {
-        requiredRoles: ['admin']
-      },
-      overrides: [
-        {
-          path: '/:eventId/admin/acesso-negado',
-          isPublic: true
-        }
-      ]
-    },
-    {
-      path: '/conselheiros/*',
-      isPublic: false,
-      auth: {
-        requiredRoles: ['advisor']
-      },
-      overrides: [
-        {
-          path: '/conselheiros/acesso-negado',
-          isPublic: true
-        },
-        {
-          path: '/conselheiros/cadastro/*'
-        }
-      ]
+      path: '/acesso-negado',
+      isPublic: true,
+    }, {
+      path: '/sessao-expirada',
+      isPublic: true,
     }
   ]
 }
