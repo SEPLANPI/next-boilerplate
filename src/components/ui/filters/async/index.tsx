@@ -19,7 +19,8 @@ export function AsyncFilter<T extends object = DefaultOption>({
   searchParamKey = 'selectedItems',
   filterFn,
   showSearch = true,
-  showSelectedOnTop = true
+  showSelectedOnTop = true,
+  position = 'bottom-end'
 }: AsyncFilterProps<T>) {
   const { data, error, isFetching } = useQuery({
     queryKey: [`async-filter-${filterId}`],
@@ -61,7 +62,7 @@ export function AsyncFilter<T extends object = DefaultOption>({
 
   return (
     <SelectedItemsProvider searchParamKey={searchParamKey}>
-      <Popover width={300} position="bottom-start" shadow="md">
+      <Popover width={300} position={position} shadow="md">
         <Popover.Target>
           <FilterButton>{children}</FilterButton>
         </Popover.Target>

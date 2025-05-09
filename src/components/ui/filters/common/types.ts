@@ -1,4 +1,5 @@
 import { PropsWithChildren } from 'react'
+import { PopoverProps } from '@mantine/core'
 
 export type DefaultOption = {
   id: string
@@ -20,6 +21,7 @@ export type BaseFilterProps<T> = PropsWithChildren<
     isDisabled?: (option: T) => boolean
     showSearch?: boolean
     showSelectedOnTop?: boolean
+    position?: PopoverProps['position']
   } & (IsDefaultOption<T> extends true
     ? {
         getOptionValue?: (option: T) => string

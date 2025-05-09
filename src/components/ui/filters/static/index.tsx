@@ -17,7 +17,8 @@ export function StaticFilter<T extends object = DefaultOption>({
   searchParamKey = 'selectedItems',
   filterFn,
   showSearch = true,
-  showSelectedOnTop = true
+  showSelectedOnTop = true,
+  position = 'bottom-end'
 }: StaticFilterProps<T>) {
   const isDefaultOption = (option: T): option is T & DefaultOption =>
     'id' in option && 'label' in option
@@ -56,7 +57,7 @@ export function StaticFilter<T extends object = DefaultOption>({
 
   return (
     <SelectedItemsProvider searchParamKey={searchParamKey}>
-      <Popover width={300} position="bottom-start" shadow="md">
+      <Popover width={300} position={position} shadow="md">
         <Popover.Target>
           <FilterButton>{children}</FilterButton>
         </Popover.Target>
