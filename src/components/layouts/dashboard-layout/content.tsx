@@ -1,4 +1,5 @@
 import { cn } from '@/lib/utils'
+import { ScrollArea } from '@mantine/core'
 import { PropsWithChildren } from 'react'
 
 export function DashboardContent({
@@ -6,19 +7,15 @@ export function DashboardContent({
   className
 }: PropsWithChildren<{ className?: string }>) {
   return (
-    <div className={cn('flex flex-1 flex-col bg-gray-100 p-6 pb-0', className)}>
-      {children}
-    </div>
-  )
-}
-
-export function DashboardMainSection({
-  children,
-  className
-}: PropsWithChildren<{ className?: string }>) {
-  return (
-    <div className={cn('rounded-t-4xl flex-1 border bg-white p-6', className)}>
-      {children}
+    <div
+      className={cn(
+        'flex max-h-[100dvh] flex-1 bg-gray-100 py-3 pr-3',
+        className
+      )}
+    >
+      <ScrollArea className="flex-1 rounded-xl border bg-white">
+        <div className="flex flex-1 flex-col gap-4 p-6">{children}</div>
+      </ScrollArea>
     </div>
   )
 }

@@ -31,6 +31,9 @@ async function clientRequest(
   })
 }
 
+/**
+ * @deprecated Use a API do arquivo @/lib/api ao invés desta.
+ */
 export const clientApi = {
   get: (url: string, options?: ClientApiOptions) =>
     clientRequest(url, 'GET', options),

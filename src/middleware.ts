@@ -12,15 +12,9 @@ export default auth((req) => {
     return NextResponse.next()
   }
 
-  if (req.auth?.error) {
-    const sessionExpiredUrl = new URL('/sessao-expirada', req.nextUrl.origin)
-    sessionExpiredUrl.searchParams.set('redirectTo', req.nextUrl.pathname)
-    return NextResponse.redirect(sessionExpiredUrl)
-  }
-
-  if (!req.auth) {
-    const loginPath = routingConfig.defaults.redirects.loginPagePath
-    const newUrl = new URL(loginPath, req.nextUrl.origin)
+  if (!req.auth || req.auth.error) {
+    const signInPagePath = routingConfig.defaults.redirects.signInPagePath
+    const newUrl = new URL(signInPagePath, req.nextUrl.origin)
     newUrl.searchParams.set('redirectTo', path)
     return NextResponse.redirect(newUrl)
   }

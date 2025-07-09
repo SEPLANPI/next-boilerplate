@@ -18,12 +18,14 @@ export async function AccessDeniedLayout({
   return (
     <div className="container mx-auto max-w-4xl py-12">
       <div className="flex flex-col items-start gap-8">
-        <div className="rounded bg-muted p-4">
-          <Lock className="text-content-muted size-12" />
+        <div className="bg-muted rounded p-4">
+          <Lock className="size-12 text-content-muted" />
         </div>
 
         <div className="flex flex-col items-start gap-4">
-          <h1 className="text-4xl font-bold">{title}</h1>
+          <h1 className="text-4xl font-semibold text-content-emphasis">
+            {title}
+          </h1>
           <p className="">{description}</p>
         </div>
 

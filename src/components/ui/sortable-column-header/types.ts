@@ -1,10 +1,10 @@
+import React from 'react'
+
 export interface ColumnHeaderProps {
   column: string
-  title: string
+  title: React.ReactNode
   sortKey: string | null
   onSort: (key: string | null) => void
-  ascendingLabel?: string
-  descendingLabel?: string
   className?: string
 }
 

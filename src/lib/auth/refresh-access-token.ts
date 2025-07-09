@@ -2,23 +2,18 @@ import { JWT } from 'next-auth/jwt'
 import { env } from '@/config/env'
 import { logger } from '@/lib/logger'
 import { enrichTokenWithUserData, updateTokens } from './token-handlers'
+import { fetchWithRetry } from '@/lib/retry'
 
 export async function refreshAccessToken(token: JWT) {
   try {
     if (!token.refreshTokenExpires || Date.now() > token.refreshTokenExpires) {
-      logger.error(
-        'Refresh token expirado antes que o refresh pudesse ser completado',
-        {
-          userId: token.user?.id
-        }
-      )
       return {
         ...token,
         error: 'TokenExpiredError'
       }
     }
 
-    const response = await fetch(
+    const response = await fetchWithRetry(
       `${env.AUTH_KEYCLOAK_ISSUER}/protocol/openid-connect/token`,
       {
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -29,6 +24,10 @@ export async function refreshAccessToken(token: JWT) {
           refresh_token: token.refreshToken
         }),
         method: 'POST'
+      },
+      {
+        maxRetries: 3,
+        delay: 300
       }
     )
 

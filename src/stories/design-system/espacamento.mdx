@@ -1,0 +1,370 @@
+import { Meta } from '@storybook/blocks'
+import { DesignTokenTable } from '../components/design-tokens-table'
+
+<Meta title="Design System/Espaçamento" />
+
+# Espaçamento
+
+O sistema de espaçamento é projetado para manter consistência visual em toda a aplicação. Ele é construído em duas camadas:
+
+1. **Escala Base**: Uma sequência progressiva de valores numéricos
+2. **Tokens Semânticos**: Abstrações com nomes significativos para uso em contextos específicos
+
+Todos os valores são calculados usando a variável `--mantine-scale`.
+
+## Escala Base de Espaçamento
+
+A escala base segue uma progressão que começa com valores pequenos e precisos (px, 0.5) para ajustes finos,
+avançando para incrementos maiores conforme os valores aumentam. Isso permite:
+
+- Ajustes precisos em componentes pequenos (0.5 - 4)
+- Espaçamentos médios para layouts comuns (5 - 16)
+- Grandes espaços para seções maiores (20 - 96)
+
+export const SpacingTokensData = [
+  {
+    name: 'space-0',
+    value: '0px',
+    example: <div className="bg-sky-400 h-4 w-0" />
+  },
+  {
+    name: 'space-px',
+    value: '1px',
+    example: <div className="bg-sky-400 h-4 w-px" />
+  },
+  {
+    name: 'space-0.5',
+    value: 'calc(0.125rem * var(--mantine-scale)) [2px]',
+    example: <div className="bg-sky-400 h-4 w-0.5" />
+  },
+  {
+    name: 'space-1',
+    value: 'calc(0.25rem * var(--mantine-scale)) [4px]',
+    example: <div className="bg-sky-400 h-4 w-1" />
+  },
+  {
+    name: 'space-1.5',
+    value: 'calc(0.375rem * var(--mantine-scale)) [6px]',
+    example: <div className="bg-sky-400 h-4 w-1.5" />
+  },
+  {
+    name: 'space-2',
+    value: 'calc(0.5rem * var(--mantine-scale)) [8px]',
+    example: <div className="bg-sky-400 h-4 w-2" />
+  },
+  {
+    name: 'space-2.5',
+    value: 'calc(0.625rem * var(--mantine-scale)) [10px]',
+    example: <div className="bg-sky-400 h-4 w-2.5" />
+  },
+  {
+    name: 'space-3',
+    value: 'calc(0.75rem * var(--mantine-scale)) [12px]',
+    example: <div className="bg-sky-400 h-4 w-3" />
+  },
+  {
+    name: 'space-3.5',
+    value: 'calc(0.875rem * var(--mantine-scale)) [14px]',
+    example: <div className="bg-sky-400 h-4 w-3.5" />
+  },
+  {
+    name: 'space-4',
+    value: 'calc(1rem * var(--mantine-scale)) [16px]',
+    example: <div className="bg-sky-400 h-4 w-4" />
+  },
+  {
+    name: 'space-5',
+    value: 'calc(1.25rem * var(--mantine-scale)) [20px]',
+    example: <div className="bg-sky-400 h-4 w-5" />
+  },
+  {
+    name: 'space-6',
+    value: 'calc(1.5rem * var(--mantine-scale)) [24px]',
+    example: <div className="bg-sky-400 h-4 w-6" />
+  },
+  {
+    name: 'space-7',
+    value: 'calc(1.75rem * var(--mantine-scale)) [28px]',
+    example: <div className="bg-sky-400 h-4 w-7" />
+  },
+  {
+    name: 'space-8',
+    value: 'calc(2rem * var(--mantine-scale)) [32px]',
+    example: <div className="bg-sky-400 h-4 w-8" />
+  },
+  {
+    name: 'space-9',
+    value: 'calc(2.25rem * var(--mantine-scale)) [36px]',
+    example: <div className="bg-sky-400 h-4 w-9" />
+  },
+  {
+    name: 'space-10',
+    value: 'calc(2.5rem * var(--mantine-scale)) [40px]',
+    example: <div className="bg-sky-400 h-4 w-10" />
+  },
+  {
+    name: 'space-11',
+    value: 'calc(2.75rem * var(--mantine-scale)) [44px]',
+    example: <div className="bg-sky-400 h-4 w-11" />
+  },
+  {
+    name: 'space-12',
+    value: 'calc(3rem * var(--mantine-scale)) [48px]',
+    example: <div className="bg-sky-400 h-4 w-12" />
+  },
+  {
+    name: 'space-14',
+    value: 'calc(3.5rem * var(--mantine-scale)) [56px]',
+    example: <div className="bg-sky-400 h-4 w-14" />
+  },
+  {
+    name: 'space-16',
+    value: 'calc(4rem * var(--mantine-scale)) [64px]',
+    example: <div className="bg-sky-400 h-4 w-16" />
+  },
+  {
+    name: 'space-20',
+    value: 'calc(5rem * var(--mantine-scale)) [80px]',
+    example: <div className="bg-sky-400 h-4 w-20" />
+  },
+  {
+    name: 'space-24',
+    value: 'calc(6rem * var(--mantine-scale)) [96px]',
+    example: <div className="bg-sky-400 h-4 w-24" />
+  },
+  {
+    name: 'space-28',
+    value: 'calc(7rem * var(--mantine-scale)) [112px]',
+    example: <div className="bg-sky-400 h-4 w-28" />
+  },
+  {
+    name: 'space-32',
+    value: 'calc(8rem * var(--mantine-scale)) [128px]',
+    example: <div className="bg-sky-400 h-4 w-32" />
+  },
+  {
+    name: 'space-36',
+    value: 'calc(9rem * var(--mantine-scale)) [144px]',
+    example: <div className="bg-sky-400 h-4 w-36" />
+  },
+  {
+    name: 'space-40',
+    value: 'calc(10rem * var(--mantine-scale)) [160px]',
+    example: <div className="bg-sky-400 h-4 w-40" />
+  },
+  {
+    name: 'space-44',
+    value: 'calc(11rem * var(--mantine-scale)) [176px]',
+    example: <div className="bg-sky-400 h-4 w-44" />
+  },
+  {
+    name: 'space-48',
+    value: 'calc(12rem * var(--mantine-scale)) [192px]',
+    example: <div className="bg-sky-400 h-4 w-48" />
+  },
+  {
+    name: 'space-52',
+    value: 'calc(13rem * var(--mantine-scale)) [208px]',
+    example: <div className="bg-sky-400 h-4 w-52" />
+  },
+  {
+    name: 'space-56',
+    value: 'calc(14rem * var(--mantine-scale)) [224px]',
+    example: <div className="bg-sky-400 h-4 w-56" />
+  },
+  {
+    name: 'space-60',
+    value: 'calc(15rem * var(--mantine-scale)) [240px]',
+    example: <div className="bg-sky-400 h-4 w-60" />
+  },
+  {
+    name: 'space-64',
+    value: 'calc(16rem * var(--mantine-scale)) [256px]',
+    example: <div className="bg-sky-400 h-4 w-64" />
+  },
+  {
+    name: 'space-72',
+    value: 'calc(18rem * var(--mantine-scale)) [288px]',
+    example: <div className="bg-sky-400 h-4 w-72" />
+  },
+  {
+    name: 'space-80',
+    value: 'calc(20rem * var(--mantine-scale)) [320px]',
+    example: <div className="bg-sky-400 h-4 w-80" />
+  },
+  {
+    name: 'space-96',
+    value: 'calc(24rem * var(--mantine-scale)) [384px]',
+    example: <div className="bg-sky-400 h-4 w-96" />
+  }
+]
+
+<DesignTokenTable tokens={SpacingTokensData} showExample={true} />
+
+## Tokens Semânticos do Mantine
+
+Os tokens semânticos do Mantine fornecem uma camada de abstração que mapeia para valores específicos da escala base.
+Eles são projetados para uso em componentes e padrões comuns do Mantine.
+
+Estes tokens são especialmente úteis ao trabalhar com componentes do Mantine que aceitam a prop `spacing`, como:
+
+- `Stack`
+- `Group`
+- `Grid`
+- `Table`
+- Propriedades de padding em modais e cards
+
+export const SemanticSpacingTokensData = [
+  {
+    name: 'space-xs',
+    value: 'calc(0.625rem * var(--mantine-scale)) [10px]',
+    example: <div className="bg-sky-400 h-4 w-xs" />
+  },
+  {
+    name: 'space-sm',
+    value: 'calc(0.75rem * var(--mantine-scale)) [12px]',
+    example: <div className="bg-sky-400 h-4 w-sm" />
+  },
+  {
+    name: 'space',
+    value: 'calc(1rem * var(--mantine-scale)) [16px]',
+    example: <div className="bg-sky-400 h-4 w-md" />
+  },
+  {
+    name: 'space-md',
+    value: 'calc(1.25rem * var(--mantine-scale)) [20px]',
+    example: <div className="bg-sky-400 h-4 w-lg" />
+  },
+  {
+    name: 'space-lg',
+    value: 'calc(2rem * var(--mantine-scale)) [32px]',
+    example: <div className="bg-sky-400 h-4 w-xl" />
+  }
+]
+
+<DesignTokenTable tokens={SemanticSpacingTokensData} showExample={true} />
+
+### Uso com Componentes Mantine
+
+```tsx
+// Exemplo de uso dos tokens semânticos
+import { Stack, Group } from '@mantine/core'
+
+// Espaçamento vertical usando token md (16px)
+<Stack spacing="md">
+  <div>Item 1</div>
+  <div>Item 2</div>
+</Stack>
+
+// Espaçamento horizontal usando token sm (12px)
+<Group spacing="sm">
+  <Button>Ação 1</Button>
+  <Button>Ação 2</Button>
+</Group>
+```
+
+## Exemplos
+
+### Componentes Mantine
+
+Os tokens de espaçamento podem ser aplicados em diversos componentes do Mantine:
+
+```tsx
+import { Stack, Group, Grid } from '@mantine/core'
+
+// Espaçamento vertical (Stack)
+<Stack spacing="xs">Espaçamento compacto</Stack>
+<Stack spacing="sm">Espaçamento pequeno</Stack>
+<Stack spacing="md">Espaçamento médio</Stack>
+<Stack spacing="lg">Espaçamento grande</Stack>
+
+// Espaçamento horizontal (Group)
+<Group spacing="xs">Itens próximos</Group>
+<Group spacing="sm">Itens com espaço pequeno</Group>
+<Group spacing="md">Itens com espaço médio</Group>
+<Group spacing="lg">Itens com espaço grande</Group>
+
+// Grid
+<Grid gutter="sm">Grade com espaço pequeno</Grid>
+<Grid gutter="md">Grade com espaço médio</Grid>
+
+// Padding em componentes
+<Card p="sm">Card com padding pequeno</Card>
+<Paper p="md">Paper com padding médio</Paper>
+<Modal p="lg">Modal com padding grande</Modal>
+```
+
+### Classes Tailwind
+
+O sistema também pode ser utilizado através das classes do Tailwind:
+
+```tsx
+// Margin
+<div className="m-2">Margin em todos os lados</div>
+<div className="mx-4">Margin horizontal</div>
+<div className="my-4">Margin vertical</div>
+<div className="mt-4">Margin top</div>
+<div className="mb-4">Margin bottom</div>
+
+// Padding
+<div className="p-2">Padding em todos os lados</div>
+<div className="px-4">Padding horizontal</div>
+<div className="py-4">Padding vertical</div>
+<div className="pt-4">Padding top</div>
+<div className="pb-4">Padding bottom</div>
+
+// Gap
+<div className="flex gap-4">Espaço entre flex items</div>
+<div className="grid gap-4">Espaço entre grid items</div>
+
+// Espaçamento responsivo
+<div className="p-2 sm:p-4 md:p-6 lg:p-8">
+  Padding que aumenta com breakpoints
+</div>
+
+// Combinando espaçamentos
+<div className="p-4 mt-6">
+  Padding interno e margin superior
+</div>
+```
+
+### Casos de Uso Comuns
+
+1. **Espaçamento Básico (1-4)**
+
+   - Espaço entre ícones e texto
+   - Padding interno em botões
+   - Margin entre elementos inline
+
+2. **Espaçamento Médio (5-8)**
+
+   - Espaço entre componentes relacionados
+   - Padding em cards e containers
+   - Gap em grids e flexbox
+
+3. **Espaçamento Grande (10-16)**
+
+   - Separação entre seções
+   - Margens verticais em títulos
+   - Espaço ao redor de elementos destacados
+
+4. **Espaçamento Extra (20-24)**
+   - Grandes divisões de layout
+   - Espaço entre blocos de conteúdo
+   - Margens para elementos isolados
+
+### Boas Práticas
+
+1. **Consistência**
+
+   - Use os mesmos valores para elementos similares
+   - Mantenha um ritmo vertical consistente
+
+2. **Hierarquia**
+
+   - Use espaçamentos maiores para separar seções diferentes
+   - Use espaçamentos menores para elementos relacionados
+
+3. **Responsividade**
+   - Ajuste o espaçamento para diferentes breakpoints
+   - Mantenha proporções consistentes ao escalar

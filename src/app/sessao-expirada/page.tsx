@@ -25,9 +25,7 @@ export default async function SessionExpired({
             await signIn('keycloak', { redirectTo })
           }}
         >
-          <Button className="w-full max-w-[200px]" type="submit">
-            Atualizar Sessão
-          </Button>
+          <Button type="submit">Atualizar Sessão</Button>
         </form>
       </div>
     </div>

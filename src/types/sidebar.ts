@@ -1,11 +1,36 @@
 import { LucideProps } from 'lucide-react'
 import { ComponentType } from 'react'
 
-export interface NavigationItem {
+interface BaseNavigationItem {
   label: string
-  href: string
   icon: ComponentType<LucideProps>
+}
+
+interface NavigationLeafItem extends BaseNavigationItem {
+  href: string
   match?: string
+  children?: never
+}
+
+interface NavigationParentItem extends BaseNavigationItem {
+  href?: never
+  match?: never
+  children: NavigationLeafItem[]
+}
+
+export type NavigationItem = NavigationLeafItem | NavigationParentItem
+
+// Type guards
+export function isNavigationLeafItem(
+  item: NavigationItem
+): item is NavigationLeafItem {
+  return 'href' in item && typeof item.href === 'string'
+}
+
+export function isNavigationParentItem(
+  item: NavigationItem
+): item is NavigationParentItem {
+  return 'children' in item && Array.isArray(item.children)
 }
 
 export interface NavigationSection {

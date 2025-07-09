@@ -20,6 +20,6 @@ export const sidebarConfig: SidebarConfig = {
           icon: File
         }
       ]
-    }
+    },
   ]
 } as const

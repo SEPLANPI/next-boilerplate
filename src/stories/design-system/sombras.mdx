@@ -1,0 +1,320 @@
+import { Meta } from '@storybook/blocks'
+import { DesignTokenTable } from '../components/design-tokens-table'
+
+<Meta title="Design System/Sombras" />
+
+# Sombras
+
+O sistema de sombras fornece uma escala consistente de elevação visual para elementos da interface. As sombras ajudam a estabelecer hierarquia visual e profundidade.
+
+## Escala de Sombras
+
+export const ShadowTokensData = [
+  {
+    name: 'shadow-none',
+    value: 'none',
+    example: (
+      <div
+        className="h-16 w-16 rounded-md bg-white"
+        style={{ boxShadow: 'none' }}
+      />
+    )
+  },
+  {
+    name: 'shadow-0.5',
+    value:
+      '0px 1.5px 2px 0px rgba(0, 0, 0, 0.10) inset, 0px 1.5px 2px 0px rgba(0, 0, 85, 0.02) inset',
+    example: (
+      <div
+        className="h-16 w-16 rounded-md bg-white"
+        style={{
+          boxShadow:
+            '0px 1.5px 2px 0px rgba(0, 0, 0, 0.10) inset, 0px 1.5px 2px 0px rgba(0, 0, 85, 0.02) inset'
+        }}
+      />
+    )
+  },
+  {
+    name: 'shadow-1',
+    value:
+      '0px 0.5px 3px 0px rgba(0, 0, 0, 0.05), 0px 1px 1px -1px rgba(0, 0, 0, 0.05)',
+    example: (
+      <div
+        className="h-16 w-16 rounded-md bg-white"
+        style={{
+          boxShadow:
+            '0px 0.5px 3px 0px rgba(0, 0, 0, 0.05), 0px 1px 1px -1px rgba(0, 0, 0, 0.05)'
+        }}
+      />
+    )
+  },
+  {
+    name: 'shadow-2',
+    value:
+      '0px 1px 2px 0px rgba(0, 0, 0, 0.10) inset, 0px 1px 3px 0px rgba(0, 0, 0, 0.05)',
+    example: (
+      <div
+        className="h-16 w-16 rounded-md bg-white"
+        style={{
+          boxShadow:
+            '0px 1px 2px 0px rgba(0, 0, 0, 0.10) inset, 0px 1px 3px 0px rgba(0, 0, 0, 0.05)'
+        }}
+      />
+    )
+  },
+  {
+    name: 'shadow-3',
+    value:
+      '0px 1px 3px 0px rgba(0, 0, 0, 0.05), 0px 2px 1px -1px rgba(0, 0, 0, 0.05)',
+    example: (
+      <div
+        className="h-16 w-16 rounded-md bg-white"
+        style={{
+          boxShadow:
+            '0px 1px 3px 0px rgba(0, 0, 0, 0.05), 0px 2px 1px -1px rgba(0, 0, 0, 0.05)'
+        }}
+      />
+    )
+  },
+  {
+    name: 'shadow-4',
+    value:
+      '0px 2px 4px -2px rgba(24, 39, 75, 0.12), 0px 4px 4px -2px rgba(24, 39, 75, 0.08)',
+    example: (
+      <div
+        className="h-16 w-16 rounded-md bg-white"
+        style={{
+          boxShadow:
+            '0px 2px 4px -2px rgba(24, 39, 75, 0.12), 0px 4px 4px -2px rgba(24, 39, 75, 0.08)'
+        }}
+      />
+    )
+  },
+  {
+    name: 'shadow-5',
+    value:
+      '0px 4px 6px -4px rgba(24, 39, 75, 0.12), 0px 8px 8px -4px rgba(24, 39, 75, 0.08)',
+    example: (
+      <div
+        className="h-16 w-16 rounded-md bg-white"
+        style={{
+          boxShadow:
+            '0px 4px 6px -4px rgba(24, 39, 75, 0.12), 0px 8px 8px -4px rgba(24, 39, 75, 0.08)'
+        }}
+      />
+    )
+  },
+  {
+    name: 'shadow-6',
+    value:
+      '0px 6px 8px -6px rgba(24, 39, 75, 0.12), 0px 8px 16px -6px rgba(24, 39, 75, 0.08)',
+    example: (
+      <div
+        className="h-16 w-16 rounded-md bg-white"
+        style={{
+          boxShadow:
+            '0px 6px 8px -6px rgba(24, 39, 75, 0.12), 0px 8px 16px -6px rgba(24, 39, 75, 0.08)'
+        }}
+      />
+    )
+  },
+  {
+    name: 'shadow-7',
+    value:
+      '0px 6px 12px -6px rgba(24, 39, 75, 0.12), 0px 8px 24px -4px rgba(24, 39, 75, 0.08)',
+    example: (
+      <div
+        className="h-16 w-16 rounded-md bg-white"
+        style={{
+          boxShadow:
+            '0px 6px 12px -6px rgba(24, 39, 75, 0.12), 0px 8px 24px -4px rgba(24, 39, 75, 0.08)'
+        }}
+      />
+    )
+  },
+  {
+    name: 'shadow-8',
+    value:
+      '0px 6px 14px -6px rgba(24, 39, 75, 0.12), 0px 10px 32px -4px rgba(24, 39, 75, 0.10)',
+    example: (
+      <div
+        className="h-16 w-16 rounded-md bg-white"
+        style={{
+          boxShadow:
+            '0px 6px 14px -6px rgba(24, 39, 75, 0.12), 0px 10px 32px -4px rgba(24, 39, 75, 0.10)'
+        }}
+      />
+    )
+  },
+  {
+    name: 'shadow-9',
+    value:
+      '0px 8px 18px -6px rgba(24, 39, 75, 0.12), 0px 12px 42px -4px rgba(24, 39, 75, 0.12)',
+    example: (
+      <div
+        className="h-16 w-16 rounded-md bg-white"
+        style={{
+          boxShadow:
+            '0px 8px 18px -6px rgba(24, 39, 75, 0.12), 0px 12px 42px -4px rgba(24, 39, 75, 0.12)'
+        }}
+      />
+    )
+  },
+  {
+    name: 'shadow-10',
+    value:
+      '0px 8px 22px -6px rgba(24, 39, 75, 0.12), 0px 14px 64px -4px rgba(24, 39, 75, 0.12)',
+    example: (
+      <div
+        className="h-16 w-16 rounded-md bg-white"
+        style={{
+          boxShadow:
+            '0px 8px 22px -6px rgba(24, 39, 75, 0.12), 0px 14px 64px -4px rgba(24, 39, 75, 0.12)'
+        }}
+      />
+    )
+  },
+  {
+    name: 'shadow-11',
+    value:
+      '0px 8px 28px -6px rgba(24, 39, 75, 0.12), 0px 18px 88px -4px rgba(24, 39, 75, 0.14)',
+    example: (
+      <div
+        className="h-16 w-16 rounded-md bg-white"
+        style={{
+          boxShadow:
+            '0px 8px 28px -6px rgba(24, 39, 75, 0.12), 0px 18px 88px -4px rgba(24, 39, 75, 0.14)'
+        }}
+      />
+    )
+  }
+]
+
+<DesignTokenTable tokens={ShadowTokensData} showExample={true} />
+
+## Exemplos
+
+### Componentes Mantine
+
+As sombras podem ser aplicadas em diversos componentes do Mantine através da prop `shadow`:
+
+```tsx
+import { Card, Paper, Button, Modal, Menu, Popover } from '@mantine/core'
+
+// Elementos de conteúdo - sombras baixas
+<Card shadow="2">Card com sombra sutil</Card>
+<Paper shadow="3">Paper com sombra próxima</Paper>
+
+// Elementos interativos - sombras médias
+<Button variant="default" shadow="4">Botão com sombra</Button>
+<Menu shadow="6">
+  <Menu.Target>
+    <Button>Menu Dropdown</Button>
+  </Menu.Target>
+  <Menu.Dropdown>
+    <Menu.Item>Item com elevação média</Menu.Item>
+  </Menu.Dropdown>
+</Menu>
+
+// Elementos flutuantes - sombras altas
+<Modal shadow="9">
+  <Modal.Content>Modal com elevação alta</Modal.Content>
+</Modal>
+<Popover shadow="7">
+  <Popover.Target>
+    <Button>Abrir Popover</Button>
+  </Popover.Target>
+  <Popover.Dropdown>
+    Conteúdo com sombra média-alta
+  </Popover.Dropdown>
+</Popover>
+
+// Elementos com hover
+<Card
+  shadow="3"
+  style={{ transition: 'box-shadow 150ms ease' }}
+  sx={{ '&:hover': { boxShadow: 'var(--shadow-7)' } }}
+>
+  Card com sombra em hover
+</Card>
+
+// Tooltips e elementos de máxima elevação
+<Tooltip shadow="11">
+  <Tooltip.Target>
+    <Button>Hover para tooltip</Button>
+  </Tooltip.Target>
+  <Tooltip.Content>
+    Tooltip com elevação máxima
+  </Tooltip.Content>
+</Tooltip>
+```
+
+### Classes Tailwind
+
+O sistema também pode ser utilizado através das classes do Tailwind:
+
+```tsx
+// Sombras básicas - elementos próximos ao plano
+<div className="shadow-none">Sem sombra</div>
+<div className="shadow-0.5">Sombra interna sutil</div>
+<div className="shadow-1">Sombra mínima</div>
+<div className="shadow-2">Sombra baixa</div>
+<div className="shadow-3">Sombra próxima</div>
+
+// Sombras médias - elementos elevados
+<div className="shadow-4">Elevação baixa</div>
+<div className="shadow-5">Elevação média-baixa</div>
+<div className="shadow-6">Elevação média</div>
+<div className="shadow-7">Elevação média-alta</div>
+
+// Sombras altas - elementos muito elevados
+<div className="shadow-8">Elevação alta</div>
+<div className="shadow-9">Elevação muito alta</div>
+<div className="shadow-10">Elevação extrema</div>
+<div className="shadow-11">Elevação máxima</div>
+
+// Combinando com outros estilos
+<div className="rounded-lg shadow-4 bg-white p-4">
+  Card com sombra e arredondamento
+</div>
+
+// Interações
+<button className="shadow-2 hover:shadow-6 transition-shadow duration-200">
+  Botão com transição de sombra
+</button>
+
+// Elementos flutuantes
+<div className="fixed bottom-4 right-4 shadow-10 bg-white p-4 rounded-lg">
+  Botão flutuante
+</div>
+
+// Cartões com hover
+<div className="shadow-3 hover:shadow-8 transition-all duration-200 ease-in-out">
+  Card com transição suave
+</div>
+```
+
+### Casos de Uso Comuns
+
+- **none**: Elementos planos, interfaces minimalistas
+- **0.5 - 1**: Sombras internas, elementos deprimidos, inputs
+- **2 - 3**: Cards básicos, botões em estado normal, elementos próximos
+- **4 - 6**: Dropdowns, popovers, cards em hover, navegação
+- **7 - 9**: Modais, sidebars, elementos em overlay
+- **10 - 11**: Tooltips, elementos flutuantes, máxima elevação
+
+### Boas Práticas
+
+1. **Hierarquia Visual**
+
+   - Use sombras mais suaves para elementos menos importantes
+   - Reserve sombras mais profundas para elementos que precisam de destaque
+
+2. **Interatividade**
+
+   - Aumente a sombra em hover para indicar interatividade
+   - Use transições suaves para mudanças de estado
+
+3. **Consistência**
+   - Mantenha um padrão consistente de sombras em elementos similares
+   - Use as mesmas sombras para elementos com a mesma função

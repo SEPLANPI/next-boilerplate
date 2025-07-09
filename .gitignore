@@ -7,6 +7,8 @@
 .yarn/install-state.gz
 .pnpm-store
 
+/storybook-static
+
 # testing
 /coverage
 
@@ -37,3 +39,5 @@ yarn-error.log*
 next-env.d.ts
 
 .env.local
+*storybook.log
+storybook-static

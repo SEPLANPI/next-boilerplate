@@ -22,7 +22,7 @@ function FormDrawerRoot({ children, onClose, ...props }: FormDrawerRootProps) {
 function FormDrawerHeader({ children }: PropsWithChildren) {
   return (
     <Drawer.Header className="p-6 pb-0">
-      <Drawer.Title className="text-sm font-semibold">{children}</Drawer.Title>
+      <Drawer.Title className="text-content-emphasis text-lg font-semibold">{children}</Drawer.Title>
       <Drawer.CloseButton />
     </Drawer.Header>
   )

@@ -1,6 +1,10 @@
 'use client'
 
+<<<<<<< HEAD
 import { ActionIcon, Divider } from '@mantine/core'
+=======
+import { ActionIcon, Divider, ScrollArea } from '@mantine/core'
+>>>>>>> dialogos/main
 import { NavItem } from './nav-item'
 import { PanelLeftClose, PanelLeftOpen } from 'lucide-react'
 import { UserMenu } from './user-menu'
@@ -13,12 +17,12 @@ export function MainNav({ config }: MainNavProps) {
 
   return (
     <aside
-      className={`flex h-full flex-col overflow-hidden border-r bg-white transition-all duration-300 ${
-        collapsed ? 'w-16' : 'w-64'
+      className={`flex h-full flex-col overflow-hidden bg-gray-100 transition-all duration-300 ${
+        collapsed ? 'w-20' : 'w-[260px]'
       }`}
     >
       <div
-        className={`mb-2 h-12 border-b ${collapsed ? 'flex flex-col items-center justify-center gap-2' : 'flex items-center justify-between px-4'}`}
+        className={`pt-3 ${collapsed ? 'flex flex-col items-center justify-center gap-2' : 'flex items-center justify-between px-4'}`}
       >
         <div
           className={`flex items-center ${collapsed ? 'justify-center' : ''} `}
@@ -28,7 +32,7 @@ export function MainNav({ config }: MainNavProps) {
             alt={config.app.name}
             width={120}
             height={120}
-            className={`size-10 ${!collapsed && 'hidden'}`}
+            className={`size-[36px] ${!collapsed && 'hidden'}`}
             quality={100}
           />
           <Image
@@ -36,7 +40,7 @@ export function MainNav({ config }: MainNavProps) {
             alt={config.app.name}
             width={300}
             height={56}
-            className={`h-7 w-auto ${collapsed && 'hidden'}`}
+            className={`h-[36px] w-auto ${collapsed && 'hidden'}`}
             quality={100}
           />
         </div>
@@ -51,16 +55,26 @@ export function MainNav({ config }: MainNavProps) {
           </ActionIcon>
         )}
       </div>
+<<<<<<< HEAD
+=======
+      {!collapsed && (
+        <div className="mt-4 px-4">
+          <EventSelect />
+        </div>
+      )}
+      {!collapsed && <Divider className="mx-4 my-4" />}
+>>>>>>> dialogos/main
       {collapsed && (
         <ActionIcon
           onClick={() => toggleCollapsed()}
           variant="ghost"
           size="lg"
-          className="mx-auto mb-2"
+          className="mx-auto my-3"
         >
           <PanelLeftOpen className="size-4" />
         </ActionIcon>
       )}
+<<<<<<< HEAD
       <nav className="flex-1 space-y-2 overflow-y-auto overflow-x-clip px-4">
         {config.sections.map((section, index) => (
           <section className="flex flex-col" key={section.title || index}>
@@ -74,15 +88,35 @@ export function MainNav({ config }: MainNavProps) {
               ))}
             <div
               className={`flex flex-col space-y-0.5 ${collapsed ? 'items-center' : ''}`}
+=======
+      <ScrollArea className="flex-1 px-4" type="scroll">
+        <nav className="space-y-3">
+          {config.sections.map((section, index) => (
+            <section
+              className="flex flex-col space-y-1.5"
+              key={section.title || index}
+>>>>>>> dialogos/main
             >
-              {section.items.map((item) => (
-                <NavItem key={item.label} item={item} collapsed={collapsed} />
-              ))}
-            </div>
-          </section>
-        ))}
-      </nav>
-      <div className="border-t p-2">
+              {section.title &&
+                (collapsed ? (
+                  <Divider className="" />
+                ) : (
+                  <span className="block text-xxs font-semibold uppercase tracking-wide text-content-muted">
+                    {section.title}
+                  </span>
+                ))}
+              <div
+                className={`flex flex-col space-y-1.5 ${collapsed ? 'items-center' : ''}`}
+              >
+                {section.items.map((item) => (
+                  <NavItem key={item.label} item={item} collapsed={collapsed} />
+                ))}
+              </div>
+            </section>
+          ))}
+        </nav>
+      </ScrollArea>
+      <div className="p-4">
         <UserMenu />
       </div>
     </aside>

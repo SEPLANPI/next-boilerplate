@@ -1,3 +1,6 @@
+// For more info, see https://github.com/storybookjs/eslint-plugin-storybook#configuration-flat-config-format
+import storybook from "eslint-plugin-storybook";
+
 import js from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import react from 'eslint-plugin-react';
@@ -7,57 +10,61 @@ import prettier from 'eslint-plugin-prettier';
 import globals from 'globals';
 import nextPlugin from '@next/eslint-plugin-next';
 
-export default tseslint.config(
-  {
-    ignores: ['node_modules/', '.next/']
-  },
-  js.configs.recommended,
-  ...tseslint.configs.recommended,
-  {
-    files: ['**/*.{ts,tsx}'],
-    languageOptions: {
-      sourceType: 'module',
-      ecmaVersion: 'latest',
-      parserOptions: {
-        ecmaFeatures: {
-          jsx: true
-        }
-      },
-      globals: {
-        ...globals.browser,
-        ...globals.node,
-        console: 'readonly',
-        process: 'readonly',
-        __dirname: 'readonly',
-        module: 'readonly'
+export default tseslint.config({
+  ignores: ['node_modules/', '.next/']
+}, js.configs.recommended, ...tseslint.configs.recommended, {
+  files: ['**/*.{ts,tsx}'],
+  languageOptions: {
+    sourceType: 'module',
+    ecmaVersion: 'latest',
+    parserOptions: {
+      ecmaFeatures: {
+        jsx: true
       }
     },
-    plugins: {
-      react,
-      'react-hooks': reactHooks,
-      'react-refresh': reactRefresh,
-      prettier,
-      next: nextPlugin
-    },
-    rules: {
-      'space-before-function-paren': [
-        'error',
-        {
-          anonymous: 'never',
-          named: 'never',
-          asyncArrow: 'always'
-        }
-      ],
-      ...reactHooks.configs.recommended.rules,
-      'react-refresh/only-export-components': [
-        'warn',
-        { allowConstantExport: true }
-      ],
-      'prettier/prettier': 'error'
+    globals: {
+      ...globals.browser,
+      ...globals.node,
+      console: 'readonly',
+      process: 'readonly',
+      __dirname: 'readonly',
+      module: 'readonly'
     }
   },
-  {
-    files: ['**/*.{js,jsx,mjs,cjs}'],
-    ...nextPlugin.configs['core-web-vitals']
+  plugins: {
+    react,
+    'react-hooks': reactHooks,
+    'react-refresh': reactRefresh,
+    prettier,
+    next: nextPlugin
+  },
+  rules: {
+    'space-before-function-paren': [
+      'error',
+      {
+        anonymous: 'never',
+        named: 'never',
+        asyncArrow: 'always'
+      }
+    ],
+    ...reactHooks.configs.recommended.rules,
+    'react-refresh/only-export-components': [
+      'warn',
+      { allowConstantExport: true }
+    ],
+    'prettier/prettier': 'error',
+    'next/no-html-link-for-pages': 'error',
+    'next/no-img-element': 'error',
+    'next/no-head-import-in-document': 'error',
+    'next/no-sync-scripts': 'error',
+    'next/no-unwanted-polyfillio': 'error',
+    'next/no-title-in-document-head': 'error'
   }
-);
+}, {
+  files: ['**/*.{js,jsx,mjs,cjs,ts,tsx}'],
+  settings: {
+    next: {
+      rootDir: '.'
+    }
+  }
+}, storybook.configs["flat/recommended"]);

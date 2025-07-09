@@ -5,6 +5,7 @@ Este é um boilerplate para iniciar rapidamente o desenvolvimento de aplicaçõe
 > 📚 [Clique aqui para acessar a documentação completa do projeto](docs/README.md)
 
 ## Tabela de Conteúdos
+
 - [Next.js Boilerplate](#nextjs-boilerplate)
   - [Tabela de Conteúdos](#tabela-de-conteúdos)
   - [Tecnologias Utilizadas](#tecnologias-utilizadas)
@@ -16,7 +17,6 @@ Este é um boilerplate para iniciar rapidamente o desenvolvimento de aplicaçõe
   - [Desenvolvimento](#desenvolvimento)
     - [Opções de Ambiente de Desenvolvimento](#opções-de-ambiente-de-desenvolvimento)
   - [Estrutura de Pastas](#estrutura-de-pastas)
-  - [Documentação Adicional](#documentação-adicional)
 
 ## Tecnologias Utilizadas
 
@@ -37,6 +37,7 @@ Este é um boilerplate para iniciar rapidamente o desenvolvimento de aplicaçõe
 Este projeto utiliza **Keycloak** integrado com **NextAuth.js**. Para mais detalhes sobre a configuração de autenticação, consulte [docs/auth.md](docs/auth.md).
 
 ## Variáveis de ambiente
+
 Crie um arquivo `.env.local` na raiz do projeto:
 
 ```env
@@ -74,24 +75,29 @@ IMAGE_HOST_PORT=8000
 1. Certifique-se de ter o Docker instalado
 2. Clone o repositório
 3. Execute:
+
 ```bash
 docker-compose up --build
 ```
+
 4. Acesse http://localhost:3000
 
 ### Executando Localmente
 
 1. Instale o pnpm:
+
 ```bash
 npm install -g pnpm
 ```
 
 2. Instale as dependências:
+
 ```bash
 pnpm install
 ```
 
 3. Inicie o servidor:
+
 ```bash
 pnpm dev
 ```
@@ -101,6 +107,7 @@ pnpm dev
 ### Opções de Ambiente de Desenvolvimento
 
 1. **Dev Containers no VSCode**:
+
    - Requer Docker e VSCode
    - Instale a extensão [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
    - Abra o projeto e selecione "Reabrir no Container"

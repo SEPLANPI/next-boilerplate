@@ -19,7 +19,7 @@ export default function GlobalError({ reset }: { reset: () => void }) {
             <h1 className="m-0 max-w-sm text-8xl font-black text-content-muted">
               500
             </h1>
-            <h2 className="text-lg font-bold">Ops! Algo deu errado.</h2>
+            <h2 className="text-lg font-semibold">Ops! Algo deu errado.</h2>
             <p className="text-center text-lg">
               Houve um problema inesperado. Por favor, tente novamente em alguns
               instantes.

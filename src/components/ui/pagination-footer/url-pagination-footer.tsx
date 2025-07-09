@@ -36,9 +36,9 @@ export function UrlPaginationFooter({
   const endItem = Math.min(page * itemsPerPage, totalItems)
 
   return (
-    <div className="mt-6 flex items-center justify-between">
+    <div className="flex items-center justify-between">
       <span className="text-sm">
-        <span className="font-bold">
+        <span className="font-semibold">
           {startItem} - {endItem}
         </span>{' '}
         de {totalItems} resultados

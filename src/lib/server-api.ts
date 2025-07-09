@@ -36,7 +36,9 @@ async function request(
     ...options
   })
 }
-
+/**
+ * @deprecated Use a API do arquivo @/lib/api ao invés desta.
+ */
 export const api = {
   get: (url: string, options?: ApiOptions) => request(url, 'GET', options),
   post: (url: string, options?: ApiOptions) => request(url, 'POST', options),

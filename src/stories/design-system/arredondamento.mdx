@@ -1,0 +1,140 @@
+import { Meta } from '@storybook/blocks'
+import { DesignTokenTable } from '../components/design-tokens-table'
+
+<Meta title="Design System/Arredondamento" />
+
+# Arredondamento
+
+O sistema de arredondamento (border-radius) fornece uma escala consistente para suavizar cantos de elementos. Os valores são calculados usando a variável `--mantine-scale`.
+
+## Escala de Arredondamento
+
+export const RadiusTokensData = [
+  {
+    name: 'rounded-xs',
+    value: 'calc(0.1875rem * var(--mantine-scale)) [3px]',
+    example: (
+      <div className="bg-sky-400 h-16 w-16" style={{ borderRadius: '3px' }} />
+    )
+  },
+  {
+    name: 'rounded-sm',
+    value: 'calc(0.25rem * var(--mantine-scale)) [4px]',
+    example: (
+      <div className="bg-sky-400 h-16 w-16" style={{ borderRadius: '4px' }} />
+    )
+  },
+  {
+    name: 'rounded',
+    value: 'calc(0.375rem * var(--mantine-scale)) [6px]',
+    example: (
+      <div className="bg-sky-400 h-16 w-16" style={{ borderRadius: '6px' }} />
+    )
+  },
+  {
+    name: 'rounded-md',
+    value: 'calc(0.5rem * var(--mantine-scale)) [8px]',
+    example: (
+      <div className="bg-sky-400 h-16 w-16" style={{ borderRadius: '8px' }} />
+    )
+  },
+  {
+    name: 'rounded-lg',
+    value: 'calc(0.75rem * var(--mantine-scale)) [12px]',
+    example: (
+      <div className="bg-sky-400 h-16 w-16" style={{ borderRadius: '12px' }} />
+    )
+  },
+  {
+    name: 'rounded-xl',
+    value: 'calc(1rem * var(--mantine-scale)) [16px]',
+    example: (
+      <div className="bg-sky-400 h-16 w-16" style={{ borderRadius: '16px' }} />
+    )
+  },
+  {
+    name: 'rounded-2xl',
+    value: 'calc(1.25rem * var(--mantine-scale)) [20px]',
+    example: (
+      <div className="bg-sky-400 h-16 w-16" style={{ borderRadius: '20px' }} />
+    )
+  },
+  {
+    name: 'rounded-3xl',
+    value: 'calc(1.5rem * var(--mantine-scale)) [24px]',
+    example: (
+      <div className="bg-sky-400 h-16 w-16" style={{ borderRadius: '24px' }} />
+    )
+  },
+  {
+    name: 'rounded-full',
+    value: '9999px',
+    example: <div className="bg-sky-400 h-16 w-16 rounded-full" />
+  }
+]
+
+<DesignTokenTable tokens={RadiusTokensData} showExample={true} />
+
+## Exemplos
+
+### Componentes Mantine
+
+Os tokens de arredondamento podem ser aplicados em diversos componentes do Mantine através da prop `radius`:
+
+```tsx
+import { Button, Card, Paper, Avatar, Badge } from '@mantine/core'
+
+// Componentes básicos
+<Button radius="sm">Botão</Button>
+<Card radius="md">Card com cantos arredondados</Card>
+<Paper radius="lg">Paper com cantos suaves</Paper>
+
+// Componentes de mídia e dados
+<Avatar radius="full" src="/avatar.jpg" alt="Foto do usuário" />
+<Image radius="lg" src="/imagem.jpg" alt="Imagem com cantos arredondados" />
+
+// Elementos de interface
+<Badge radius="xl">Status</Badge>
+<Alert radius="md">Alerta com cantos suaves</Alert>
+
+// Inputs e campos de formulário
+<TextInput radius="sm" placeholder="Campo de texto" />
+<Select radius="md" data={['Opção 1', 'Opção 2']} />
+```
+
+### Classes Tailwind
+
+O sistema também pode ser utilizado através das classes do Tailwind:
+
+```tsx
+// Arredondamento básico
+<div className="rounded-sm">Arredondamento pequeno</div>
+<div className="rounded">Arredondamento padrão</div>
+<div className="rounded-lg">Arredondamento grande</div>
+
+// Arredondamento em lados específicos
+<div className="rounded-t-lg">Apenas topo</div>
+<div className="rounded-r-lg">Apenas direita</div>
+<div className="rounded-b-lg">Apenas base</div>
+<div className="rounded-l-lg">Apenas esquerda</div>
+
+// Cantos específicos
+<div className="rounded-tl-lg">Topo esquerdo</div>
+<div className="rounded-tr-lg">Topo direito</div>
+<div className="rounded-br-lg">Base direita</div>
+<div className="rounded-bl-lg">Base esquerda</div>
+
+// Casos comuns
+<div className="rounded-full">Círculo perfeito</div>
+<button className="rounded hover:rounded-lg">
+  Botão com transição de arredondamento
+</button>
+```
+
+### Casos de Uso Comuns
+
+- **xs - sm**: Elementos pequenos, inputs, botões secundários
+- **rounded - md**: Cartões, botões primários, campos de formulário
+- **lg - xl**: Modais, popovers, elementos destacados
+- **2xl - 3xl**: Elementos especiais, banners
+- **full**: Avatares, badges, pills

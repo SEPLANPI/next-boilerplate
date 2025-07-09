@@ -23,7 +23,7 @@ export function ControlledPaginationFooter({
   return (
     <div className="mt-6 flex items-center justify-between">
       <span className="text-sm">
-        <span className="font-bold">
+        <span className="font-semibold">
           {startItem} - {endItem}
         </span>{' '}
         de {totalItems} resultados

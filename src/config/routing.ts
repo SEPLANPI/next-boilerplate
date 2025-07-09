@@ -5,7 +5,8 @@ export const routingConfig: RoutingConfiguration = {
     isPublic: false,
     requiredRoles: [],
     redirects: {
-      loginPagePath: '/api/auth/sign-in',
+      postAuthRedirectPath: '/api/auth/role-redirect',
+      signInPagePath: '/api/auth/sign-in',
       defaultAccessDeniedPath: '/acesso-negado',
       accessDeniedPageByRequiredRole: {}
     }

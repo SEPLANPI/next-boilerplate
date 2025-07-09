@@ -19,7 +19,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       if (account && user) {
         return true
       } else {
-        return routingConfig.defaults.redirects.loginPagePath
+        return routingConfig.defaults.redirects.signInPagePath
       }
     },
     redirect: async ({ url, baseUrl }) => {
@@ -57,6 +57,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     }
   },
   pages: {
-    signIn: '/api/auth/sign-in'
+    signIn: '/api/auth/sign-in',
+    error: '/erro-autenticacao'
   }
 })

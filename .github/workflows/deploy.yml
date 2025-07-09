@@ -1,7 +1,7 @@
 name: Implantação da Aplicação
 
 on:
-  pull_request:
+  push:
     branches: [main]
   workflow_dispatch:
 

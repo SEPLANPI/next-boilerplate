@@ -58,17 +58,17 @@ export function SearchInput({
       defaultValue={search}
       ref={inputRef}
       onChange={handleSearch}
-      className={cn('w-full max-w-xs', className)}
+      className={cn('w-full max-w-[300px]', className)}
       classNames={{
         input: cn(inputClassName)
       }}
-      placeholder={placeholder || 'Pesquisar'}
+      placeholder={placeholder || 'Busca'}
       rightSectionPointerEvents="all"
       rightSection={
         search ? (
           <CloseButton aria-label="Limpar pesquisa" onClick={clearSearch} />
         ) : (
-          <Search className="size-4" />
+          <Search className="size-4 text-primary-600" />
         )
       }
     />

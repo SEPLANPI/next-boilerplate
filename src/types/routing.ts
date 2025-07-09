@@ -18,7 +18,10 @@ export interface RouteConfig {
 }
 export interface AuthRedirectConfig {
   // Path to redirect when user is not logged in
-  loginPagePath: string
+  signInPagePath: string
+
+  // Path to redirect to after successful authentication
+  postAuthRedirectPath: string
 
   // Default access denied page
   defaultAccessDeniedPath: string
