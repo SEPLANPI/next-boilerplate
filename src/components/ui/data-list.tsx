@@ -118,14 +118,7 @@ export function DataListLabel({
   ...props
 }: DataListLabelProps) {
   return (
-    <span
-<<<<<<< HEAD
-      className={cn('text-sm font-medium text-content-muted', className)}
-=======
-      className={cn('text-content-emphasis text-sm ', className)}
->>>>>>> dialogos/main
-      {...props}
-    >
+    <span className={cn('text-sm text-content-emphasis', className)} {...props}>
       {children}
     </span>
   )

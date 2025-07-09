@@ -1,10 +1,6 @@
 'use client'
 
-<<<<<<< HEAD
-import { ActionIcon, Divider } from '@mantine/core'
-=======
 import { ActionIcon, Divider, ScrollArea } from '@mantine/core'
->>>>>>> dialogos/main
 import { NavItem } from './nav-item'
 import { PanelLeftClose, PanelLeftOpen } from 'lucide-react'
 import { UserMenu } from './user-menu'
@@ -17,9 +13,8 @@ export function MainNav({ config }: MainNavProps) {
 
   return (
     <aside
-      className={`flex h-full flex-col overflow-hidden bg-gray-100 transition-all duration-300 ${
-        collapsed ? 'w-20' : 'w-[260px]'
-      }`}
+      className={`flex h-full flex-col overflow-hidden bg-gray-100 transition-all duration-300 ${collapsed ? 'w-20' : 'w-[260px]'
+        }`}
     >
       <div
         className={`pt-3 ${collapsed ? 'flex flex-col items-center justify-center gap-2' : 'flex items-center justify-between px-4'}`}
@@ -55,15 +50,6 @@ export function MainNav({ config }: MainNavProps) {
           </ActionIcon>
         )}
       </div>
-<<<<<<< HEAD
-=======
-      {!collapsed && (
-        <div className="mt-4 px-4">
-          <EventSelect />
-        </div>
-      )}
-      {!collapsed && <Divider className="mx-4 my-4" />}
->>>>>>> dialogos/main
       {collapsed && (
         <ActionIcon
           onClick={() => toggleCollapsed()}
@@ -74,28 +60,12 @@ export function MainNav({ config }: MainNavProps) {
           <PanelLeftOpen className="size-4" />
         </ActionIcon>
       )}
-<<<<<<< HEAD
-      <nav className="flex-1 space-y-2 overflow-y-auto overflow-x-clip px-4">
-        {config.sections.map((section, index) => (
-          <section className="flex flex-col" key={section.title || index}>
-            {section.title &&
-              (collapsed ? (
-                <Divider className="mb-2" />
-              ) : (
-                <span className="mb-2 block text-xxs font-semibold uppercase text-content-muted">
-                  {section.title}
-                </span>
-              ))}
-            <div
-              className={`flex flex-col space-y-0.5 ${collapsed ? 'items-center' : ''}`}
-=======
       <ScrollArea className="flex-1 px-4" type="scroll">
         <nav className="space-y-3">
           {config.sections.map((section, index) => (
             <section
               className="flex flex-col space-y-1.5"
               key={section.title || index}
->>>>>>> dialogos/main
             >
               {section.title &&
                 (collapsed ? (

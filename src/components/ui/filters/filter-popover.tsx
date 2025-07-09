@@ -20,14 +20,9 @@ export const FilterPopover = <T extends object>({
   filterFn,
   showSearch = true,
   showSelectedOnTop = true,
-<<<<<<< HEAD:src/components/ui/filters/async/index.tsx
-  position = 'bottom-end'
-}: AsyncFilterProps<T>) {
-=======
   position = 'bottom-end',
   width = 300
 }: FilterPopoverProps<T>) => {
->>>>>>> dialogos/main:src/components/ui/filters/filter-popover.tsx
   const { data, error, isFetching } = useQuery({
     queryKey: [`filter-${filterId}`],
     queryFn: loadOptions,
@@ -70,11 +65,7 @@ export const FilterPopover = <T extends object>({
 
   return (
     <SelectedItemsProvider searchParamKey={searchParamKey}>
-<<<<<<< HEAD:src/components/ui/filters/async/index.tsx
-      <Popover width={300} position={position} shadow="md">
-=======
       <Popover width={width} position={position} shadow="m5">
->>>>>>> dialogos/main:src/components/ui/filters/filter-popover.tsx
         <Popover.Target>
           <FilterButton>{children}</FilterButton>
         </Popover.Target>

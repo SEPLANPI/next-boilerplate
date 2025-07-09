@@ -32,14 +32,9 @@ export const StaticFilterPopover = <T extends object>({
   filterFn,
   showSearch = true,
   showSelectedOnTop = true,
-<<<<<<< HEAD:src/components/ui/filters/static/index.tsx
-  position = 'bottom-end'
-}: StaticFilterProps<T>) {
-=======
   position = 'bottom-end',
   width = 300
 }: StaticFilterPopoverProps<T>) => {
->>>>>>> dialogos/main:src/components/ui/filters/components/static-filter-popover.tsx
   const isDefaultOption = (option: T): option is T & DefaultOption =>
     'id' in option && 'label' in option
 
@@ -75,11 +70,7 @@ export const StaticFilterPopover = <T extends object>({
 
   return (
     <SelectedItemsProvider searchParamKey={searchParamKey}>
-<<<<<<< HEAD:src/components/ui/filters/static/index.tsx
-      <Popover width={300} position={position} shadow="md">
-=======
       <Popover width={width} position={position} shadow="m5">
->>>>>>> dialogos/main:src/components/ui/filters/components/static-filter-popover.tsx
         <Popover.Target>
           <FilterButton>{children}</FilterButton>
         </Popover.Target>
