@@ -1,4 +1,4 @@
-import { ApiError } from '../../api/errors'
+import { ApiError } from '@/lib/api/errors'
 
 export type DjangoError =
   | string[]
@@ -13,11 +13,11 @@ export function buildDjangoErrorMessage(error: DjangoError): string {
   if (Array.isArray(error)) {
     return error.join('\n')
   }
-
+  const commonKeys = ['non_field_errors', 'detail', 'error', 'message']
   const messages: string[] = []
   Object.entries(error).forEach(([key, value]) => {
     const errorMessages = Array.isArray(value) ? value : [value]
-    if (key === 'non_field_errors') {
+    if (commonKeys.includes(key)) {
       messages.push(errorMessages.join(', '))
     } else {
       messages.push(`${key}: ${errorMessages.join(', ')}`)

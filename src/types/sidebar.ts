@@ -1,9 +1,11 @@
 import { LucideProps } from 'lucide-react'
 import { ComponentType } from 'react'
+import { Role } from './roles'
 
 interface BaseNavigationItem {
   label: string
   icon: ComponentType<LucideProps>
+  authorizedRoles?: Role[]
 }
 
 interface NavigationLeafItem extends BaseNavigationItem {

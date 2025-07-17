@@ -18,7 +18,7 @@ import {
   Select,
   SelectProps
 } from '@mantine/core'
-import { cn } from '../utils'
+import { cn } from '@/utils'
 
 /**
  * Component customizations for the Mantine theme

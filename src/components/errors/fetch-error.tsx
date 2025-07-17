@@ -1,8 +1,9 @@
 import { API } from '@/constants/messages'
 import { DjangoError } from '@/types/actions'
-import { buildErrorMessage } from '@/lib/utils'
+import { buildErrorMessage } from '@/utils'
 import { Alert } from '@mantine/core'
 import { ApiError } from '@/lib/api/errors'
+import { AlertTriangle } from 'lucide-react'
 
 interface FetchErrorProps {
   error?: DjangoError | ApiError
@@ -23,7 +24,13 @@ export function FetchError({
     return buildErrorMessage(error)
   }
   return (
-    <Alert title={title} variant="light" color="red" className="max-w-xl">
+    <Alert
+      title={title}
+      variant="light"
+      color="red"
+      className="max-w-xl"
+      icon={<AlertTriangle />}
+    >
       {getErrorMessage()}
     </Alert>
   )

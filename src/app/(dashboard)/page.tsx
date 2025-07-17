@@ -1,7 +1,4 @@
-import {
-  HeaderContent,
-  PageHeader
-} from '@/components/layouts/dashboard-layout'
+import { PageHeader } from '@/components/layouts/app-shell'
 
 import { BreadcrumbItem, Breadcrumbs } from '@/components/ui/breadcrumbs'
 
@@ -14,9 +11,9 @@ export default async function Home() {
   return (
     <>
       <PageHeader>
-        <HeaderContent>
+        <PageHeader.Content>
           <Breadcrumbs items={items} />
-        </HeaderContent>
+        </PageHeader.Content>
       </PageHeader>
       <h1>Página Exemplo</h1>
     </>

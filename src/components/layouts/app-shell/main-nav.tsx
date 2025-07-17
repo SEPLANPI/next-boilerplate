@@ -4,7 +4,7 @@ import { ActionIcon, Divider, ScrollArea } from '@mantine/core'
 import { NavItem } from './nav-item'
 import { PanelLeftClose, PanelLeftOpen } from 'lucide-react'
 import { UserMenu } from './user-menu'
-import { useSidebar } from '@/contexts/sidebar-context'
+import { useSidebar } from './context'
 import { MainNavProps } from '@/types/sidebar'
 import Image from 'next/image'
 
@@ -50,6 +50,7 @@ export function MainNav({ config }: MainNavProps) {
           </ActionIcon>
         )}
       </div>
+      {!collapsed && <Divider className="mx-4 my-4" />}
       {collapsed && (
         <ActionIcon
           onClick={() => toggleCollapsed()}

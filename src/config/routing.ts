@@ -2,22 +2,23 @@ import { RoutingConfiguration } from '@/types/routing'
 
 export const routingConfig: RoutingConfiguration = {
   defaults: {
-    isPublic: false,
-    requiredRoles: [],
+    isPublic: true,
+    authorizedRoles: [],
     redirects: {
       postAuthRedirectPath: '/api/auth/role-redirect',
       signInPagePath: '/api/auth/sign-in',
       defaultAccessDeniedPath: '/acesso-negado',
-      accessDeniedPageByRequiredRole: {}
+      accessDeniedPageByAllowedRole: {}
     }
   },
   routes: [
     {
       path: '/acesso-negado',
-      isPublic: true,
-    }, {
+      isPublic: true
+    },
+    {
       path: '/sessao-expirada',
-      isPublic: true,
+      isPublic: true
     }
   ]
 }

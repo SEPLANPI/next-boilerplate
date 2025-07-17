@@ -1,6 +1,6 @@
 import React from 'react'
 import { Badge } from '@mantine/core'
-import { cn } from '@/lib/utils'
+import { cn } from '@/utils'
 import { TrendingDown, TrendingUp } from 'lucide-react'
 
 // Base Card Root component

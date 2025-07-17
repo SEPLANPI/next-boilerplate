@@ -3,7 +3,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
 import { usePathname, useRouter } from 'next/navigation'
 import { Tabs, TabsList, TabsTab } from '@mantine/core'
-import { cn } from '@/lib/utils'
+import { cn } from '@/utils'
 
 interface NavigationTabsContextValue {
   activeTab: string

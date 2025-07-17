@@ -31,16 +31,16 @@ export function matchRoute(path: string, routes: string[]): boolean {
 
 export function checkPermissions(
   userRoles: Role[] = [],
-  routeRequiredRoles?: Role[],
+  routeAuthorizedRoles?: Role[],
   defaultRoles: Role[] = []
 ): boolean {
-  const requiredRoles = routeRequiredRoles ?? defaultRoles
+  const authorizedRoles = routeAuthorizedRoles ?? defaultRoles
 
-  if (requiredRoles.length === 0) {
+  if (authorizedRoles.length === 0) {
     return true
   }
 
-  return requiredRoles.every((role) => userRoles.includes(role))
+  return userRoles.some((role) => authorizedRoles.includes(role))
 }
 
 export function determineRouteAccess(
@@ -65,18 +65,18 @@ export function determineRouteAccess(
   }
 
   const isPublic = matchedConfig?.isPublic ?? routingConfig.defaults.isPublic
-  const requiredRoles =
-    matchedConfig?.requiredRoles ?? routingConfig.defaults.requiredRoles
+  const authorizedRoles =
+    matchedConfig?.authorizedRoles ?? routingConfig.defaults.authorizedRoles
 
-  const hasPermission = checkPermissions(userRoles, requiredRoles)
+  const hasPermission = checkPermissions(userRoles, authorizedRoles)
 
   let accessDeniedPath =
     routingConfig.defaults.redirects.defaultAccessDeniedPath
-  if (!hasPermission && requiredRoles.length > 0) {
-    const roleSpecificPath = requiredRoles
+  if (!hasPermission && authorizedRoles.length > 0) {
+    const roleSpecificPath = authorizedRoles
       .map(
         (role) =>
-          routingConfig.defaults.redirects.accessDeniedPageByRequiredRole[role]
+          routingConfig.defaults.redirects.accessDeniedPageByAllowedRole[role]
       )
       .find((path) => path !== undefined)
     if (roleSpecificPath) {

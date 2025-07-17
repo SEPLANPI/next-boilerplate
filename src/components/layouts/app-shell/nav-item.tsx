@@ -10,6 +10,7 @@ import {
   isNavigationParentItem
 } from '@/types/sidebar'
 import { ChevronDown } from 'lucide-react'
+import { useSession } from 'next-auth/react'
 
 interface NavItemProps {
   item: NavigationItem
@@ -66,6 +67,17 @@ export function NavItem({ item, collapsed }: NavItemProps) {
   const pathname = usePathname()
   const params = useParams()
   const [opened, { toggle }] = useDisclosure(false)
+  const { data: session } = useSession()
+  const userRoles = session?.user?.roles ?? []
+
+  const hasPermission =
+    !item.authorizedRoles ||
+    item.authorizedRoles.length === 0 ||
+    item.authorizedRoles.some((role) => userRoles.includes(role))
+
+  if (!hasPermission) {
+    return null
+  }
 
   if (isNavigationLeafItem(item)) {
     const href = item.href.replace(
@@ -111,7 +123,19 @@ export function NavItem({ item, collapsed }: NavItemProps) {
   if (isNavigationParentItem(item)) {
     const IconComponent = item.icon ? <item.icon className="size-4" /> : null
 
-    const isAnyChildActive = item.children.some((child) => {
+    const visibleChildren = item.children.filter((child) => {
+      const childHasPermission =
+        !child.authorizedRoles ||
+        child.authorizedRoles.length === 0 ||
+        child.authorizedRoles.some((role) => userRoles.includes(role))
+      return childHasPermission
+    })
+
+    if (visibleChildren.length === 0) {
+      return null
+    }
+
+    const isAnyChildActive = visibleChildren.some((child) => {
       const childHref = child.href.replace(
         /:(\w+)/g,
         (_, param) => params[param] as string
@@ -145,7 +169,7 @@ export function NavItem({ item, collapsed }: NavItemProps) {
 
           <Menu.Dropdown>
             <Menu.Label>{item.label}</Menu.Label>
-            {item.children.map((child) => {
+            {visibleChildren.map((child) => {
               const childHref = child.href.replace(
                 /:(\w+)/g,
                 (_, param) => params[param] as string
@@ -197,7 +221,7 @@ export function NavItem({ item, collapsed }: NavItemProps) {
 
         <Collapse in={opened}>
           <Box className="ml-5 space-y-1.5 border-l-2 border-secondary py-1 pl-1">
-            {item.children.map((child) => {
+            {visibleChildren.map((child) => {
               const childHref = child.href.replace(
                 /:(\w+)/g,
                 (_, param) => params[param] as string

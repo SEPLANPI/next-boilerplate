@@ -3,7 +3,7 @@
 import { ActionIcon, Divider } from '@mantine/core'
 import { X } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { cn } from '@/lib/utils'
+import { cn } from '@/utils'
 
 export function FormLayoutHeader({ children }: { children: React.ReactNode }) {
   const router = useRouter()

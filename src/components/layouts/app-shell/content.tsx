@@ -1,4 +1,4 @@
-import { cn } from '@/lib/utils'
+import { cn } from '@/utils'
 import { ScrollArea } from '@mantine/core'
 import { PropsWithChildren } from 'react'
 

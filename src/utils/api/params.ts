@@ -1,4 +1,4 @@
-import { buildParams, type ParamsRecord } from '../../api/params'
+import { buildParams, type ParamsRecord } from '@/lib/api/params'
 
 /**
  * Build parameters with automatic event scoping

@@ -2,7 +2,7 @@ import { ColumnHeaderProps } from './types'
 import { useSortableColumn } from './use-sortable-column'
 import { SortIcon } from './sort-icon'
 import { TableTh } from '@mantine/core'
-import { cn } from '@/lib/utils'
+import { cn } from '@/utils'
 
 export function SortableColumnHeader({
   column,

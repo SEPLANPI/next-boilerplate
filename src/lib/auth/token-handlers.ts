@@ -3,7 +3,7 @@ import { getUserInfo } from './get-user-info'
 import jwt from 'jsonwebtoken'
 import { KeycloakAccessTokenPayload } from './types'
 import { env } from '@/config/env'
-import { calculateExpiryTime } from '../utils'
+import { calculateExpiryTime } from '@/utils'
 
 export interface TokenData {
   accessToken: string

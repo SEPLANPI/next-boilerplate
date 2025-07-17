@@ -1,15 +1,15 @@
 'use client'
 import { PropsWithChildren } from 'react'
 import { MainNav } from './main-nav'
-import { SidebarProvider } from '@/contexts/sidebar-context'
+import { SidebarProvider } from './context'
 import { SidebarConfig } from '@/types/sidebar'
 import { DashboardContent } from './content'
 
-interface DashboardLayoutProps extends PropsWithChildren {
+interface AppShellProps extends PropsWithChildren {
   config: SidebarConfig
 }
 
-export function DashboardLayout({ children, config }: DashboardLayoutProps) {
+export function AppShell({ children, config }: AppShellProps) {
   return (
     <SidebarProvider>
       <div className="flex min-h-[100dvh] items-stretch">

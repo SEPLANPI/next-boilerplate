@@ -5,7 +5,7 @@ import { useDebouncedCallback } from '@mantine/hooks'
 import { Search } from 'lucide-react'
 import { parseAsInteger, parseAsString, useQueryStates } from 'nuqs'
 import { ChangeEvent, useEffect, useRef } from 'react'
-import { cn } from '@/lib/utils'
+import { cn } from '@/utils'
 
 type SearchInputProps = {
   placeholder?: string

@@ -5,12 +5,12 @@ import { auth } from '@/auth'
 
 interface ServerPermissionGateProps {
   children: ReactNode
-  allowedRoles: Role[]
+  authorizedRoles?: Role[]
 }
 
 export async function ServerPermissionGate({
   children,
-  allowedRoles
+  authorizedRoles
 }: ServerPermissionGateProps) {
   const session = await auth()
   const user = session?.user
@@ -19,7 +19,13 @@ export async function ServerPermissionGate({
     return null
   }
 
-  const hasPermission = user.roles.some((role) => allowedRoles.includes(role))
+  if (!authorizedRoles) {
+    return <>{children}</>
+  }
+
+  const hasPermission = user.roles.some((role) =>
+    authorizedRoles.includes(role)
+  )
 
   if (!hasPermission) {
     return null

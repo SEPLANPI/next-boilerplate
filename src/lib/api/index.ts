@@ -41,4 +41,4 @@ export {
 } from './interceptors'
 export { asQuery } from './query'
 export { buildParams, type ParamsRecord } from './params'
-export { buildEventScopedParams } from '../utils/api/params'
+export { buildEventScopedParams } from '@/utils/api/params'

@@ -1,16 +1,13 @@
 'use client'
-
 import { Avatar, Button, Menu, UnstyledButton } from '@mantine/core'
 import Link from 'next/link'
 import { useSession } from 'next-auth/react'
-import { useState } from 'react'
-import { useSidebar } from '@/contexts/sidebar-context'
+import { useSidebar } from './context'
 import { ChevronsUpDown, LogOut } from 'lucide-react'
-import { formatCPF } from '@/lib/utils'
+import { formatCPF } from '@/utils'
 
 export function UserMenu() {
   const { data } = useSession()
-  const [open, setOpen] = useState(false)
   const { collapsed } = useSidebar()
 
   const getShortName = (fullName?: string) => {
@@ -54,12 +51,7 @@ export function UserMenu() {
   if (collapsed) {
     return (
       <div className="flex items-center justify-center">
-        <Menu
-          width={288}
-          position="right-end"
-          onOpen={() => setOpen(true)}
-          onClose={() => setOpen(false)}
-        >
+        <Menu width={288} position="right-end">
           <Menu.Target>
             <UnstyledButton
               className={
@@ -83,12 +75,7 @@ export function UserMenu() {
   }
 
   return (
-    <Menu
-      width={288}
-      position="right-end"
-      onOpen={() => setOpen(true)}
-      onClose={() => setOpen(false)}
-    >
+    <Menu width={288} position="right-end">
       <Menu.Target>
         <Button
           unstyled

@@ -1,4 +1,5 @@
 import { Role } from './roles'
+
 export interface RouteConfig {
   // Path pattern - can use /* for wildcard matching
   path: string
@@ -7,7 +8,7 @@ export interface RouteConfig {
   isPublic?: boolean
 
   // Roles that can access this route
-  requiredRoles?: Role[]
+  authorizedRoles?: Role[]
 
   // Whether to inherit roles from parent routes
   inheritRoles?: boolean
@@ -16,6 +17,7 @@ export interface RouteConfig {
   // These take precedence over wildcard matches
   overrides?: RouteConfig[]
 }
+
 export interface AuthRedirectConfig {
   // Path to redirect when user is not logged in
   signInPagePath: string
@@ -26,15 +28,16 @@ export interface AuthRedirectConfig {
   // Default access denied page
   defaultAccessDeniedPath: string
 
-  // Role-specific access denied pages by required role
-  accessDeniedPageByRequiredRole: {
+  // Role-specific access denied pages by allowed role
+  accessDeniedPageByAllowedRole: {
     [role in Role]?: string
   }
 }
+
 export interface RoutingConfiguration {
   defaults: {
     isPublic: boolean
-    requiredRoles: Role[]
+    authorizedRoles: Role[]
     redirects: AuthRedirectConfig
   }
   routes: RouteConfig[]

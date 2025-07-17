@@ -1,11 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import React from 'react'
-import {
-  PageHeader,
-  HeaderRow,
-  HeaderActions,
-  HeaderContent
-} from '@/components/layouts/dashboard-layout'
+import { PageHeader } from '@/components/layouts/app-shell'
 import { Breadcrumbs } from '@/components/ui/breadcrumbs'
 import {
   FilterManager,
@@ -111,16 +106,16 @@ export const HeaderBasico: Story = {
   render: () => (
     <div className="flex min-h-screen flex-col gap-4 p-6">
       <PageHeader>
-        <HeaderRow>
-          <HeaderContent>
+        <PageHeader.Row>
+          <PageHeader.Content>
             <Breadcrumbs items={[{ label: 'Visão Geral' }]} />
-          </HeaderContent>
-          <HeaderActions>
+          </PageHeader.Content>
+          <PageHeader.Actions>
             <Button leftSection={<Download size={16} />} variant="default">
               Exportar
             </Button>
-          </HeaderActions>
-        </HeaderRow>
+          </PageHeader.Actions>
+        </PageHeader.Row>
       </PageHeader>
 
       <div className="flex flex-col items-center justify-center p-20">
@@ -168,13 +163,13 @@ export const HeaderComFiltros: Story = {
   render: () => (
     <div className="flex min-h-screen flex-col gap-4 p-6">
       <PageHeader>
-        <HeaderRow>
-          <HeaderContent>
+        <PageHeader.Row>
+          <PageHeader.Content>
             <Breadcrumbs items={[{ label: 'Conselheiros' }]} />
-          </HeaderContent>
-        </HeaderRow>
-        <HeaderRow>
-          <HeaderContent>
+          </PageHeader.Content>
+        </PageHeader.Row>
+        <PageHeader.Row>
+          <PageHeader.Content>
             <SearchInput placeholder="Pesquisar por nome ou CPF" />
             <StaticFilterPopover
               searchParamKey="status"
@@ -222,8 +217,8 @@ export const HeaderComFiltros: Story = {
                 ]}
               />
             </FilterManager>
-          </HeaderContent>
-        </HeaderRow>
+          </PageHeader.Content>
+        </PageHeader.Row>
       </PageHeader>
 
       <div className="flex flex-col items-center justify-center p-20">
@@ -279,8 +274,8 @@ export const HeaderComTabs: Story = {
   render: () => (
     <div className="flex min-h-screen flex-col gap-4 p-6">
       <PageHeader>
-        <HeaderRow>
-          <HeaderContent>
+        <PageHeader.Row>
+          <PageHeader.Content>
             <Breadcrumbs
               items={[
                 {
@@ -290,14 +285,14 @@ export const HeaderComTabs: Story = {
                 { label: 'Ana Silva Santos' }
               ]}
             />
-          </HeaderContent>
-          <HeaderActions>
+          </PageHeader.Content>
+          <PageHeader.Actions>
             <Button leftSection={<Edit size={16} />} variant="default">
               Editar
             </Button>
             <Button leftSection={<CheckCircle size={16} />}>Validar</Button>
-          </HeaderActions>
-        </HeaderRow>
+          </PageHeader.Actions>
+        </PageHeader.Row>
 
         <NavigationTabsContainer basePath="/admin/conselheiros/cadastros/123">
           <NavigationTabs>
@@ -374,8 +369,8 @@ export const LayoutCompleto: Story = {
   render: () => (
     <div className="flex min-h-screen flex-col gap-4 p-6">
       <PageHeader>
-        <HeaderRow>
-          <HeaderContent>
+        <PageHeader.Row>
+          <PageHeader.Content>
             <Breadcrumbs
               items={[
                 { label: 'Admin', href: '/admin' },
@@ -384,8 +379,8 @@ export const LayoutCompleto: Story = {
                 { label: 'Gestão Avançada' }
               ]}
             />
-          </HeaderContent>
-          <HeaderActions>
+          </PageHeader.Content>
+          <PageHeader.Actions>
             <Button leftSection={<Download size={16} />} variant="default">
               Exportar Excel
             </Button>
@@ -393,11 +388,11 @@ export const LayoutCompleto: Story = {
               Configurações
             </Button>
             <Button leftSection={<Plus size={16} />}>Nova Proposta</Button>
-          </HeaderActions>
-        </HeaderRow>
+          </PageHeader.Actions>
+        </PageHeader.Row>
 
-        <HeaderRow>
-          <HeaderContent>
+        <PageHeader.Row>
+          <PageHeader.Content>
             <SearchInput placeholder="Buscar por título, autor ou número..." />
 
             <StaticFilterPopover
@@ -458,8 +453,8 @@ export const LayoutCompleto: Story = {
                 ]}
               />
             </FilterManager>
-          </HeaderContent>
-        </HeaderRow>
+          </PageHeader.Content>
+        </PageHeader.Row>
       </PageHeader>
 
       {/* Cards de Métricas */}

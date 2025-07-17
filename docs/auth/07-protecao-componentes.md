@@ -25,16 +25,15 @@ O sistema fornece dois componentes para controle de acesso granular na UI:
 
 import { useSession } from 'next-auth/react'
 import { ReactNode } from 'react'
-import { Role } from '@/types/roles'
 
 interface ClientPermissionGateProps {
   children: ReactNode
-  allowedRoles: Role[]
+  authorizedRoles?: Role[]
 }
 
 export function ClientPermissionGate({
   children,
-  allowedRoles
+  authorizedRoles
 }: ClientPermissionGateProps) {
   const { data: session } = useSession()
   const user = session?.user
@@ -43,7 +42,14 @@ export function ClientPermissionGate({
     return null
   }
 
-  const hasPermission = user.roles.some((role) => allowedRoles.includes(role))
+  // If authorizedRoles is not provided, any authenticated user has permission.
+  if (!authorizedRoles) {
+    return <>{children}</>
+  }
+
+  const hasPermission = user.roles.some((role) =>
+    authorizedRoles.includes(role)
+  )
 
   if (!hasPermission) {
     return null
@@ -55,6 +61,12 @@ export function ClientPermissionGate({
 
 ### Uso Básico
 
+O `ClientPermissionGate` utiliza a prop `authorizedRoles` para definir quais perfis (`Role`) têm permissão para ver o conteúdo aninhado. A prop é **opcional**.
+
+- **Se `authorizedRoles` for uma lista de perfis**: O conteúdo será exibido se o usuário logado possuir **pelo menos um** dos perfis listados.
+- **Se `authorizedRoles` não for fornecido (`undefined`)**: O conteúdo será exibido para **qualquer usuário autenticado**, independentemente do seu perfil.
+- **Se o usuário não estiver logado**: O conteúdo nunca será exibido.
+
 ```typescript
 import { ClientPermissionGate } from '@/components/permision-gates/client-permission-gate'
 
@@ -63,17 +75,22 @@ export function Dashboard() {
     <div>
       <h1>Dashboard</h1>
 
-      {/* Apenas admins */}
-      <ClientPermissionGate allowedRoles={['admin']}>
-        <button>Configurações</button>
+      {/* Exemplo 1: Apenas admins */}
+      <ClientPermissionGate authorizedRoles={['admin']}>
+        <button>Configurações Avançadas</button>
       </ClientPermissionGate>
 
-      {/* Admin ou Advisor */}
-      <ClientPermissionGate allowedRoles={['admin', 'advisor']}>
+      {/* Exemplo 2: Admin ou Advisor */}
+      <ClientPermissionGate authorizedRoles={['admin', 'advisor']}>
         <section>
-          <h2>Área Restrita</h2>
-          <p>Conteúdo para usuários com permissão</p>
+          <h2>Área de Gestão</h2>
+          <p>Conteúdo visível para administradores e conselheiros.</p>
         </section>
+      </ClientPermissionGate>
+
+      {/* Exemplo 3: Qualquer usuário logado */}
+      <ClientPermissionGate>
+        <p>Esta informação é visível para todos os usuários logados.</p>
       </ClientPermissionGate>
     </div>
   )
@@ -88,17 +105,16 @@ export function Dashboard() {
 // src/components/permision-gates/server-permission-gate.tsx
 import 'server-only'
 import { ReactNode } from 'react'
-import { Role } from '@/types/roles'
 import { auth } from '@/auth'
 
 interface ServerPermissionGateProps {
   children: ReactNode
-  allowedRoles: Role[]
+  authorizedRoles?: Role[]
 }
 
 export async function ServerPermissionGate({
   children,
-  allowedRoles
+  authorizedRoles
 }: ServerPermissionGateProps) {
   const session = await auth()
   const user = session?.user
@@ -107,7 +123,14 @@ export async function ServerPermissionGate({
     return null
   }
 
-  const hasPermission = user.roles.some((role) => allowedRoles.includes(role))
+  // If authorizedRoles is not provided, any authenticated user has permission.
+  if (!authorizedRoles) {
+    return <>{children}</>
+  }
+
+  const hasPermission = user.roles.some((role) =>
+    authorizedRoles.includes(role)
+  )
 
   if (!hasPermission) {
     return null
@@ -119,21 +142,37 @@ export async function ServerPermissionGate({
 
 ### Uso Básico
 
+O `ServerPermissionGate` funciona exatamente como seu equivalente do cliente, mas é renderizado no servidor. Ele usa a prop opcional `authorizedRoles` para determinar o acesso.
+
+- **Se `authorizedRoles` for uma lista de perfis**: O conteúdo será exibido se o usuário logado possuir **pelo menos um** dos perfis listados.
+- **Se `authorizedRoles` não for fornecido (`undefined`)**: O conteúdo será exibido para **qualquer usuário autenticado**, independentemente do seu perfil.
+- **Se o usuário não estiver logado**: O conteúdo nunca será exibido.
+
 ```typescript
 import { ServerPermissionGate } from '@/components/permision-gates/server-permission-gate'
+import { AdminPanel } from '@/components/admin/admin-panel'
 
 export default async function ServerPage() {
   return (
     <div>
-      <h1>Página do Servidor</h1>
+      <h1>Página Renderizada no Servidor</h1>
 
-      {/* Renderizado no servidor - mais performático */}
-      <ServerPermissionGate allowedRoles={['admin']}>
-        <div>Conteúdo administrativo</div>
+      {/* Exemplo 1: Conteúdo apenas para admins */}
+      <ServerPermissionGate authorizedRoles={['admin']}>
+        <div>
+          <h2>Painel Administrativo</h2>
+          <p>Este conteúdo é renderizado no servidor e visível apenas para admins.</p>
+        </div>
       </ServerPermissionGate>
 
-      <ServerPermissionGate allowedRoles={['admin', 'advisor']}>
+      {/* Exemplo 2: Componente aninhado para Admin ou Advisor */}
+      <ServerPermissionGate authorizedRoles={['admin', 'advisor']}>
         <AdminPanel />
+      </ServerPermissionGate>
+
+      {/* Exemplo 3: Qualquer usuário logado */}
+      <ServerPermissionGate>
+        <p>Esta informação é visível para todos os usuários logados no servidor.</p>
       </ServerPermissionGate>
     </div>
   )
@@ -144,30 +183,29 @@ export default async function ServerPage() {
 
 ### Navegação Condicional
 
+Use o `ClientPermissionGate` para construir menus de navegação dinâmicos. Itens de menu para todos os usuários logados simplesmente omitem a prop `authorizedRoles`.
+
 ```typescript
 import { ClientPermissionGate } from '@/components/permision-gates/client-permission-gate'
 import Link from 'next/link'
 
 const menuItems = [
   { label: 'Dashboard', href: '/dashboard', roles: ['admin', 'advisor'] },
-  { label: 'Usuários', href: '/admin/users', roles: ['admin'] },
-  { label: 'Conselheiros', href: '/conselheiros', roles: ['advisor'] },
-  { label: 'Relatórios', href: '/reports', roles: ['admin', 'advisor'] }
+  { label: 'Gestão de Usuários', href: '/admin/users', roles: ['admin'] },
+  { label: 'Configurações', href: '/settings' }, // Todos logados
 ]
 
 export function Navigation() {
   return (
-    <nav className="main-navigation">
+    <nav>
       <ul>
         {menuItems.map(item => (
           <ClientPermissionGate
             key={item.href}
-            allowedRoles={item.roles}
+            authorizedRoles={item.roles}
           >
             <li>
-              <Link href={item.href}>
-                {item.label}
-              </Link>
+              <Link href={item.href}>{item.label}</Link>
             </li>
           </ClientPermissionGate>
         ))}
@@ -179,32 +217,27 @@ export function Navigation() {
 
 ### Formulários com Campos Condicionais
 
+Oculte ou exiba campos de um formulário com base no perfil do usuário, garantindo que apenas usuários autorizados possam ver ou editar dados sensíveis.
+
 ```typescript
 import { ClientPermissionGate } from '@/components/permision-gates/client-permission-gate'
 
 export function UserForm() {
   return (
     <form>
-      {/* Campos básicos - todos podem ver */}
-      <input name="name" placeholder="Nome" required />
-      <input name="email" type="email" placeholder="Email" required />
+      {/* Campos básicos */}
+      <input name="name" placeholder="Nome" />
+      <input name="email" type="email" placeholder="Email" />
 
-      {/* Campos administrativos - apenas admin */}
-      <ClientPermissionGate allowedRoles={['admin']}>
+      {/* Campo de status - Apenas para admins */}
+      <ClientPermissionGate authorizedRoles={['admin']}>
         <fieldset>
-          <legend>Configurações Administrativas</legend>
+          <legend>Controle de Acesso</legend>
           <select name="role">
+            <option value="user">Usuário</option>
             <option value="advisor">Conselheiro</option>
             <option value="admin">Administrador</option>
           </select>
-        </fieldset>
-      </ClientPermissionGate>
-
-      {/* Campos de gestão - admin ou advisor */}
-      <ClientPermissionGate allowedRoles={['admin', 'advisor']}>
-        <fieldset>
-          <legend>Informações de Gestão</legend>
-          <textarea name="notes" placeholder="Observações" />
         </fieldset>
       </ClientPermissionGate>
 
@@ -216,57 +249,34 @@ export function UserForm() {
 
 ### Botões de Ação Condicionais
 
+Envolva botões ou outros elementos de ação com o `ClientPermissionGate` para garantir que apenas usuários com o perfil correto possam interagir com eles.
+
 ```typescript
-import { useSession } from 'next-auth/react'
+import { ClientPermissionGate } from '@/components/permision-gates/client-permission-gate'
 
 interface ActionButtonsProps {
-  itemId: string
-  onEdit?: () => void
-  onDelete?: () => void
-  onApprove?: () => void
+  onEdit: () => void
+  onDelete: () => void
+  onApprove: () => void
 }
 
-export function ActionButtons({
-  itemId,
-  onEdit,
-  onDelete,
-  onApprove
-}: ActionButtonsProps) {
-  const { data: session } = useSession()
-  const userRoles = session?.user?.roles || []
-
-  const isAdmin = userRoles.includes('admin')
-  const isAdvisor = userRoles.includes('advisor')
-
+export function ActionButtons({ onEdit, onDelete, onApprove }: ActionButtonsProps) {
   return (
-    <div className="action-buttons">
-      {/* Editar - admin ou advisor */}
-      {(isAdmin || isAdvisor) && onEdit && (
-        <button onClick={onEdit} className="btn-primary">
-          Editar
-        </button>
-      )}
+    <div className="flex space-x-2">
+      {/* Editar: Admin ou Advisor */}
+      <ClientPermissionGate authorizedRoles={['admin', 'advisor']}>
+        <button onClick={onEdit}>Editar</button>
+      </ClientPermissionGate>
 
-      {/* Aprovar - apenas advisors */}
-      {isAdvisor && onApprove && (
-        <button onClick={onApprove} className="btn-success">
-          Aprovar
-        </button>
-      )}
+      {/* Aprovar: Apenas Advisor */}
+      <ClientPermissionGate authorizedRoles={['advisor']}>
+        <button onClick={onApprove}>Aprovar</button>
+      </ClientPermissionGate>
 
-      {/* Excluir - apenas admins */}
-      {isAdmin && onDelete && (
-        <button
-          onClick={() => {
-            if (confirm('Tem certeza que deseja excluir?')) {
-              onDelete()
-            }
-          }}
-          className="btn-danger"
-        >
-          Excluir
-        </button>
-      )}
+      {/* Excluir: Apenas Admin */}
+      <ClientPermissionGate authorizedRoles={['admin']}>
+        <button onClick={onDelete}>Excluir</button>
+      </ClientPermissionGate>
     </div>
   )
 }
@@ -274,8 +284,11 @@ export function ActionButtons({
 
 ### Layout com Seções Condicionais
 
+Use o `ServerPermissionGate` para renderizar seções inteiras de um layout no servidor, como uma barra lateral de administração, ou para exibir conteúdo geral para qualquer usuário autenticado.
+
 ```typescript
 import { ServerPermissionGate } from '@/components/permision-gates/server-permission-gate'
+import Link from 'next/link'
 
 export default async function AdminLayout({
   children
@@ -283,210 +296,33 @@ export default async function AdminLayout({
   children: React.ReactNode
 }) {
   return (
-    <div className="admin-layout">
+    <div>
       <header>
-        <h1>Painel Administrativo</h1>
+        <h1>Painel de Administração</h1>
       </header>
 
-      <aside className="sidebar">
+      <aside>
         <nav>
           <ul>
-            <li><a href="/admin/dashboard">Dashboard</a></li>
-
-            <ServerPermissionGate allowedRoles={['admin']}>
-              <li><a href="/admin/users">Usuários</a></li>
-              <li><a href="/admin/settings">Configurações</a></li>
+            {/* Visível para todos os logados */}
+            <ServerPermissionGate>
+              <li><Link href="/dashboard">Dashboard</Link></li>
             </ServerPermissionGate>
 
-            <ServerPermissionGate allowedRoles={['admin', 'advisor']}>
-              <li><a href="/admin/reports">Relatórios</a></li>
+            {/* Apenas Admins */}
+            <ServerPermissionGate authorizedRoles={['admin']}>
+              <li><Link href="/admin/users">Usuários</Link></li>
+            </ServerPermissionGate>
+
+            {/* Admins e Advisors */}
+            <ServerPermissionGate authorizedRoles={['admin', 'advisor']}>
+              <li><Link href="/admin/reports">Relatórios</Link></li>
             </ServerPermissionGate>
           </ul>
         </nav>
       </aside>
 
-      <main>
-        {children}
-      </main>
-    </div>
-  )
-}
-```
-
-## Padrões de Uso
-
-### Verificação Manual com useSession
-
-```typescript
-'use client'
-import { useSession } from 'next-auth/react'
-
-export function ManualRoleCheck() {
-  const { data: session, status } = useSession()
-
-  // Estados de loading
-  if (status === 'loading') {
-    return <div>Carregando...</div>
-  }
-
-  // Não autenticado
-  if (!session) {
-    return <div>Faça login para continuar</div>
-  }
-
-  // Verificação manual de roles
-  const isAdmin = session.user?.roles?.includes('admin')
-  const isAdvisor = session.user?.roles?.includes('advisor')
-
-  return (
-    <div>
-      <h2>Olá, {session.user.fullName}!</h2>
-
-      {isAdmin && (
-        <section className="admin-section">
-          <h3>Controles de Admin</h3>
-          <button>Gerenciar Sistema</button>
-        </section>
-      )}
-
-      {isAdvisor && (
-        <section className="advisor-section">
-          <h3>Ferramentas do Conselheiro</h3>
-          <button>Emitir Parecer</button>
-        </section>
-      )}
-
-      {(isAdmin || isAdvisor) && (
-        <section className="common-section">
-          <h3>Ferramentas Comuns</h3>
-          <button>Relatórios</button>
-        </section>
-      )}
-    </div>
-  )
-}
-```
-
-### Hook Personalizado (Sugestão)
-
-```typescript
-// src/hooks/useRoles.ts (você pode criar)
-import { useSession } from 'next-auth/react'
-import { Role } from '@/types/roles'
-
-export function useRoles() {
-  const { data: session, status } = useSession()
-  const userRoles = session?.user?.roles || []
-
-  const hasRole = (role: Role): boolean => {
-    return userRoles.includes(role)
-  }
-
-  const hasAnyRole = (roles: Role[]): boolean => {
-    return roles.some((role) => hasRole(role))
-  }
-
-  const can = (action: string, resource: string): boolean => {
-    // Lógica personalizada de permissões
-    if (action === 'delete' && resource === 'user') {
-      return hasRole('admin')
-    }
-
-    if (action === 'edit' && resource === 'profile') {
-      return hasAnyRole(['admin', 'advisor'])
-    }
-
-    return false
-  }
-
-  return {
-    userRoles,
-    hasRole,
-    hasAnyRole,
-    can,
-    isAdmin: hasRole('admin'),
-    isAdvisor: hasRole('advisor'),
-    isLoading: status === 'loading',
-    isAuthenticated: status === 'authenticated'
-  }
-}
-```
-
-### Usando Hook Personalizado
-
-```typescript
-import { useRoles } from '@/hooks/useRoles'
-
-export function RoleBasedDashboard() {
-  const { isAdmin, isAdvisor, can, isLoading } = useRoles()
-
-  if (isLoading) return <div>Carregando...</div>
-
-  return (
-    <div>
-      <h1>Dashboard</h1>
-
-      {isAdmin && (
-        <section>
-          <h2>Painel Admin</h2>
-          <button>Configurações</button>
-        </section>
-      )}
-
-      {isAdvisor && (
-        <section>
-          <h2>Ferramentas do Conselheiro</h2>
-          <button>Pareceres</button>
-        </section>
-      )}
-
-      {can('edit', 'profile') && (
-        <button>Editar Perfil</button>
-      )}
-
-      {can('delete', 'user') && (
-        <button className="danger">Excluir Usuário</button>
-      )}
-    </div>
-  )
-}
-```
-
-### Componente de Fallback
-
-```typescript
-import { ClientPermissionGate } from '@/components/permision-gates/client-permission-gate'
-
-interface ProtectedContentProps {
-  children: React.ReactNode
-  requiredRoles: Role[]
-  fallback?: React.ReactNode
-}
-
-export function ProtectedContent({
-  children,
-  requiredRoles,
-  fallback = <div>Acesso restrito</div>
-}: ProtectedContentProps) {
-  return (
-    <ClientPermissionGate allowedRoles={requiredRoles}>
-      {children}
-    </ClientPermissionGate>
-  ) || fallback
-}
-
-// Uso:
-export function MyPage() {
-  return (
-    <div>
-      <h1>Página</h1>
-
-      <ProtectedContent
-        requiredRoles={['admin']}
-        fallback={<p>Você precisa ser admin para ver isto</p>}
-      >
-        <AdminControls />
-      </ProtectedContent>
+      <main>{children}</main>
     </div>
   )
 }

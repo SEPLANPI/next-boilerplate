@@ -6,12 +6,12 @@ import { Role } from '@/types/roles'
 
 interface ClientPermissionGateProps {
   children: ReactNode
-  allowedRoles: Role[]
+  authorizedRoles?: Role[]
 }
 
 export function ClientPermissionGate({
   children,
-  allowedRoles
+  authorizedRoles
 }: ClientPermissionGateProps) {
   const { data: session } = useSession()
   const user = session?.user
@@ -20,7 +20,14 @@ export function ClientPermissionGate({
     return null
   }
 
-  const hasPermission = user.roles.some((role) => allowedRoles.includes(role))
+  // If authorizedRoles is not provided, any authenticated user has permission.
+  if (!authorizedRoles) {
+    return <>{children}</>
+  }
+
+  const hasPermission = user.roles.some((role) =>
+    authorizedRoles.includes(role)
+  )
 
   if (!hasPermission) {
     return null

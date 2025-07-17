@@ -1,6 +1,14 @@
 # Guia de Requisições API
 
+> [!WARNING] > **API DEPRECIADA**
+> Este documento descreve o antigo sistema de requisições (`server-api.ts` e `client-api.ts`). Ele foi substituído por um novo [API Client unificado](./api-client.md).
+>
+> Esta documentação é mantida apenas para referência de projetos e partes do código que ainda não foram migradas. Para novos desenvolvimentos, utilize o novo cliente.
+>
+> **[Acessar a documentação do novo API Client](./api-client.md)**
+
 ## Índice
+
 - [Guia de Requisições API](#guia-de-requisições-api)
   - [Índice](#índice)
   - [Visão Geral](#visão-geral)
@@ -18,7 +26,6 @@
     - [ServerResult](#serverresult)
   - [Boas Práticas](#boas-práticas)
 
-
 ## Visão Geral
 
 O projeto utiliza duas abordagens principais para requisições API:
@@ -31,11 +38,13 @@ O projeto utiliza duas abordagens principais para requisições API:
 O projeto utiliza duas utilidades de API distintas (`server-api.ts` e `client-api.ts`) por alguns motivos técnicos importantes:
 
 1. **URLs Diferentes**
+
    - **Server-Side**: Acessa a API diretamente pela rede Docker interna (ex: `http://web:8000`)
    - **Client-Side**: Acessa via proxy Nginx público (ex: `https://api.exemplo.com`)
    - Isso é necessário pois o servidor Next.js roda dentro da rede Docker e pode acessar outros serviços diretamente, enquanto o navegador precisa acessar através do proxy público
 
 2. **Autenticação**
+
    - **Server-Side**: Usa o método `auth()` do NextAuth.js para obter a sessão no servidor
    - **Client-Side**: Usa o método `getSession()` do NextAuth.js para gerenciar tokens no navegador
    - Os métodos de obtenção do token de autenticação são diferentes em cada ambiente
@@ -45,16 +54,14 @@ O projeto utiliza duas utilidades de API distintas (`server-api.ts` e `client-ap
    - **Client-Side**: Executa no navegador com restrições de CORS e segurança
 
 Esta separação permite:
+
 - Melhor segurança ao isolar chamadas sensíveis no servidor
 - Performance otimizada usando a rede interna quando possível
 - Flexibilidade para usar diferentes estratégias de autenticação
 - Tipagem específica para cada contexto de execução
 
-
-
-
-
 ### Principais Bibliotecas Utilizadas:
+
 - `@tanstack/react-query`: Para gerenciamento de estado e cache no cliente
 
 ## Estrutura de Arquivos
@@ -74,6 +81,7 @@ src/
 └── types/
     └── server-result.ts              # Tipos comuns
 ```
+
 ## Como Usar
 
 ### Server-Side Fetching
@@ -93,7 +101,7 @@ type ResourceType = {
 export async function getResource(): Promise<ServerResult<ResourceType>> {
   try {
     const response = await api.get('/resource')
-    
+
     if (!response.ok) {
       const error = await response.json()
       return { error: error.detail || API.UNEXPECTED_FETCH_ERROR }
@@ -117,11 +125,11 @@ import { Loading } from '@/components/loading'
 // Server Component que faz a requisição
 async function ResourceServerComponent() {
   const { data, error } = await getResource()
-  
+
   if (error) {
     return <FetchError error={error} title="Erro ao carregar dados" />
   }
-  
+
   return <div>{data.name}</div>
 }
 
@@ -134,7 +142,6 @@ export default function ResourcePage() {
   )
 }
 ```
-
 
 ### Client-Side Fetching
 
@@ -151,7 +158,7 @@ type ResourceType = {
 
 export async function getResource(): Promise<ResourceType> {
   const response = await clientApi.get('/resource')
-  
+
   if (!response.ok) {
     const error = await response.json()
     throw new Error(error.detail || API.UNEXPECTED_FETCH_ERROR)
@@ -172,7 +179,7 @@ function ResourceComponent() {
 
   if (error) return <FetchError error={error.message} title="Erro ao carregar dados" />
   if (isFetching) return <Loading />
-  
+
   return <div>{data.name}</div>
 }
 ```
@@ -182,7 +189,6 @@ function ResourceComponent() {
 ## Componente de Erro Padrão
 
 O projeto fornece um componente padrão `FetchError` para exibir erros de requisições:
-
 
 ```typescript
 import { API } from '@/constants/messages'
@@ -224,9 +230,11 @@ Você pode criar seus próprios componentes de erro para casos específicos.
 As mensagens de erro podem ser definidas de duas formas:
 
 1. **Usando constantes**:
+
    ```typescript
    return <FetchError error={API.UNEXPECTED_FETCH_ERROR} title="Erro ao carregar dados" />
    ```
+
    As constantes são centralizadas no arquivo de constantes. Para mais detalhes sobre a estrutura e boas práticas de constantes, consulte [docs/constantes.md](./constantes.md).
 
 2. **Usando strings diretas**:
@@ -235,6 +243,7 @@ As mensagens de erro podem ser definidas de duas formas:
    ```
 
 Recomenda-se usar constantes para mensagens que:
+
 - São reutilizadas em vários lugares
 - Podem precisar de internacionalização
 - Podem mudar com requisitos futuros
@@ -244,6 +253,7 @@ Para mensagens únicas e específicas, strings diretas podem ser mais simples e 
 ## Tipos
 
 ### ServerResult
+
 ```typescript
 interface ServerResult<T> {
   data?: T
@@ -254,26 +264,29 @@ interface ServerResult<T> {
 ## Boas Práticas
 
 1. **Organização**:
+
    - Mantenha funções de API separadas por feature
    - Separe claramente funções server-side e client-side
    - Centralize tipos comuns em arquivos `.ts` específicos
 
 2. **Nomenclatura**:
+
    - Funções server-side: `getResource`
    - Funções client-side: `clientGetResource` se `getResource` já existir
    - Tipos: `ResourceResponse`, `ResourceType`
 
 3. **React Query**:
+
    - Use para dados que precisam de cache/revalidação
    - Configure `staleTime` apropriadamente
    - Implemente loading states
    - Use `placeholderData` quando apropriado
 
 4. **Tratamento de Erros**:
+
    - Centralize mensagens de erro em `messages.ts`
    - Trate tanto erros de rede quanto erros da API
 
 5. **Autenticação**:
    - os utilitários `server-api` e `client-api` já incluem o token automaticamente
    - Não é necessário adicionar headers de autenticação manualmente
-
