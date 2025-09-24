@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
-import { Button } from '@mantine/core'
-import { X } from 'lucide-react'
-import { useQueryStates, parseAsArrayOf, parseAsString } from 'nuqs'
-import { useMemo, ReactNode } from 'react'
+import { Button } from "@mantine/core"
+import { X } from "lucide-react"
+import { parseAsArrayOf, parseAsString, useQueryStates } from "nuqs"
+import { ReactNode, useMemo } from "react"
 
 interface ClearFiltersButtonProps {
   /**
@@ -14,11 +14,11 @@ interface ClearFiltersButtonProps {
   /**
    * Button variant
    */
-  variant?: 'outline' | 'subtle' | 'filled' | 'white' | 'default' | 'light'
+  variant?: "outline" | "subtle" | "filled" | "white" | "default" | "light"
   /**
    * Button size
    */
-  size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+  size?: "xs" | "sm" | "md" | "lg" | "xl"
   /**
    * Custom className
    */
@@ -31,10 +31,10 @@ interface ClearFiltersButtonProps {
 
 export function ClearFiltersButton({
   filterParamKeys,
-  variant = 'light',
-  size = 'sm',
+  variant = "light",
+  size = "sm",
   className,
-  children = 'Limpar'
+  children = "Limpar",
 }: ClearFiltersButtonProps) {
   const queryStateConfig = useMemo(() => {
     if (!filterParamKeys) return {}
@@ -42,11 +42,11 @@ export function ClearFiltersButton({
     return filterParamKeys.reduce(
       (acc, key) => {
         acc[key] = parseAsArrayOf(parseAsString).withDefault([]).withOptions({
-          shallow: false
+          shallow: false,
         })
         return acc
       },
-      {} as Record<string, ReturnType<typeof parseAsArrayOf<string>>>
+      {} as Record<string, ReturnType<typeof parseAsArrayOf<string>>>,
     )
   }, [filterParamKeys])
 
@@ -56,7 +56,7 @@ export function ClearFiltersButton({
     if (!filterParamKeys) {
       // If no specific keys provided, check all query states
       return Object.values(queryStates).some((value) =>
-        Array.isArray(value) ? value.length > 0 : Boolean(value)
+        Array.isArray(value) ? value.length > 0 : Boolean(value),
       )
     }
 
@@ -75,7 +75,7 @@ export function ClearFiltersButton({
           acc[key] = null
           return acc
         },
-        {} as Record<string, null>
+        {} as Record<string, null>,
       )
       setQueryStates(clearedStates)
     } else {
@@ -85,7 +85,7 @@ export function ClearFiltersButton({
           acc[key] = null
           return acc
         },
-        {} as Record<string, null>
+        {} as Record<string, null>,
       )
       setQueryStates(clearedStates)
     }

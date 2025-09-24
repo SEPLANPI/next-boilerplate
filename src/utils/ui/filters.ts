@@ -1,5 +1,5 @@
-import { OptionsFilter, ComboboxItem } from '@mantine/core'
-import { removeAccents } from '../formatting/text'
+import { OptionsFilter, ComboboxItem } from "@mantine/core"
+import { removeAccents } from "../formatting/text"
 
 /**
  * Função de filtro para o componente Select do Mantine que ignora acentos.

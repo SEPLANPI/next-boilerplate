@@ -1,7 +1,7 @@
-import { useDebouncedState } from '@mantine/hooks'
-import { Input, Checkbox, Divider, Button, ScrollArea } from '@mantine/core'
-import { Search } from 'lucide-react'
-import { useFilters } from '../hooks/use-filters'
+import { Button, Checkbox, Divider, Input, ScrollArea } from "@mantine/core"
+import { useDebouncedState } from "@mantine/hooks"
+import { Search } from "lucide-react"
+import { useFilters } from "../hooks/use-filters"
 
 interface FilterGroupContentProps<T> {
   groupKey: string
@@ -23,33 +23,34 @@ export function FilterGroupContent<T>({
   isDisabled,
   filterFn,
   showSearch = true,
-  showSelectedOnTop = true
+  showSelectedOnTop = true,
 }: FilterGroupContentProps<T>) {
   const { getGroupSelected, toggleOption, clearGroup } = useFilters()
-  const [search, setSearch] = useDebouncedState('', 100)
+  const [search, setSearch] = useDebouncedState("", 100)
 
   const selectedItems = getGroupSelected(groupKey)
 
   const filteredOptions = options.filter((option) => filterFn(option, search))
   const selectedOptions = filteredOptions.filter((option) =>
-    selectedItems.has(getOptionValue(option))
+    selectedItems.has(getOptionValue(option)),
   )
 
   const renderCheckboxItem = (option: T) => (
     <li key={getOptionValue(option)} className="group">
       <label
-        className={`flex w-full cursor-pointer space-x-2 px-3 py-1.5 text-sm hover:bg-gray-100 ${
-          isDisabled(option) ? 'cursor-not-allowed text-content-muted' : ''
-        }`}
+        className={`flex w-full cursor-pointer space-x-2 px-3 py-1.5 text-sm hover:bg-gray-100 ${isDisabled(option) ? "cursor-not-allowed text-content-muted" : ""
+          }`}
       >
         <Checkbox
           className="mt-0.5"
           size="xs"
           checked={selectedItems.has(getOptionValue(option))}
-          onChange={() =>
-            !isDisabled(option) &&
-            toggleOption(groupKey, getOptionValue(option))
-          }
+          onChange={() => {
+            console.log("isDisabled", isDisabled(option))
+            if (!isDisabled(option)) {
+              toggleOption(groupKey, getOptionValue(option))
+            }
+          }}
           disabled={isDisabled(option)}
         />
         {renderOption(option)}
@@ -70,7 +71,7 @@ export function FilterGroupContent<T>({
       )}
 
       <div className="relative">
-        <ScrollArea.Autosize className="w-full" type="scroll" mah={224}>
+        <ScrollArea.Autosize className="w-full" type="scroll" mah={252}>
           {filteredOptions.length === 0 ? (
             <div className="p-6 text-center">
               <span className="text-sm">Nenhuma opção encontrada</span>
@@ -91,10 +92,10 @@ export function FilterGroupContent<T>({
               <ul>
                 {showSelectedOnTop
                   ? filteredOptions.map(
-                      (option) =>
-                        !selectedItems.has(getOptionValue(option)) &&
-                        renderCheckboxItem(option)
-                    )
+                    (option) =>
+                      !selectedItems.has(getOptionValue(option)) &&
+                      renderCheckboxItem(option),
+                  )
                   : filteredOptions.map(renderCheckboxItem)}
               </ul>
             </div>

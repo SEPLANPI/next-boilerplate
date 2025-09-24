@@ -1,33 +1,33 @@
-'use client'
+"use client"
 
-import { ActionIcon, Divider, ScrollArea } from '@mantine/core'
-import { NavItem } from './nav-item'
-import { PanelLeftClose, PanelLeftOpen } from 'lucide-react'
-import { UserMenu } from './user-menu'
-import { useSidebar } from './context'
-import { MainNavProps } from '@/types/sidebar'
-import Image from 'next/image'
+import { MainNavProps } from "@/types/sidebar"
+import { ActionIcon, Divider, ScrollArea } from "@mantine/core"
+import { PanelLeftClose, PanelLeftOpen } from "lucide-react"
+import Image from "next/image"
+import { useSidebar } from "./context"
+import { NavItem } from "./nav-item"
+import { UserMenu } from "./user-menu"
 
-export function MainNav({ config }: MainNavProps) {
+export function MainNav({ config, workspaceSelect }: MainNavProps) {
   const { collapsed, toggleCollapsed } = useSidebar()
 
   return (
     <aside
-      className={`flex h-full flex-col overflow-hidden bg-gray-100 transition-all duration-300 ${collapsed ? 'w-20' : 'w-[260px]'
+      className={`flex h-full flex-col overflow-hidden bg-gray-100 transition-all duration-300 ${collapsed ? "w-20" : "w-[260px]"
         }`}
     >
       <div
-        className={`pt-3 ${collapsed ? 'flex flex-col items-center justify-center gap-2' : 'flex items-center justify-between px-4'}`}
+        className={`pt-3 ${collapsed ? "flex flex-col items-center justify-center gap-2" : "flex items-center justify-between px-4"}`}
       >
         <div
-          className={`flex items-center ${collapsed ? 'justify-center' : ''} `}
+          className={`flex items-center ${collapsed ? "justify-center" : ""} `}
         >
           <Image
             src={config.app.logos.collapsed}
             alt={config.app.name}
             width={120}
             height={120}
-            className={`size-[36px] ${!collapsed && 'hidden'}`}
+            className={`size-[36px] ${!collapsed && "hidden"}`}
             quality={100}
           />
           <Image
@@ -35,7 +35,7 @@ export function MainNav({ config }: MainNavProps) {
             alt={config.app.name}
             width={300}
             height={56}
-            className={`h-[36px] w-auto ${collapsed && 'hidden'}`}
+            className={`h-[28px] w-auto ${collapsed && "hidden"}`}
             quality={100}
           />
         </div>
@@ -50,6 +50,9 @@ export function MainNav({ config }: MainNavProps) {
           </ActionIcon>
         )}
       </div>
+      {!collapsed && workspaceSelect && (
+        <div className="mt-4 px-4">{workspaceSelect}</div>
+      )}
       {!collapsed && <Divider className="mx-4 my-4" />}
       {collapsed && (
         <ActionIcon
@@ -77,7 +80,7 @@ export function MainNav({ config }: MainNavProps) {
                   </span>
                 ))}
               <div
-                className={`flex flex-col space-y-1.5 ${collapsed ? 'items-center' : ''}`}
+                className={`flex flex-col space-y-1.5 ${collapsed ? "items-center" : ""}`}
               >
                 {section.items.map((item) => (
                   <NavItem key={item.label} item={item} collapsed={collapsed} />

@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
-import { ActionIcon, Divider } from '@mantine/core'
-import { X } from 'lucide-react'
-import { useRouter } from 'next/navigation'
-import { cn } from '@/utils'
+import { ActionIcon, Divider } from "@mantine/core"
+import { X } from "lucide-react"
+import { useRouter } from "next/navigation"
+import { cn } from "@/utils"
 
 export function FormLayoutHeader({ children }: { children: React.ReactNode }) {
   const router = useRouter()
@@ -25,25 +25,25 @@ export function FormLayoutTitle({ children }: { children: React.ReactNode }) {
 }
 
 const contentSizes = {
-  sm: 'max-w-2xl',
-  md: 'max-w-4xl',
-  lg: 'max-w-7xl',
-  full: 'max-w-full'
+  sm: "max-w-2xl",
+  md: "max-w-4xl",
+  lg: "max-w-7xl",
+  full: "max-w-full",
 } as const
 
 type ContentSize = keyof typeof contentSizes
 
 export function FormLayoutContent({
   children,
-  size = 'md',
-  spacing = true
+  size = "md",
+  spacing = true,
 }: {
   children: React.ReactNode
   size?: ContentSize
   spacing?: boolean
 }) {
   return (
-    <div className={cn('mx-auto', spacing && 'my-6 px-5', contentSizes[size])}>
+    <div className={cn("mx-auto", spacing && "my-6 px-5", contentSizes[size])}>
       {children}
     </div>
   )

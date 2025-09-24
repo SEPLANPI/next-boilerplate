@@ -1,16 +1,16 @@
-import { Modal, Button, Group, ScrollArea } from '@mantine/core'
-import { FiltersModalProps } from '../types'
-import { useFilters } from '../hooks/use-filters'
-import { Search } from 'lucide-react'
+import { Button, Group, Modal, ScrollArea } from "@mantine/core"
+import { Search } from "lucide-react"
+import { useFilters } from "../hooks/use-filters"
+import { FiltersModalProps } from "../types"
 
 export function FiltersModal({
   opened,
   onClose,
   onApply,
   children,
-  modalProps = {}
+  modalProps = {},
 }: FiltersModalProps) {
-  const { clearAll, getTotalSelectedCount } = useFilters()
+  const { clearAll, getTotalSelectedCount, applyFilters } = useFilters()
 
   const totalSelected = getTotalSelectedCount()
   const hasSelectedFilters = totalSelected > 0
@@ -20,7 +20,8 @@ export function FiltersModal({
   }
 
   const handleApply = () => {
-    onApply()
+    applyFilters()
+    onApply?.()
     onClose()
   }
 
@@ -32,17 +33,16 @@ export function FiltersModal({
       size="md"
       centered
       classNames={{
-        header: 'pb-3',
-        body: 'p-0'
+        header: "pb-3",
+        body: "p-0",
       }}
       {...modalProps}
+      scrollAreaComponent={ScrollArea.Autosize}
     >
-      <div className="flex h-full flex-col">
-        <ScrollArea className="flex-1 px-4 pb-3">
-          <div className="space-y-4">{children}</div>
-        </ScrollArea>
+      <div className="flex h-full  flex-col">
+        <div className="space-y-4 px-4 pb-16">{children}</div>
 
-        <div className="px-4 pb-4">
+        <div className="fixed px-4 py-4 z-20 bg-white  w-full bottom-0">
           <Group justify="space-between">
             <Button
               variant="white"

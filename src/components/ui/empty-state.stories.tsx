@@ -1,13 +1,13 @@
-import type { Meta, StoryObj } from '@storybook/nextjs-vite'
-import React from 'react'
-import { EmptyState } from './empty-state'
-import { Button } from '@mantine/core'
+import type { Meta, StoryObj } from "@storybook/nextjs-vite"
+import React from "react"
+import { EmptyState } from "./empty-state"
+import { Button } from "@mantine/core"
 
 const meta: Meta<typeof EmptyState> = {
-  title: 'Componentes/Empty State',
+  title: "Componentes/Empty State",
   component: EmptyState,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
     docs: {
       description: {
         component: `
@@ -29,36 +29,36 @@ Componente para exibir estados vazios com consistência visual e boa experiênci
   </EmptyState.Actions>
 </EmptyState>
 \`\`\`
-        `
-      }
-    }
+        `,
+      },
+    },
   },
   argTypes: {
     size: {
-      description: 'Tamanho do container do empty state',
-      control: 'select',
-      options: ['narrow', 'wide'],
+      description: "Tamanho do container do empty state",
+      control: "select",
+      options: ["narrow", "wide"],
       table: {
-        category: 'Layout',
-        defaultValue: { summary: 'narrow' }
-      }
+        category: "Layout",
+        defaultValue: { summary: "narrow" },
+      },
     },
     className: {
-      description: 'Classes CSS adicionais para o container',
-      control: 'text',
+      description: "Classes CSS adicionais para o container",
+      control: "text",
       table: {
-        category: 'Layout'
-      }
-    }
+        category: "Layout",
+      },
+    },
   },
-  tags: ['autodocs']
+  tags: ["autodocs"],
 } satisfies Meta<typeof EmptyState>
 
 export default meta
 type Story = StoryObj<typeof EmptyState>
 
 export const UsoBasico: Story = {
-  name: 'Uso Básico',
+  name: "Uso Básico",
   render: () => (
     <EmptyState>
       <EmptyState.Header>Nenhum item encontrado</EmptyState.Header>
@@ -83,14 +83,14 @@ Estrutura básica limpa com apenas header e descrição.
 \`\`\`
 
 **Usado em:** Estados vazios simples, listas sem dados
-        `
-      }
-    }
-  }
+        `,
+      },
+    },
+  },
 }
 
 export const ComAcoes: Story = {
-  name: 'Com Ações',
+  name: "Com Ações",
   render: () => (
     <EmptyState>
       <EmptyState.Header>Nenhum membro na equipe</EmptyState.Header>
@@ -123,14 +123,14 @@ Empty state com ações para orientar o usuário sobre próximos passos.
 \`\`\`
 
 **Padrão:** Ação primária (filled) + ação secundária (ghost)
-        `
-      }
-    }
-  }
+        `,
+      },
+    },
+  },
 }
 
 export const ListViewExamples: Story = {
-  name: 'Exemplos de List Views',
+  name: "Exemplos de List Views",
   render: () => (
     <div className="space-y-8">
       <div>
@@ -179,7 +179,7 @@ export const ListViewExamples: Story = {
     </div>
   ),
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
         story: `
@@ -191,14 +191,14 @@ Cada exemplo segue o padrão minimalista:
 - **Sem ícones:** Design limpo que representa a ausência de conteúdo
 
 **Padrão implementado:** Estados vazios limpos e focados no texto.
-        `
-      }
-    }
-  }
+        `,
+      },
+    },
+  },
 }
 
 export const ComImagem: Story = {
-  name: 'Com Imagem',
+  name: "Com Imagem",
   render: () => (
     <EmptyState size="wide">
       <EmptyState.Image
@@ -244,14 +244,14 @@ Empty state com imagem ilustrativa para contextos especiais (onboarding, landing
 \`\`\`
 
 **Usado em:** Landing pages, onboarding, primeiro uso
-        `
-      }
-    }
-  }
+        `,
+      },
+    },
+  },
 }
 
 export const VariacoesTamanho: Story = {
-  name: 'Variações de Tamanho',
+  name: "Variações de Tamanho",
   render: () => (
     <div className="space-y-8">
       <div>
@@ -282,7 +282,7 @@ export const VariacoesTamanho: Story = {
     </div>
   ),
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
         story: `
@@ -306,14 +306,14 @@ Demonstração dos dois tamanhos disponíveis.
 
 **Narrow:** max-width: 32rem (512px) - para listas e componentes compactos  
 **Wide:** max-width: 48rem (768px) - para páginas principais e onboarding
-        `
-      }
-    }
-  }
+        `,
+      },
+    },
+  },
 }
 
 export const ContextosEspecificos: Story = {
-  name: 'Contextos Específicos',
+  name: "Contextos Específicos",
   render: () => (
     <div className="grid grid-cols-1 gap-8 md:grid-cols-2">
       <div>
@@ -364,7 +364,7 @@ export const ContextosEspecificos: Story = {
     </div>
   ),
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
         story: `
@@ -376,8 +376,8 @@ Diferentes contextos com design minimalista.
 **Permissão:** Informação clara sem ações desnecessárias
 
 **Princípio:** Ações secundárias usam variant="ghost" para hierarquia visual clara.
-        `
-      }
-    }
-  }
+        `,
+      },
+    },
+  },
 }

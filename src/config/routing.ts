@@ -1,24 +1,32 @@
-import { RoutingConfiguration } from '@/types/routing'
+import { RoutingConfiguration } from "@/types/routing"
 
 export const routingConfig: RoutingConfiguration = {
   defaults: {
     isPublic: true,
     authorizedRoles: [],
     redirects: {
-      postAuthRedirectPath: '/api/auth/role-redirect',
-      signInPagePath: '/api/auth/sign-in',
-      defaultAccessDeniedPath: '/acesso-negado',
-      accessDeniedPageByAllowedRole: {}
-    }
+      postAuthRedirectPath: "/",
+      signInPagePath: "/api/auth/sign-in",
+      defaultAccessDeniedPath: "/acesso-negado",
+      accessDeniedPageByAllowedRole: {},
+    },
   },
   routes: [
     {
-      path: '/acesso-negado',
-      isPublic: true
+      path: "/acesso-negado",
+      isPublic: true,
     },
     {
-      path: '/sessao-expirada',
-      isPublic: true
-    }
-  ]
+      path: "/sessao-expirada",
+      isPublic: true,
+    },
+    {
+      path: "/erro",
+      isPublic: true,
+    },
+    {
+      path: "/erro-autenticacao",
+      isPublic: true,
+    },
+  ],
 }

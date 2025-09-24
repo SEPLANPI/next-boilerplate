@@ -1,8 +1,8 @@
-'use client'
+"use client"
 
-import { useSession } from 'next-auth/react'
-import { ReactNode } from 'react'
-import { Role } from '@/types/roles'
+import { useSession } from "next-auth/react"
+import { ReactNode } from "react"
+import { Role } from "@/types/roles"
 
 interface ClientPermissionGateProps {
   children: ReactNode
@@ -11,7 +11,7 @@ interface ClientPermissionGateProps {
 
 export function ClientPermissionGate({
   children,
-  authorizedRoles
+  authorizedRoles,
 }: ClientPermissionGateProps) {
   const { data: session } = useSession()
   const user = session?.user
@@ -26,7 +26,7 @@ export function ClientPermissionGate({
   }
 
   const hasPermission = user.roles.some((role) =>
-    authorizedRoles.includes(role)
+    authorizedRoles.includes(role),
   )
 
   if (!hasPermission) {

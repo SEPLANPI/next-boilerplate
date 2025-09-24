@@ -1,7 +1,7 @@
-import type { Meta, StoryObj } from '@storybook/nextjs-vite'
-import React from 'react'
-import { Card } from './card'
-import { Sparkline } from '@mantine/charts'
+import type { Meta, StoryObj } from "@storybook/nextjs-vite"
+import React from "react"
+import { Card } from "./card"
+import { Sparkline } from "@mantine/charts"
 import {
   Users,
   DollarSign,
@@ -10,14 +10,14 @@ import {
   Eye,
   Star,
   Calendar,
-  Target
-} from 'lucide-react'
+  Target,
+} from "lucide-react"
 
 const meta: Meta<typeof Card.Root> = {
-  title: 'Componentes/Card',
+  title: "Componentes/Card",
   component: Card.Root,
   parameters: {
-    layout: 'centered',
+    layout: "centered",
     docs: {
       description: {
         component: `
@@ -43,20 +43,20 @@ Sistema de cards usando padrão de composição para máxima flexibilidade.
   </Card.Footer>
 </Card.Root>
 \`\`\`
-        `
-      }
-    }
+        `,
+      },
+    },
   },
   argTypes: {
     className: {
-      description: 'Classes CSS adicionais para o container do card',
-      control: 'text',
+      description: "Classes CSS adicionais para o container do card",
+      control: "text",
       table: {
-        category: 'Layout'
-      }
-    }
+        category: "Layout",
+      },
+    },
   },
-  tags: ['autodocs']
+  tags: ["autodocs"],
 } satisfies Meta<typeof Card.Root>
 
 export default meta
@@ -67,7 +67,7 @@ const revenueData = [45, 52, 38, 44, 60, 76, 78, 51, 65, 85, 92, 89]
 const usersData = [10, 15, 12, 8, 14, 18, 16, 20, 25, 22, 28, 30]
 
 export const UsoBasico: Story = {
-  name: 'Uso Básico',
+  name: "Uso Básico",
   render: () => (
     <Card.Root>
       <Card.Header>
@@ -107,14 +107,14 @@ Estrutura básica de um card com título, valor e descrição.
 
 **Estrutura:** Header (título + ícone) → Content (valor) → Footer (descrição)  
 **Usado em:** Métricas simples, KPIs básicos
-        `
-      }
-    }
-  }
+        `,
+      },
+    },
+  },
 }
 
 export const ComGrafico: Story = {
-  name: 'Card com Gráfico',
+  name: "Card com Gráfico",
   render: () => (
     <Card.Root className="w-80">
       <Card.Header>
@@ -162,14 +162,14 @@ Card com gráfico Sparkline integrado para mostrar tendências.
 \`\`\`
 
 **Usado em:** Dashboards, métricas com histórico, análises temporais
-        `
-      }
-    }
-  }
+        `,
+      },
+    },
+  },
 }
 
 export const ComTrend: Story = {
-  name: 'Card com Trend',
+  name: "Card com Trend",
   render: () => (
     <div className="grid grid-cols-2 gap-4">
       <Card.Root>
@@ -219,14 +219,14 @@ Component \`Card.Trend\` determina automaticamente cor e ícone:
 \`\`\`
 
 **Usado em:** Comparações período anterior, métricas de performance
-        `
-      }
-    }
-  }
+        `,
+      },
+    },
+  },
 }
 
 export const OrientacaoVertical: Story = {
-  name: 'Orientação Vertical',
+  name: "Orientação Vertical",
   render: () => (
     <div className="grid grid-cols-2 gap-4">
       <Card.Root>
@@ -282,14 +282,14 @@ Header e Footer suportam orientação vertical para layouts diferentes.
 \`\`\`
 
 **Usado em:** Cards compactos, layouts com pouco espaço horizontal
-        `
-      }
-    }
-  }
+        `,
+      },
+    },
+  },
 }
 
 export const VariacoesDados: Story = {
-  name: 'Variações de Dados',
+  name: "Variações de Dados",
   render: () => (
     <div className="grid grid-cols-3 gap-4">
       <Card.Root>
@@ -347,14 +347,14 @@ export const VariacoesDados: Story = {
 \`\`\`
 
 **Usado em:** Diferentes tipos de métricas, valores com unidades específicas
-        `
-      }
-    }
-  }
+        `,
+      },
+    },
+  },
 }
 
 export const CardCompleto: Story = {
-  name: 'Card Completo',
+  name: "Card Completo",
   render: () => (
     <Card.Root className="w-96">
       <Card.Header>
@@ -405,14 +405,14 @@ Exemplo completo combinando todos os elementos disponíveis.
 \`\`\`
 
 **Usado em:** Dashboards principais, métricas importantes com contexto completo
-        `
-      }
-    }
-  }
+        `,
+      },
+    },
+  },
 }
 
 export const CardList: Story = {
-  name: 'Card.List - Layout Horizontal',
+  name: "Card.List - Layout Horizontal",
   render: () => (
     <Card.List>
       <Card.Root>
@@ -481,7 +481,7 @@ export const CardList: Story = {
     </Card.List>
   ),
   parameters: {
-    layout: 'padded',
+    layout: "padded",
     docs: {
       description: {
         story: `
@@ -526,8 +526,8 @@ Componente \`Card.List\` organiza cards horizontalmente com espaçamento consist
 - **Responsivo**: Cards se ajustam automaticamente
 
 **Usado em:** Dashboards principais, métricas em linha, headers de seções
-        `
-      }
-    }
-  }
+        `,
+      },
+    },
+  },
 }

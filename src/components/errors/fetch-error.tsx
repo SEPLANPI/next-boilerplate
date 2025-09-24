@@ -1,9 +1,9 @@
-import { API } from '@/constants/messages'
-import { DjangoError } from '@/types/actions'
-import { buildErrorMessage } from '@/utils'
-import { Alert } from '@mantine/core'
-import { ApiError } from '@/lib/api/errors'
-import { AlertTriangle } from 'lucide-react'
+import { API } from "@/constants/messages"
+import { DjangoError } from "@/types/actions"
+import { buildErrorMessage } from "@/utils"
+import { Alert } from "@mantine/core"
+import { ApiError } from "@/lib/api/errors"
+import { AlertTriangle } from "lucide-react"
 
 interface FetchErrorProps {
   error?: DjangoError | ApiError
@@ -12,7 +12,7 @@ interface FetchErrorProps {
 
 export function FetchError({
   error,
-  title = 'Erro inesperado'
+  title = "Erro inesperado",
 }: FetchErrorProps) {
   const getErrorMessage = () => {
     if (!error) {

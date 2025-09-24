@@ -1,5 +1,5 @@
 // components/DesignTokenTable.tsx
-import React from 'react'
+import React from "react"
 
 interface TokenData {
   name: string
@@ -16,7 +16,7 @@ interface DesignTokenTableProps {
 
 export const DesignTokenTable: React.FC<DesignTokenTableProps> = ({
   tokens,
-  showExample = false
+  showExample = false,
 }) => {
   return (
     <table className="!m-0 min-w-full">
@@ -45,7 +45,7 @@ export const DesignTokenTable: React.FC<DesignTokenTableProps> = ({
               <td className="whitespace-nowrap">{token.example}</td>
             )}
             <td className="px-6 py-4 text-sm text-gray-700">
-              {token.description || '—'}
+              {token.description || "—"}
             </td>
           </tr>
         ))}

@@ -1,4 +1,4 @@
-import { DjangoError } from './actions'
+import { DjangoError } from "./actions"
 
 export type ServerResult<TOutput> =
   | { data: TOutput; error?: never }

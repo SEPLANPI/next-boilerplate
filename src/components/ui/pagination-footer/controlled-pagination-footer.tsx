@@ -1,7 +1,7 @@
-'use client'
+"use client"
 
-import { Pagination } from '@mantine/core'
-import { PAGINATION } from '@/constants/pagination'
+import { Pagination } from "@mantine/core"
+import { PAGINATION } from "@/constants/pagination"
 
 interface ControlledPaginationFooterProps {
   page: number
@@ -14,7 +14,7 @@ export function ControlledPaginationFooter({
   page,
   totalItems,
   itemsPerPage = PAGINATION.DEFAULT_PAGE_SIZE,
-  onPageChange
+  onPageChange,
 }: ControlledPaginationFooterProps) {
   const totalPages = Math.ceil(totalItems / itemsPerPage)
   const startItem = (page - 1) * itemsPerPage + 1
@@ -25,7 +25,7 @@ export function ControlledPaginationFooter({
       <span className="text-sm">
         <span className="font-semibold">
           {startItem} - {endItem}
-        </span>{' '}
+        </span>{" "}
         de {totalItems} resultados
       </span>
 

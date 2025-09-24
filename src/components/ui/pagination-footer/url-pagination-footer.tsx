@@ -1,14 +1,14 @@
-'use client'
+"use client"
 
-import { Pagination } from '@mantine/core'
-import { parseAsInteger, useQueryState } from 'nuqs'
+import { Pagination } from "@mantine/core"
+import { parseAsInteger, useQueryState } from "nuqs"
 
 export function UrlPaginationFooter({
   totalItems,
   itemsPerPage,
-  queryKey = 'page',
+  queryKey = "page",
   shallow = false,
-  onPageChange
+  onPageChange,
 }: {
   totalItems: number
   itemsPerPage: number
@@ -19,8 +19,8 @@ export function UrlPaginationFooter({
   const [page, setPage] = useQueryState(
     queryKey,
     parseAsInteger.withDefault(1).withOptions({
-      shallow
-    })
+      shallow,
+    }),
   )
 
   const totalPages = Math.ceil(totalItems / itemsPerPage)
@@ -40,7 +40,7 @@ export function UrlPaginationFooter({
       <span className="text-sm">
         <span className="font-semibold">
           {startItem} - {endItem}
-        </span>{' '}
+        </span>{" "}
         de {totalItems} resultados
       </span>
 

@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
-import React, { createContext, useContext, useState, useEffect } from 'react'
-import { usePathname, useRouter } from 'next/navigation'
-import { Tabs, TabsList, TabsTab } from '@mantine/core'
-import { cn } from '@/utils'
+import React, { createContext, useContext, useState, useEffect } from "react"
+import { usePathname, useRouter } from "next/navigation"
+import { Tabs, TabsList, TabsTab } from "@mantine/core"
+import { cn } from "@/utils"
 
 interface NavigationTabsContextValue {
   activeTab: string
@@ -18,7 +18,7 @@ export function useNavigationTabsContext() {
   const context = useContext(NavigationTabsContext)
   if (!context) {
     throw new Error(
-      'NavigationTabs components must be used within a NavigationTabsContainer provider'
+      "NavigationTabs components must be used within a NavigationTabsContainer provider",
     )
   }
   return context
@@ -37,27 +37,27 @@ interface NavigationTabsContainerProps {
 export function NavigationTabsContainer({
   children,
   className,
-  basePath
+  basePath,
 }: NavigationTabsContainerProps) {
   const router = useRouter()
   const pathname = usePathname()
 
   function getActiveTabFromUrl(): string {
     // If current path starts with basePath, extract the tab value
-    if (pathname.startsWith(basePath + '/')) {
+    if (pathname.startsWith(basePath + "/")) {
       const tabPath = pathname.slice(basePath.length + 1)
       // Return the first segment after basePath as the tab value
-      const tabValue = tabPath.split('/')[0]
+      const tabValue = tabPath.split("/")[0]
       return tabValue
     }
 
     // If we're exactly at basePath, return empty string (no active tab)
-    return ''
+    return ""
   }
 
   // Controlled state for Mantine tabs
   const [activeTab, setActiveTab] = useState<string | null>(() =>
-    getActiveTabFromUrl()
+    getActiveTabFromUrl(),
   )
 
   // Sync with URL changes
@@ -74,16 +74,16 @@ export function NavigationTabsContainer({
   }
 
   const contextValue: NavigationTabsContextValue = {
-    activeTab: activeTab || '',
-    handleTabChange
+    activeTab: activeTab || "",
+    handleTabChange,
   }
 
   return (
     <NavigationTabsContext.Provider value={contextValue}>
       <div
         className={cn(
-          'flex min-h-8 w-full items-center justify-between gap-x-4 border-b',
-          className
+          "flex min-h-8 w-full items-center justify-between gap-x-4 border-b",
+          className,
         )}
       >
         {children}
@@ -105,18 +105,7 @@ export function NavigationTabs({ children, className }: NavigationTabsProps) {
   const { activeTab, handleTabChange } = useNavigationTabsContext()
 
   return (
-    <Tabs
-      value={activeTab}
-      onChange={handleTabChange}
-      unstyled
-      className={className}
-      classNames={{
-        root: 'h-10',
-        list: 'flex h-full',
-        tab: 'flex space-x-2 items-center h-full font-normal px-3 text-sm text-gray-700 data-[active=true]:font-semibold data-[active=true]:text-primary-600 border-[transparent] border-b-2 data-[active=true]:border-primary-600',
-        tabLabel: 'leading-[20px]'
-      }}
-    >
+    <Tabs value={activeTab} onChange={handleTabChange} className={className}>
       <TabsList>{children}</TabsList>
     </Tabs>
   )
@@ -140,7 +129,7 @@ export function NavigationTabsItem({
   value,
   leftSection,
   rightSection,
-  className
+  className,
 }: NavigationTabsItemProps) {
   return (
     <TabsTab
@@ -167,7 +156,7 @@ interface NavigationTabsActionsProps {
 export function NavigationTabsActions({
   children,
   value,
-  className
+  className,
 }: NavigationTabsActionsProps) {
   const { activeTab } = useNavigationTabsContext()
 
@@ -176,7 +165,7 @@ export function NavigationTabsActions({
   }
 
   return (
-    <div className={cn('flex shrink-0 items-center gap-x-2', className)}>
+    <div className={cn("flex shrink-0 items-center gap-x-2", className)}>
       {children}
     </div>
   )

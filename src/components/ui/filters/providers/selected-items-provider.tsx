@@ -1,13 +1,13 @@
-'use client'
+"use client"
 
+import { parseAsArrayOf, parseAsString, useQueryStates } from "nuqs"
 import {
   createContext,
-  useContext,
   PropsWithChildren,
+  useCallback,
+  useContext,
   useMemo,
-  useCallback
-} from 'react'
-import { parseAsString, parseAsArrayOf, useQueryState } from 'nuqs'
+} from "react"
 
 type SelectedItemsContextType = {
   selectedItems: Set<string>
@@ -23,7 +23,7 @@ export function useSelectedItems() {
   const context = useContext(SelectedItemsContext)
   if (!context) {
     throw new Error(
-      'useSelectedItems must be used within SelectedItemsContext.Provider'
+      "useSelectedItems must be used within SelectedItemsContext.Provider",
     )
   }
   return context
@@ -31,46 +31,53 @@ export function useSelectedItems() {
 
 export function SelectedItemsProvider({
   children,
-  searchParamKey = 'selected'
+  searchParamKey = "selected",
 }: PropsWithChildren<{
   searchParamKey?: string
 }>) {
-  const [selectedItems, setSelectedItems] = useQueryState(
-    searchParamKey,
-    parseAsArrayOf(parseAsString).withDefault([]).withOptions({
-      shallow: false
-    })
+  const [state, setState] = useQueryStates(
+    {
+      [searchParamKey]: parseAsArrayOf(parseAsString).withDefault([]),
+      page: parseAsString.withDefault("1"),
+    },
+    {
+      shallow: false,
+    },
   )
 
-  const isSelected = useCallback(
-    (item: string) => {
-      return selectedItems.includes(item)
-    },
-    [selectedItems]
-  )
+  const selectedItems = state[searchParamKey] as string[]
 
   const toggle = useCallback(
     (value: string) => {
-      if (isSelected(value)) {
-        setSelectedItems((prev) => prev.filter((item) => item !== value))
+      if (selectedItems.includes(value)) {
+        setState({
+          [searchParamKey]: selectedItems.filter((item) => item !== value),
+          page: "1",
+        })
       } else {
-        setSelectedItems((prev) => [...prev, value])
+        setState({
+          [searchParamKey]: [...selectedItems, value],
+          page: "1",
+        })
       }
     },
-    [setSelectedItems, isSelected]
+    [setState, selectedItems, searchParamKey],
   )
 
   const clear = useCallback(() => {
-    setSelectedItems([])
-  }, [setSelectedItems])
+    setState({
+      [searchParamKey]: [],
+      page: "1",
+    })
+  }, [setState, searchParamKey])
 
   const contextValue = useMemo(
     () => ({
       selectedItems: new Set(selectedItems),
       toggle,
-      clear
+      clear,
     }),
-    [selectedItems, toggle, clear]
+    [selectedItems, toggle, clear],
   )
 
   return (

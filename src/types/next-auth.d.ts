@@ -1,7 +1,7 @@
-import { AdapterUser } from '@auth/core/adapters'
-import { BaseUser } from './auth'
+import { AdapterUser } from "@auth/core/adapters"
+import { BaseUser } from "./auth"
 
-declare module 'next-auth' {
+declare module "next-auth" {
   interface Session {
     user: BaseUser
     accessToken: string
@@ -9,11 +9,11 @@ declare module 'next-auth' {
     error: string
   }
 
-  interface User extends BaseUser, AdapterUser { }
+  interface User extends BaseUser, AdapterUser {}
 
   interface Account {
-    provider: 'keycloak'
-    type: 'oidc'
+    provider: "keycloak"
+    type: "oidc"
     id: string
     access_token: string
     expires_in: number
@@ -21,13 +21,13 @@ declare module 'next-auth' {
     refresh_token: string
     token_type: string
     id_token: string
-    'not-before-policy': number
+    "not-before-policy": number
     session_state: string
     scope: string
   }
 }
 
-declare module 'next-auth/jwt' {
+declare module "next-auth/jwt" {
   interface JWT {
     name: string
     email: string

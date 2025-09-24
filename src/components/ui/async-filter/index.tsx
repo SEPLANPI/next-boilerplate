@@ -1,14 +1,15 @@
-'use client'
+/* eslint-disable prettier/prettier */
+"use client";
 
-import { forwardRef, PropsWithChildren } from 'react'
-import { Button, Popover, Badge } from '@mantine/core'
-import { ChevronDown } from 'lucide-react'
-import { Content } from './content'
+import { forwardRef, PropsWithChildren } from "react";
+import { Button, Popover, Badge } from "@mantine/core";
+import { ChevronDown } from "lucide-react";
+import { Content } from "./content";
 import {
   SelectedItemsProvider,
-  useSelectedItems
-} from './selected-items-provider'
-import { DefaultOption, AsyncFilterProps } from './types'
+  useSelectedItems,
+} from "./selected-items-provider";
+import { DefaultOption, AsyncFilterProps } from "./types";
 
 export function AsyncFilter<T extends object = DefaultOption>({
   children,
@@ -23,20 +24,20 @@ export function AsyncFilter<T extends object = DefaultOption>({
   showSearch = true
 }: AsyncFilterProps<T>) {
   const isDefaultOption = (option: T): option is T & DefaultOption =>
-    'id' in option && 'label' in option
+    "id" in option && "label" in option;
 
   const handlers = {
     getValue: (option: T): string => {
-      if (getOptionValue) return getOptionValue(option)
-      if (isDefaultOption(option)) return option.id
-      throw new Error('getOptionValue is required for non-DefaultOption types')
+      if (getOptionValue) return getOptionValue(option);
+      if (isDefaultOption(option)) return option.id;
+      throw new Error("getOptionValue is required for non-DefaultOption types");
     },
     getLabel: (option: T): string => {
-      if (getOptionLabel) return getOptionLabel(option)
-      if (isDefaultOption(option)) return option.label
-      throw new Error('getOptionLabel is required for non-DefaultOption types')
-    }
-  }
+      if (getOptionLabel) return getOptionLabel(option);
+      if (isDefaultOption(option)) return option.label;
+      throw new Error("getOptionLabel is required for non-DefaultOption types");
+    },
+  };
 
   const finalRenderOption =
     renderOption ||
@@ -79,20 +80,20 @@ export function AsyncFilter<T extends object = DefaultOption>({
         </Popover.Dropdown>
       </Popover>
     </SelectedItemsProvider>
-  )
+  );
 }
 
 const FilterButton = forwardRef<HTMLButtonElement, PropsWithChildren>(
   ({ children, ...props }, ref) => {
-    const { selectedItems } = useSelectedItems()
-    const hasSelectedItems = selectedItems.size > 0
+    const { selectedItems } = useSelectedItems();
+    const hasSelectedItems = selectedItems.size > 0;
     return (
       <Button
         data-active={hasSelectedItems}
         ref={ref}
         variant="secondary"
         classNames={{
-          root: 'data-[active=true]:bg-govBlue-50 data-[active=true]:text-govBlue-700'
+          root: "data-[active=true]:bg-govBlue-50 data-[active=true]:text-govBlue-700",
         }}
         rightSection={<ChevronDown className="size-4" />}
         {...props}
@@ -104,8 +105,8 @@ const FilterButton = forwardRef<HTMLButtonElement, PropsWithChildren>(
           </Badge>
         )}
       </Button>
-    )
-  }
-)
+    );
+  },
+);
 
-FilterButton.displayName = 'FilterButton'
+FilterButton.displayName = "FilterButton";

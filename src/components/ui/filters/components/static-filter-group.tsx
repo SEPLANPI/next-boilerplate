@@ -1,10 +1,10 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
-import { Collapse, Badge, Button } from '@mantine/core'
-import { DefaultOption } from '../types'
-import { useFilters } from '../hooks/use-filters'
-import { FilterGroupContent } from './filter-group-content'
+import { Badge, Button, Collapse } from "@mantine/core"
+import { useState } from "react"
+import { useFilters } from "../hooks/use-filters"
+import { DefaultOption } from "../types"
+import { FilterGroupContent } from "./filter-group-content"
 
 export interface StaticFilterGroupProps<T extends object> {
   title: string
@@ -31,7 +31,7 @@ export function StaticFilterGroup<T extends object>({
   filterFn,
   showSearch = true,
   showSelectedOnTop = true,
-  children
+  children,
 }: StaticFilterGroupProps<T>) {
   const [isOpen, setIsOpen] = useState(false)
   const { getGroupSelectedCount } = useFilters()
@@ -40,26 +40,26 @@ export function StaticFilterGroup<T extends object>({
 
   // Type guards and handlers
   const isDefaultOption = (option: T): option is T & DefaultOption =>
-    'id' in option && 'label' in option
+    "id" in option && "label" in option
 
   const handlers = {
     getValue: (option: T): string => {
       if (getOptionValue) return getOptionValue(option)
       if (isDefaultOption(option)) return String(option.id)
-      throw new Error('getOptionValue is required for non-DefaultOption types')
+      throw new Error("getOptionValue is required for non-DefaultOption types")
     },
     getLabel: (option: T): string => {
       if (getOptionLabel) return getOptionLabel(option)
       if (isDefaultOption(option)) return option.label
-      throw new Error('getOptionLabel is required for non-DefaultOption types')
-    }
+      throw new Error("getOptionLabel is required for non-DefaultOption types")
+    },
   }
 
   const finalRenderOption =
     renderOption ||
     ((option: T) => (
       <span
-        className={`flex-grow ${isDisabled?.(option) ? 'text-gray-400' : ''}`}
+        className={`flex-grow ${isDisabled?.(option) ? "text-gray-400" : ""}`}
       >
         {handlers.getLabel(option)}
       </span>
@@ -78,8 +78,8 @@ export function StaticFilterGroup<T extends object>({
         unstyled
         onClick={() => setIsOpen(!isOpen)}
         classNames={{
-          root: 'w-full py-2 px-3 text-content-default font-semibold',
-          label: 'w-full text-sm flex justify-between items-center'
+          root: "w-full py-2 px-3 text-content-default font-semibold",
+          label: "w-full text-sm flex justify-between items-center",
         }}
       >
         {title}

@@ -1,7 +1,7 @@
-import { forwardRef, PropsWithChildren } from 'react'
-import { Button, Badge } from '@mantine/core'
-import { ChevronDown } from 'lucide-react'
-import { useSelectedItems } from '../providers/selected-items-provider'
+import { forwardRef, PropsWithChildren } from "react"
+import { Button, Badge } from "@mantine/core"
+import { ChevronDown } from "lucide-react"
+import { useSelectedItems } from "../providers/selected-items-provider"
 
 export const FilterButton = forwardRef<HTMLButtonElement, PropsWithChildren>(
   ({ children, ...props }, ref) => {
@@ -30,7 +30,7 @@ export const FilterButton = forwardRef<HTMLButtonElement, PropsWithChildren>(
         )}
       </Button>
     )
-  }
+  },
 )
 
-FilterButton.displayName = 'FilterButton'
+FilterButton.displayName = "FilterButton"

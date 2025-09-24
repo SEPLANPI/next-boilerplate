@@ -1,7 +1,7 @@
-import 'server-only'
-import { ReactNode } from 'react'
-import { Role } from '@/types/roles'
-import { auth } from '@/auth'
+import "server-only"
+import { ReactNode } from "react"
+import { Role } from "@/types/roles"
+import { auth } from "@/auth"
 
 interface ServerPermissionGateProps {
   children: ReactNode
@@ -10,7 +10,7 @@ interface ServerPermissionGateProps {
 
 export async function ServerPermissionGate({
   children,
-  authorizedRoles
+  authorizedRoles,
 }: ServerPermissionGateProps) {
   const session = await auth()
   const user = session?.user
@@ -24,7 +24,7 @@ export async function ServerPermissionGate({
   }
 
   const hasPermission = user.roles.some((role) =>
-    authorizedRoles.includes(role)
+    authorizedRoles.includes(role),
   )
 
   if (!hasPermission) {

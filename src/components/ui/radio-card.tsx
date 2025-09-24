@@ -1,12 +1,12 @@
-import { Radio, Tooltip, RadioCardProps } from '@mantine/core'
-import { Info } from 'lucide-react'
+import { Radio, Tooltip, RadioCardProps } from "@mantine/core"
+import { Info } from "lucide-react"
 
 export function RadioCard({
   value,
   label,
   description,
   disabled,
-  disabledTooltip
+  disabledTooltip,
 }: RadioCardProps & {
   label: string
   description?: string

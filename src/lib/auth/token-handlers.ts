@@ -1,9 +1,9 @@
-import { JWT } from 'next-auth/jwt'
-import { getUserInfo } from './get-user-info'
-import jwt from 'jsonwebtoken'
-import { KeycloakAccessTokenPayload } from './types'
-import { env } from '@/config/env'
-import { calculateExpiryTime } from '@/utils'
+import { JWT } from "next-auth/jwt"
+import { getUserInfo } from "./get-user-info"
+import jwt from "jsonwebtoken"
+import { KeycloakAccessTokenPayload } from "./types"
+import { env } from "@/config/env"
+import { calculateExpiryTime } from "@/utils"
 
 export interface TokenData {
   accessToken: string
@@ -16,13 +16,13 @@ export interface TokenData {
 export async function enrichTokenWithUserData(token: JWT, accessToken: string) {
   const userInfo = await getUserInfo(accessToken)
   const accessTokenContent = jwt.decode(
-    accessToken
+    accessToken,
   ) as KeycloakAccessTokenPayload
 
   if (!userInfo) {
     return {
       ...token,
-      error: 'UserInfoError'
+      error: "UserInfoError",
     }
   }
 
@@ -36,8 +36,9 @@ export async function enrichTokenWithUserData(token: JWT, accessToken: string) {
       fullName: userInfo.nomeCompleto,
       email: userInfo.email,
       roles:
-        accessTokenContent?.resource_access?.[env.AUTH_KEYCLOAK_ID]?.roles || []
-    }
+        accessTokenContent?.resource_access?.[env.AUTH_KEYCLOAK_ID]?.roles ||
+        [],
+    },
   }
 }
 
@@ -47,13 +48,13 @@ export function updateTokens(token: JWT, tokenData: TokenData): JWT {
     accessToken: tokenData.accessToken,
     accessTokenExpires: calculateExpiryTime(tokenData.expiresIn),
     ...(tokenData.refreshToken && {
-      refreshToken: tokenData.refreshToken
+      refreshToken: tokenData.refreshToken,
     }),
     ...(tokenData.refreshExpiresIn && {
-      refreshTokenExpires: calculateExpiryTime(tokenData.refreshExpiresIn)
+      refreshTokenExpires: calculateExpiryTime(tokenData.refreshExpiresIn),
     }),
     ...(tokenData.idToken && {
-      idToken: tokenData.idToken
-    })
+      idToken: tokenData.idToken,
+    }),
   }
 }

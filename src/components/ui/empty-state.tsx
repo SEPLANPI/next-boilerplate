@@ -1,11 +1,11 @@
-import React from 'react'
-import Image from 'next/image'
-import { cn } from '@/utils'
+import React from "react"
+import Image from "next/image"
+import { cn } from "@/utils"
 
 interface EmptyStateProps {
   children: React.ReactNode
   className?: string
-  size?: 'narrow' | 'wide'
+  size?: "narrow" | "wide"
 }
 
 interface EmptyStateHeaderProps {
@@ -36,18 +36,18 @@ interface EmptyStateActionsProps {
   className?: string
 }
 
-function EmptyState({ children, className, size = 'narrow' }: EmptyStateProps) {
+function EmptyState({ children, className, size = "narrow" }: EmptyStateProps) {
   const sizeClasses = {
-    narrow: 'max-w-lg',
-    wide: 'max-w-3xl'
+    narrow: "max-w-lg",
+    wide: "max-w-3xl",
   }
 
   return (
     <div
       className={cn(
-        'mx-auto flex flex-col items-center justify-center p-12 text-center',
+        "mx-auto flex flex-col items-center justify-center p-12 text-center",
         sizeClasses[size],
-        className
+        className,
       )}
     >
       {children}
@@ -59,8 +59,8 @@ function EmptyStateHeader({ children, className }: EmptyStateHeaderProps) {
   return (
     <h3
       className={cn(
-        'mb-4 text-xl font-semibold text-content-emphasis',
-        className
+        "mb-4 text-xl font-semibold text-content-emphasis",
+        className,
       )}
     >
       {children}
@@ -70,17 +70,17 @@ function EmptyStateHeader({ children, className }: EmptyStateHeaderProps) {
 
 function EmptyStateDescription({
   children,
-  className
+  className,
 }: EmptyStateDescriptionProps) {
-  return <p className={cn('mb-4 text-sm', className)}>{children}</p>
+  return <p className={cn("mb-4 text-sm", className)}>{children}</p>
 }
 
 function EmptyStateIcon({ children, className }: EmptyStateIconProps) {
   return (
     <div
       className={cn(
-        'mb-6 flex size-14 items-center justify-center rounded-lg border text-content-muted shadow-6',
-        className
+        "mb-6 flex size-14 items-center justify-center rounded-lg border text-content-muted shadow-6",
+        className,
       )}
     >
       {children}
@@ -93,7 +93,7 @@ function EmptyStateImage({
   alt,
   width,
   height,
-  className
+  className,
 }: EmptyStateImageProps) {
   return (
     <Image
@@ -101,7 +101,7 @@ function EmptyStateImage({
       alt={alt}
       width={width}
       height={height}
-      className={cn('mb-6 max-w-xs opacity-50', className)}
+      className={cn("mb-6 max-w-xs opacity-50", className)}
     />
   )
 }
@@ -110,8 +110,8 @@ function EmptyStateActions({ children, className }: EmptyStateActionsProps) {
   return (
     <div
       className={cn(
-        'flex flex-col justify-center gap-2 sm:flex-row',
-        className
+        "flex flex-col justify-center gap-2 sm:flex-row",
+        className,
       )}
     >
       {children}

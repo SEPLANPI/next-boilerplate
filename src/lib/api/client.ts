@@ -1,7 +1,7 @@
-import { ApiError } from './errors'
-import type { RequestInterceptor, ResponseInterceptor } from './interceptors'
+import { ApiError } from "./errors"
+import type { RequestInterceptor, ResponseInterceptor } from "./interceptors"
 
-import { buildParams, type ParamsRecord } from './params'
+import { buildParams, type ParamsRecord } from "./params"
 
 export interface ApiClientOptions {
   baseUrl: string
@@ -24,8 +24,8 @@ export type ApiResponse<T> =
 // Backward compatibility type - matches existing ServerResult
 export type ServerResult<T> = ApiResponse<T>
 
-type RequestOptions = Omit<RequestInit, 'body'> & {
-  contentType?: 'form-data' | 'json'
+type RequestOptions = Omit<RequestInit, "body"> & {
+  contentType?: "form-data" | "json"
   params?: ParamsRecord
   body?: unknown
   raw?: boolean // When true, returns raw Response instead of processed data
@@ -34,55 +34,55 @@ type RequestOptions = Omit<RequestInit, 'body'> & {
 export interface ApiClient {
   get<T>(
     url: string,
-    options?: RequestOptions & { raw?: false }
+    options?: RequestOptions & { raw?: false },
   ): Promise<ApiResponse<T>>
   get(url: string, options: RequestOptions & { raw: true }): Promise<Response>
   get<T>(
     url: string,
-    options?: RequestOptions
+    options?: RequestOptions,
   ): Promise<ApiResponse<T> | Response>
 
   post<T>(
     url: string,
-    options?: RequestOptions & { raw?: false }
+    options?: RequestOptions & { raw?: false },
   ): Promise<ApiResponse<T>>
   post(url: string, options: RequestOptions & { raw: true }): Promise<Response>
   post<T>(
     url: string,
-    options?: RequestOptions
+    options?: RequestOptions,
   ): Promise<ApiResponse<T> | Response>
 
   put<T>(
     url: string,
-    options?: RequestOptions & { raw?: false }
+    options?: RequestOptions & { raw?: false },
   ): Promise<ApiResponse<T>>
   put(url: string, options: RequestOptions & { raw: true }): Promise<Response>
   put<T>(
     url: string,
-    options?: RequestOptions
+    options?: RequestOptions,
   ): Promise<ApiResponse<T> | Response>
 
   patch<T>(
     url: string,
-    options?: RequestOptions & { raw?: false }
+    options?: RequestOptions & { raw?: false },
   ): Promise<ApiResponse<T>>
   patch(url: string, options: RequestOptions & { raw: true }): Promise<Response>
   patch<T>(
     url: string,
-    options?: RequestOptions
+    options?: RequestOptions,
   ): Promise<ApiResponse<T> | Response>
 
   delete<T>(
     url: string,
-    options?: RequestOptions & { raw?: false }
+    options?: RequestOptions & { raw?: false },
   ): Promise<ApiResponse<T>>
   delete(
     url: string,
-    options: RequestOptions & { raw: true }
+    options: RequestOptions & { raw: true },
   ): Promise<Response>
   delete<T>(
     url: string,
-    options?: RequestOptions
+    options?: RequestOptions,
   ): Promise<ApiResponse<T> | Response>
 }
 
@@ -99,7 +99,7 @@ class ApiClientImpl implements ApiClient {
 
   private async applyRequestInterceptors(
     url: string,
-    options: RequestInit
+    options: RequestInit,
   ): Promise<RequestInit> {
     let finalOptions = { ...options }
     for (const interceptor of this.requestInterceptors) {
@@ -111,7 +111,7 @@ class ApiClientImpl implements ApiClient {
   private async applyResponseInterceptors(
     response: Response,
     url: string,
-    options: RequestInit
+    options: RequestInit,
   ): Promise<Response> {
     let finalResponse = response
     for (const interceptor of this.responseInterceptors) {
@@ -122,8 +122,8 @@ class ApiClientImpl implements ApiClient {
 
   private async request<T = unknown>(
     url: string,
-    method: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH',
-    options: RequestOptions = {}
+    method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH",
+    options: RequestOptions = {},
   ): Promise<ApiResponse<T> | Response> {
     const {
       body,
@@ -137,9 +137,9 @@ class ApiClientImpl implements ApiClient {
     const headers = new Headers(optionHeaders)
 
     let processedBody: BodyInit | undefined = body as BodyInit | undefined
-    if (body && contentType !== 'form-data') {
-      if (!headers.has('Content-Type')) {
-        headers.set('Content-Type', 'application/json')
+    if (body && contentType !== "form-data") {
+      if (!headers.has("Content-Type")) {
+        headers.set("Content-Type", "application/json")
       }
       processedBody = JSON.stringify(body)
     }
@@ -148,7 +148,7 @@ class ApiClientImpl implements ApiClient {
       method,
       headers,
       body: processedBody,
-      ...restOptions
+      ...restOptions,
     }
 
     let fullUrl = `${this.baseUrl}${url}`
@@ -164,7 +164,7 @@ class ApiClientImpl implements ApiClient {
       // Apply request interceptors
       requestOptions = await this.applyRequestInterceptors(
         fullUrl,
-        requestOptions
+        requestOptions,
       )
 
       let response = await fetch(fullUrl, requestOptions)
@@ -173,7 +173,7 @@ class ApiClientImpl implements ApiClient {
       response = await this.applyResponseInterceptors(
         response,
         fullUrl,
-        requestOptions
+        requestOptions,
       )
 
       if (!response.ok) {
@@ -187,7 +187,7 @@ class ApiClientImpl implements ApiClient {
         try {
           errorBody = await response.json()
         } catch {
-          errorBody = { detail: 'Failed to parse error response.' }
+          errorBody = { detail: "Failed to parse error response." }
         }
         return { error: new ApiError(response, errorBody) }
       }
@@ -201,10 +201,10 @@ class ApiClientImpl implements ApiClient {
         return { data: undefined as T }
       }
 
-      const responseContentType = response.headers.get('content-type')
+      const responseContentType = response.headers.get("content-type")
       if (
         responseContentType &&
-        responseContentType.includes('application/json')
+        responseContentType.includes("application/json")
       ) {
         const data = await response.json()
         return { data: data as T }
@@ -219,9 +219,9 @@ class ApiClientImpl implements ApiClient {
       const message =
         error instanceof Error
           ? error.message
-          : 'Ocorreu um erro de conexão. Por favor, verifique sua internet e tente novamente.'
+          : "Ocorreu um erro de conexão. Por favor, verifique sua internet e tente novamente."
       const apiError = new ApiError(new Response(null, { status: 500 }), {
-        detail: message
+        detail: message,
       })
       return { error: apiError }
     }
@@ -229,77 +229,77 @@ class ApiClientImpl implements ApiClient {
 
   public get<T>(
     url: string,
-    options?: RequestOptions & { raw?: false }
+    options?: RequestOptions & { raw?: false },
   ): Promise<ApiResponse<T>>
   public get(
     url: string,
-    options: RequestOptions & { raw: true }
+    options: RequestOptions & { raw: true },
   ): Promise<Response>
   public get<T>(
     url: string,
-    options?: RequestOptions
+    options?: RequestOptions,
   ): Promise<ApiResponse<T> | Response> {
-    return this.request<T>(url, 'GET', options)
+    return this.request<T>(url, "GET", options)
   }
 
   public post<T>(
     url: string,
-    options?: RequestOptions & { raw?: false }
+    options?: RequestOptions & { raw?: false },
   ): Promise<ApiResponse<T>>
   public post(
     url: string,
-    options: RequestOptions & { raw: true }
+    options: RequestOptions & { raw: true },
   ): Promise<Response>
   public post<T>(
     url: string,
-    options?: RequestOptions
+    options?: RequestOptions,
   ): Promise<ApiResponse<T> | Response> {
-    return this.request<T>(url, 'POST', options)
+    return this.request<T>(url, "POST", options)
   }
 
   public put<T>(
     url: string,
-    options?: RequestOptions & { raw?: false }
+    options?: RequestOptions & { raw?: false },
   ): Promise<ApiResponse<T>>
   public put(
     url: string,
-    options: RequestOptions & { raw: true }
+    options: RequestOptions & { raw: true },
   ): Promise<Response>
   public put<T>(
     url: string,
-    options?: RequestOptions
+    options?: RequestOptions,
   ): Promise<ApiResponse<T> | Response> {
-    return this.request<T>(url, 'PUT', options)
+    return this.request<T>(url, "PUT", options)
   }
 
   public patch<T>(
     url: string,
-    options?: RequestOptions & { raw?: false }
+    options?: RequestOptions & { raw?: false },
   ): Promise<ApiResponse<T>>
   public patch(
     url: string,
-    options: RequestOptions & { raw: true }
+    options: RequestOptions & { raw: true },
   ): Promise<Response>
   public patch<T>(
     url: string,
-    options?: RequestOptions
+    options?: RequestOptions,
   ): Promise<ApiResponse<T> | Response> {
-    return this.request<T>(url, 'PATCH', options)
+    return this.request<T>(url, "PATCH", options)
   }
 
   public delete<T>(
     url: string,
-    options?: RequestOptions & { raw?: false }
+    options?: RequestOptions & { raw?: false },
   ): Promise<ApiResponse<T>>
   public delete(
     url: string,
-    options: RequestOptions & { raw: true }
+    options: RequestOptions & { raw: true },
   ): Promise<Response>
   public delete<T>(
     url: string,
-    options?: RequestOptions
+    options?: RequestOptions,
   ): Promise<ApiResponse<T> | Response> {
-    return this.request<T>(url, 'DELETE', options)
+    return this.request<T>(url, "DELETE", options)
   }
 }
 

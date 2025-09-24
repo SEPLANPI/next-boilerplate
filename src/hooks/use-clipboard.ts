@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { notifications } from '@mantine/notifications'
+import { useState } from "react"
+import { notifications } from "@mantine/notifications"
 
 export function useClipboard(timeout = 500) {
   const [copied, setCopied] = useState(false)
@@ -13,30 +13,30 @@ export function useClipboard(timeout = 500) {
         return
       }
 
-      const textArea = document.createElement('textarea')
+      const textArea = document.createElement("textarea")
       textArea.value = text
-      textArea.style.top = '0'
-      textArea.style.left = '0'
-      textArea.style.position = 'fixed'
-      textArea.style.opacity = '0'
+      textArea.style.top = "0"
+      textArea.style.left = "0"
+      textArea.style.position = "fixed"
+      textArea.style.opacity = "0"
 
       document.body.appendChild(textArea)
       textArea.focus()
       textArea.select()
 
       try {
-        const successful = document.execCommand('copy')
-        if (!successful) throw new Error('Copy command failed')
+        const successful = document.execCommand("copy")
+        if (!successful) throw new Error("Copy command failed")
         setCopied(true)
         setTimeout(() => setCopied(false), timeout)
       } finally {
         document.body.removeChild(textArea)
       }
     } catch (err) {
-      console.error('Failed to copy:', err)
+      console.error("Failed to copy:", err)
       notifications.show({
-        message: 'Não foi possível copiar o texto',
-        color: 'red'
+        message: "Não foi possível copiar o texto",
+        color: "red",
       })
     }
   }

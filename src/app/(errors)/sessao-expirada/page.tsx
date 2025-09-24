@@ -1,9 +1,9 @@
-import { signIn } from '@/auth'
-import { Button } from '@mantine/core'
-import { AlertCircle } from 'lucide-react'
+import { signIn } from "@/auth"
+import { Button } from "@mantine/core"
+import { AlertCircle } from "lucide-react"
 
 export default async function SessionExpired({
-  searchParams: { redirectTo = '/' }
+  searchParams: { redirectTo = "/" },
 }: {
   searchParams: {
     redirectTo?: string
@@ -21,8 +21,8 @@ export default async function SessionExpired({
         </div>
         <form
           action={async () => {
-            'use server'
-            await signIn('keycloak', { redirectTo })
+            "use server"
+            await signIn("keycloak", { redirectTo })
           }}
         >
           <Button type="submit">Atualizar Sessão</Button>

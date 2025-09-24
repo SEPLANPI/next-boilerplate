@@ -1,4 +1,4 @@
-# Next.js Boilerplate
+# oracamento front usaando nextjs
 
 Este é um boilerplate para iniciar rapidamente o desenvolvimento de aplicações utilizando Next.js e outras tecnologias para evitar a escrita de código boilerplate e padronizar as aplicações da SEPLAN.
 
@@ -111,8 +111,8 @@ pnpm dev
    - Requer Docker e VSCode
    - Instale a extensão [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
    - Abra o projeto e selecione "Reabrir no Container"
-
 2. **Desenvolvimento Local**:
+
    - Execute `pnpm install` para instalar dependências
 
 ## Estrutura de Pastas

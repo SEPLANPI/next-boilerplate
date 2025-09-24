@@ -1,7 +1,7 @@
-import React, { useCallback, useEffect } from 'react'
-import { parseAsInteger, useQueryStates } from 'nuqs'
-import { RangeSlider, Button, Popover, TextInput, Divider } from '@mantine/core'
-import { ChevronDown, Minus } from 'lucide-react'
+import React, { useCallback, useEffect } from "react"
+import { parseAsInteger, useQueryStates } from "nuqs"
+import { RangeSlider, Button, Popover, TextInput, Divider } from "@mantine/core"
+import { ChevronDown, Minus } from "lucide-react"
 
 interface ValueRangeFilterProps {
   min: number
@@ -14,23 +14,23 @@ export function ValueRangeFilter({
   min,
   max,
   data,
-  children
+  children,
 }: ValueRangeFilterProps) {
   const [valueRange, setValueRange] = useQueryStates({
     fromValue: parseAsInteger,
     toValue: parseAsInteger,
-    page: parseAsInteger.withDefault(1)
+    page: parseAsInteger.withDefault(1),
   })
 
   const [tempRange, setTempRange] = React.useState({
     fromValue: min,
-    toValue: max
+    toValue: max,
   })
 
   const handleApply = () => {
     setValueRange({
       fromValue: tempRange.fromValue,
-      toValue: tempRange.toValue
+      toValue: tempRange.toValue,
     })
   }
 
@@ -41,27 +41,27 @@ export function ValueRangeFilter({
   const handleFromValueChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const cleanValue = parseFloat(
-        event.currentTarget.value.replace(/[^0-9.-]+/g, '')
+        event.currentTarget.value.replace(/[^0-9.-]+/g, ""),
       )
       setTempRange((prev) => ({
         ...prev,
-        fromValue: isNaN(cleanValue) ? min : cleanValue
+        fromValue: isNaN(cleanValue) ? min : cleanValue,
       }))
     },
-    [min]
+    [min],
   )
 
   const handleToValueChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const cleanValue = parseFloat(
-        event.currentTarget.value.replace(/[^0-9.-]+/g, '')
+        event.currentTarget.value.replace(/[^0-9.-]+/g, ""),
       )
       setTempRange((prev) => ({
         ...prev,
-        toValue: isNaN(cleanValue) ? max : cleanValue
+        toValue: isNaN(cleanValue) ? max : cleanValue,
       }))
     },
-    [max]
+    [max],
   )
 
   // Resetar inputs quando botão de limpar filtros é utilizado
@@ -120,7 +120,7 @@ export function ValueRangeFilter({
                 key={item.value}
                 className="data-[in-range=true]:bg-govBlue-600 w-2 flex-1 rounded-sm bg-gray-300 transition-colors"
                 style={{
-                  height: `${(item.count / maxCount) * 100}px` // Scale height to max 100px
+                  height: `${(item.count / maxCount) * 100}px`, // Scale height to max 100px
                 }}
               />
             ))}
@@ -132,7 +132,7 @@ export function ValueRangeFilter({
             onChange={(value) => {
               setTempRange({
                 fromValue: value[0],
-                toValue: value[1]
+                toValue: value[1],
               })
             }}
           />

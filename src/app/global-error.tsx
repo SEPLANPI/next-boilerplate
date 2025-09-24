@@ -1,8 +1,8 @@
-'use client'
+"use client"
 
-import { Button, MantineProvider } from '@mantine/core'
-import { theme } from '@ui/mantine-config'
-import { startTransition } from 'react'
+import { Button, MantineProvider } from "@mantine/core"
+import { theme } from "@ui/mantine-config"
+import { startTransition } from "react"
 
 export default function GlobalError({ reset }: { reset: () => void }) {
   function handleReset() {

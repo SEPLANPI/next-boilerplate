@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
-import { MantineProvider } from '@mantine/core'
-import { theme } from '@ui/mantine-config'
-import { Suspense } from 'react'
-import { ErrorContent } from './error-content'
+import { MantineProvider } from "@mantine/core"
+import { theme } from "@ui/mantine-config"
+import { Suspense } from "react"
+import { ErrorContent } from "./error-content"
 
 export default function ErrorPage() {
   return (

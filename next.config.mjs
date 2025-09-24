@@ -13,7 +13,7 @@ const nextConfig = {
   //   ]
   // },
   // Habilitar Streaming e Suspense com Nginx
-  async headers () {
+  async headers() {
     return [
       {
         source: '/:path*{/}?',

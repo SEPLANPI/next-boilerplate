@@ -1,14 +1,21 @@
-'use client'
+"use client"
 
-import { createContext, PropsWithChildren, useMemo, useCallback } from 'react'
 import {
   parseAsArrayOf,
-  parseAsString,
-  useQueryStates,
-  ParserBuilder,
   parseAsInteger,
-  useQueryState
-} from 'nuqs'
+  parseAsString,
+  ParserBuilder,
+  useQueryState,
+  useQueryStates,
+} from "nuqs"
+import {
+  createContext,
+  PropsWithChildren,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react"
 
 type FilterGroupState = {
   [key: string]: Set<string>
@@ -20,123 +27,151 @@ export type FiltersContextType = {
   toggleOption: (groupKey: string, value: string) => void
   clearGroup: (groupKey: string) => void
   clearAll: () => void
+  applyFilters: () => void
   getTotalSelectedCount: () => number
+  getTotalAppliedCount: () => number
   getGroupSelectedCount: (groupKey: string) => number
   page: number | null
 }
 
 export const FiltersContext = createContext<FiltersContextType | undefined>(
-  undefined
+  undefined,
 )
 
 export function FiltersProvider({
   children,
-  groupKeys = []
+  groupKeys = [],
 }: PropsWithChildren<{
   groupKeys?: string[]
 }>) {
-  const [page, setPage] = useQueryState('page', parseAsInteger.withDefault(1))
+  const [page, setPage] = useQueryState("page", parseAsInteger.withDefault(1))
 
   const queryStateConfig = useMemo(() => {
     return groupKeys.reduce(
       (acc, key) => {
         acc[key] = parseAsArrayOf(parseAsString).withOptions({
-          shallow: false
+          shallow: false,
         })
         return acc
       },
-      {} as Record<string, ParserBuilder<string[]>>
+      {} as Record<string, ParserBuilder<string[]>>,
     )
   }, [groupKeys])
 
   const [queryStates, setQueryStates] = useQueryStates(queryStateConfig)
 
-  const filterGroups = useMemo(() => {
-    return groupKeys.reduce((acc, key) => {
-      const value = queryStates[key]
-      acc[key] = new Set(Array.isArray(value) ? value : [])
+  // Calculate applied filters based only on what's actually in the URL
+  const appliedFilters = useMemo(() => {
+    return Object.entries(queryStates).reduce((acc, [key, value]) => {
+      if (value && Array.isArray(value) && value.length > 0) {
+        acc[key] = new Set(value)
+      }
       return acc
     }, {} as FilterGroupState)
-  }, [groupKeys, queryStates])
+  }, [queryStates])
+
+  const [draftFilters, setDraftFilters] =
+    useState<FilterGroupState>(appliedFilters)
+
+  useEffect(() => {
+    setDraftFilters(appliedFilters)
+  }, [appliedFilters])
 
   const getGroupSelected = useCallback(
     (groupKey: string) => {
-      return filterGroups[groupKey] || new Set()
+      return draftFilters[groupKey] || new Set()
     },
-    [filterGroups]
+    [draftFilters],
   )
 
-  const toggleOption = useCallback(
-    (groupKey: string, value: string) => {
-      setQueryStates((prev) => {
-        const currentSelection = new Set(prev[groupKey] || [])
-        if (currentSelection.has(value)) {
-          currentSelection.delete(value)
-        } else {
-          currentSelection.add(value)
-        }
-        return { ...prev, [groupKey]: Array.from(currentSelection) }
-      })
-      setPage(1)
-    },
-    [setQueryStates, setPage]
-  )
+  const toggleOption = useCallback((groupKey: string, value: string) => {
+    setDraftFilters((prev) => {
+      const newDraft = { ...prev }
+      const currentSelection = new Set(newDraft[groupKey] || [])
 
-  const clearGroup = useCallback(
-    (groupKey: string) => {
-      setQueryStates({ [groupKey]: null })
-      setPage(1)
-    },
-    [setQueryStates, setPage]
-  )
+      if (currentSelection.has(value)) {
+        currentSelection.delete(value)
+      } else {
+        currentSelection.add(value)
+      }
+      newDraft[groupKey] = currentSelection
+      return newDraft
+    })
+  }, [])
+
+  const clearGroup = useCallback((groupKey: string) => {
+    setDraftFilters((prev) => ({
+      ...prev,
+      [groupKey]: new Set(),
+    }))
+  }, [])
 
   const clearAll = useCallback(() => {
-    const clearedGroups = groupKeys.reduce(
-      (acc, key) => {
-        acc[key] = null
+    const clearedGroups = groupKeys.reduce((acc, key) => {
+      acc[key] = new Set()
+      return acc
+    }, {} as FilterGroupState)
+    setDraftFilters(clearedGroups)
+  }, [groupKeys])
+
+  const applyFilters = useCallback(() => {
+    const newQueryStates = Object.entries(draftFilters).reduce(
+      (acc, [key, valueSet]) => {
+        acc[key] = valueSet.size > 0 ? Array.from(valueSet) : null
         return acc
       },
-      {} as Record<string, null>
+      {} as Record<string, string[] | null>,
     )
-    setQueryStates({ ...clearedGroups })
+    setQueryStates(newQueryStates)
     setPage(1)
-  }, [groupKeys, setQueryStates, setPage])
+  }, [draftFilters, setQueryStates, setPage])
 
   const getTotalSelectedCount = useCallback(() => {
-    return Object.values(filterGroups).reduce(
+    return Object.values(draftFilters).reduce(
       (total, group) => total + group.size,
-      0
+      0,
     )
-  }, [filterGroups])
+  }, [draftFilters])
+
+  const getTotalAppliedCount = useCallback(() => {
+    return Object.values(appliedFilters).reduce(
+      (total, group) => total + group.size,
+      0,
+    )
+  }, [appliedFilters])
 
   const getGroupSelectedCount = useCallback(
     (groupKey: string) => {
-      return filterGroups[groupKey]?.size || 0
+      return draftFilters[groupKey]?.size || 0
     },
-    [filterGroups]
+    [draftFilters],
   )
 
   const contextValue = useMemo(
     () => ({
-      filterGroups,
+      filterGroups: draftFilters,
       getGroupSelected,
       toggleOption,
       clearGroup,
       clearAll,
+      applyFilters,
       getTotalSelectedCount,
       getGroupSelectedCount,
-      page
+      getTotalAppliedCount,
+      page,
     }),
     [
-      filterGroups,
+      draftFilters,
       getGroupSelected,
       toggleOption,
       clearGroup,
       clearAll,
+      applyFilters,
       getTotalSelectedCount,
       getGroupSelectedCount,
-      page
-    ]
+      getTotalAppliedCount,
+      page,
+    ],
   )
 
   return (

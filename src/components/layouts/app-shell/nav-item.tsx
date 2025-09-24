@@ -1,16 +1,16 @@
-'use client'
+"use client"
 
-import { Tooltip, Anchor, Collapse, Menu, Box } from '@mantine/core'
-import { useDisclosure } from '@mantine/hooks'
-import { useParams, usePathname } from 'next/navigation'
-import Link from 'next/link'
+import { Tooltip, Anchor, Collapse, Menu, Box } from "@mantine/core"
+import { useDisclosure } from "@mantine/hooks"
+import { useParams, usePathname } from "next/navigation"
+import Link from "next/link"
 import {
   NavigationItem,
   isNavigationLeafItem,
-  isNavigationParentItem
-} from '@/types/sidebar'
-import { ChevronDown } from 'lucide-react'
-import { useSession } from 'next-auth/react'
+  isNavigationParentItem,
+} from "@/types/sidebar"
+import { ChevronDown } from "lucide-react"
+import { useSession } from "next-auth/react"
 
 interface NavItemProps {
   item: NavigationItem
@@ -19,13 +19,13 @@ interface NavItemProps {
 
 // Base navigation styles
 const NAV_BASE_CLASSES = {
-  base: 'rounded-md flex items-center font-medium text-content',
-  interactive: '[&:not([data-active=true])]:hover:bg-gray-700/[.12]',
+  base: "rounded-md flex items-center font-medium text-content",
+  interactive: "[&:not([data-active=true])]:hover:bg-gray-700/[.12]",
   active: {
-    background: 'data-[active=true]:bg-primary-700/[.08]',
-    text: 'data-[active=true]:text-primary-700',
-    font: 'data-[active=true]:font-semibold'
-  }
+    background: "data-[active=true]:bg-primary-700/[.08]",
+    text: "data-[active=true]:text-primary-700",
+    font: "data-[active=true]:font-semibold",
+  },
 }
 
 // Navigation style variants
@@ -38,8 +38,8 @@ const NAV_STYLES = {
       NAV_BASE_CLASSES.active.background,
       NAV_BASE_CLASSES.active.text,
       NAV_BASE_CLASSES.active.font,
-      'block whitespace-nowrap no-underline space-x-2 text-sm w-full px-3 py-2 '
-    ].join(' ')
+      "block whitespace-nowrap no-underline space-x-2 text-sm w-full px-3 py-2 ",
+    ].join(" "),
   },
 
   // Collapsed navigation link (collapsed sidebar)
@@ -49,8 +49,8 @@ const NAV_STYLES = {
       NAV_BASE_CLASSES.interactive,
       NAV_BASE_CLASSES.active.background,
       NAV_BASE_CLASSES.active.text,
-      'justify-center size-9'
-    ].join(' ')
+      "justify-center size-9",
+    ].join(" "),
   },
 
   // Parent navigation item (with children)
@@ -58,9 +58,9 @@ const NAV_STYLES = {
     root: [
       NAV_BASE_CLASSES.base,
       NAV_BASE_CLASSES.interactive,
-      'cursor-pointer space-x-2 text-sm w-full px-3 py-2  justify-between text-gray-700'
-    ].join(' ')
-  }
+      "cursor-pointer space-x-2 text-sm w-full px-3 py-2  justify-between text-gray-700",
+    ].join(" "),
+  },
 }
 
 export function NavItem({ item, collapsed }: NavItemProps) {
@@ -82,11 +82,11 @@ export function NavItem({ item, collapsed }: NavItemProps) {
   if (isNavigationLeafItem(item)) {
     const href = item.href.replace(
       /:(\w+)/g,
-      (_, param) => params[param] as string
+      (_, param) => params[param] as string,
     )
 
     const isActive =
-      pathname.startsWith(href) || (item.match && pathname.includes(item.match))
+      pathname.endsWith(href) || (item.match && pathname.includes(item.match))
 
     const IconComponent = item.icon ? <item.icon className="size-4" /> : null
 
@@ -138,7 +138,7 @@ export function NavItem({ item, collapsed }: NavItemProps) {
     const isAnyChildActive = visibleChildren.some((child) => {
       const childHref = child.href.replace(
         /:(\w+)/g,
-        (_, param) => params[param] as string
+        (_, param) => params[param] as string,
       )
       return (
         pathname.startsWith(childHref) ||
@@ -172,7 +172,7 @@ export function NavItem({ item, collapsed }: NavItemProps) {
             {visibleChildren.map((child) => {
               const childHref = child.href.replace(
                 /:(\w+)/g,
-                (_, param) => params[param] as string
+                (_, param) => params[param] as string,
               )
               const isChildActive =
                 pathname.startsWith(childHref) ||
@@ -188,7 +188,7 @@ export function NavItem({ item, collapsed }: NavItemProps) {
                   href={childHref}
                   data-active={isChildActive}
                   className={
-                    isChildActive ? 'bg-primary-50 text-primary-700' : ''
+                    isChildActive ? "bg-primary-50 text-primary-700" : ""
                   }
                 >
                   {child.label}
@@ -214,7 +214,7 @@ export function NavItem({ item, collapsed }: NavItemProps) {
           </Box>
           <ChevronDown
             className={`size-4 transition-transform duration-200 ease-in-out ${
-              opened ? 'rotate-180' : 'rotate-0'
+              opened ? "rotate-180" : "rotate-0"
             }`}
           />
         </Box>
@@ -224,7 +224,7 @@ export function NavItem({ item, collapsed }: NavItemProps) {
             {visibleChildren.map((child) => {
               const childHref = child.href.replace(
                 /:(\w+)/g,
-                (_, param) => params[param] as string
+                (_, param) => params[param] as string,
               )
               const isChildActive =
                 pathname.startsWith(childHref) ||

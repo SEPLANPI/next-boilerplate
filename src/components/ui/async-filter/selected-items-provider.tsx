@@ -1,16 +1,17 @@
+/* eslint-disable react-refresh/only-export-components */
 import {
   createContext,
   useContext,
   PropsWithChildren,
   useMemo,
-  useCallback
-} from 'react'
+  useCallback,
+} from "react"
 import {
   parseAsInteger,
   parseAsString,
   parseAsArrayOf,
-  useQueryStates
-} from 'nuqs'
+  useQueryStates,
+} from "nuqs"
 
 type SelectedItemsContextType = {
   selectedItems: Set<string>
@@ -26,7 +27,7 @@ export function useSelectedItems() {
   const context = useContext(SelectedItemsContext)
   if (!context) {
     throw new Error(
-      'useSelectedItems must be used within SelectedItemsContext.Provider'
+      "useSelectedItems must be used within SelectedItemsContext.Provider",
     )
   }
   return context
@@ -35,7 +36,7 @@ export function useSelectedItems() {
 export function SelectedItemsProvider({
   children,
   searchParamKey,
-  onSelectionChange
+  onSelectionChange,
 }: PropsWithChildren<{
   searchParamKey: string
   onSelectionChange?: (items: Set<string>) => void
@@ -43,14 +44,14 @@ export function SelectedItemsProvider({
   const [{ selectedParam }, setSelectedParam] = useQueryStates(
     {
       selectedParam: parseAsArrayOf(parseAsString).withDefault([]),
-      page: parseAsInteger.withDefault(1)
+      page: parseAsInteger.withDefault(1),
     },
     {
       shallow: false,
       urlKeys: {
-        selectedParam: searchParamKey
-      }
-    }
+        selectedParam: searchParamKey,
+      },
+    },
   )
 
   const selectedItems = useMemo(() => {
@@ -73,7 +74,7 @@ export function SelectedItemsProvider({
         return { selectedParam: newArray.length ? newArray : null, page: 1 }
       })
     },
-    [setSelectedParam, onSelectionChange]
+    [setSelectedParam, onSelectionChange],
   )
 
   const clear = useCallback(() => {
@@ -85,9 +86,9 @@ export function SelectedItemsProvider({
     () => ({
       selectedItems,
       toggle,
-      clear
+      clear,
     }),
-    [selectedItems, toggle, clear]
+    [selectedItems, toggle, clear],
   )
 
   return (

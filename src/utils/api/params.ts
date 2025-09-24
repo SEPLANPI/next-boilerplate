@@ -1,4 +1,4 @@
-import { buildParams, type ParamsRecord } from '@/lib/api/params'
+import { buildParams, type ParamsRecord } from "@/lib/api/params"
 
 /**
  * Build parameters with automatic event scoping
@@ -10,8 +10,8 @@ export function buildEventScopedParams({
 }: ParamsRecord & { evento_id: string | null }) {
   const baseParams = buildParams(params)
 
-  if (evento_id && evento_id !== 'global') {
-    baseParams.set('evento_id', evento_id)
+  if (evento_id && evento_id !== "global") {
+    baseParams.set("evento_id", evento_id)
   }
 
   return baseParams

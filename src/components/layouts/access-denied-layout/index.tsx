@@ -1,7 +1,8 @@
-import { auth } from '@/auth'
-import { Avatar, Button } from '@mantine/core'
-import { Lock, LogOut, Home } from 'lucide-react'
-import Link from 'next/link'
+import { auth } from "@/auth"
+import { Avatar, Button } from "@mantine/core"
+import { Home, Lock } from "lucide-react"
+import Link from "next/link"
+import { SignOutButton } from "./sign-out-button"
 
 interface AccessDeniedLayoutProps {
   title: string
@@ -12,7 +13,7 @@ interface AccessDeniedLayoutProps {
 export async function AccessDeniedLayout({
   title,
   description,
-  suggestions
+  suggestions,
 }: AccessDeniedLayoutProps) {
   const session = await auth()
   return (
@@ -64,14 +65,7 @@ export async function AccessDeniedLayout({
           >
             Voltar para página inicial
           </Button>
-          <Button
-            component={Link}
-            href="/api/auth/sign-out"
-            variant="subtle"
-            rightSection={<LogOut className="size-4" />}
-          >
-            Sair do sistema
-          </Button>
+          <SignOutButton />
         </div>
       </div>
     </div>

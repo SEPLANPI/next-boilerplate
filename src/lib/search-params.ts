@@ -1,13 +1,13 @@
 import {
   createSearchParamsCache,
   parseAsInteger,
-  parseAsString
-} from 'nuqs/server'
+  parseAsString,
+} from "nuqs/server"
 
 export const baseSearchParamsParsers = {
-  search: parseAsString.withDefault(''),
+  search: parseAsString.withDefault(""),
   page: parseAsInteger.withDefault(1),
-  sort: parseAsString
+  sort: parseAsString,
 } as const
 
 export function createBaseSearchParams() {

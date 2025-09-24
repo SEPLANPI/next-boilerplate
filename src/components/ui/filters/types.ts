@@ -1,5 +1,5 @@
-import { PropsWithChildren, ReactNode } from 'react'
-import { PopoverProps, ModalProps } from '@mantine/core'
+import { PropsWithChildren, ReactNode } from "react"
+import { PopoverProps, ModalProps } from "@mantine/core"
 
 export type DefaultOption = {
   id: string
@@ -16,7 +16,7 @@ export type BaseFilterProps<T> = PropsWithChildren<
     isDisabled?: (option: T) => boolean
     showSearch?: boolean
     showSelectedOnTop?: boolean
-    position?: PopoverProps['position']
+    position?: PopoverProps["position"]
   } & (IsDefaultOption<T> extends true
     ? {
         getOptionValue?: (option: T) => string
@@ -106,6 +106,7 @@ export type FilterManagerProps = {
   children?: ReactNode
   onApply?: () => void
   buttonText?: string
+  groupKeys?: string[]
 }
 
 // Legacy type
@@ -113,7 +114,7 @@ export type LegacyFilterGroup<T> = {
   id: string
   title: string
   searchParamKey: string
-  type: 'static' | 'async'
+  type: "static" | "async"
   options?: T[]
   loadOptions?: () => Promise<T[]>
   renderOption?: (option: T) => JSX.Element

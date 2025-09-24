@@ -1,15 +1,17 @@
-import NextAuth from 'next-auth'
-import KeycloakProvider from 'next-auth/providers/keycloak'
-import { env } from './config/env'
-import { refreshAccessToken } from './lib/auth/refresh-access-token'
-import { handleInitialSignIn } from './lib/auth/handle-initial-signin'
-import { routingConfig } from './config/routing'
-import { verifySessionActivity } from './lib/auth/verify-session'
+import NextAuth from "next-auth"
+import KeycloakProvider from "next-auth/providers/keycloak"
+import { env } from "./config/env"
+import { routingConfig } from "./config/routing"
+import { handleInitialSignIn } from "./lib/auth/handle-initial-signin"
+import { refreshAccessToken } from "./lib/auth/refresh-access-token"
+import { verifySessionActivity } from "./lib/auth/verify-session"
+import { logger } from "./lib/logger"
+import { fetchWithRetry } from "./lib/retry"
 
 const keycloakProvider = KeycloakProvider({
   clientId: env.AUTH_KEYCLOAK_ID,
   clientSecret: env.AUTH_KEYCLOAK_SECRET,
-  issuer: env.AUTH_KEYCLOAK_ISSUER
+  issuer: env.AUTH_KEYCLOAK_ISSUER,
 })
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -23,7 +25,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
     },
     redirect: async ({ url, baseUrl }) => {
-      if (url.startsWith('/')) return `${baseUrl}${url}`
+      if (url.startsWith("/")) return `${baseUrl}${url}`
       else if (new URL(url).origin === baseUrl) return url
       return baseUrl
     },
@@ -40,13 +42,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         return handleInitialSignIn(token, user, account)
       }
 
-      if (Date.now() > token.accessTokenExpires || trigger === 'update')
+      if (Date.now() > token.accessTokenExpires || trigger === "update")
         return refreshAccessToken(token)
 
       if (token.accessToken) {
         const isActive = await verifySessionActivity(token.accessToken)
         if (!isActive) {
-          return { ...token, error: 'TokenInvalidError' }
+          return { ...token, error: "TokenInvalidError" }
         }
       }
 
@@ -54,10 +56,39 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     },
     authorized: async ({ auth }) => {
       return !!auth && !auth.error
-    }
+    },
+  },
+  events: {
+    signOut: async (message) => {
+      if (!("token" in message && message.token)) {
+        return
+      }
+
+      try {
+        const url = `${env.AUTH_KEYCLOAK_ISSUER}/protocol/openid-connect/logout`
+
+        await fetchWithRetry(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+          body: new URLSearchParams({
+            client_id: env.AUTH_KEYCLOAK_ID,
+            client_secret: env.AUTH_KEYCLOAK_SECRET,
+            refresh_token: message.token.refreshToken as string,
+          }).toString(),
+        })
+      } catch (error) {
+        logger.error("Erro ao realizar logout no Keycloak:", {
+          name: (error as Error).name,
+          message: (error as Error).message,
+          stack: (error as Error).stack,
+        })
+      }
+    },
   },
   pages: {
-    signIn: '/api/auth/sign-in',
-    error: '/erro-autenticacao'
-  }
+    signIn: "/api/auth/sign-in",
+    error: "/erro-autenticacao",
+  },
 })

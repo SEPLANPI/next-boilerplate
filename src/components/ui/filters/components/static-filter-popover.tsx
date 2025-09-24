@@ -1,10 +1,10 @@
-'use client'
+"use client"
 
-import { Popover } from '@mantine/core'
-import { BaseContent } from './base-content'
-import { FilterButton } from './filter-button'
-import { SelectedItemsProvider } from '../providers/selected-items-provider'
-import type { DefaultOption } from '../types'
+import { Popover } from "@mantine/core"
+import { SelectedItemsProvider } from "../providers/selected-items-provider"
+import type { DefaultOption } from "../types"
+import { BaseContent } from "./base-content"
+import { FilterButton } from "./filter-button"
 
 export interface StaticFilterPopoverProps<T extends object> {
   children?: React.ReactNode
@@ -17,7 +17,7 @@ export interface StaticFilterPopoverProps<T extends object> {
   filterFn?: (option: T, search: string) => boolean
   showSearch?: boolean
   showSelectedOnTop?: boolean
-  position?: 'bottom-end' | 'bottom-start' | 'top-end' | 'top-start'
+  position?: "bottom-end" | "bottom-start" | "top-end" | "top-start"
   width?: number | string
 }
 
@@ -28,34 +28,34 @@ export const StaticFilterPopover = <T extends object>({
   getOptionValue,
   getOptionLabel,
   isDisabled,
-  searchParamKey = 'selectedItems',
+  searchParamKey = "selectedItems",
   filterFn,
   showSearch = true,
   showSelectedOnTop = true,
-  position = 'bottom-end',
-  width = 300
+  position = "bottom-start",
+  width = 300,
 }: StaticFilterPopoverProps<T>) => {
   const isDefaultOption = (option: T): option is T & DefaultOption =>
-    'id' in option && 'label' in option
+    "id" in option && "label" in option
 
   const handlers = {
     getValue: (option: T): string => {
       if (getOptionValue) return getOptionValue(option)
       if (isDefaultOption(option)) return String(option.id)
-      throw new Error('getOptionValue is required for non-DefaultOption types')
+      throw new Error("getOptionValue is required for non-DefaultOption types")
     },
     getLabel: (option: T): string => {
       if (getOptionLabel) return getOptionLabel(option)
       if (isDefaultOption(option)) return option.label
-      throw new Error('getOptionLabel is required for non-DefaultOption types')
-    }
+      throw new Error("getOptionLabel is required for non-DefaultOption types")
+    },
   }
 
   const finalRenderOption =
     renderOption ||
     ((option: T) => (
       <span
-        className={`flex-grow ${isDisabled?.(option) ? 'text-gray-400' : ''}`}
+        className={`flex-grow ${isDisabled?.(option) ? "text-gray-400" : ""}`}
       >
         {handlers.getLabel(option)}
       </span>

@@ -1,13 +1,13 @@
-import * as z from 'zod'
+import * as z from "zod"
 
 export const ClientEnvSchema = z.object({
   APP_URL: z.string().url(),
-  CLIENT_API_URL: z.string().url()
+  CLIENT_API_URL: z.string().url(),
 })
 
 export const clientEnvVars = {
   APP_URL: process.env.NEXT_PUBLIC_APP_URL,
-  CLIENT_API_URL: process.env.NEXT_PUBLIC_CLIENT_API_URL
+  CLIENT_API_URL: process.env.NEXT_PUBLIC_CLIENT_API_URL,
 }
 
 const createClientEnv = () => {
@@ -18,8 +18,8 @@ const createClientEnv = () => {
       `Configuração de ambiente cliente inválida.
 As seguintes variáveis estão ausentes ou inválidas:
 ${Object.entries(parsedEnv.error.flatten().fieldErrors)
-  .map(([key, errors]) => `- ${key}: ${errors.join(', ')}`)
-  .join('\n')}`
+  .map(([key, errors]) => `- ${key}: ${errors.join(", ")}`)
+  .join("\n")}`,
     )
   }
 

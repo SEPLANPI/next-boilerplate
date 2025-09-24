@@ -1,5 +1,5 @@
 export function OptionalInputLabel({
-  children
+  children,
 }: {
   children: React.ReactNode
 }) {

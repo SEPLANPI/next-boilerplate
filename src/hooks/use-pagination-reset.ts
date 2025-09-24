@@ -1,18 +1,18 @@
-import { parseAsInteger, useQueryState } from 'nuqs'
-import { useCallback } from 'react'
+import { parseAsInteger, useQueryState } from "nuqs"
+import { useCallback } from "react"
 
 type UsePaginationResetParams = Partial<{
   shallow: boolean
 }>
 
 export function usePaginationReset({
-  shallow = false
+  shallow = false,
 }: UsePaginationResetParams = {}) {
   const [page, setPage] = useQueryState(
-    'page',
+    "page",
     parseAsInteger.withDefault(1).withOptions({
-      shallow
-    })
+      shallow,
+    }),
   )
 
   const resetPagination = useCallback(() => {
@@ -21,6 +21,6 @@ export function usePaginationReset({
 
   return {
     page,
-    resetPagination
+    resetPagination,
   }
 }

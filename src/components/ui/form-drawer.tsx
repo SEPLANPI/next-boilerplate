@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
-import { Drawer, DrawerProps } from '@mantine/core'
-import { PropsWithChildren, ReactNode } from 'react'
+import { Drawer, DrawerProps } from "@mantine/core"
+import { PropsWithChildren, ReactNode } from "react"
 
-interface FormDrawerRootProps extends Omit<DrawerProps, 'children'> {
+interface FormDrawerRootProps extends Omit<DrawerProps, "children"> {
   children: ReactNode
   onClose: () => void
 }
@@ -21,8 +21,8 @@ function FormDrawerRoot({ children, onClose, ...props }: FormDrawerRootProps) {
 
 function FormDrawerHeader({ children }: PropsWithChildren) {
   return (
-    <Drawer.Header className="p-6 pb-0">
-      <Drawer.Title className="text-content-emphasis text-lg font-semibold">{children}</Drawer.Title>
+    <Drawer.Header>
+      <Drawer.Title>{children}</Drawer.Title>
       <Drawer.CloseButton />
     </Drawer.Header>
   )
@@ -33,22 +33,16 @@ interface FormDrawerContentProps {
 }
 
 function FormDrawerContent({ children }: FormDrawerContentProps) {
-  return (
-    <Drawer.Body className="flex flex-1 flex-col p-6">{children}</Drawer.Body>
-  )
+  return <Drawer.Body>{children}</Drawer.Body>
 }
 
 function FormDrawerFooter({ children }: PropsWithChildren) {
-  return (
-    <footer className="sticky bottom-0 border-t bg-white p-6">
-      {children}
-    </footer>
-  )
+  return <footer className="px-4">{children}</footer>
 }
 
 export const FormDrawer = {
   Root: FormDrawerRoot,
   Header: FormDrawerHeader,
   Content: FormDrawerContent,
-  Footer: FormDrawerFooter
+  Footer: FormDrawerFooter,
 }

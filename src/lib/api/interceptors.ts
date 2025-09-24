@@ -1,12 +1,12 @@
 export type RequestInterceptor = (
   url: string,
-  options: RequestInit
+  options: RequestInit,
 ) => Promise<RequestInit> | RequestInit
 
 export type ResponseInterceptor = (
   response: Response,
   url: string,
-  options: RequestInit
+  options: RequestInit,
 ) => Promise<Response> | Response
 
 /**
@@ -15,24 +15,24 @@ export type ResponseInterceptor = (
  */
 export const nextAuthInterceptor: RequestInterceptor = async (
   url: string,
-  options: RequestInit
+  options: RequestInit,
 ) => {
   let token: string | null = null
 
   try {
-    if (typeof window === 'undefined') {
+    if (typeof window === "undefined") {
       // Server-side
-      const { auth } = await import('@/auth')
+      const { auth } = await import("@/auth")
       const session = await auth()
       token = session?.accessToken || null
     } else {
       // Client-side
-      const { getSession } = await import('next-auth/react')
+      const { getSession } = await import("next-auth/react")
       const session = await getSession()
       token = session?.accessToken || null
     }
   } catch (error) {
-    console.warn('🔐 Auth token fetch failed:', error)
+    console.warn("🔐 Auth token fetch failed:", error)
     return options
   }
 
@@ -41,26 +41,26 @@ export const nextAuthInterceptor: RequestInterceptor = async (
   }
 
   const headers = new Headers(options.headers)
-  headers.set('Authorization', `Bearer ${token}`)
+  headers.set("Authorization", `Bearer ${token}`)
 
   return {
     ...options,
-    headers
+    headers,
   }
 }
 
 export const requestLoggingInterceptor: RequestInterceptor = (
   url: string,
-  options: RequestInit
+  options: RequestInit,
 ) => {
-  const method = options.method || 'GET'
+  const method = options.method || "GET"
   console.log(`🚀 ${method} ${url}`)
   return options
 }
 
 export const responseLoggingInterceptor: ResponseInterceptor = async (
   response: Response,
-  url: string
+  url: string,
 ) => {
   const status = response.status
 

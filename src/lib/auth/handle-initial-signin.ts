@@ -1,17 +1,17 @@
-import { JWT } from 'next-auth/jwt'
-import { User, Account } from 'next-auth'
-import { logger } from '@/lib/logger'
-import { enrichTokenWithUserData, updateTokens } from './token-handlers'
+import { JWT } from "next-auth/jwt"
+import { User, Account } from "next-auth"
+import { logger } from "@/lib/logger"
+import { enrichTokenWithUserData, updateTokens } from "./token-handlers"
 
 export async function handleInitialSignIn(
   token: JWT,
   user: User,
-  account: Account
+  account: Account,
 ) {
   try {
     const updatedToken = await enrichTokenWithUserData(
       token,
-      account.access_token
+      account.access_token,
     )
 
     return updateTokens(updatedToken, {
@@ -19,13 +19,13 @@ export async function handleInitialSignIn(
       refreshToken: account.refresh_token,
       idToken: account.id_token,
       expiresIn: account.expires_in,
-      refreshExpiresIn: account.refresh_expires_in
+      refreshExpiresIn: account.refresh_expires_in,
     })
   } catch (error) {
-    logger.error('Erro durante o login inicial', {
+    logger.error("Erro durante o login inicial", {
       userId: user.id,
       email: user.email,
-      error
+      error,
     })
     throw error
   }

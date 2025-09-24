@@ -1,17 +1,18 @@
-'use client'
+"use client"
 
-import { useState } from 'react'
-import { Collapse, Badge, Button, Loader, Alert } from '@mantine/core'
-import { useQuery } from '@tanstack/react-query'
-import { DefaultOption } from '../types'
-import { useFilters } from '../hooks/use-filters'
-import { FilterGroupContent } from './filter-group-content'
+import { ApiResponse, asQuery } from "@/lib/api"
+import { Alert, Badge, Button, Collapse, Loader } from "@mantine/core"
+import { useQuery } from "@tanstack/react-query"
+import { useState } from "react"
+import { useFilters } from "../hooks/use-filters"
+import { DefaultOption } from "../types"
+import { FilterGroupContent } from "./filter-group-content"
 
 export interface AsyncFilterGroupProps<T extends object> {
   title: string
   searchParamKey: string
   filterId: string
-  loadOptions: () => Promise<T[]>
+  loadOptions: () => Promise<ApiResponse<T[]>>
   getOptionValue?: (option: T) => string
   getOptionLabel?: (option: T) => string
   renderOption?: (option: T) => JSX.Element
@@ -34,42 +35,40 @@ export function AsyncFilterGroup<T extends object>({
   filterFn,
   showSearch = true,
   showSelectedOnTop = true,
-  children
+  children,
 }: AsyncFilterGroupProps<T>) {
   const [isOpen, setIsOpen] = useState(false)
   const { getGroupSelectedCount } = useFilters()
 
   const selectedCount = getGroupSelectedCount(searchParamKey)
 
-  // Async data loading
   const { data, error, isFetching } = useQuery({
     queryKey: [`filter-${filterId}`],
-    queryFn: loadOptions,
-    enabled: isOpen
+    queryFn: asQuery(loadOptions),
+    enabled: isOpen,
   })
 
-  // Type guards and handlers
   const isDefaultOption = (option: T): option is T & DefaultOption =>
-    'id' in option && 'label' in option
+    "id" in option && "label" in option
 
   const handlers = {
     getValue: (option: T): string => {
       if (getOptionValue) return getOptionValue(option)
       if (isDefaultOption(option)) return String(option.id)
-      throw new Error('getOptionValue is required for non-DefaultOption types')
+      throw new Error("getOptionValue is required for non-DefaultOption types")
     },
     getLabel: (option: T): string => {
       if (getOptionLabel) return getOptionLabel(option)
       if (isDefaultOption(option)) return option.label
-      throw new Error('getOptionLabel is required for non-DefaultOption types')
-    }
+      throw new Error("getOptionLabel is required for non-DefaultOption types")
+    },
   }
 
   const finalRenderOption =
     renderOption ||
     ((option: T) => (
       <span
-        className={`flex-grow ${isDisabled?.(option) ? 'text-gray-400' : ''}`}
+        className={`flex-grow ${isDisabled?.(option) ? "text-gray-400" : ""}`}
       >
         {handlers.getLabel(option)}
       </span>
@@ -89,8 +88,8 @@ export function AsyncFilterGroup<T extends object>({
         unstyled
         onClick={() => setIsOpen(!isOpen)}
         classNames={{
-          root: 'w-full py-2 px-3 text-content-default font-semibold',
-          label: 'w-full text-sm flex justify-between items-center'
+          root: "w-full py-2 px-3 text-content-default font-semibold",
+          label: "w-full text-sm flex justify-between items-center",
         }}
       >
         {title}

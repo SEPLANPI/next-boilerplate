@@ -1,15 +1,15 @@
-import { ColumnHeaderProps } from './types'
-import { useSortableColumn } from './use-sortable-column'
-import { SortIcon } from './sort-icon'
-import { TableTh } from '@mantine/core'
-import { cn } from '@/utils'
+import { ColumnHeaderProps } from "./types"
+import { useSortableColumn } from "./use-sortable-column"
+import { SortIcon } from "./sort-icon"
+import { TableTh } from "@mantine/core"
+import { cn } from "@/utils"
 
 export function SortableColumnHeader({
   column,
   title,
   sortKey,
   onSort,
-  className
+  className,
 }: ColumnHeaderProps) {
   const { isSorted, isDescending } = useSortableColumn(column, sortKey)
 
@@ -27,18 +27,19 @@ export function SortableColumnHeader({
     <TableTh
       onClick={handleSort}
       className={cn(
-        'group flex h-full w-full cursor-pointer items-center text-left hover:bg-gray-200 focus:outline-none',
-        className
+        "group h-full w-full cursor-pointer text-right hover:bg-gray-200 focus:outline-none ",
+        className,
       )}
       aria-label={`Ordenar por ${title}`}
     >
-      {title}
-
-      <SortIcon
-        isSorted={isSorted}
-        isDescending={isDescending}
-        data-sorted={isSorted}
-      />
+      <div className="flex items-center">
+        {title}
+        <SortIcon
+          isSorted={isSorted}
+          isDescending={isDescending}
+          data-sorted={isSorted}
+        />
+      </div>
     </TableTh>
   )
 }

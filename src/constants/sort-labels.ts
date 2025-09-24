@@ -1,32 +1,32 @@
 export const SORT_LABELS = {
   ALPHABETICAL: {
-    ASC: 'A - Z',
-    DESC: 'Z - A'
+    ASC: "A - Z",
+    DESC: "Z - A",
   },
   NUMERIC: {
-    ASC: 'Menor valor',
-    DESC: 'Maior valor'
+    ASC: "Menor valor",
+    DESC: "Maior valor",
   },
   QUANTITY: {
-    ASC: 'Menos itens',
-    DESC: 'Mais itens'
+    ASC: "Menos itens",
+    DESC: "Mais itens",
   },
   DATE: {
-    ASC: 'Mais antiga',
-    DESC: 'Mais recente'
+    ASC: "Mais antiga",
+    DESC: "Mais recente",
   },
   RELEVANCE: {
-    ASC: 'Menos relevante',
-    DESC: 'Mais relevante'
+    ASC: "Menos relevante",
+    DESC: "Mais relevante",
   },
   PRIORITY: {
-    ASC: 'Menor prioridade',
-    DESC: 'Maior prioridade'
+    ASC: "Menor prioridade",
+    DESC: "Maior prioridade",
   },
   STATUS: {
-    ASC: 'Pendente primeiro',
-    DESC: 'Concluído primeiro'
-  }
+    ASC: "Pendente primeiro",
+    DESC: "Concluído primeiro",
+  },
 } as const
 
 export type SortLabelsType = typeof SORT_LABELS

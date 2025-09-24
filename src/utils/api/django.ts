@@ -1,4 +1,4 @@
-import { ApiError } from '@/lib/api/errors'
+import { ApiError } from "@/lib/api/errors"
 
 export type DjangoError =
   | string[]
@@ -6,25 +6,25 @@ export type DjangoError =
   | (Record<string, string | string[]> & {})
 
 export function buildDjangoErrorMessage(error: DjangoError): string {
-  if (typeof error === 'string') {
+  if (typeof error === "string") {
     return error
   }
 
   if (Array.isArray(error)) {
-    return error.join('\n')
+    return error.join("\n")
   }
-  const commonKeys = ['non_field_errors', 'detail', 'error', 'message']
+  const commonKeys = ["non_field_errors", "detail", "error", "message"]
   const messages: string[] = []
   Object.entries(error).forEach(([key, value]) => {
     const errorMessages = Array.isArray(value) ? value : [value]
     if (commonKeys.includes(key)) {
-      messages.push(errorMessages.join(', '))
+      messages.push(errorMessages.join(", "))
     } else {
-      messages.push(`${key}: ${errorMessages.join(', ')}`)
+      messages.push(`${key}: ${errorMessages.join(", ")}`)
     }
   })
 
-  return messages.length > 0 ? messages.join('\n') : 'Unexpected error occurred'
+  return messages.length > 0 ? messages.join("\n") : "Unexpected error occurred"
 }
 
 export function getDjangoErrorMessage(error: ApiError): string {
@@ -42,13 +42,13 @@ export function getDjangoErrorMessage(error: ApiError): string {
 }
 
 export function isDjangoValidationError(error: unknown): error is DjangoError {
-  if (!error || typeof error !== 'object') return false
+  if (!error || typeof error !== "object") return false
 
   if (Array.isArray(error)) return true
-  if (typeof error === 'string') return true
+  if (typeof error === "string") return true
 
   return Object.values(error as Record<string, unknown>).every(
-    (value) => typeof value === 'string' || Array.isArray(value)
+    (value) => typeof value === "string" || Array.isArray(value),
   )
 }
 

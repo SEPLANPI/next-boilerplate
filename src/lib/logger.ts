@@ -5,14 +5,14 @@ export const logger = {
       timestamp: new Date().toISOString(),
       error: error instanceof Error ? error.message : error,
       stack: error instanceof Error ? error.stack : undefined,
-      ...context
+      ...context,
     })
   },
   info: (message: string, context?: Record<string, unknown>) => {
     console.info({
       timestamp: new Date().toISOString(),
       message,
-      ...context
+      ...context,
     })
-  }
+  },
 }

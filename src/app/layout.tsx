@@ -1,21 +1,21 @@
-import type { Metadata } from 'next'
-import { ColorSchemeScript } from '@mantine/core'
-import './globals.css'
-import '@mantine/dates/styles.css'
-import '@mantine/notifications/styles.css'
-import '@mantine/charts/styles.css'
-import '@mantine/carousel/styles.css'
-import { Figtree } from 'next/font/google'
-import { Providers } from './providers'
+import "@mantine/carousel/styles.css"
+import "@mantine/charts/styles.css"
+import { ColorSchemeScript } from "@mantine/core"
+import "@mantine/dates/styles.css"
+import "@mantine/notifications/styles.css"
+import type { Metadata } from "next"
+import { Figtree } from "next/font/google"
+import "./globals.css"
+import { Providers } from "./providers"
 
 export const metadata: Metadata = {
-  title: 'DITI Next Boilerplate'
+  title: "Next Boilerplate",
 }
 
-const figtree = Figtree({ subsets: ['latin'] })
+const figtree = Figtree({ subsets: ["latin"] })
 
 export default function RootLayout({
-  children
+  children,
 }: Readonly<{
   children: React.ReactNode
 }>) {

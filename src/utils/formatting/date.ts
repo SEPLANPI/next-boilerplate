@@ -1,25 +1,26 @@
-export function formatDate(
-  date: Date | string,
-  locale: string = 'pt-BR',
-  options: Intl.DateTimeFormatOptions = {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit'
-  }
-): string {
-  const dateObj = typeof date === 'string' ? new Date(date) : date
-  return new Intl.DateTimeFormat(locale, options).format(dateObj)
-}
+import { dayjs } from "@/lib/dayjs"
 
-export function formatDateTime(
-  date: Date | string,
-  locale: string = 'pt-BR'
+export const DATE_FORMATS = {
+  DEFAULT: "DD/MM/YYYY[,] HH:mm",
+  SHORT: "DD/MM/YYYY",
+  TIME: "HH:mm",
+  FULL: "DD [de] MMMM [de] YYYY [às] HH:mm",
+  ISO: "YYYY-MM-DD",
+} as const
+
+type DateFormat = (typeof DATE_FORMATS)[keyof typeof DATE_FORMATS]
+
+/**
+ * Formata uma string de data
+ * @param date String de data
+ * @param format Formato desejado (opcional)
+ * @returns String de data formatada
+ */
+export function formatDate(
+  date: string | null | undefined,
+  format: DateFormat = DATE_FORMATS.DEFAULT,
 ): string {
-  return formatDate(date, locale, {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-    hour: '2-digit',
-    minute: '2-digit'
-  })
+  if (!date) return "Não informado"
+
+  return dayjs(date).format(format)
 }

@@ -1,30 +1,37 @@
 // Core utilities
-export { cn } from './core/cn'
-export { formatCurrency } from './core/currency'
-export { calculateExpiryTime } from './core/time'
+export { cn } from "./core/cn"
+export { formatCurrency } from "./core/currency"
+export { calculateExpiryTime } from "./core/time"
 
-export { formatCPF, isValidCPF } from './validation/cpf'
+export { formatCPF, isValidCPF } from "./validation/cpf"
 
-import { formatCPF, isValidCPF } from './validation/cpf'
+import { formatCPF, isValidCPF } from "./validation/cpf"
 export const CPF = {
   format: formatCPF,
-  isValid: isValidCPF
+  isValid: isValidCPF,
 }
 
-export { formatDate, formatDateTime } from './formatting/date'
-export { removeAccents, normalizeForSearch } from './formatting/text'
+export {
+  formatarProcessoInput,
+  formatarValorMonetario,
+  formatProcesso,
+  limparNumeroProcesso,
+} from "./formatting/format-process"
 
-export { filterOptions } from './ui/filters'
+export { formatDate } from "./formatting/date"
+export { normalizeForSearch, removeAccents } from "./formatting/text"
 
-export { buildEventScopedParams } from './api/params'
+export { filterOptions } from "./ui/filters"
 
-export { buildParams, type ParamsRecord } from '@/lib/api/params'
+export { buildEventScopedParams } from "./api/params"
+
+export { buildParams, type ParamsRecord } from "@/lib/api/params"
 
 export {
   buildDjangoErrorMessage,
+  buildErrorMessage,
+  formatDjangoErrors,
   getDjangoErrorMessage,
   isDjangoValidationError,
-  formatDjangoErrors,
-  buildErrorMessage,
-  type DjangoError
-} from './api/django'
+  type DjangoError,
+} from "./api/django"

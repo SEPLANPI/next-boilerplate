@@ -1,9 +1,9 @@
-import { useDebouncedState } from '@mantine/hooks'
-import { useQuery } from '@tanstack/react-query'
-import { Input, Checkbox, Divider, Button, Loader, Alert } from '@mantine/core'
-import { Search } from 'lucide-react'
-import { ContentProps } from './types'
-import { useSelectedItems } from './selected-items-provider'
+import { useDebouncedState } from "@mantine/hooks"
+import { useQuery } from "@tanstack/react-query"
+import { Input, Checkbox, Divider, Button, Loader, Alert } from "@mantine/core"
+import { Search } from "lucide-react"
+import { ContentProps } from "./types"
+import { useSelectedItems } from "./selected-items-provider"
 
 export function Content<T>({
   loadOptions,
@@ -12,13 +12,13 @@ export function Content<T>({
   getOptionDisabled,
   filterId,
   filterFn,
-  showSearch = true
+  showSearch = true,
 }: ContentProps<T>) {
-  const [search, setSearch] = useDebouncedState('', 100)
+  const [search, setSearch] = useDebouncedState("", 100)
   const { selectedItems, toggle, clear } = useSelectedItems()
   const { data, error, isFetching } = useQuery({
     queryKey: [`async-filter-${filterId}`],
-    queryFn: () => loadOptions()
+    queryFn: () => loadOptions(),
   })
 
   if (isFetching) {
@@ -44,7 +44,7 @@ export function Content<T>({
     data?.filter((option) => filterFn(option, search)) || []
 
   const selectedOptions = filteredOptions.filter((option) =>
-    selectedItems.has(getOptionValue(option))
+    selectedItems.has(getOptionValue(option)),
   )
 
   const renderCheckboxItem = (option: T) => (
@@ -52,8 +52,8 @@ export function Content<T>({
       <label
         className={`flex w-full cursor-pointer space-x-2 p-2 text-xs hover:bg-gray-100 ${
           getOptionDisabled(option)
-            ? 'cursor-not-allowed text-muted-foreground'
-            : ''
+            ? "cursor-not-allowed text-muted-foreground"
+            : ""
         }`}
       >
         <Checkbox
@@ -76,7 +76,7 @@ export function Content<T>({
         <header className="border-b p-1">
           <Input
             classNames={{
-              input: 'border-none'
+              input: "border-none",
             }}
             onChange={(event) => setSearch(event.target.value)}
             placeholder="Pesquisar"
@@ -97,7 +97,7 @@ export function Content<T>({
         {filteredOptions.map(
           (option) =>
             !selectedItems.has(getOptionValue(option)) &&
-            renderCheckboxItem(option)
+            renderCheckboxItem(option),
         )}
       </ul>
       {selectedOptions.length > 0 && (

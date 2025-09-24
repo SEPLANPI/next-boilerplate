@@ -1,11 +1,11 @@
-'use client'
+"use client"
 
-import { CloseButton, Input } from '@mantine/core'
-import { useDebouncedCallback } from '@mantine/hooks'
-import { Search } from 'lucide-react'
-import { parseAsInteger, parseAsString, useQueryStates } from 'nuqs'
-import { ChangeEvent, useEffect, useRef } from 'react'
-import { cn } from '@/utils'
+import { CloseButton, Input } from "@mantine/core"
+import { useDebouncedCallback } from "@mantine/hooks"
+import { Search } from "lucide-react"
+import { parseAsInteger, parseAsString, useQueryStates } from "nuqs"
+import { ChangeEvent, useEffect, useRef } from "react"
+import { cn } from "@/utils"
 
 type SearchInputProps = {
   placeholder?: string
@@ -16,39 +16,39 @@ type SearchInputProps = {
 export function SearchInput({
   placeholder,
   className,
-  inputClassName
+  inputClassName,
 }: SearchInputProps) {
   const inputRef = useRef<HTMLInputElement | null>(null)
   const [{ search }, setQuery] = useQueryStates(
     {
-      search: parseAsString.withDefault(''),
-      page: parseAsInteger.withDefault(1)
+      search: parseAsString.withDefault(""),
+      page: parseAsInteger.withDefault(1),
     },
     {
-      shallow: false
-    }
+      shallow: false,
+    },
   )
 
   const handleSearch = useDebouncedCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       setQuery({
         search: event.target.value,
-        page: 1
+        page: 1,
       })
     },
-    500
+    500,
   )
 
   useEffect(() => {
-    if (inputRef.current && search === '') inputRef.current.value = ''
+    if (inputRef.current && search === "") inputRef.current.value = ""
   }, [search])
 
   const clearSearch = () => {
     if (inputRef.current) {
-      inputRef.current.value = ''
+      inputRef.current.value = ""
       setQuery({
-        search: '',
-        page: 1
+        search: "",
+        page: 1,
       })
     }
   }
@@ -58,11 +58,11 @@ export function SearchInput({
       defaultValue={search}
       ref={inputRef}
       onChange={handleSearch}
-      className={cn('w-full max-w-[300px]', className)}
+      className={cn("w-full max-w-[300px]", className)}
       classNames={{
-        input: cn(inputClassName)
+        input: cn(inputClassName),
       }}
-      placeholder={placeholder || 'Busca'}
+      placeholder={placeholder || "Busca"}
       rightSectionPointerEvents="all"
       rightSection={
         search ? (

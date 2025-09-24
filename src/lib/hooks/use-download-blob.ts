@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { api } from '@/lib/api'
+import { useState } from "react"
+import { api } from "@/lib/api"
 
 interface UseDownloadBlobOptions {
   onSuccess?: () => void
@@ -10,7 +10,7 @@ interface UseDownloadBlobReturn {
   downloadBlob: (
     url: string,
     filename: string,
-    params?: Record<string, string | number | boolean | string[] | undefined>
+    params?: Record<string, string | number | boolean | string[] | undefined>,
   ) => Promise<void>
   isLoading: boolean
   error: Error | null
@@ -22,7 +22,7 @@ interface UseDownloadBlobReturn {
  * @returns Object with downloadBlob function, loading state, and error state
  */
 export function useDownloadBlob(
-  options: UseDownloadBlobOptions = {}
+  options: UseDownloadBlobOptions = {},
 ): UseDownloadBlobReturn {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<Error | null>(null)
@@ -30,7 +30,7 @@ export function useDownloadBlob(
   const downloadBlob = async (
     url: string,
     filename: string,
-    params?: Record<string, string | number | boolean | string[] | undefined>
+    params?: Record<string, string | number | boolean | string[] | undefined>,
   ): Promise<void> => {
     try {
       setIsLoading(true)
@@ -38,7 +38,7 @@ export function useDownloadBlob(
 
       const response = (await api.get(url, {
         raw: true,
-        params
+        params,
       })) as Response
 
       if (!response.ok) {
@@ -48,9 +48,9 @@ export function useDownloadBlob(
       const blob = await response.blob()
       const downloadUrl = window.URL.createObjectURL(blob)
 
-      const link = document.createElement('a')
+      const link = document.createElement("a")
       link.href = downloadUrl
-      link.setAttribute('download', filename)
+      link.setAttribute("download", filename)
 
       document.body.appendChild(link)
       link.click()
@@ -60,10 +60,10 @@ export function useDownloadBlob(
 
       options.onSuccess?.()
     } catch (err) {
-      const error = err instanceof Error ? err : new Error('Download failed')
+      const error = err instanceof Error ? err : new Error("Download failed")
       setError(error)
       options.onError?.(error)
-      console.error('Error downloading file:', error)
+      console.error("Error downloading file:", error)
     } finally {
       setIsLoading(false)
     }
@@ -72,6 +72,6 @@ export function useDownloadBlob(
   return {
     downloadBlob,
     isLoading,
-    error
+    error,
   }
 }

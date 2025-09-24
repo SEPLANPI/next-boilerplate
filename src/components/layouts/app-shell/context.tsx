@@ -1,7 +1,7 @@
-'use client'
+"use client"
 
-import { createContext, useContext, PropsWithChildren } from 'react'
-import { useLocalStorage } from '@mantine/hooks'
+import { createContext, useContext, PropsWithChildren } from "react"
+import { useLocalStorage } from "@mantine/hooks"
 
 interface SidebarContextType {
   collapsed: boolean
@@ -12,8 +12,8 @@ const SidebarContext = createContext<SidebarContextType | null>(null)
 
 export function SidebarProvider({ children }: PropsWithChildren) {
   const [collapsed, setCollapsed] = useLocalStorage({
-    key: 'main-nav-collapsed',
-    defaultValue: false
+    key: "main-nav-collapsed",
+    defaultValue: false,
   })
 
   const toggleCollapsed = () => setCollapsed(!collapsed)
@@ -28,7 +28,7 @@ export function SidebarProvider({ children }: PropsWithChildren) {
 export function useSidebar() {
   const context = useContext(SidebarContext)
   if (!context) {
-    throw new Error('useSidebar must be used within a SidebarProvider')
+    throw new Error("useSidebar must be used within a SidebarProvider")
   }
   return context
 }

@@ -1,5 +1,4 @@
-import { Role } from './roles'
-
+import { Role } from "./roles"
 export interface RouteConfig {
   // Path pattern - can use /* for wildcard matching
   path: string
@@ -33,7 +32,6 @@ export interface AuthRedirectConfig {
     [role in Role]?: string
   }
 }
-
 export interface RoutingConfiguration {
   defaults: {
     isPublic: boolean

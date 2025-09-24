@@ -1,7 +1,7 @@
 import {
   defaultVariantColorsResolver,
-  VariantColorsResolver
-} from '@mantine/core'
+  VariantColorsResolver,
+} from "@mantine/core"
 
 /**
  * Custom variant color resolver for extended button styles
@@ -10,12 +10,12 @@ import {
 export const variantColorResolver: VariantColorsResolver = (button) => {
   const defaultResolvedColors = defaultVariantColorsResolver(button)
 
-  if (button.variant === 'ghost') {
+  if (button.variant === "ghost") {
     return {
-      background: 'transparent',
-      color: 'var(--mantine-color-text)',
-      hover: 'var(--mantine-color-gray-2)',
-      border: 'none'
+      background: "transparent",
+      color: "var(--mantine-color-text)",
+      hover: "var(--mantine-color-gray-2)",
+      border: "none",
     }
   }
 

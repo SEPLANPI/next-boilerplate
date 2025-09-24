@@ -1,7 +1,7 @@
-import React from 'react'
-import { Badge } from '@mantine/core'
-import { cn } from '@/utils'
-import { TrendingDown, TrendingUp } from 'lucide-react'
+import React from "react"
+import { Badge } from "@mantine/core"
+import { cn } from "@/utils"
+import { TrendingDown, TrendingUp } from "lucide-react"
 
 // Base Card Root component
 interface CardRootProps {
@@ -15,7 +15,7 @@ function CardRoot({
   ...props
 }: CardRootProps & React.HTMLAttributes<HTMLDivElement>) {
   const baseStyles =
-    'bg-white rounded-xl p-4 overflow-hidden border flex-1 shadow-1'
+    "bg-white rounded-xl p-4 overflow-hidden border flex-1 shadow-1"
 
   return (
     <div className={cn(baseStyles, className)} {...props}>
@@ -28,17 +28,17 @@ function CardRoot({
 interface CardHeaderProps {
   children: React.ReactNode
   className?: string
-  orientation?: 'horizontal' | 'vertical'
+  orientation?: "horizontal" | "vertical"
 }
 
 function CardHeader({
   children,
   className,
-  orientation = 'horizontal'
+  orientation = "horizontal",
 }: CardHeaderProps) {
-  if (orientation === 'vertical') {
+  if (orientation === "vertical") {
     return (
-      <div className={cn('mb-2 flex flex-col gap-1', className)}>
+      <div className={cn("mb-2 flex flex-col gap-1", className)}>
         {children}
       </div>
     )
@@ -46,7 +46,7 @@ function CardHeader({
 
   return (
     <div
-      className={cn('mb-2 flex items-center justify-between gap-2', className)}
+      className={cn("mb-2 flex items-center justify-between gap-2", className)}
     >
       {children}
     </div>
@@ -60,7 +60,7 @@ interface CardTitleProps {
 }
 
 function CardTitle({ children, className }: CardTitleProps) {
-  return <h3 className={cn('text-xs font-semibold', className)}>{children}</h3>
+  return <h3 className={cn("text-xs font-semibold", className)}>{children}</h3>
 }
 
 // Card Value Display
@@ -76,7 +76,7 @@ interface CardValueProps {
 function CardValue({ children, prefix, suffix, className }: CardValueProps) {
   return (
     <div
-      className={cn('text-2xl font-semibold text-content-emphasis', className)}
+      className={cn("text-2xl font-semibold text-content-emphasis", className)}
     >
       {prefix && <span className="text-content-muted">{prefix}</span>}
       {children}
@@ -93,7 +93,7 @@ interface CardDescriptionProps {
 
 function CardDescription({ children, className }: CardDescriptionProps) {
   return (
-    <p className={cn('text-xs text-content-muted', className)}>{children}</p>
+    <p className={cn("text-xs text-content-muted", className)}>{children}</p>
   )
 }
 
@@ -104,7 +104,7 @@ interface CardContentProps {
 
 function CardContent({ children, className }: CardContentProps) {
   return (
-    <div className={cn('flex flex-1 items-end gap-2', className)}>
+    <div className={cn("flex flex-1 items-end gap-2", className)}>
       {children}
     </div>
   )
@@ -114,24 +114,24 @@ function CardContent({ children, className }: CardContentProps) {
 interface CardFooterProps {
   children: React.ReactNode
   className?: string
-  orientation?: 'horizontal' | 'vertical'
+  orientation?: "horizontal" | "vertical"
 }
 
 function CardFooter({
   children,
   className,
-  orientation = 'horizontal'
+  orientation = "horizontal",
 }: CardFooterProps) {
-  if (orientation === 'vertical') {
+  if (orientation === "vertical") {
     return (
-      <div className={cn('mt-2', className)}>
+      <div className={cn("mt-2", className)}>
         <div className="flex flex-col gap-2">{children}</div>
       </div>
     )
   }
 
   return (
-    <div className={cn('mt-2', className)}>
+    <div className={cn("mt-2", className)}>
       <div className="flex items-center gap-2">{children}</div>
     </div>
   )
@@ -147,8 +147,8 @@ function CardIcon({ children, className }: CardIconProps) {
   return (
     <div
       className={cn(
-        'flex h-8 w-8 items-center justify-center rounded-full bg-gray-100',
-        className
+        "flex h-8 w-8 items-center justify-center rounded-full bg-gray-100",
+        className,
       )}
     >
       {children}
@@ -165,7 +165,7 @@ interface CardChartProps {
 
 function CardChart({ children, className, height = 200 }: CardChartProps) {
   return (
-    <div className={cn('w-full overflow-hidden', className)} style={{ height }}>
+    <div className={cn("w-full overflow-hidden", className)} style={{ height }}>
       {children}
     </div>
   )
@@ -181,7 +181,7 @@ function CardTrend({ value }: CardTrendProps) {
   const isNegative = value < 0
 
   return (
-    <Badge variant="light" color={isPositive ? 'green' : 'red'} radius="sm">
+    <Badge variant="light" color={isPositive ? "green" : "red"} radius="sm">
       <span className="flex items-center gap-1">
         {isPositive && <TrendingUp className="size-3" />}
         {isNegative && <TrendingDown className="size-3" />}
@@ -198,7 +198,7 @@ interface CardListProps {
 }
 
 function CardList({ children, className }: CardListProps) {
-  return <div className={cn('flex w-full gap-4', className)}>{children}</div>
+  return <div className={cn("flex w-full gap-4", className)}>{children}</div>
 }
 
 // Main Card export with composition pattern
@@ -213,7 +213,7 @@ export const Card = {
   Icon: CardIcon,
   Chart: CardChart,
   Trend: CardTrend,
-  List: CardList
+  List: CardList,
 }
 
 // Type exports for easier usage
@@ -228,5 +228,5 @@ export type {
   CardIconProps,
   CardChartProps,
   CardTrendProps,
-  CardListProps
+  CardListProps,
 }

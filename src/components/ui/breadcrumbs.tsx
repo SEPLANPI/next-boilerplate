@@ -1,16 +1,15 @@
-'use client'
+"use client"
 
 import {
   ActionIcon,
   Anchor,
-  Button,
   Breadcrumbs as MantineBreadcrumbs,
-  Menu
-} from '@mantine/core'
-import { MoreHorizontal } from 'lucide-react'
-import Link from 'next/link'
-import type React from 'react'
-import { memo, useMemo } from 'react'
+  Menu,
+} from "@mantine/core"
+import { MoreHorizontal } from "lucide-react"
+import Link from "next/link"
+import type React from "react"
+import { memo, useMemo } from "react"
 
 export interface BreadcrumbItem {
   label: string
@@ -31,12 +30,11 @@ interface BreadcrumbItemProps {
 }
 
 const BreadcrumbItemComponent: React.FC<BreadcrumbItemProps> = memo(
-  ({ item, isLastItem, maxWidth = '160px' }) => {
+  ({ item, maxWidth = "160px" }) => {
     const { href, label } = item
 
     const itemClasses = `
-      inline-flex items-center text-xs transition-colors duration-200  
-      ${isLastItem ? 'font-semibold text-content-emphasis' : 'text-content-muted hover:text-content cursor-pointer'}
+      inline-flex items-center text-xs transition-colors duration-200 text-content-muted hover:text-content cursor-pointer"}
     `
 
     const content = (
@@ -58,10 +56,10 @@ const BreadcrumbItemComponent: React.FC<BreadcrumbItemProps> = memo(
     ) : (
       <span className={itemClasses}>{content}</span>
     )
-  }
+  },
 )
 
-BreadcrumbItemComponent.displayName = 'BreadcrumbItem'
+BreadcrumbItemComponent.displayName = "BreadcrumbItem"
 
 interface DropdownMenuProps {
   items: BreadcrumbItem[]
@@ -109,17 +107,17 @@ const DropdownMenu: React.FC<DropdownMenuProps> = memo(
         })}
       </Menu.Dropdown>
     </Menu>
-  )
+  ),
 )
 
-DropdownMenu.displayName = 'DropdownMenu'
+DropdownMenu.displayName = "DropdownMenu"
 
 export const Breadcrumbs: React.FC<BreadcrumbsProps> = memo(
   ({
     items,
     separator = <span className="text-content-muted">/</span>,
     maxVisibleItems = 4,
-    maxItemWidth = '180px'
+    maxItemWidth = "180px",
   }) => {
     const { visibleItems, hiddenItems } = useMemo(() => {
       if (items.length <= maxVisibleItems) {
@@ -140,7 +138,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = memo(
 
       return {
         visibleItems: [firstItem, ...visibleMiddleItems, lastItem],
-        hiddenItems: hiddenMiddleItems
+        hiddenItems: hiddenMiddleItems,
       }
     }, [items, maxVisibleItems])
 
@@ -157,7 +155,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = memo(
               key="dropdown"
               items={hiddenItems}
               maxItemWidth={maxItemWidth}
-            />
+            />,
           )
         }
 
@@ -167,7 +165,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = memo(
             item={item}
             isLastItem={isLastItem}
             maxWidth={maxItemWidth}
-          />
+          />,
         )
       })
 
@@ -183,7 +181,7 @@ export const Breadcrumbs: React.FC<BreadcrumbsProps> = memo(
         {breadcrumbs}
       </MantineBreadcrumbs>
     )
-  }
+  },
 )
 
-Breadcrumbs.displayName = 'Breadcrumbs'
+Breadcrumbs.displayName = "Breadcrumbs"

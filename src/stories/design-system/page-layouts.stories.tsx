@@ -1,14 +1,24 @@
-import type { Meta, StoryObj } from '@storybook/nextjs-vite'
-import React from 'react'
-import { PageHeader } from '@/components/layouts/app-shell'
-import { Breadcrumbs } from '@/components/ui/breadcrumbs'
+import { PageHeader } from "@/components/layouts/app-shell"
+import { Breadcrumbs } from "@/components/ui/breadcrumbs"
+import { Card } from "@/components/ui/card"
 import {
-  FilterManager,
+  AsyncFilterPopover,
   FilterGroup,
+  FilterManager,
   StaticFilterPopover,
-  AsyncFilterPopover
-} from '@/components/ui/filters'
+} from "@/components/ui/filters"
 import {
+  NavigationTabs,
+  NavigationTabsContainer,
+  NavigationTabsItem,
+} from "@/components/ui/navigation-tabs"
+import { UrlPaginationFooter } from "@/components/ui/pagination-footer/url-pagination-footer"
+import { SearchInput } from "@/components/ui/search-input"
+import { PAGINATION } from "@/constants/pagination"
+import { ApiResponse } from "@/lib/api"
+import {
+  Avatar,
+  Badge,
   Button,
   Table,
   TableTbody,
@@ -16,33 +26,23 @@ import {
   TableTh,
   TableThead,
   TableTr,
-  Badge,
-  Avatar
-} from '@mantine/core'
+} from "@mantine/core"
+import type { Meta, StoryObj } from "@storybook/nextjs-vite"
 import {
-  Plus,
-  Download,
   BarChart3,
-  User,
-  FileSpreadsheet,
-  Edit,
   CheckCircle,
-  Settings
-} from 'lucide-react'
-import { SearchInput } from '@/components/ui/search-input'
-import {
-  NavigationTabsContainer,
-  NavigationTabs,
-  NavigationTabsItem
-} from '@/components/ui/navigation-tabs'
-import { UrlPaginationFooter } from '@/components/ui/pagination-footer/url-pagination-footer'
-import { PAGINATION } from '@/constants/pagination'
-import { Card } from '@/components/ui/card'
+  Download,
+  Edit,
+  FileSpreadsheet,
+  Plus,
+  Settings,
+  User,
+} from "lucide-react"
 
 const meta: Meta = {
-  title: 'Padrões/Layout de Páginas Administrativas',
+  title: "Padrões/Layout de Páginas Administrativas",
   parameters: {
-    layout: 'fullscreen',
+    layout: "fullscreen",
     docs: {
       description: {
         component: `
@@ -67,12 +67,12 @@ Sistema de layout usado nas páginas administrativas da aplicação. Estes exemp
 ### 4. Layout Completo
 - Header + Cards + Tabela + Paginação
 - Usado em: Dashboards operacionais, gestão complexa
-        `
-      }
-    }
+        `,
+      },
+    },
   },
   argTypes: {},
-  tags: ['autodocs']
+  tags: ["autodocs"],
 }
 
 export default meta
@@ -80,35 +80,35 @@ type Story = StoryObj
 
 // Mock data baseado nos dados reais das páginas admin
 const statusOptions = [
-  { id: 'aprovada', label: 'Aprovada' },
-  { id: 'pendente', label: 'Pendente' },
-  { id: 'rejeitada', label: 'Rejeitada' },
-  { id: 'em_analise', label: 'Em Análise' }
+  { id: "aprovada", label: "Aprovada" },
+  { id: "pendente", label: "Pendente" },
+  { id: "rejeitada", label: "Rejeitada" },
+  { id: "em_analise", label: "Em Análise" },
 ]
 
 const eixosOptions = [
-  { id: 'saude', label: 'Saúde' },
-  { id: 'educacao', label: 'Educação' },
-  { id: 'seguranca', label: 'Segurança' },
-  { id: 'mobilidade', label: 'Mobilidade Urbana' },
-  { id: 'meio_ambiente', label: 'Meio Ambiente' }
+  { id: "saude", label: "Saúde" },
+  { id: "educacao", label: "Educação" },
+  { id: "seguranca", label: "Segurança" },
+  { id: "mobilidade", label: "Mobilidade Urbana" },
+  { id: "meio_ambiente", label: "Meio Ambiente" },
 ]
 
 // Função async simulada para filtros
 const loadEixosOptions = async () => {
   await new Promise((resolve) => setTimeout(resolve, 1000))
-  return eixosOptions
+  return { data: eixosOptions } as ApiResponse<typeof eixosOptions>
 }
 
 // 1. Header Básico
 export const HeaderBasico: Story = {
-  name: '1. Header Básico',
+  name: "1. Header Básico",
   render: () => (
     <div className="flex min-h-screen flex-col gap-4 p-6">
       <PageHeader>
         <PageHeader.Row>
           <PageHeader.Content>
-            <Breadcrumbs items={[{ label: 'Visão Geral' }]} />
+            <Breadcrumbs items={[{ label: "Visão Geral" }]} />
           </PageHeader.Content>
           <PageHeader.Actions>
             <Button leftSection={<Download size={16} />} variant="default">
@@ -151,21 +151,21 @@ Header mais simples com breadcrumbs e ações principais.
 
 **Usado em:** Visão Geral, páginas simples sem filtros
 **Características:** Uma única linha com breadcrumbs e ações
-        `
-      }
-    }
-  }
+        `,
+      },
+    },
+  },
 }
 
 // 2. Header com Filtros
 export const HeaderComFiltros: Story = {
-  name: '2. Header com Filtros',
+  name: "2. Header com Filtros",
   render: () => (
     <div className="flex min-h-screen flex-col gap-4 p-6">
       <PageHeader>
         <PageHeader.Row>
           <PageHeader.Content>
-            <Breadcrumbs items={[{ label: 'Conselheiros' }]} />
+            <Breadcrumbs items={[{ label: "Conselheiros" }]} />
           </PageHeader.Content>
         </PageHeader.Row>
         <PageHeader.Row>
@@ -182,12 +182,16 @@ export const HeaderComFiltros: Story = {
             <AsyncFilterPopover
               filterId="regiao"
               searchParamKey="regiao"
-              loadOptions={async () => [
-                { id: 'norte', label: 'Norte' },
-                { id: 'sul', label: 'Sul' },
-                { id: 'centro', label: 'Centro' },
-                { id: 'leste', label: 'Leste' }
-              ]}
+              loadOptions={async () => {
+                return {
+                  data: [
+                    { id: "norte", label: "Norte" },
+                    { id: "sul", label: "Sul" },
+                    { id: "centro", label: "Centro" },
+                    { id: "leste", label: "Leste" },
+                  ],
+                } as ApiResponse<{ id: string; label: string }[]>
+              }}
               getOptionLabel={(option) => option.label}
               getOptionValue={(option) => option.id}
               showSearch={true}
@@ -195,25 +199,16 @@ export const HeaderComFiltros: Story = {
               Região
             </AsyncFilterPopover>
             <FilterManager
-              onApply={() => console.log('Filtros aplicados!')}
+              onApply={() => console.log("Filtros aplicados!")}
               buttonText="Mais filtros"
             >
-              <FilterGroup
-                title="Eixo Temático"
-                searchParamKey="eixo"
-                filterId="eixos-header"
-                loadOptions={loadEixosOptions}
-                getOptionLabel={(option) => option.label}
-                getOptionValue={(option) => option.id}
-                showSearch={true}
-              />
               <FilterGroup
                 title="Data de Cadastro"
                 searchParamKey="data"
                 options={[
-                  { id: 'hoje', label: 'Hoje' },
-                  { id: 'semana', label: 'Esta semana' },
-                  { id: 'mes', label: 'Este mês' }
+                  { id: "hoje", label: "Hoje" },
+                  { id: "semana", label: "Esta semana" },
+                  { id: "mes", label: "Este mês" },
                 ]}
               />
             </FilterManager>
@@ -262,15 +257,15 @@ Header com sistema completo de filtros para listagens.
 **Características:** 
 - Primeira linha: Breadcrumbs
 - Segunda linha: SearchInput + filtros importantes + FilterManager
-        `
-      }
-    }
-  }
+        `,
+      },
+    },
+  },
 }
 
 // 3. Header com Tabs
 export const HeaderComTabs: Story = {
-  name: '3. Header com Tabs',
+  name: "3. Header com Tabs",
   render: () => (
     <div className="flex min-h-screen flex-col gap-4 p-6">
       <PageHeader>
@@ -279,10 +274,10 @@ export const HeaderComTabs: Story = {
             <Breadcrumbs
               items={[
                 {
-                  label: 'Conselheiros',
-                  href: '/admin/conselheiros/cadastros'
+                  label: "Conselheiros",
+                  href: "/admin/conselheiros/cadastros",
                 },
-                { label: 'Ana Silva Santos' }
+                { label: "Ana Silva Santos" },
               ]}
             />
           </PageHeader.Content>
@@ -357,15 +352,15 @@ Header com navegação por tabs para visualização de detalhes.
 **Características:**
 - Breadcrumbs + ações na primeira linha
 - NavigationTabs com ícones na segunda linha
-        `
-      }
-    }
-  }
+        `,
+      },
+    },
+  },
 }
 
 // 4. Layout Completo
 export const LayoutCompleto: Story = {
-  name: '4. Layout Completo (Cards + Tabela + Paginação)',
+  name: "4. Layout Completo (Cards + Tabela + Paginação)",
   render: () => (
     <div className="flex min-h-screen flex-col gap-4 p-6">
       <PageHeader>
@@ -373,10 +368,10 @@ export const LayoutCompleto: Story = {
           <PageHeader.Content>
             <Breadcrumbs
               items={[
-                { label: 'Admin', href: '/admin' },
-                { label: 'Evento Diálogos 2024', href: '/admin/evento-2024' },
-                { label: 'Propostas', href: '/admin/evento-2024/propostas' },
-                { label: 'Gestão Avançada' }
+                { label: "Admin", href: "/admin" },
+                { label: "Evento Diálogos 2024", href: "/admin/evento-2024" },
+                { label: "Propostas", href: "/admin/evento-2024/propostas" },
+                { label: "Gestão Avançada" },
               ]}
             />
           </PageHeader.Content>
@@ -417,18 +412,18 @@ export const LayoutCompleto: Story = {
             </AsyncFilterPopover>
 
             <FilterManager
-              onApply={() => console.log('Filtros aplicados!')}
+              onApply={() => console.log("Filtros aplicados!")}
               buttonText="Filtros Avançados"
             >
               <FilterGroup
                 title="Região"
                 searchParamKey="regiao"
                 options={[
-                  { id: 'norte', label: 'Norte' },
-                  { id: 'sul', label: 'Sul' },
-                  { id: 'centro', label: 'Centro' },
-                  { id: 'leste', label: 'Leste' },
-                  { id: 'oeste', label: 'Oeste' }
+                  { id: "norte", label: "Norte" },
+                  { id: "sul", label: "Sul" },
+                  { id: "centro", label: "Centro" },
+                  { id: "leste", label: "Leste" },
+                  { id: "oeste", label: "Oeste" },
                 ]}
                 showSearch={false}
               />
@@ -436,20 +431,20 @@ export const LayoutCompleto: Story = {
                 title="Orçamento"
                 searchParamKey="orcamento"
                 options={[
-                  { id: 'ate_10k', label: 'Até R$ 10.000' },
-                  { id: '10k_50k', label: 'R$ 10.000 - R$ 50.000' },
-                  { id: '50k_100k', label: 'R$ 50.000 - R$ 100.000' },
-                  { id: 'acima_100k', label: 'Acima de R$ 100.000' }
+                  { id: "ate_10k", label: "Até R$ 10.000" },
+                  { id: "10k_50k", label: "R$ 10.000 - R$ 50.000" },
+                  { id: "50k_100k", label: "R$ 50.000 - R$ 100.000" },
+                  { id: "acima_100k", label: "Acima de R$ 100.000" },
                 ]}
               />
               <FilterGroup
                 title="Data de Submissão"
                 searchParamKey="data_submissao"
                 options={[
-                  { id: 'ultima_semana', label: 'Última semana' },
-                  { id: 'ultimo_mes', label: 'Último mês' },
-                  { id: 'ultimos_3_meses', label: 'Últimos 3 meses' },
-                  { id: 'mais_antigo', label: 'Mais antigo' }
+                  { id: "ultima_semana", label: "Última semana" },
+                  { id: "ultimo_mes", label: "Último mês" },
+                  { id: "ultimos_3_meses", label: "Últimos 3 meses" },
+                  { id: "mais_antigo", label: "Mais antigo" },
                 ]}
               />
             </FilterManager>
@@ -817,8 +812,8 @@ Layout completo demonstrando todos os elementos em uma página de gestão avanç
 - ✅ **Paginação**: Componente real com contadores
 
 **Quando usar:** Dashboards operacionais, páginas de gestão complexa, relatórios administrativos
-        `
-      }
-    }
-  }
+        `,
+      },
+    },
+  },
 }

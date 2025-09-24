@@ -1,7 +1,7 @@
-import { NextResponse } from 'next/server'
-import { auth } from '@/auth'
-import { determineRouteAccess } from '@/lib/routes/matcher'
-import { routingConfig } from './config/routing'
+import { auth } from "@/auth"
+import { determineRouteAccess } from "@/lib/routes/matcher"
+import { NextResponse } from "next/server"
+import { routingConfig } from "./config/routing"
 
 export default auth((req) => {
   const path = req.nextUrl.pathname
@@ -15,7 +15,7 @@ export default auth((req) => {
   if (!req.auth || req.auth.error) {
     const signInPagePath = routingConfig.defaults.redirects.signInPagePath
     const newUrl = new URL(signInPagePath, req.nextUrl.origin)
-    newUrl.searchParams.set('redirectTo', path)
+    newUrl.searchParams.set("redirectTo", path)
     return NextResponse.redirect(newUrl)
   }
 
@@ -29,6 +29,6 @@ export default auth((req) => {
 
 export const config = {
   matcher: [
-    '/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:jpg|jpeg|png|gif|svg|webp)).*)'
-  ]
+    "/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:jpg|jpeg|png|gif|svg|webp)).*)",
+  ],
 }

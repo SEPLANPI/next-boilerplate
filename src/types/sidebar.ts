@@ -1,6 +1,6 @@
-import { LucideProps } from 'lucide-react'
-import { ComponentType } from 'react'
-import { Role } from './roles'
+import { LucideProps } from "lucide-react"
+import { ComponentType } from "react"
+import { Role } from "./roles"
 
 interface BaseNavigationItem {
   label: string
@@ -24,15 +24,15 @@ export type NavigationItem = NavigationLeafItem | NavigationParentItem
 
 // Type guards
 export function isNavigationLeafItem(
-  item: NavigationItem
+  item: NavigationItem,
 ): item is NavigationLeafItem {
-  return 'href' in item && typeof item.href === 'string'
+  return "href" in item && typeof item.href === "string"
 }
 
 export function isNavigationParentItem(
-  item: NavigationItem
+  item: NavigationItem,
 ): item is NavigationParentItem {
-  return 'children' in item && Array.isArray(item.children)
+  return "children" in item && Array.isArray(item.children)
 }
 
 export interface NavigationSection {
@@ -55,4 +55,5 @@ export interface SidebarConfig {
 
 export interface MainNavProps {
   config: SidebarConfig
+  workspaceSelect?: React.ReactNode
 }

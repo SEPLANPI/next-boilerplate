@@ -1,6 +1,6 @@
 'use client'
 
-import { Anchor, Button, Menu } from '@mantine/core'
+import { Anchor, Button, Menu, Container } from '@mantine/core'
 import { ChevronDown } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -24,6 +24,11 @@ const apps: App[] = [
     key: 'pactos',
     name: 'Pactos pelo Piauí',
     link: 'https://pactospelopiaui.pi.gov.br/'
+  },
+  {
+    key: 'cec',
+    name: '6ª CEC',
+    link: 'https://conferenciadascidades.seplan.pi.gov.br/'
   },
   {
     key: 'retribuir',
@@ -52,13 +57,13 @@ export function SeplanAppsBar({
   return (
     <header
       className={cn(
-        'flex h-[64px] items-center justify-between bg-primary-700 px-8 sm:h-[84px]',
+        'relative z-50 flex h-[64px] items-center justify-between bg-primary-700 sm:h-[84px]',
         className
       )}
     >
-      <div
+      <Container
         className={cn(
-          'mx-auto flex w-full max-w-[1120px] items-center justify-between',
+          'flex w-full items-center justify-between',
           contentClassName
         )}
       >
@@ -123,7 +128,7 @@ export function SeplanAppsBar({
             className="h-[40px] w-auto object-cover sm:h-[60px]"
           />
         </Anchor>
-      </div>
+      </Container>
     </header>
   )
 }

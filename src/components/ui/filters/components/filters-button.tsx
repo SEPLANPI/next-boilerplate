@@ -1,7 +1,7 @@
-import { forwardRef } from 'react'
-import { Button, Badge } from '@mantine/core'
-import { ListFilter } from 'lucide-react'
-import { useFilters } from '../hooks/use-filters'
+import { Badge, Button } from "@mantine/core"
+import { ListFilter } from "lucide-react"
+import { forwardRef } from "react"
+import { useFilters } from "../hooks/use-filters"
 
 interface FiltersButtonProps {
   onClick: () => void
@@ -10,9 +10,9 @@ interface FiltersButtonProps {
 
 export const FiltersButton = forwardRef<HTMLButtonElement, FiltersButtonProps>(
   ({ onClick, children }, ref) => {
-    const { getTotalSelectedCount } = useFilters()
-    const totalSelected = getTotalSelectedCount()
-    const hasSelectedFilters = totalSelected > 0
+    const { getTotalAppliedCount } = useFilters()
+    const totalApplied = getTotalAppliedCount()
+    const hasSelectedFilters = totalApplied > 0
 
     return (
       <Button
@@ -22,16 +22,16 @@ export const FiltersButton = forwardRef<HTMLButtonElement, FiltersButtonProps>(
         rightSection={
           hasSelectedFilters && (
             <Badge circle size="sm" variant="light" color="primary">
-              {totalSelected}
+              {totalApplied}
             </Badge>
           )
         }
         leftSection={<ListFilter className="size-4" />}
       >
-        {children || 'Filtros'}
+        {children || "Filtros"}
       </Button>
     )
-  }
+  },
 )
 
-FiltersButton.displayName = 'FiltersButton'
+FiltersButton.displayName = "FiltersButton"

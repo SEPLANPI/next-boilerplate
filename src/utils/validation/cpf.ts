@@ -1,20 +1,20 @@
 export function formatCPF(cpf: string): string {
   // Remove non-numeric characters
-  const cleanedCPF = cpf.replace(/\D/g, '')
+  const cleanedCPF = cpf.replace(/\D/g, "")
 
   // Apply CPF formatting: XXX.XXX.XXX-XX
   if (cleanedCPF.length <= 11) {
     return cleanedCPF
-      .replace(/(\d{3})(\d)/, '$1.$2')
-      .replace(/(\d{3})(\d)/, '$1.$2')
-      .replace(/(\d{3})(\d{1,2})$/, '$1-$2')
+      .replace(/(\d{3})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d)/, "$1.$2")
+      .replace(/(\d{3})(\d{1,2})$/, "$1-$2")
   }
 
   return cpf // Return original if more than 11 digits
 }
 
 export function isValidCPF(cpf: string): boolean {
-  const cleanedCPF = cpf.replace(/\D/g, '')
+  const cleanedCPF = cpf.replace(/\D/g, "")
 
   // Check if CPF has 11 digits
   if (cleanedCPF.length !== 11) {

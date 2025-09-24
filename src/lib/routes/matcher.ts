@@ -1,26 +1,26 @@
-import { routingConfig } from '@/config/routing'
-import { Role } from '@/types/roles'
+import { routingConfig } from "@/config/routing"
+import { Role } from "@/types/roles"
 
 function routeToRegexPattern(route: string): string {
-  let pattern = route.replace(/[.+?^${}()|[\]\\]/g, '\\$&')
+  let pattern = route.replace(/[.+?^${}()|[\]\\]/g, "\\$&")
 
-  if (pattern.endsWith('/*')) {
-    pattern = pattern.replace(/\/\*$/, '')
+  if (pattern.endsWith("/*")) {
+    pattern = pattern.replace(/\/\*$/, "")
     pattern = `^${pattern}(?:/.*)?$`
   } else {
     pattern = `^${pattern}$`
   }
 
-  pattern = pattern.replace(/:(\w+)/g, '([^/]+)')
+  pattern = pattern.replace(/:(\w+)/g, "([^/]+)")
 
   return pattern
 }
 
 export function matchRoute(path: string, routes: string[]): boolean {
-  const normalizedPath = path === '/' ? path : path.replace(/\/$/, '')
+  const normalizedPath = path === "/" ? path : path.replace(/\/$/, "")
 
   return routes.some((route) => {
-    const normalizedRoute = route === '/' ? route : route.replace(/\/$/, '')
+    const normalizedRoute = route === "/" ? route : route.replace(/\/$/, "")
 
     const regexPattern = routeToRegexPattern(normalizedRoute)
     const regex = new RegExp(regexPattern)
@@ -32,7 +32,7 @@ export function matchRoute(path: string, routes: string[]): boolean {
 export function checkPermissions(
   userRoles: Role[] = [],
   routeAuthorizedRoles?: Role[],
-  defaultRoles: Role[] = []
+  defaultRoles: Role[] = [],
 ): boolean {
   const authorizedRoles = routeAuthorizedRoles ?? defaultRoles
 
@@ -45,19 +45,19 @@ export function checkPermissions(
 
 export function determineRouteAccess(
   path: string,
-  userRoles: Role[] = []
+  userRoles: Role[] = [],
 ): {
   isPublic: boolean
   hasPermission: boolean
   accessDeniedPath?: string
 } {
   let matchedConfig = routingConfig.routes.find((route) =>
-    matchRoute(path, [route.path])
+    matchRoute(path, [route.path]),
   )
 
   if (matchedConfig?.overrides) {
     const override = matchedConfig.overrides.find((override) =>
-      matchRoute(path, [override.path])
+      matchRoute(path, [override.path]),
     )
     if (override) {
       matchedConfig = override
@@ -76,7 +76,7 @@ export function determineRouteAccess(
     const roleSpecificPath = authorizedRoles
       .map(
         (role) =>
-          routingConfig.defaults.redirects.accessDeniedPageByAllowedRole[role]
+          routingConfig.defaults.redirects.accessDeniedPageByAllowedRole[role],
       )
       .find((path) => path !== undefined)
     if (roleSpecificPath) {
@@ -87,6 +87,6 @@ export function determineRouteAccess(
   return {
     isPublic,
     hasPermission,
-    accessDeniedPath
+    accessDeniedPath,
   }
 }

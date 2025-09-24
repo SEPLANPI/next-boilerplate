@@ -16,7 +16,7 @@ export interface RetryOptions {
 const DEFAULT_OPTIONS: Required<RetryOptions> = {
   maxRetries: 3,
   delay: 1000,
-  exponentialBackoff: false
+  exponentialBackoff: false,
 }
 
 /**
@@ -24,11 +24,11 @@ const DEFAULT_OPTIONS: Required<RetryOptions> = {
  */
 export async function withRetry<T>(
   operation: () => Promise<T>,
-  options: RetryOptions = {}
+  options: RetryOptions = {},
 ): Promise<T> {
   const { maxRetries, delay, exponentialBackoff } = {
     ...DEFAULT_OPTIONS,
-    ...options
+    ...options,
   }
 
   let lastError: unknown
@@ -56,7 +56,7 @@ export async function withRetry<T>(
 
       // Wait before retry (max 10 seconds)
       await new Promise((resolve) =>
-        setTimeout(resolve, Math.min(currentDelay, 10000))
+        setTimeout(resolve, Math.min(currentDelay, 10000)),
       )
     }
   }
@@ -76,7 +76,7 @@ function shouldRetryError(error: unknown): boolean {
   // Timeout/abort errors
   if (
     error instanceof Error &&
-    (error.name === 'AbortError' || error.name === 'TimeoutError')
+    (error.name === "AbortError" || error.name === "TimeoutError")
   ) {
     return true
   }
@@ -101,26 +101,26 @@ function shouldRetryError(error: unknown): boolean {
  * Extract status code from various error formats
  */
 function getErrorStatus(error: unknown): number | null {
-  if (!error || typeof error !== 'object') {
+  if (!error || typeof error !== "object") {
     return null
   }
 
   // Error with response.status
   if (
-    'response' in error &&
-    typeof error.response === 'object' &&
+    "response" in error &&
+    typeof error.response === "object" &&
     error.response
   ) {
     const response = error.response as Record<string, unknown>
     const status = response.status
-    return typeof status === 'number' ? status : null
+    return typeof status === "number" ? status : null
   }
 
   // Error with status directly
-  if ('status' in error) {
+  if ("status" in error) {
     const errorWithStatus = error as Record<string, unknown>
     const status = errorWithStatus.status
-    return typeof status === 'number' ? status : null
+    return typeof status === "number" ? status : null
   }
 
   return null
@@ -132,7 +132,7 @@ function getErrorStatus(error: unknown): number | null {
 export async function fetchWithRetry(
   input: RequestInfo | URL,
   init?: RequestInit,
-  options?: RetryOptions
+  options?: RetryOptions,
 ): Promise<Response> {
   return withRetry(async () => {
     const response = await fetch(input, init)
@@ -140,7 +140,7 @@ export async function fetchWithRetry(
     // Throw on 5xx errors so retry logic handles them
     if (response.status >= 500 && response.status < 600) {
       const error = new Error(
-        `HTTP ${response.status}: ${response.statusText}`
+        `HTTP ${response.status}: ${response.statusText}`,
       ) as Error & {
         status: number
         response: Response

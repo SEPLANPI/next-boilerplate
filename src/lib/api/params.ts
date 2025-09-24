@@ -18,11 +18,11 @@ export function buildParams(params: ParamsRecord): URLSearchParams {
   Object.entries(params).forEach(([key, value]) => {
     if (Array.isArray(value)) {
       value.forEach((item) => {
-        if (item != null && item !== '') {
+        if (item != null && item !== "") {
           urlParams.append(key, item.toString())
         }
       })
-    } else if (value != null && value !== '') {
+    } else if (value != null && value !== "") {
       urlParams.append(key, value.toString())
     }
   })

@@ -1,15 +1,15 @@
-'use client'
+"use client"
 
-import { Button } from '@mantine/core'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { Button } from "@mantine/core"
+import { useRouter, useSearchParams } from "next/navigation"
 
 export function ErrorContent() {
   const router = useRouter()
   const searchParams = useSearchParams()
-  const errorMessage = searchParams.get('message') || 'Erro inesperado'
+  const errorMessage = searchParams.get("message") || "Erro inesperado"
 
   function handleRetry() {
-    router.push('/')
+    router.push("/")
   }
 
   return (

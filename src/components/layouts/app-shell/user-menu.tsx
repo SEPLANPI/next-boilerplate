@@ -1,18 +1,19 @@
-'use client'
-import { Avatar, Button, Menu, UnstyledButton } from '@mantine/core'
-import Link from 'next/link'
-import { useSession } from 'next-auth/react'
-import { useSidebar } from './context'
-import { ChevronsUpDown, LogOut } from 'lucide-react'
-import { formatCPF } from '@/utils'
+"use client"
+import { routingConfig } from "@/config/routing"
+import { formatCPF } from "@/utils"
+import { Avatar, Button, Menu, UnstyledButton } from "@mantine/core"
+import { ChevronsUpDown, LogOut } from "lucide-react"
+import { signOut, useSession } from "next-auth/react"
+import { useSidebar } from "./context"
 
 export function UserMenu() {
   const { data } = useSession()
   const { collapsed } = useSidebar()
 
   const getShortName = (fullName?: string) => {
-    if (!fullName) return ''
-    const names = fullName.split(' ')
+    if (!fullName) return ""
+    const names = fullName.split(" ")
+
     return names.length > 1
       ? `${names[0]} ${names[names.length - 1]}`
       : names[0]
@@ -33,15 +34,18 @@ export function UserMenu() {
             {getShortName(data?.user.name)}
           </p>
           <span className="w-full truncate text-xs font-normal text-content-muted">
-            {formatCPF(data?.user.cpf || '')}
+            {formatCPF(data?.user.cpf || "")}
           </span>
         </div>
       </div>
       <Menu.Divider />
       <Menu.Item
-        component={Link}
-        href="/api/auth/sign-out?redirectTo=/"
         rightSection={<LogOut className="size-4" />}
+        onClick={() =>
+          signOut({
+            redirectTo: routingConfig.defaults.redirects.postAuthRedirectPath,
+          })
+        }
       >
         Sair
       </Menu.Item>
@@ -55,7 +59,7 @@ export function UserMenu() {
           <Menu.Target>
             <UnstyledButton
               className={
-                'flex size-12 items-center justify-center rounded-md border bg-white shadow-3 hover:bg-gray-100'
+                "flex size-12 items-center justify-center rounded-md border bg-white shadow-3 hover:bg-gray-100"
               }
             >
               <Avatar
@@ -80,9 +84,9 @@ export function UserMenu() {
         <Button
           unstyled
           classNames={{
-            inner: 'flex flex-nowrap items-center space-x-2  min-w-0',
-            section: 'ml-auto flex-shrink-0',
-            label: 'flex-1 min-w-0'
+            inner: "flex flex-nowrap items-center space-x-2  min-w-0",
+            section: "ml-auto flex-shrink-0",
+            label: "flex-1 min-w-0",
           }}
           className="w-full rounded-md border bg-white px-3 py-2 shadow-3 hover:bg-gray-100"
           rightSection={
@@ -104,7 +108,7 @@ export function UserMenu() {
                 {getShortName(data?.user.name)}
               </p>
               <p className="min-w-0 truncate text-start text-xs text-content-muted">
-                {formatCPF(data?.user.cpf || '')}
+                {formatCPF(data?.user.cpf || "")}
               </p>
             </div>
           </div>

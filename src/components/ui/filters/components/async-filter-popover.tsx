@@ -1,16 +1,17 @@
-'use client'
+"use client"
 
-import { Alert, Loader, Popover } from '@mantine/core'
-import { useQuery } from '@tanstack/react-query'
-import { BaseContent } from './base-content'
-import { FilterButton } from './filter-button'
-import { SelectedItemsProvider } from '../providers/selected-items-provider'
-import type { DefaultOption } from '../types'
+import { ApiResponse, asQuery } from "@/lib/api"
+import { Alert, Loader, Popover } from "@mantine/core"
+import { useQuery } from "@tanstack/react-query"
+import { SelectedItemsProvider } from "../providers/selected-items-provider"
+import type { DefaultOption } from "../types"
+import { BaseContent } from "./base-content"
+import { FilterButton } from "./filter-button"
 
 export interface AsyncFilterPopoverProps<T extends object> {
   children?: React.ReactNode
   filterId: string
-  loadOptions: () => Promise<T[]>
+  loadOptions: () => Promise<ApiResponse<T[]>>
   renderOption?: (option: T) => JSX.Element
   getOptionValue?: (option: T) => string
   getOptionLabel?: (option: T) => string
@@ -19,7 +20,7 @@ export interface AsyncFilterPopoverProps<T extends object> {
   filterFn?: (option: T, search: string) => boolean
   showSearch?: boolean
   showSelectedOnTop?: boolean
-  position?: 'bottom-end' | 'bottom-start' | 'top-end' | 'top-start'
+  position?: "bottom-end" | "bottom-start" | "top-end" | "top-start"
   width?: number | string
 }
 
@@ -31,39 +32,39 @@ export const AsyncFilterPopover = <T extends object>({
   getOptionLabel,
   isDisabled,
   filterId,
-  searchParamKey = 'selectedItems',
+  searchParamKey = "selectedItems",
   filterFn,
   showSearch = true,
   showSelectedOnTop = true,
-  position = 'bottom-end',
-  width = 300
+  position = "bottom-start",
+  width = 300,
 }: AsyncFilterPopoverProps<T>) => {
   const { data, error, isFetching } = useQuery({
     queryKey: [`filter-${filterId}`],
-    queryFn: loadOptions
+    queryFn: asQuery(loadOptions),
   })
 
   const isDefaultOption = (option: T): option is T & DefaultOption =>
-    'id' in option && 'label' in option
+    "id" in option && "label" in option
 
   const handlers = {
     getValue: (option: T): string => {
       if (getOptionValue) return getOptionValue(option)
       if (isDefaultOption(option)) return String(option.id)
-      throw new Error('getOptionValue is required for non-DefaultOption types')
+      throw new Error("getOptionValue is required for non-DefaultOption types")
     },
     getLabel: (option: T): string => {
       if (getOptionLabel) return getOptionLabel(option)
       if (isDefaultOption(option)) return option.label
-      throw new Error('getOptionLabel is required for non-DefaultOption types')
-    }
+      throw new Error("getOptionLabel is required for non-DefaultOption types")
+    },
   }
 
   const finalRenderOption =
     renderOption ||
     ((option: T) => (
       <span
-        className={`flex-grow ${isDisabled?.(option) ? 'text-gray-400' : ''}`}
+        className={`flex-grow ${isDisabled?.(option) ? "text-gray-400" : ""}`}
       >
         {handlers.getLabel(option)}
       </span>

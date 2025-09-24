@@ -1,5 +1,5 @@
-import React from 'react'
-import { cn } from '@/utils'
+import React from "react"
+import { cn } from "@/utils"
 
 interface PageHeaderProps {
   children: React.ReactNode
@@ -24,7 +24,7 @@ interface PageHeaderProps {
  */
 export function PageHeader({ children, className }: PageHeaderProps) {
   return (
-    <header className={cn('w-full space-y-4', className)}>{children}</header>
+    <header className={cn("w-full space-y-4", className)}>{children}</header>
   )
 }
 
@@ -41,8 +41,8 @@ function Row({ children, className }: RowProps) {
   return (
     <div
       className={cn(
-        'flex min-h-8 w-full items-center justify-between gap-x-4',
-        className
+        "flex min-h-8 w-full items-end justify-between gap-x-4",
+        className,
       )}
     >
       {children}
@@ -63,8 +63,8 @@ function Content({ children, className }: ContentProps) {
   return (
     <div
       className={cn(
-        'header-content flex min-w-0 flex-1 items-center gap-x-4',
-        className
+        "header-content flex min-w-0 flex-1 items-center gap-x-4",
+        className,
       )}
     >
       {children}
@@ -83,12 +83,48 @@ interface ActionsProps {
  */
 function Actions({ children, className }: ActionsProps) {
   return (
-    <div className={cn('flex shrink-0 items-center gap-x-2', className)}>
+    <div className={cn("flex shrink-0 items-center gap-x-2", className)}>
       {children}
     </div>
+  )
+}
+
+interface TitleProps {
+  children: React.ReactNode
+  className?: string
+}
+
+/**
+ * Page title component.
+ * Renders as a styled heading for the page.
+ */
+function Title({ children, className }: TitleProps) {
+  return (
+    <h1
+      className={cn("text-2xl font-semibold text-content-emphasis", className)}
+    >
+      {children}
+    </h1>
+  )
+}
+
+interface TitleSectionProps {
+  children: React.ReactNode
+  className?: string
+}
+
+/**
+ * Vertical container for title and breadcrumbs.
+ * Arranges children vertically with appropriate spacing.
+ */
+function TitleSection({ children, className }: TitleSectionProps) {
+  return (
+    <div className={cn("flex flex-col gap-y-1", className)}>{children}</div>
   )
 }
 
 PageHeader.Row = Row
 PageHeader.Content = Content
 PageHeader.Actions = Actions
+PageHeader.Title = Title
+PageHeader.TitleSection = TitleSection
