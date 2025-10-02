@@ -1,33 +1,25 @@
 import NextAuth from 'next-auth'
 import KeycloakProvider from 'next-auth/providers/keycloak'
-import { env } from './config/env'
-import { refreshAccessToken } from './lib/auth/refresh-access-token'
-import { handleInitialSignIn } from './lib/auth/handle-initial-signin'
-import { routingConfig } from './config/routing'
-import { verifySessionActivity } from './lib/auth/verify-session'
+import { mockAuthConfig } from './lib/auth/mock-auth'
 
-const keycloakProvider = KeycloakProvider({
-  clientId: env.AUTH_KEYCLOAK_ID,
-  clientSecret: env.AUTH_KEYCLOAK_SECRET,
-  issuer: env.AUTH_KEYCLOAK_ISSUER
-})
+// Função para detectar se o Keycloak está configurado
+function isKeycloakConfigured() {
+  return !!(
+    process.env.AUTH_KEYCLOAK_ISSUER &&
+    process.env.AUTH_KEYCLOAK_ID &&
+    process.env.AUTH_KEYCLOAK_SECRET
+  )
+}
 
-export const { handlers, signIn, signOut, auth } = NextAuth({
-  providers: [keycloakProvider],
+// Configuração base do NextAuth
+const baseConfig = {
   callbacks: {
-    signIn: async ({ user, account }) => {
-      if (account && user) {
-        return true
-      } else {
-        return routingConfig.defaults.redirects.signInPagePath
-      }
-    },
-    redirect: async ({ url, baseUrl }) => {
+    async redirect({ url, baseUrl }: { url: string; baseUrl: string }) {
       if (url.startsWith('/')) return `${baseUrl}${url}`
       else if (new URL(url).origin === baseUrl) return url
       return baseUrl
     },
-    session: async ({ session, token }) => {
+    async session({ session, token }: any) {
       if (token) {
         session.user = token.user
         session.error = token.error
@@ -35,24 +27,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
       return session
     },
-    jwt: async ({ token, user, account, trigger }) => {
-      if (account && user) {
-        return handleInitialSignIn(token, user, account)
-      }
-
-      if (Date.now() > token.accessTokenExpires || trigger === 'update')
-        return refreshAccessToken(token)
-
-      if (token.accessToken) {
-        const isActive = await verifySessionActivity(token.accessToken)
-        if (!isActive) {
-          return { ...token, error: 'TokenInvalidError' }
-        }
-      }
-
-      return token
-    },
-    authorized: async ({ auth }) => {
+    async authorized({ auth }: { auth: any }) {
       return !!auth && !auth.error
     }
   },
@@ -60,4 +35,57 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     signIn: '/api/auth/sign-in',
     error: '/erro-autenticacao'
   }
-})
+}
+
+// Configuração específica para Keycloak
+const keycloakConfig = {
+  ...baseConfig,
+  providers: [
+    KeycloakProvider({
+      clientId: process.env.AUTH_KEYCLOAK_ID!,
+      clientSecret: process.env.AUTH_KEYCLOAK_SECRET!,
+      issuer: process.env.AUTH_KEYCLOAK_ISSUER!
+    })
+  ],
+  callbacks: {
+    ...baseConfig.callbacks,
+    async signIn({ user, account }: any) {
+      if (account && user) {
+        return true
+      } else {
+        const { routingConfig } = await import('./config/routing')
+        return routingConfig.defaults.redirects.signInPagePath
+      }
+    },
+    async jwt({ token, user, account, trigger }: any) {
+      if (account && user) {
+        const { handleInitialSignIn } = await import('./lib/auth/handle-initial-signin')
+        return handleInitialSignIn(token, user, account)
+      }
+
+      if (Date.now() > token.accessTokenExpires || trigger === 'update') {
+        const { refreshAccessToken } = await import('./lib/auth/refresh-access-token')
+        return refreshAccessToken(token)
+      }
+
+      if (token.accessToken) {
+        const { verifySessionActivity } = await import('./lib/auth/verify-session')
+        const isActive = await verifySessionActivity(token.accessToken)
+        if (!isActive) {
+          return { ...token, error: 'TokenInvalidError' }
+        }
+      }
+
+      return token
+    }
+  }
+}
+
+// Escolhe a configuração baseada na disponibilidade do Keycloak
+const authConfig = isKeycloakConfigured() ? keycloakConfig : mockAuthConfig
+
+if (!isKeycloakConfigured()) {
+  console.log('🔐 Usando autenticação mock - Keycloak não configurado')
+}
+
+export const { handlers, signIn, signOut, auth } = NextAuth(authConfig)

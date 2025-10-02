@@ -4,6 +4,7 @@ export interface BaseUser {
   name: string
   email: string
   id: string
-  cpf: string
+  cpf?: string
   roles: Role[]
+  permissions?: string[]
 }

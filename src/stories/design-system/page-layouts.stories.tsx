@@ -1,13 +1,13 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite'
 import React from 'react'
 import { PageHeader } from '@/components/layouts/app-shell'
-import { Breadcrumbs } from '@/components/ui/breadcrumbs'
 import {
+  Breadcrumbs,
   FilterManager,
   FilterGroup,
   StaticFilterPopover,
   AsyncFilterPopover
-} from '@/components/ui/filters'
+} from '@seplan/diti-ds'
 import {
   Button,
   Table,
@@ -29,15 +29,14 @@ import {
   CheckCircle,
   Settings
 } from 'lucide-react'
-import { SearchInput } from '@/components/ui/search-input'
 import {
-  NavigationTabsContainer,
+  SearchInput,
   NavigationTabs,
-  NavigationTabsItem
-} from '@/components/ui/navigation-tabs'
-import { UrlPaginationFooter } from '@/components/ui/pagination-footer/url-pagination-footer'
+  UrlPaginationFooter,
+  Card
+} from '@seplan/diti-ds'
+import { NavigationTabsContainer, NavigationTabsItem } from '@/components/ui/navigation-tabs'
 import { PAGINATION } from '@/constants/pagination'
-import { Card } from '@/components/ui/card'
 
 const meta: Meta = {
   title: 'Padrões/Layout de Páginas Administrativas',
