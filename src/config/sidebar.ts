@@ -3,6 +3,7 @@
 import { SidebarConfig } from "@/types/sidebar"
 import {
   Home,
+  MessageCircleWarning,
 } from "lucide-react"
 
 export const sidebarConfig: SidebarConfig = {
@@ -21,6 +22,11 @@ export const sidebarConfig: SidebarConfig = {
           label: "Página Inicial",
           href: "/",
           icon: Home,
+        },
+        {
+          label: "Sobre",
+          href: "/about",
+          icon: MessageCircleWarning,
         },
       ],
     }

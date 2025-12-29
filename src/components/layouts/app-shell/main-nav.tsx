@@ -23,7 +23,8 @@ export function MainNav({ config, workspaceSelect }: MainNavProps) {
           className={`flex items-center ${collapsed ? "justify-center" : ""} `}
         >
           <Image
-            src={config.app.logos.collapsed}
+            //src={config.app.logos.collapsed}
+            src="/next.svg"
             alt={config.app.name}
             width={120}
             height={120}
@@ -31,7 +32,7 @@ export function MainNav({ config, workspaceSelect }: MainNavProps) {
             quality={100}
           />
           <Image
-            src={config.app.logos.expanded}
+            src="/next.svg"
             alt={config.app.name}
             width={300}
             height={56}
