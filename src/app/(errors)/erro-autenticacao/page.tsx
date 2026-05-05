@@ -10,10 +10,10 @@ export const metadata: Metadata = {
 }
 
 interface AuthErrorPageProps {
-  searchParams: {
+  searchParams: Promise<{
     error?: string
     redirectTo?: string
-  }
+  }>
 }
 
 export default async function AuthErrorPage({
@@ -22,7 +22,7 @@ export default async function AuthErrorPage({
   const {
     error = "unknown",
     redirectTo = routingConfig.defaults.redirects.postAuthRedirectPath,
-  } = searchParams
+  } = await searchParams
 
   const getErrorMessage = (errorType: string) => {
     switch (errorType) {

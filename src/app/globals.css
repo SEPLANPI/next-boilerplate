@@ -1,27 +1,24 @@
-@layer tw_base, mantine, tw_components, tw_utilities;
-
-/* import tailwind */
-@import "tailwindcss/base" layer(tw_base);
-@import "tailwindcss/components" layer(tw_components);
-@import "tailwindcss/utilities" layer(tw_utilities);
-
-/* import mantine */
+@import "tailwindcss";
 @import "@mantine/core/styles.layer.css";
 
-@layer mantine {
+@theme {
+  --color-content: var(--mantine-color-gray-6);
+  --color-background: #ffffff;
+}
+
+@layer base {
   html {
-    @apply scroll-smooth;
+    scroll-behavior: smooth;
   }
 
   body {
     @apply text-content bg-background;
+
     font-synthesis-weight: none;
     text-rendering: optimizeLegibility;
 
     --mantine-color-default-border: var(--mantine-color-gray-3);
     --mantine-color-default-color: var(--mantine-color-gray-6);
-
-    /* text-content-default */
     --mantine-color-text: var(--mantine-color-gray-6);
   }
 }

@@ -28,5 +28,10 @@ export const routingConfig: RoutingConfiguration = {
       path: "/erro-autenticacao",
       isPublic: true,
     },
+    {
+      path: '/about',
+      isPublic: false,
+      authorizedRoles: ["compromissos-admin", "compromissos-collaborator", "compromissos-manager"],
+    },
   ],
 }
