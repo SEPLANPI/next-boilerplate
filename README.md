@@ -3,6 +3,8 @@
 Este é um boilerplate para iniciar rapidamente o desenvolvimento de aplicações utilizando Next.js e outras tecnologias para evitar a escrita de código boilerplate e padronizar as aplicações da SEPLAN.
 
 > 📚 [Clique aqui para acessar a documentação completa do projeto](docs/README.md)
+>
+> 🧭 **Novo por aqui (leitura “para externos”)?** Comece em: **[`docs/GUIA-DO-BOILERPLATE.md`](docs/GUIA-DO-BOILERPLATE.md)**
 
 ## Tabela de Conteúdos
 
