@@ -1,0 +1,64 @@
+name: Verificar
+
+# Tipos, lint, testes unitários, stories, build e ponta a ponta em todo PR.
+# Roda na imagem oficial do Playwright: navegador e fontes iguais aos usados
+# para gerar as capturas de referência (tests/e2e/*-snapshots).
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: verificar-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    container:
+      image: mcr.microsoft.com/playwright:v1.54.1-noble
+      options: --ipc=host
+    env:
+      CI: "true"
+      HOME: /root
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - name: Instalar dependências
+        run: pnpm install --frozen-lockfile
+
+      - name: Tipos
+        run: pnpm typecheck
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Testes unitários
+        run: pnpm test
+
+      - name: Testes das stories
+        run: pnpm test:storybook
+
+      - name: Build (ambiente de teste)
+        run: |
+          eval "$(node --input-type=module -e "import('./tests/e2e/ambiente.mjs').then(m => console.log(Object.entries(m.AMBIENTE).map(([k, v]) => 'export ' + k + '=' + JSON.stringify(v)).join('\n')))")"
+          pnpm build
+
+      - name: Testes de ponta a ponta
+        run: pnpm test:e2e
+
+      - name: Relatório do Playwright
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: |
+            playwright-report/
+            test-results/
+          retention-days: 7
