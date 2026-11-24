@@ -3,12 +3,13 @@ import { Button } from "@mantine/core"
 import { AlertCircle } from "lucide-react"
 
 export default async function SessionExpired({
-  searchParams: { redirectTo = "/" },
+  searchParams,
 }: {
-  searchParams: {
+  searchParams: Promise<{
     redirectTo?: string
-  }
+  }>
 }) {
+  const { redirectTo = "/" } = await searchParams
   return (
     <div className="flex h-screen w-full items-center justify-center">
       <div className="space-y-6 text-center">
