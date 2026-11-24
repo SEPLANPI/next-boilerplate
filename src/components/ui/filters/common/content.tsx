@@ -8,7 +8,6 @@ export function BaseContent<T>({
   options,
   renderOption,
   getOptionValue,
-  getOptionLabel,
   isDisabled,
   filterFn,
   showSearch = true,
