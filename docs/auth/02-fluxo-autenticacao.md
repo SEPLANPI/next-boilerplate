@@ -175,21 +175,27 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       }
     },
     jwt: async ({ token, user, account, trigger }) => {
-      // Login inicial
+      // Processamento inicial do login (conta como verificação da sessão)
       if (account && user) {
-        return handleInitialSignIn(token, user, account)
+        const inicial = await handleInitialSignIn(token, user, account)
+        return { ...inicial, sessaoVerificadaEm: Date.now() }
       }
 
-      // Renovação automática
-      if (Date.now() > token.accessTokenExpires || trigger === 'update')
-        return refreshAccessToken(token)
+      // Renovação automática (só funciona com a sessão ativa: também conta)
+      if (Date.now() > token.accessTokenExpires || trigger === 'update') {
+        const renovado = await refreshAccessToken(token)
+        return renovado.error
+          ? renovado
+          : { ...renovado, sessaoVerificadaEm: Date.now() }
+      }
 
-      // Verificação de sessão ativa
-      if (token.accessToken) {
+      // Verificação de sessão ativa: no máximo a cada 5 min
+      if (token.accessToken && precisaVerificarSessao(token)) {
         const isActive = await verifySessionActivity(token.accessToken)
         if (!isActive) {
           return { ...token, error: 'TokenInvalidError' }
         }
+        return { ...token, sessaoVerificadaEm: Date.now() }
       }
 
       return token
@@ -199,6 +205,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         session.user = token.user
         session.error = token.error
         session.accessToken = token.accessToken
+        session.accessTokenExpires = token.accessTokenExpires
       }
       return session
     }
@@ -354,8 +361,25 @@ O sistema automaticamente:
 
 1. **Verifica expiração** a cada requisição
 2. **Renova tokens** quando necessário via `refreshAccessToken()`
-3. **Valida sessão** no Keycloak via `verifySessionActivity()`
+3. **Valida sessão** no Keycloak via `verifySessionActivity()`, no máximo a cada 5 min
 4. **Marca erro** se token inválido para redirecionamento
+
+### Quantas vezes o app vai ao Keycloak
+
+O callback `jwt` roda a cada `auth()` (servidor) e `getSession()` (navegador) — várias vezes por tela. Para não chamar o Keycloak em todas:
+
+| Onde | Regra | Código |
+|---|---|---|
+| Callback `jwt` | introspect só se a última verificação passou de 5 min (`sessaoVerificadaEm` no token); login e renovação contam como verificação | `src/lib/auth/sessao.ts` (`precisaVerificarSessao`) |
+| Servidor | `auth()` uma vez por renderização: use `sessaoDoServidor()` em vez de `auth()` | `src/lib/auth/sessao-servidor.ts` |
+| Layout raiz | a sessão vai pronta para o `SessionProvider`, que não busca `/api/auth/session` ao montar nem a cada foco | `src/app/layout.tsx`, `src/app/providers.tsx` |
+| Navegador | o token fica em memória até perto de expirar, em vez de um `getSession()` por chamada à API | `criarCacheDeToken` em `src/lib/api/interceptors.ts` e `src/lib/client-api.ts` |
+
+Resultado medido nos testes de ponta a ponta: de **4 introspects por página para 0** com a sessão verificada há pouco (até 2 na primeira página depois de 5 min, e 0 nas seguintes).
+
+**Troca aceita:** um logout feito em outro lugar (ou sessão derrubada no Keycloak) derruba o acesso em até 5 min, não na hora. Se alguma operação precisar de confirmação imediata, chame `verifySessionActivity()` nela.
+
+Mesmo modelo do SAPO (sapo-front#245), em produção desde nov/2026.
 
 ## Navegação
 

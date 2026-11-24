@@ -179,21 +179,27 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ],
   callbacks: {
     jwt: async ({ token, user, account, trigger }) => {
-      // Processamento inicial do login
+      // Processamento inicial do login (conta como verificação da sessão)
       if (account && user) {
-        return handleInitialSignIn(token, user, account)
+        const inicial = await handleInitialSignIn(token, user, account)
+        return { ...inicial, sessaoVerificadaEm: Date.now() }
       }
 
-      // Renovação automática de tokens
-      if (Date.now() > token.accessTokenExpires || trigger === 'update')
-        return refreshAccessToken(token)
+      // Renovação automática (só funciona com a sessão ativa: também conta)
+      if (Date.now() > token.accessTokenExpires || trigger === 'update') {
+        const renovado = await refreshAccessToken(token)
+        return renovado.error
+          ? renovado
+          : { ...renovado, sessaoVerificadaEm: Date.now() }
+      }
 
-      // Verificação de sessão ativa
-      if (token.accessToken) {
+      // Verificação de sessão ativa: no máximo a cada 5 min
+      if (token.accessToken && precisaVerificarSessao(token)) {
         const isActive = await verifySessionActivity(token.accessToken)
         if (!isActive) {
           return { ...token, error: 'TokenInvalidError' }
         }
+        return { ...token, sessaoVerificadaEm: Date.now() }
       }
 
       return token
@@ -203,6 +209,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         session.user = token.user
         session.error = token.error
         session.accessToken = token.accessToken
+        session.accessTokenExpires = token.accessTokenExpires
       }
       return session
     }
@@ -215,7 +222,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 1. **Login Inicial**: `handleInitialSignIn()` processa o primeiro login
 2. **Enriquecimento**: `enrichTokenWithUserData()` busca dados do Keycloak
 3. **Renovação**: `refreshAccessToken()` renova tokens automaticamente
-4. **Verificação**: `verifySessionActivity()` valida sessão no Keycloak
+4. **Verificação**: `verifySessionActivity()` valida sessão no Keycloak, no máximo a cada 5 min (ver `02-fluxo-autenticacao.md`, "Quantas vezes o app vai ao Keycloak")
 
 ### Integração com GovPI
 
