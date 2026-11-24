@@ -1,6 +1,6 @@
 import "server-only"
 
-import { auth } from "@/auth"
+import { sessaoDoServidor } from "@/lib/auth/sessao-servidor"
 import { RequestInit } from "next/dist/server/web/spec-extension/request"
 import { env } from "@/config/env"
 
@@ -20,7 +20,8 @@ async function request(
   method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH",
   { body, contentType, next, ...options }: ApiOptions = {},
 ): Promise<Response> {
-  const session = await auth()
+  // Uma sessão por renderização (ver `sessaoDoServidor`).
+  const session = await sessaoDoServidor()
   const accessToken = session?.accessToken
 
   const headers: HeadersInit = {
