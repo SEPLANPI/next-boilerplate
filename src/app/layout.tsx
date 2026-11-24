@@ -6,6 +6,7 @@ import "@mantine/notifications/styles.css"
 import type { Metadata } from "next"
 import { Figtree } from "next/font/google"
 import "./globals.css"
+import { sessaoDoServidor } from "@/lib/auth/sessao-servidor"
 import { Providers } from "./providers"
 
 export const metadata: Metadata = {
@@ -14,11 +15,15 @@ export const metadata: Metadata = {
 
 const figtree = Figtree({ subsets: ["latin"] })
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  // Sessão entregue ao SessionProvider: o navegador não busca
+  // /api/auth/session ao montar (ver providers.tsx).
+  const session = await sessaoDoServidor()
+
   return (
     <html lang="en" data-mantine-color-scheme="light">
       <head>
@@ -26,7 +31,7 @@ export default function RootLayout({
         <ColorSchemeScript />
       </head>
       <body className={`${figtree.className} antialised`}>
-        <Providers>{children}</Providers>
+        <Providers session={session}>{children}</Providers>
       </body>
     </html>
   )
