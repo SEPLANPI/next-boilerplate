@@ -1,5 +1,6 @@
 import { ApiResponse } from "@/lib/api"
 import type { Meta, StoryObj } from "@storybook/nextjs-vite"
+import { expect, userEvent, within } from "storybook/test"
 import {
   AsyncFilterPopover,
   FilterGroup,
@@ -164,6 +165,26 @@ interface StaticFilterArgs {
 // 1. Filtro Estático Básico
 export const FiltroEstatico: StoryObj<StaticFilterArgs> = {
   name: "StaticFilterPopover",
+  // Abre o filtro, marca uma opção, confere o contador no botão e limpa.
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement)
+    // O dropdown do Mantine abre num portal, fora do canvas.
+    const pagina = within(canvasElement.ownerDocument.body)
+    const botao = canvas.getByRole("button", { name: /Filtro Interativo/ })
+
+    await userEvent.click(botao)
+    const pendentes = await pagina.findByRole("checkbox", { name: "Pendentes" })
+    await userEvent.click(pendentes)
+
+    await expect(pendentes).toBeChecked()
+    await expect(botao).toHaveTextContent("1")
+
+    await userEvent.click(pagina.getByRole("button", { name: "Limpar" }))
+    await expect(
+      pagina.getByRole("checkbox", { name: "Pendentes" }),
+    ).not.toBeChecked()
+    await expect(botao).not.toHaveTextContent("1")
+  },
   args: {
     children: "Filtro Interativo",
     searchParamKey: "status",
