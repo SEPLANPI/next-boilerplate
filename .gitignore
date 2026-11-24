@@ -44,3 +44,8 @@ storybook-static
 
 # Variáveis de ambiente (use .env-example como modelo)
 .env
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
