@@ -1,6 +1,11 @@
 import { getSession } from "next-auth/react"
+import { criarCacheDeToken } from "@/lib/auth/sessao"
 
 const apiUrl = process.env.NEXT_PUBLIC_CLIENT_API_URL
+
+// Token reaproveitado até perto de expirar, em vez de um getSession()
+// (GET /api/auth/session + callback jwt) por chamada.
+const tokenDoNavegador = criarCacheDeToken(getSession)
 
 interface ClientApiOptions extends Omit<RequestInit, "body"> {
   contentType?: "form-data" | "json"
@@ -12,8 +17,7 @@ async function clientRequest(
   method: "GET" | "POST" | "PUT" | "DELETE" | "PATCH",
   { body, contentType, ...options }: ClientApiOptions = {},
 ): Promise<Response> {
-  const session = await getSession()
-  const accessToken = session?.accessToken
+  const accessToken = await tokenDoNavegador.obter()
   const headers: HeadersInit = {
     ...(!contentType && { "Content-Type": "application/json" }),
     ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
