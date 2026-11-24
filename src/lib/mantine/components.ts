@@ -1,6 +1,7 @@
 import { cn } from "@/utils"
 import {
   Badge,
+  rem,
   Button,
   Checkbox,
   Drawer,
