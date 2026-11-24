@@ -20,6 +20,9 @@ export const USUARIO = {
 export async function entrarComo(
   contexto: BrowserContext,
   usuario: Partial<typeof USUARIO> = {},
+  // Última confirmação da sessão no Keycloak (ms). Padrão: agora, como logo
+  // depois do login. Mais de 5 min atrás força um introspect.
+  sessaoVerificadaEm = Date.now(),
 ) {
   const agora = Date.now()
   const valor = await encode({
@@ -32,6 +35,7 @@ export async function entrarComo(
       refreshToken: "refresh-token-de-teste",
       accessTokenExpires: agora + 60 * 60 * 1000,
       refreshTokenExpires: agora + 2 * 60 * 60 * 1000,
+      sessaoVerificadaEm,
     },
   })
   await contexto.addCookies([
@@ -42,6 +46,10 @@ export async function entrarComo(
 /** Contadores do Keycloak falso (quantas vezes o app foi a cada endpoint). */
 export async function chamadasAoKeycloak(): Promise<Record<string, number>> {
   return (await fetch(`${KEYCLOAK}/__chamadas`)).json()
+}
+
+export async function encerrarSessaoNoKeycloak() {
+  await fetch(`${KEYCLOAK}/__sessao?ativa=0`, { method: "POST" })
 }
 
 export async function zerarKeycloak() {

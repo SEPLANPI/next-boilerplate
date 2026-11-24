@@ -1,3 +1,5 @@
+import { criarCacheDeToken } from "@/lib/auth/sessao"
+
 export type RequestInterceptor = (
   url: string,
   options: RequestInit,
@@ -8,6 +10,16 @@ export type ResponseInterceptor = (
   url: string,
   options: RequestInit,
 ) => Promise<Response> | Response
+
+let cacheTokenNavegador: ReturnType<typeof criarCacheDeToken> | null = null
+
+function tokenDoNavegador() {
+  cacheTokenNavegador ??= criarCacheDeToken(async () => {
+    const { getSession } = await import("next-auth/react")
+    return getSession()
+  })
+  return cacheTokenNavegador
+}
 
 /**
  * NextAuth interceptor that adds Bearer token to requests
@@ -21,15 +33,13 @@ export const nextAuthInterceptor: RequestInterceptor = async (
 
   try {
     if (typeof window === "undefined") {
-      // Server-side
-      const { auth } = await import("@/auth")
-      const session = await auth()
+      // Server-side: uma sessão por renderização (ver `sessaoDoServidor`).
+      const { sessaoDoServidor } = await import("@/lib/auth/sessao-servidor")
+      const session = await sessaoDoServidor()
       token = session?.accessToken || null
     } else {
-      // Client-side
-      const { getSession } = await import("next-auth/react")
-      const session = await getSession()
-      token = session?.accessToken || null
+      // Client-side: token reaproveitado até perto de expirar.
+      token = await tokenDoNavegador().obter()
     }
   } catch (error) {
     console.warn("🔐 Auth token fetch failed:", error)

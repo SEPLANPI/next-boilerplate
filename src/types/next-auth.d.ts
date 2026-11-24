@@ -5,6 +5,7 @@ declare module "next-auth" {
   interface Session {
     user: BaseUser
     accessToken: string
+    accessTokenExpires: number
     refreshToken: string
     error: string
   }
@@ -37,6 +38,8 @@ declare module "next-auth/jwt" {
     idToken: string
     accessTokenExpires: number
     refreshTokenExpires: number
+    /** Última vez (ms) que a sessão foi confirmada no Keycloak. */
+    sessaoVerificadaEm?: number
     user: User
     error: string
   }

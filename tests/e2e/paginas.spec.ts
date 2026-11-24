@@ -2,6 +2,7 @@ import { expect, test } from "@playwright/test"
 import {
   USUARIO,
   chamadasAoKeycloak,
+  encerrarSessaoNoKeycloak,
   entrarComo,
   vigiarErros,
   zerarKeycloak,
@@ -62,22 +63,54 @@ test("barra no fim da URL redireciona para a página sem barra", async ({
   await expect(page).toHaveURL(/\/about$/)
 })
 
-test.describe("chamadas ao Keycloak por página (linha de base)", () => {
-  // Hoje o callback jwt faz um introspect a cada auth()/getSession(). O
-  // número fica registrado no relatório; a reforma de sessão (F1–F4) vai
-  // trocar este registro por um limite.
-  test("introspects ao abrir / com sessão", async ({ page, context }) => {
+test.describe("chamadas ao Keycloak por página", () => {
+  // O callback jwt confere a sessão no Keycloak (introspect) no máximo a cada
+  // 5 min (src/lib/auth/sessao.ts). Antes eram 4 introspects por página.
+  const SEIS_MINUTOS = 6 * 60 * 1000
+
+  test("sessão verificada há pouco: nenhum introspect", async ({
+    page,
+    context,
+  }) => {
     await entrarComo(context)
     await page.goto("/")
     await page.waitForLoadState("networkidle")
+    await page.goto("/about")
+    await page.waitForLoadState("networkidle")
 
-    const { introspect = 0 } = await chamadasAoKeycloak()
-    test.info().annotations.push({
-      type: "introspect por página",
-      description: String(introspect),
-    })
-    console.log(`introspects ao abrir / com sessão: ${introspect}`)
-    expect(introspect).toBeGreaterThan(0)
+    expect((await chamadasAoKeycloak()).introspect ?? 0).toBe(0)
+  })
+
+  test("verificação vencida: confere uma vez e grava a hora", async ({
+    page,
+    context,
+  }) => {
+    await entrarComo(context, {}, Date.now() - SEIS_MINUTOS)
+    await page.goto("/")
+    await page.waitForLoadState("networkidle")
+
+    // Middleware e renderização da página rodam na mesma requisição e os
+    // dois leem o cookie antigo: até 2 na primeira página.
+    const naPrimeira = (await chamadasAoKeycloak()).introspect ?? 0
+    expect(naPrimeira).toBeGreaterThanOrEqual(1)
+    expect(naPrimeira).toBeLessThanOrEqual(2)
+
+    // A hora da verificação foi gravada no cookie: a próxima tela não repete.
+    await page.goto("/about")
+    await page.waitForLoadState("networkidle")
+    expect((await chamadasAoKeycloak()).introspect).toBe(naPrimeira)
+  })
+
+  test("sessão encerrada no Keycloak: a sessão sai com erro", async ({
+    page,
+    context,
+  }) => {
+    await encerrarSessaoNoKeycloak()
+    await entrarComo(context, {}, Date.now() - SEIS_MINUTOS)
+    await page.goto("/")
+
+    const sessao = await (await page.request.get("/api/auth/session")).json()
+    expect(sessao.error).toBe("TokenInvalidError")
   })
 })
 
