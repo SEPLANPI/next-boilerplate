@@ -7,6 +7,7 @@ Este diretório contém a documentação do boilerplate de frontend.
 - **Começando pelo essencial**: `README.md` (raiz do repositório)
 - **Entender stack e dinâmica (para externos)**: `docs/GUIA-DO-BOILERPLATE.md`
 - **Autenticação/Autorização**: `docs/auth/README.md`
+- **Testes (unitários, stories, ponta a ponta, capturas de tela)**: `docs/TESTES.md`
 - **Integração com API**:
   - `docs/guias/api.md`
   - `docs/guias/api-legado.md`
@@ -14,6 +15,7 @@ Este diretório contém a documentação do boilerplate de frontend.
 ## Índice
 
 - `docs/GUIA-DO-BOILERPLATE.md`: relatório geral do boilerplate (stack, organização e como usar)
+- `docs/TESTES.md`: como rodar e escrever testes; sessão e Keycloak de teste; capturas de tela
 - `docs/auth/*`: autenticação e autorização padronizadas (Keycloak + NextAuth)
 - `docs/guias/*`: guias de integração e padrões por área
 
