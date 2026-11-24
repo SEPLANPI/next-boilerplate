@@ -15,7 +15,9 @@ export const parseApiErrors = (errorData: unknown): string => {
     }
 
     if (typeof errorData === "object") {
-      return Object.values(errorData as object).flat().join("\n")
+      return Object.values(errorData as object)
+        .flat()
+        .join("\n")
     }
 
     return String(errorData)
