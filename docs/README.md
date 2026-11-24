@@ -18,4 +18,5 @@ Este diretório contém a documentação do boilerplate de frontend.
 - `docs/TESTES.md`: como rodar e escrever testes; sessão e Keycloak de teste; capturas de tela
 - `docs/auth/*`: autenticação e autorização padronizadas (Keycloak + NextAuth)
 - `docs/guias/*`: guias de integração e padrões por área
+- `docs/guias/atualizacao-mantine-8.md`: como atualizar um projeto para Mantine 8 + next-auth beta.32 (passo a passo e o que conferir)
 
