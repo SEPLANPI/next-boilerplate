@@ -1,10 +1,10 @@
-'use client'
+"use client"
 
-import { Anchor, Button, Menu, Container } from '@mantine/core'
-import { ChevronDown } from 'lucide-react'
-import Image from 'next/image'
-import Link from 'next/link'
-import { cn } from '@/utils'
+import { Anchor, Button, Menu, Container } from "@mantine/core"
+import { ChevronDown } from "lucide-react"
+import Image from "next/image"
+import Link from "next/link"
+import { cn } from "@/utils"
 
 type App = {
   key: string
@@ -13,34 +13,34 @@ type App = {
 }
 
 const apps: App[] = [
-  { key: 'dialogos', name: 'Diálogos', link: 'https://dialogos.pi.gov.br/' },
+  { key: "dialogos", name: "Diálogos", link: "https://dialogos.pi.gov.br/" },
   {
-    key: 'opa',
-    name: 'OPA',
-    link: 'https://opa.seplan.pi.gov.br/'
+    key: "opa",
+    name: "OPA",
+    link: "https://opa.seplan.pi.gov.br/",
   },
-  { key: 'dadospi', name: 'dadosPI', link: 'https://dados.pi.gov.br/' },
+  { key: "dadospi", name: "dadosPI", link: "https://dados.pi.gov.br/" },
   {
-    key: 'pactos',
-    name: 'Pactos pelo Piauí',
-    link: 'https://pactospelopiaui.pi.gov.br/'
-  },
-  {
-    key: 'cec',
-    name: '6ª CEC',
-    link: 'https://conferenciadascidades.seplan.pi.gov.br/'
+    key: "pactos",
+    name: "Pactos pelo Piauí",
+    link: "https://pactospelopiaui.pi.gov.br/",
   },
   {
-    key: 'retribuir',
-    name: 'Retribuir',
-    link: 'https://www.seplan.pi.gov.br/projetos/retribuir/'
+    key: "cec",
+    name: "6ª CEC",
+    link: "https://conferenciadascidades.seplan.pi.gov.br/",
   },
-  { key: 'psi', name: 'PSI', link: 'https://psi.seplan.pi.gov.br/' },
   {
-    key: 'pilares',
-    name: 'Pilares',
-    link: 'https://www.seplan.pi.gov.br/projetos/pilares-ii/'
-  }
+    key: "retribuir",
+    name: "Retribuir",
+    link: "https://www.seplan.pi.gov.br/projetos/retribuir/",
+  },
+  { key: "psi", name: "PSI", link: "https://psi.seplan.pi.gov.br/" },
+  {
+    key: "pilares",
+    name: "Pilares",
+    link: "https://www.seplan.pi.gov.br/projetos/pilares-ii/",
+  },
 ]
 
 interface SeplanAppsBarProps {
@@ -52,19 +52,19 @@ interface SeplanAppsBarProps {
 export function SeplanAppsBar({
   currentApp,
   className,
-  contentClassName
+  contentClassName,
 }: SeplanAppsBarProps) {
   return (
     <header
       className={cn(
-        'relative z-50 flex h-[64px] items-center justify-between bg-primary-700 sm:h-[84px]',
-        className
+        "relative z-50 flex h-[64px] items-center justify-between bg-primary-700 sm:h-[84px]",
+        className,
       )}
     >
       <Container
         className={cn(
-          'flex w-full items-center justify-between',
-          contentClassName
+          "flex w-full items-center justify-between",
+          contentClassName,
         )}
       >
         <div className="flex items-center gap-5">

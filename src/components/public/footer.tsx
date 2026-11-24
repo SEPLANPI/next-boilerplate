@@ -1,7 +1,7 @@
-import Image from 'next/image'
-import Link from 'next/link'
-import { Instagram, Mail, Youtube } from 'lucide-react'
-import { Anchor, Container } from '@mantine/core'
+import Image from "next/image"
+import Link from "next/link"
+import { Instagram, Mail, Youtube } from "lucide-react"
+import { Anchor, Container } from "@mantine/core"
 
 export function Footer() {
   return (

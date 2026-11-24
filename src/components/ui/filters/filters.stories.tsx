@@ -526,12 +526,13 @@ export const PropsAvancadas: Story = {
           renderOption={(option) => (
             <div className="flex items-center gap-2">
               <div
-                className={`h-3 w-3 rounded-full ${option.id === "aprovada"
+                className={`h-3 w-3 rounded-full ${
+                  option.id === "aprovada"
                     ? "bg-green-500"
                     : option.id === "pendente"
                       ? "bg-yellow-500"
                       : "bg-red-500"
-                  }`}
+                }`}
               />
               <span>{option.label}</span>
             </div>

@@ -48,5 +48,3 @@ Panel.Actions = PanelActions
 Panel.Content = PanelContent
 
 export { Panel }
-
-

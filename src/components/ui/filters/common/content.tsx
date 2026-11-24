@@ -25,8 +25,9 @@ export function BaseContent<T>({
   const renderCheckboxItem = (option: T) => (
     <li key={getOptionValue(option)} className="group">
       <label
-        className={`flex w-full cursor-pointer space-x-2 p-2 text-xs hover:bg-gray-100 ${isDisabled(option) ? "text-content-muted cursor-not-allowed" : ""
-          }`}
+        className={`flex w-full cursor-pointer space-x-2 p-2 text-xs hover:bg-gray-100 ${
+          isDisabled(option) ? "text-content-muted cursor-not-allowed" : ""
+        }`}
       >
         <Checkbox
           className="mt-0.5"
@@ -64,10 +65,10 @@ export function BaseContent<T>({
         )}
         {showSelectedOnTop
           ? filteredOptions.map(
-            (option) =>
-              !selectedItems.has(getOptionValue(option)) &&
-              renderCheckboxItem(option),
-          )
+              (option) =>
+                !selectedItems.has(getOptionValue(option)) &&
+                renderCheckboxItem(option),
+            )
           : filteredOptions.map(renderCheckboxItem)}
       </ul>
       {selectedOptions.length > 0 && (

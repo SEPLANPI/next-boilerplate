@@ -1,7 +1,7 @@
-import { Code } from '@mantine/core'
+import { Code } from "@mantine/core"
 
 export default function AboutPage() {
-	const shortCode = `
+  const shortCode = `
 	...
 	sections: [
 		{
@@ -22,14 +22,12 @@ export default function AboutPage() {
 	]
 	...
 	`
-	return (
-		<>
-			<h1 className='text-3xl'>Sobre</h1>
-			<h2 className='text-2xl'>Sidebar</h2>
-			<h3 className='text-xl'>Itens de Menu</h3>
-			<Code block>
-				{shortCode}
-			</Code>		
-		</>
-	)
+  return (
+    <>
+      <h1 className="text-3xl">Sobre</h1>
+      <h2 className="text-2xl">Sidebar</h2>
+      <h3 className="text-xl">Itens de Menu</h3>
+      <Code block>{shortCode}</Code>
+    </>
+  )
 }

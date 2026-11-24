@@ -38,8 +38,9 @@ export function FilterGroupContent<T>({
   const renderCheckboxItem = (option: T) => (
     <li key={getOptionValue(option)} className="group">
       <label
-        className={`flex w-full cursor-pointer space-x-2 px-3 py-1.5 text-sm hover:bg-gray-100 ${isDisabled(option) ? "cursor-not-allowed text-content-muted" : ""
-          }`}
+        className={`flex w-full cursor-pointer space-x-2 px-3 py-1.5 text-sm hover:bg-gray-100 ${
+          isDisabled(option) ? "cursor-not-allowed text-content-muted" : ""
+        }`}
       >
         <Checkbox
           className="mt-0.5"
@@ -92,10 +93,10 @@ export function FilterGroupContent<T>({
               <ul>
                 {showSelectedOnTop
                   ? filteredOptions.map(
-                    (option) =>
-                      !selectedItems.has(getOptionValue(option)) &&
-                      renderCheckboxItem(option),
-                  )
+                      (option) =>
+                        !selectedItems.has(getOptionValue(option)) &&
+                        renderCheckboxItem(option),
+                    )
                   : filteredOptions.map(renderCheckboxItem)}
               </ul>
             </div>

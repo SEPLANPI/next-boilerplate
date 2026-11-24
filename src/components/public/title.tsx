@@ -1,15 +1,15 @@
-import { cn } from '@/utils'
-import { PropsWithChildren } from 'react'
+import { cn } from "@/utils"
+import { PropsWithChildren } from "react"
 
 export function Title({
   children,
-  className
+  className,
 }: PropsWithChildren<{ className?: string }>) {
   return (
     <h2
       className={cn(
-        'text-2xl font-bold text-content-emphasis md:text-4xl',
-        className
+        "text-2xl font-bold text-content-emphasis md:text-4xl",
+        className,
       )}
     >
       {children}

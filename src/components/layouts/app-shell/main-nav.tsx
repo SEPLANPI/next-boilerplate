@@ -13,8 +13,9 @@ export function MainNav({ config, workspaceSelect }: MainNavProps) {
 
   return (
     <aside
-      className={`flex h-full flex-col overflow-hidden bg-gray-100 transition-all duration-300 ${collapsed ? "w-20" : "w-[260px]"
-        }`}
+      className={`flex h-full flex-col overflow-hidden bg-gray-100 transition-all duration-300 ${
+        collapsed ? "w-20" : "w-[260px]"
+      }`}
     >
       <div
         className={`pt-3 ${collapsed ? "flex flex-col items-center justify-center gap-2" : "flex items-center justify-between px-4"}`}

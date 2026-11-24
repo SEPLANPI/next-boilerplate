@@ -29,7 +29,7 @@ const CONTAINER_SIZES: Record<string, number> = {
   md: 720,
   lg: 960,
   xl: 1120,
-  xxl: 1320
+  xxl: 1320,
 }
 
 export const components: MantineThemeOverride["components"] = {
@@ -241,25 +241,25 @@ export const components: MantineThemeOverride["components"] = {
   }),
   Container: Container.extend({
     defaultProps: {
-      size: 'xl'
+      size: "xl",
     },
     classNames: {
-      root: 'px-5 sm:px-8'
+      root: "px-5 sm:px-8",
     },
     vars: (_, { size, fluid }) => ({
       root: {
-        '--container-size': fluid
-          ? '100%'
-          : typeof size === 'number'
+        "--container-size": fluid
+          ? "100%"
+          : typeof size === "number"
             ? rem(size)
             : rem(
                 CONTAINER_SIZES[
-                  (typeof size === 'string' && size in CONTAINER_SIZES
+                  (typeof size === "string" && size in CONTAINER_SIZES
                     ? size
-                    : 'xl') as keyof typeof CONTAINER_SIZES
-                ]
-              )
-      }
-    })
-  })
+                    : "xl") as keyof typeof CONTAINER_SIZES
+                ],
+              ),
+      },
+    }),
+  }),
 }
