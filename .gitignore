@@ -41,3 +41,6 @@ next-env.d.ts
 .env.local
 *storybook.log
 storybook-static
+
+# Variáveis de ambiente (use .env-example como modelo)
+.env
