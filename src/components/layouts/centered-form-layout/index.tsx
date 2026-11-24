@@ -1,6 +1,6 @@
-import React, { PropsWithChildren } from 'react'
-import Image from 'next/image'
-import { cn } from '@/utils'
+import React, { PropsWithChildren } from "react"
+import Image from "next/image"
+import { cn } from "@/utils"
 
 interface CenteredFormLayoutRootProps extends PropsWithChildren {
   backgroundImage?: string
@@ -10,13 +10,13 @@ interface CenteredFormLayoutRootProps extends PropsWithChildren {
 function CenteredFormLayoutRoot({
   children,
   backgroundImage,
-  className = ''
+  className = "",
 }: CenteredFormLayoutRootProps) {
   return (
     <div
       className={cn(
-        'relative flex min-h-[100dvh] w-full justify-center bg-gray-50 p-4',
-        className
+        "relative flex min-h-[100dvh] w-full justify-center bg-gray-50 p-4",
+        className,
       )}
     >
       {backgroundImage && (
@@ -46,9 +46,9 @@ interface CenteredFormLayoutHeaderImageProps {
 }
 
 function CenteredFormLayoutHeaderImage({
-  src = '/form-header.png',
-  alt = 'Header',
-  className = ''
+  src = "/form-header.png",
+  alt = "Header",
+  className = "",
 }: CenteredFormLayoutHeaderImageProps) {
   return (
     <Image
@@ -72,7 +72,7 @@ function CenteredFormLayoutContent({
   children,
   title,
   description,
-  className = ''
+  className = "",
 }: CenteredFormLayoutContentProps) {
   return (
     <div
@@ -93,7 +93,7 @@ interface CenteredFormLayoutHeaderProps extends PropsWithChildren {
 
 function CenteredFormLayoutHeader({
   children,
-  className = ''
+  className = "",
 }: CenteredFormLayoutHeaderProps) {
   return (
     <>
@@ -112,7 +112,7 @@ interface CenteredFormLayoutTitleProps extends PropsWithChildren {
 
 function CenteredFormLayoutTitle({
   children,
-  className = ''
+  className = "",
 }: CenteredFormLayoutTitleProps) {
   return (
     <h1 className={`text-xl font-semibold text-content-emphasis ${className}`}>
@@ -128,7 +128,7 @@ interface CenteredFormLayoutDescriptionProps extends PropsWithChildren {
 
 function CenteredFormLayoutDescription({
   children,
-  className = ''
+  className = "",
 }: CenteredFormLayoutDescriptionProps) {
   return <p className={className}>{children}</p>
 }
@@ -139,7 +139,7 @@ export const CenteredFormLayout = {
   Header: CenteredFormLayoutHeader,
   Title: CenteredFormLayoutTitle,
   Description: CenteredFormLayoutDescription,
-  Content: CenteredFormLayoutContent
+  Content: CenteredFormLayoutContent,
 }
 
 export {
@@ -148,7 +148,7 @@ export {
   CenteredFormLayoutHeader,
   CenteredFormLayoutTitle,
   CenteredFormLayoutDescription,
-  CenteredFormLayoutContent
+  CenteredFormLayoutContent,
 }
 
 export type {
@@ -157,5 +157,5 @@ export type {
   CenteredFormLayoutHeaderProps,
   CenteredFormLayoutTitleProps,
   CenteredFormLayoutDescriptionProps,
-  CenteredFormLayoutContentProps
+  CenteredFormLayoutContentProps,
 }

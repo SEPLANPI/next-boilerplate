@@ -30,7 +30,7 @@ export const CPF = {
 
     if (!groups) return cleaned
 
-    const [_, g1, g2, g3, g4] = groups
+    const [, g1, g2, g3, g4] = groups
 
     if (!g2) return g1
     if (!g3) return `${g1}.${g2}`

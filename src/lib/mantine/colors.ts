@@ -1,4 +1,3 @@
-
 import { MantineThemeOverride } from "@mantine/core"
 
 export const colors: MantineThemeOverride["colors"] = {
@@ -16,17 +15,17 @@ export const colors: MantineThemeOverride["colors"] = {
   ],
 
   primary: [
-    '#F0F6FF',
-    '#D0E7FF',
-    '#7DBDFC',
-    '#389CF8',
-    '#0E7FE9',
-    '#0262C7',
-    '#0352AA',
-    '#074385',
-    '#0C396E',
-    '#082449',
-    '#081C37'
+    "#F0F6FF",
+    "#D0E7FF",
+    "#7DBDFC",
+    "#389CF8",
+    "#0E7FE9",
+    "#0262C7",
+    "#0352AA",
+    "#074385",
+    "#0C396E",
+    "#082449",
+    "#081C37",
   ],
 
   stone: [

@@ -1,10 +1,7 @@
 "use client"
 
 import { SidebarConfig } from "@/types/sidebar"
-import {
-  Home,
-  MessageCircleWarning,
-} from "lucide-react"
+import { Home, MessageCircleWarning } from "lucide-react"
 
 export const sidebarConfig: SidebarConfig = {
   app: {
@@ -29,6 +26,6 @@ export const sidebarConfig: SidebarConfig = {
           icon: MessageCircleWarning,
         },
       ],
-    }
-  ]
+    },
+  ],
 } as const

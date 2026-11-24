@@ -1,6 +1,6 @@
-import { Container } from '@mantine/core'
-import Image from 'next/image'
-import { PropsWithChildren } from 'react'
+import { Container } from "@mantine/core"
+import Image from "next/image"
+import { PropsWithChildren } from "react"
 
 export function Header({ children }: PropsWithChildren) {
   return (

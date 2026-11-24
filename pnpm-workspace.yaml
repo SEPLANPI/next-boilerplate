@@ -1,0 +1,7 @@
+# Dependências que podem rodar script de instalação (o pnpm 10 bloqueia por padrão).
+onlyBuiltDependencies:
+  - '@biomejs/biome'
+  - core-js
+  - esbuild
+  - sharp
+  - unrs-resolver

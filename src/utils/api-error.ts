@@ -1,10 +1,11 @@
-export const parseApiErrors = (errorData: any): string => {
+export const parseApiErrors = (errorData: unknown): string => {
   try {
     if (Array.isArray(errorData)) {
       return errorData
         .map((item) => {
           if (typeof item === "object") {
-            return Object.values(item.error || {})
+            // null cai no catch, como antes
+            return Object.values((item as { error?: object }).error || {})
               .flat()
               .join("\n")
           }
@@ -14,11 +15,13 @@ export const parseApiErrors = (errorData: any): string => {
     }
 
     if (typeof errorData === "object") {
-      return Object.values(errorData).flat().join("\n")
+      return Object.values(errorData as object)
+        .flat()
+        .join("\n")
     }
 
     return String(errorData)
-  } catch (err) {
+  } catch {
     return "Erro desconhecido ao processar resposta."
   }
 }
