@@ -33,7 +33,7 @@
         "@storybook/blocks": "^8.6.14",
         "@tanstack/react-query": "^5.76.1",
         "@types/qrcode": "^1.5.5",
-        "@ui/mantine-config": "github:SEPLANPI/ui-mantine-config",
+        "@ui/mantine-config": "github:SEPLANPI/ui-mantine-config#task/1gau1hrwc8w-atualizar-libs-ui",
         "@ui/tailwind-config": "github:SEPLANPI/ui-tailwind-config",
         "axios": "^1.9.0",
         "clsx": "^2.1.1",
