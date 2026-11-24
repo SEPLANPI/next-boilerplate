@@ -5,9 +5,15 @@ import { PostHogProvider as PHProvider, usePostHog } from "posthog-js/react"
 import { Suspense, useEffect } from "react"
 import { usePathname, useSearchParams } from "next/navigation"
 
+// Só em produção e com chave configurada: projeto sem PostHog não inicializa
+// (antes ele inicializava sem token e gerava erro no console em toda página).
+const POSTHOG_ATIVO =
+  process.env.NODE_ENV === "production" &&
+  Boolean(process.env.NEXT_PUBLIC_POSTHOG_KEY)
+
 export function PostHogProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
-    if (process.env.NODE_ENV === "production") {
+    if (POSTHOG_ATIVO) {
       posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
         api_host: "/ingest",
         ui_host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
@@ -19,7 +25,7 @@ export function PostHogProvider({ children }: { children: React.ReactNode }) {
     }
   }, [])
 
-  if (process.env.NODE_ENV !== "production") {
+  if (!POSTHOG_ATIVO) {
     return <>{children}</>
   }
 
