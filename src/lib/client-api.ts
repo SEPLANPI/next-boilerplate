@@ -4,7 +4,7 @@ const apiUrl = process.env.NEXT_PUBLIC_CLIENT_API_URL
 
 interface ClientApiOptions extends Omit<RequestInit, "body"> {
   contentType?: "form-data" | "json"
-  body?: any
+  body?: unknown
 }
 
 async function clientRequest(
@@ -19,12 +19,14 @@ async function clientRequest(
     ...(accessToken && { Authorization: `Bearer ${accessToken}` }),
     ...options.headers,
   }
-  if (body && (!contentType || contentType === "json")) {
-    body = JSON.stringify(body)
-  }
+  // JSON por padrão; com contentType "form-data" o body vai como veio.
+  const corpo =
+    body && (!contentType || contentType === "json")
+      ? JSON.stringify(body)
+      : (body as BodyInit | undefined)
   return fetch(`${apiUrl}${url}`, {
     method,
-    body,
+    body: corpo,
 
     headers,
     ...options,

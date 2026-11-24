@@ -8,7 +8,7 @@ const apiUrl = env.SERVER_API_URL
 
 interface ApiOptions extends Omit<RequestInit, "body"> {
   contentType?: "form-data" | "json"
-  body?: any
+  body?: unknown
   next?: {
     revalidate?: number | false
     tags?: string[]
@@ -29,13 +29,15 @@ async function request(
     ...options.headers,
   }
 
-  if (body && (!contentType || contentType === "json")) {
-    body = JSON.stringify(body)
-  }
+  // JSON por padrão; com contentType "form-data" o body vai como veio.
+  const corpo =
+    body && (!contentType || contentType === "json")
+      ? JSON.stringify(body)
+      : (body as BodyInit | undefined)
 
   return fetch(`${apiUrl}${url}`, {
     method,
-    body,
+    body: corpo,
     headers,
     next,
     ...options,
