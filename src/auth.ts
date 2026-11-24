@@ -4,6 +4,7 @@ import { env } from "./config/env"
 import { routingConfig } from "./config/routing"
 import { handleInitialSignIn } from "./lib/auth/handle-initial-signin"
 import { refreshAccessToken } from "./lib/auth/refresh-access-token"
+import { precisaVerificarSessao } from "./lib/auth/sessao"
 import { verifySessionActivity } from "./lib/auth/verify-session"
 import { logger } from "./lib/logger"
 import { fetchWithRetry } from "./lib/retry"
@@ -34,22 +35,36 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         session.user = token.user
         session.error = token.error
         session.accessToken = token.accessToken
+        // O navegador reaproveita o token até perto daqui (ver
+        // `criarCacheDeToken`) em vez de buscar a sessão a cada chamada.
+        session.accessTokenExpires = token.accessTokenExpires
       }
       return session
     },
     jwt: async ({ token, user, account, trigger }) => {
       if (account && user) {
-        return handleInitialSignIn(token, user, account)
+        const inicial = await handleInitialSignIn(token, user, account)
+        return { ...inicial, sessaoVerificadaEm: Date.now() }
       }
 
-      if (Date.now() > token.accessTokenExpires || trigger === "update")
-        return refreshAccessToken(token)
+      if (Date.now() > token.accessTokenExpires || trigger === "update") {
+        // Renovar com o refresh token só funciona com a sessão ativa no
+        // Keycloak: vale como verificação.
+        const renovado = await refreshAccessToken(token)
+        return renovado.error
+          ? renovado
+          : { ...renovado, sessaoVerificadaEm: Date.now() }
+      }
 
-      if (token.accessToken) {
+      // Este callback roda a cada auth()/getSession() — várias vezes por
+      // tela. A sessão no Keycloak é conferida no máximo a cada
+      // INTERVALO_VERIFICACAO_SESSAO_MS, não em toda chamada.
+      if (token.accessToken && precisaVerificarSessao(token)) {
         const isActive = await verifySessionActivity(token.accessToken)
         if (!isActive) {
           return { ...token, error: "TokenInvalidError" }
         }
+        return { ...token, sessaoVerificadaEm: Date.now() }
       }
 
       return token
