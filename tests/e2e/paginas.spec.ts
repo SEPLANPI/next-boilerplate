@@ -55,6 +55,12 @@ test("com sessão mostra o usuário no menu", async ({ page, context }) => {
   semErros()
 })
 
+test("idioma pt-BR e uma única meta viewport", async ({ page }) => {
+  await page.goto("/")
+  await expect(page.locator("html")).toHaveAttribute("lang", "pt-BR")
+  await expect(page.locator('meta[name="viewport"]')).toHaveCount(1)
+})
+
 test("barra no fim da URL redireciona para a página sem barra", async ({
   page,
 }) => {
