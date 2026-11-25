@@ -22,27 +22,38 @@ Guias oficiais:
 
 2. **Manter o visual do Mantine 8.** O Mantine 9 muda a aparência em dois pontos:
    - a variante `light` (Badge, Button, ActionIcon, Alert…) passa a usar cor sólida, em vez de cor com transparência;
-   - o peso `medium` vai de 500 para 600.
+   - os pesos de fonte. No 8, os rótulos usavam peso 500 e os botões 600. No 9, todos usam `var(--mantine-font-weight-medium)`, que vale 600. Os rótulos ficam mais grossos.
 
-   O boilerplate mantém o visual do 8 até a revisão do tema. Em `src/lib/mantine/index.ts`:
+   O boilerplate mantém o visual do 8 até a revisão do tema.
 
-   ```ts
-   export const compatibilidadeMantine8 = createTheme({
-     fontWeights: { medium: "500" },
-   })
-   export const theme = mergeThemeOverrides(temaBase, compatibilidadeMantine8)
-   export const cssVariablesResolver = v8CssVariablesResolver
-   ```
-
-   E em **todo** `MantineProvider`, inclusive o do `.storybook/preview.tsx` e o de páginas de erro:
+   **Cores:** em `src/lib/mantine/index.ts`, `export const cssVariablesResolver = v8CssVariablesResolver`, passado em **todo** `MantineProvider`, inclusive o do `.storybook/preview.tsx` e os das páginas de erro:
 
    ```tsx
    <MantineProvider theme={theme} cssVariablesResolver={cssVariablesResolver}>
    ```
 
-   - Onde o `MantineProvider` recebe outro tema, como o de `@ui/mantine-config` nas páginas de erro, aplique o ajuste do peso também: `mergeThemeOverrides(temaDaLib, compatibilidadeMantine8)`.
-   - Para achar todos: `git grep -n "<MantineProvider" -- src .storybook`.
-   - O teste `src/lib/mantine/compatibilidade-mantine-8.test.ts` confere os dois valores. Se um dia o tema adotar o visual do 9, tire o resolver e o ajuste, e atualize ou remova o teste.
+   Para achar todos: `git grep -n "<MantineProvider" -- src .storybook`.
+
+   **Pesos:** **não** troque `fontWeights.medium` para 500 no tema. Isso afina também os botões, que no 8 eram 600, e muda as capturas de tela. Em vez disso, o `globals.css` devolve o 500 só aos elementos que eram 500 no 8:
+
+   ```css
+   @layer mantine {
+     .mantine-InputWrapper-label,
+     .mantine-Menu-label,
+     .mantine-Notification-title,
+     .mantine-Stepper-stepLabel,
+     .mantine-SegmentedControl-label,
+     .mantine-Timeline-itemTitle,
+     .mantine-Combobox-groupLabel,
+     .mantine-Table-th {
+       --mantine-font-weight-medium: 500;
+     }
+   }
+   ```
+
+   - Como a regra troca a variável, e não o `font-weight`, classes do projeto como `font-semibold` continuam valendo.
+   - A lista vem da comparação do `styles.css` do `@mantine/core` 8.3.18 com o do 9.8.2. No 8, `Button`, `ActionIcon` e o trilho do `Switch` eram 600; esses ficam com o padrão do 9.
+   - A story `Design System/Compatibilidade Mantine 8` mede no navegador o peso de botão, rótulo de campo, título de notificação, rótulo do `SegmentedControl` e cabeçalho de tabela, e a cor do Badge `light`. Os valores esperados foram medidos com o Mantine 8. Se um dia o tema adotar o visual do 9, tire o resolver e o bloco do CSS e atualize a story.
 
 3. **`<Collapse in>` → `<Collapse expanded>`.** O `typecheck` aponta cada caso.
 
@@ -105,11 +116,11 @@ O `@mantine/charts` (`BarChart`, `LineChart`, `DonutChart`…) esconde a maior p
 ## Resultado no boilerplate
 
 - **Capturas de tela: nenhuma diferença** nas 7 páginas.
-- **Variáveis CSS iguais às do Mantine 8:** comparei as geradas pelo tema no 8.3.18 (B3) e no 9.8.2 (B4), nos dois temas (o local e o de `@ui/mantine-config`), em claro e escuro, e as cores de 9 variantes × 6 cores.
-  - Com a compatibilidade, a única diferença são variáveis que não existiam no 8 (`--mantine-font-weight-*` e `--mantine-color-success`).
-  - Sem o `v8CssVariablesResolver`, são 268 diferenças, por exemplo `--mantine-color-primary-light`: `rgba(3, 82, 170, 0.1)` → `var(--mantine-color-primary-1)`.
-  - As 7 páginas das capturas não usam a variante `light`, por isso só a comparação das variáveis pega essa mudança.
+- **Cores e pesos iguais aos do Mantine 8**, medidos no navegador pela story de compatibilidade, com os mesmos valores do Mantine 8.3.18 (B3).
+  - As variáveis CSS geradas pelo tema batem com as do 8 em claro e escuro, e também as cores de 9 variantes × 6 cores. A única diferença são as variáveis que não existiam no 8 (`--mantine-font-weight-*` e `--mantine-color-success`).
+  - Checagem de mutação: sem o `v8CssVariablesResolver`, o Badge `light` passa de `rgba(3, 82, 170, 0.1)` para `rgb(208, 231, 255)`. Sem o bloco do CSS, o rótulo do `SegmentedControl` e o título da notificação vão para 600. Nos dois casos, a story falha.
+- **Primeira tentativa, descartada:** `fontWeights.medium: "500"` no tema. As 4 páginas de erro mudaram nas capturas, porque os botões, que no 8 eram 600, ficaram com 500. Sem nenhum ajuste de peso, as capturas não mudam, já que elas não têm rótulos. Ou seja, as capturas sozinhas não pegam a mudança dos rótulos; quem pega é a story.
 - **Quebras encontradas:**
   - `Collapse in` em 4 componentes, pego pelo `typecheck`;
   - `Grid gutter` em exemplos da documentação do Storybook. Os mesmos exemplos ainda usavam `Group spacing` e `Stack spacing`, inválidos desde o Mantine 7 (o certo é `gap`); corrigidos junto.
-- As 29 stories, entre elas as do `Sparkline`, passaram com o Recharts 3.
+- As 30 stories, entre elas as do `Sparkline`, passaram com o Recharts 3.
