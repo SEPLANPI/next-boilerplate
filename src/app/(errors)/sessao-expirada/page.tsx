@@ -4,12 +4,10 @@ import { AlertCircle } from "lucide-react"
 
 export default async function SessionExpired({
   searchParams,
-}: {
-  searchParams: Promise<{
-    redirectTo?: string
-  }>
-}) {
-  const { redirectTo = "/" } = await searchParams
+}: PageProps<"/sessao-expirada">) {
+  const parametro = (await searchParams).redirectTo
+  // Repetido na URL (?redirectTo=a&redirectTo=b) vira lista: volta para "/".
+  const redirectTo = typeof parametro === "string" ? parametro : "/"
   return (
     <div className="flex h-screen w-full items-center justify-center">
       <div className="space-y-6 text-center">
