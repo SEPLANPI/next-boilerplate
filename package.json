@@ -13,7 +13,7 @@
         "start": "next start",
         "lint": "eslint src",
         "lint:fix": "eslint src --fix",
-        "typecheck": "tsc --noEmit",
+        "typecheck": "next typegen && tsc --noEmit",
         "test": "vitest run --project unit",
         "test:storybook": "vitest run --project storybook",
         "test:e2e": "playwright test",
