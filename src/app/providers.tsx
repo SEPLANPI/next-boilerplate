@@ -9,7 +9,7 @@ import { SessionProvider } from "next-auth/react"
 import { NuqsAdapter } from "nuqs/adapters/next"
 import { PropsWithChildren } from "react"
 import { Notifications } from "@mantine/notifications"
-import { theme } from "@/lib/mantine"
+import { cssVariablesResolver, theme } from "@/lib/mantine"
 import { PostHogProvider } from "@/components/posthog-provider"
 
 export function Providers({ children }: PropsWithChildren) {
@@ -23,7 +23,10 @@ export function Providers({ children }: PropsWithChildren) {
             locale: "pt-br",
           }}
         >
-          <MantineProvider theme={theme}>
+          <MantineProvider
+            theme={theme}
+            cssVariablesResolver={cssVariablesResolver}
+          >
             <PostHogProvider>
               <Notifications position="top-center" autoClose={4000} />
               <NuqsAdapter>{children}</NuqsAdapter>
