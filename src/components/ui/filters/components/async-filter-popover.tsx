@@ -12,7 +12,7 @@ export interface AsyncFilterPopoverProps<T extends object> {
   children?: React.ReactNode
   filterId: string
   loadOptions: () => Promise<ApiResponse<T[]>>
-  renderOption?: (option: T) => JSX.Element
+  renderOption?: (option: T) => React.JSX.Element
   getOptionValue?: (option: T) => string
   getOptionLabel?: (option: T) => string
   isDisabled?: (option: T) => boolean

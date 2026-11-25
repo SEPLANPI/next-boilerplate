@@ -15,7 +15,7 @@ export type IsDefaultOption<T> = T extends DefaultOption ? true : false
 export type AsyncFilterProps<T> = PropsWithChildren<
   {
     loadOptions: () => Promise<T[]>
-    renderOption?: (option: T) => JSX.Element
+    renderOption?: (option: T) => React.JSX.Element
     filterId: string
     searchParamKey?: string
     filterFn?: (option: T, search: string) => boolean
@@ -32,7 +32,7 @@ export type AsyncFilterProps<T> = PropsWithChildren<
       })
 >
 export type ContentProps<T> = {
-  renderOption: (option: T) => JSX.Element
+  renderOption: (option: T) => React.JSX.Element
   loadOptions: () => Promise<T[]>
   getOptionValue: (option: T) => string
   getOptionLabel: (option: T) => string

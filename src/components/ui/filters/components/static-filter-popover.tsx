@@ -9,7 +9,7 @@ import { FilterButton } from "./filter-button"
 export interface StaticFilterPopoverProps<T extends object> {
   children?: React.ReactNode
   options: T[]
-  renderOption?: (option: T) => JSX.Element
+  renderOption?: (option: T) => React.JSX.Element
   getOptionValue?: (option: T) => string
   getOptionLabel?: (option: T) => string
   isDisabled?: (option: T) => boolean

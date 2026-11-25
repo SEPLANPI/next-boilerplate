@@ -14,7 +14,7 @@ export type OptionHandlers<T> = {
 
 export type BaseFilterProps<T> = PropsWithChildren<
   {
-    renderOption?: (option: T) => JSX.Element
+    renderOption?: (option: T) => React.JSX.Element
     searchParamKey: string
     filterFn?: (option: T, search: string) => boolean
     isDisabled?: (option: T) => boolean
@@ -33,7 +33,7 @@ export type BaseFilterProps<T> = PropsWithChildren<
 
 export type BaseContentProps<T> = {
   options: T[]
-  renderOption: (option: T) => JSX.Element
+  renderOption: (option: T) => React.JSX.Element
   getOptionValue: (option: T) => string
   getOptionLabel: (option: T) => string
   isDisabled: (option: T) => boolean

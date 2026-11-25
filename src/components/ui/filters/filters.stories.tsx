@@ -132,7 +132,7 @@ Componentes para filtros baseados em exemplos reais da aplicação.
     // Advanced props
     renderOption: {
       description:
-        "Renderização customizada de cada opção: (option: T) => JSX.Element",
+        "Renderização customizada de cada opção: (option: T) => React.JSX.Element",
       table: { category: "Avançado" },
     },
     isDisabled: {

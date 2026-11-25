@@ -6,7 +6,7 @@ import { useFilters } from "../hooks/use-filters"
 interface FilterGroupContentProps<T> {
   groupKey: string
   options: T[]
-  renderOption: (option: T) => JSX.Element
+  renderOption: (option: T) => React.JSX.Element
   getOptionValue: (option: T) => string
   getOptionLabel: (option: T) => string
   isDisabled: (option: T) => boolean
