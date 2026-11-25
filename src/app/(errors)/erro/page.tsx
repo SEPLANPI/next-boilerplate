@@ -1,12 +1,10 @@
 "use client"
 
-import { MantineProvider, mergeThemeOverrides } from "@mantine/core"
-import { theme as temaDaLib } from "@ui/mantine-config"
-import { compatibilidadeMantine8, cssVariablesResolver } from "@/lib/mantine"
+import { MantineProvider } from "@mantine/core"
+import { theme } from "@ui/mantine-config"
+import { cssVariablesResolver } from "@/lib/mantine"
 import { Suspense } from "react"
 import { ErrorContent } from "./error-content"
-
-const theme = mergeThemeOverrides(temaDaLib, compatibilidadeMantine8)
 
 export default function ErrorPage() {
   return (

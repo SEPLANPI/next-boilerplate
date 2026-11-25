@@ -1,8 +1,4 @@
-import {
-  createTheme,
-  mergeThemeOverrides,
-  v8CssVariablesResolver,
-} from "@mantine/core"
+import { createTheme, v8CssVariablesResolver } from "@mantine/core"
 import { colors } from "./colors"
 import { fontFamilies, headings, fontSizes, lineHeights } from "./typography"
 import { spacing, radius, breakpoints } from "./layout"
@@ -11,22 +7,10 @@ import { components } from "./components"
 import { variantColorResolver } from "./variant-resolver"
 
 /**
- * Ajustes que mantêm o visual do Mantine 8 no Mantine 9, até a revisão do tema.
- * O 9 subiu o peso "medium" de 500 para 600.
- * Aplique também em temas de fora, como o de `@ui/mantine-config`:
- * `mergeThemeOverrides(outroTema, compatibilidadeMantine8)`.
- */
-export const compatibilidadeMantine8 = createTheme({
-  fontWeights: {
-    medium: "500",
-  },
-})
-
-/**
  * Main Mantine theme configuration
  * Combines all theme modules into a cohesive design system
  */
-const temaBase = createTheme({
+export const theme = createTheme({
   // Core settings
   scale: 1,
   fontSmoothing: true,
@@ -79,8 +63,6 @@ const temaBase = createTheme({
   // Custom variant resolver
   variantColorResolver,
 })
-
-export const theme = mergeThemeOverrides(temaBase, compatibilidadeMantine8)
 
 /**
  * Variáveis CSS no formato do Mantine 8.

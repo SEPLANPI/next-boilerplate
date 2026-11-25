@@ -1,11 +1,9 @@
 "use client"
 
-import { Button, MantineProvider, mergeThemeOverrides } from "@mantine/core"
-import { theme as temaDaLib } from "@ui/mantine-config"
-import { compatibilidadeMantine8, cssVariablesResolver } from "@/lib/mantine"
+import { Button, MantineProvider } from "@mantine/core"
+import { theme } from "@ui/mantine-config"
+import { cssVariablesResolver } from "@/lib/mantine"
 import { startTransition } from "react"
-
-const theme = mergeThemeOverrides(temaDaLib, compatibilidadeMantine8)
 
 export default function GlobalError({ reset }: { reset: () => void }) {
   function handleReset() {
