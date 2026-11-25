@@ -3,7 +3,7 @@ import { determineRouteAccess } from "@/lib/routes/matcher"
 import { NextResponse } from "next/server"
 import { routingConfig } from "./config/routing"
 
-export default auth((req) => {
+export const proxy = auth((req) => {
   const path = req.nextUrl.pathname
 
   const routeAccess = determineRouteAccess(path, req?.auth?.user?.roles || [])
