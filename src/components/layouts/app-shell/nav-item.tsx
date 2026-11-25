@@ -219,7 +219,7 @@ export function NavItem({ item, collapsed }: NavItemProps) {
           />
         </Box>
 
-        <Collapse in={opened}>
+        <Collapse expanded={opened}>
           <Box className="ml-5 space-y-1.5 border-l-2 border-secondary py-1 pl-1">
             {visibleChildren.map((child) => {
               const childHref = child.href.replace(
