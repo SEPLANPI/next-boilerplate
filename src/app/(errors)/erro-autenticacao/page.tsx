@@ -3,7 +3,7 @@ import { routingConfig } from "@/config/routing"
 import { Button } from "@mantine/core"
 import { AlertTriangle, Home, RefreshCw } from "lucide-react"
 import { Metadata } from "next"
-import Link from "next/link"
+import { LinkCliente } from "@/components/ui/link-cliente"
 
 export const metadata: Metadata = {
   title: "Erro de Autenticação",
@@ -141,7 +141,7 @@ export default async function AuthErrorPage({
           </form>
 
           <Button
-            component={Link}
+            component={LinkCliente}
             href="/"
             variant="subtle"
             rightSection={<Home className="size-4" />}

@@ -1,7 +1,7 @@
 import { auth } from "@/auth"
 import { Avatar, Button } from "@mantine/core"
 import { Home, Lock } from "lucide-react"
-import Link from "next/link"
+import { LinkCliente } from "@/components/ui/link-cliente"
 import { SignOutButton } from "./sign-out-button"
 
 interface AccessDeniedLayoutProps {
@@ -59,7 +59,7 @@ export async function AccessDeniedLayout({
         )}
         <div className="mt-4 flex gap-4">
           <Button
-            component={Link}
+            component={LinkCliente}
             href="/"
             rightSection={<Home className="size-4" />}
           >
