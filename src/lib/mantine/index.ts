@@ -1,4 +1,4 @@
-import { createTheme } from "@mantine/core"
+import { createTheme, v8CssVariablesResolver } from "@mantine/core"
 import { colors } from "./colors"
 import { fontFamilies, headings, fontSizes, lineHeights } from "./typography"
 import { spacing, radius, breakpoints } from "./layout"
@@ -34,6 +34,10 @@ export const theme = createTheme({
   headings,
   fontSizes,
   lineHeights,
+  // O Mantine 9 subiu o peso "medium" de 500 para 600. Mantém o do 8.
+  fontWeights: {
+    medium: "500",
+  },
 
   // Layout and spacing
   spacing,
@@ -63,6 +67,15 @@ export const theme = createTheme({
   // Custom variant resolver
   variantColorResolver,
 })
+
+/**
+ * Variáveis CSS no formato do Mantine 8.
+ *
+ * No Mantine 9, a variante `light` usa cores sólidas em vez de transparência.
+ * Este resolver mantém o visual do 8 até a revisão do tema. Passe em todo
+ * `MantineProvider`: `<MantineProvider theme={theme} cssVariablesResolver={cssVariablesResolver}>`.
+ */
+export const cssVariablesResolver = v8CssVariablesResolver
 
 // Re-export all modules for direct access if needed
 export * from "./colors"
