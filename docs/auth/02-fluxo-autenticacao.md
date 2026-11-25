@@ -101,13 +101,13 @@ export async function GET(req: Request) {
 ## Middleware de Proteção
 
 ```typescript
-// src/middleware.ts
+// src/proxy.ts
 import { NextResponse } from 'next/server'
 import { auth } from '@/auth'
 import { determineRouteAccess } from '@/lib/routes/matcher'
 import { routingConfig } from './config/routing'
 
-export default auth((req) => {
+export const proxy = auth((req) => {
   const path = req.nextUrl.pathname
   const routeAccess = determineRouteAccess(path, req?.auth?.user?.roles || [])
 

@@ -25,13 +25,13 @@ O middleware intercepta **todas as requisições** e decide automaticamente:
 ### Arquivo Principal
 
 ```typescript
-// src/middleware.ts
+// src/proxy.ts
 import { NextResponse } from 'next/server'
 import { auth } from '@/auth'
 import { determineRouteAccess } from '@/lib/routes/matcher'
 import { routingConfig } from './config/routing'
 
-export default auth((req) => {
+export const proxy = auth((req) => {
   const path = req.nextUrl.pathname
 
   // Determina acesso baseado no caminho e roles do usuário
@@ -281,8 +281,8 @@ export default function AdminAccessDenied() {
 ### Logs de Debug
 
 ```typescript
-// src/middleware.ts (versão com debug)
-export default auth((req) => {
+// src/proxy.ts (versão com debug)
+export const proxy = auth((req) => {
   const path = req.nextUrl.pathname
 
   // Log para debug (remover em produção)
@@ -356,7 +356,7 @@ export function RouteDebugger() {
 #### 1. Middleware não executa
 
 ```typescript
-// Verifique o matcher no middleware.ts
+// Verifique o matcher no proxy.ts
 export const config = {
   matcher: [
     // ✅ Correto - exclui assets
@@ -398,7 +398,7 @@ export const config = {
 
 ```typescript
 // ❌ Problema: modificar resposta após next()
-export default auth((req) => {
+export const proxy = auth((req) => {
   const response = NextResponse.next()
 
   // Alguma lógica...

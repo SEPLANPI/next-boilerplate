@@ -12,7 +12,7 @@ export interface StaticFilterGroupProps<T extends object> {
   options: T[]
   getOptionValue?: (option: T) => string
   getOptionLabel?: (option: T) => string
-  renderOption?: (option: T) => JSX.Element
+  renderOption?: (option: T) => React.JSX.Element
   isDisabled?: (option: T) => boolean
   filterFn?: (option: T, search: string) => boolean
   showSearch?: boolean

@@ -3,26 +3,24 @@ import { routingConfig } from "@/config/routing"
 import { Button } from "@mantine/core"
 import { AlertTriangle, Home, RefreshCw } from "lucide-react"
 import { Metadata } from "next"
-import Link from "next/link"
+import { LinkCliente } from "@/components/ui/link-cliente"
 
 export const metadata: Metadata = {
   title: "Erro de Autenticação",
 }
 
-interface AuthErrorPageProps {
-  searchParams: Promise<{
-    error?: string
-    redirectTo?: string
-  }>
-}
+// Parâmetro repetido na URL vira lista: usa o padrão.
+const texto = (valor: string | string[] | undefined) =>
+  typeof valor === "string" ? valor : undefined
 
 export default async function AuthErrorPage({
   searchParams,
-}: AuthErrorPageProps) {
-  const {
-    error = "unknown",
-    redirectTo = routingConfig.defaults.redirects.postAuthRedirectPath,
-  } = await searchParams
+}: PageProps<"/erro-autenticacao">) {
+  const parametros = await searchParams
+  const error = texto(parametros.error) ?? "unknown"
+  const redirectTo =
+    texto(parametros.redirectTo) ??
+    routingConfig.defaults.redirects.postAuthRedirectPath
 
   const getErrorMessage = (errorType: string) => {
     switch (errorType) {
@@ -143,7 +141,7 @@ export default async function AuthErrorPage({
           </form>
 
           <Button
-            component={Link}
+            component={LinkCliente}
             href="/"
             variant="subtle"
             rightSection={<Home className="size-4" />}
