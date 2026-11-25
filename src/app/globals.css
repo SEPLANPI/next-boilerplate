@@ -8,6 +8,27 @@
 /* import mantine */
 @import "@mantine/core/styles.layer.css";
 
+/*
+ * Visual do Mantine 8 no Mantine 9 (até a revisão do tema).
+ * No 8, rótulos usavam peso 500 e botões 600. O 9 passou todos para
+ * var(--mantine-font-weight-medium), que vale 600. Aqui a variável volta a 500
+ * só nos elementos que eram 500 no 8. Por ser uma variável, e não font-weight,
+ * classes como font-semibold continuam valendo.
+ * Ver docs/guias/atualizacao-mantine-9.md.
+ */
+@layer mantine {
+  .mantine-InputWrapper-label,
+  .mantine-Menu-label,
+  .mantine-Notification-title,
+  .mantine-Stepper-stepLabel,
+  .mantine-SegmentedControl-label,
+  .mantine-Timeline-itemTitle,
+  .mantine-Combobox-groupLabel,
+  .mantine-Table-th {
+    --mantine-font-weight-medium: 500;
+  }
+}
+
 @layer mantine {
   html {
     @apply scroll-smooth;
