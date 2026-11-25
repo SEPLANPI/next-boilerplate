@@ -70,7 +70,7 @@ Implemente controle de acesso na UI
 
 - **[Keycloak GovPI Cidadão](https://www.gov.br/governodigital/pt-br)** - Provedor de identidade padrão da empresa
 - **[NextAuth.js](https://next-auth.js.org/)** - Gerenciamento de autenticação
-- **[Next.js Middleware](https://nextjs.org/docs/advanced-features/middleware)** - Proteção automática de rotas
+- **[Next.js Proxy](https://nextjs.org/docs/app/api-reference/file-conventions/proxy)** (antigo middleware) - Proteção automática de rotas
 - **JWT** - Tokens de acesso padrão
 - **TypeScript** - Tipagem completa e extensível
 
@@ -79,7 +79,7 @@ Implemente controle de acesso na UI
 ```
 src/
 ├── auth.ts                         # ⚙️ Configuração principal (adapte para seu sistema)
-├── middleware.ts                   # 🛡️ Middleware universal (reutilizável)
+├── proxy.ts                        # 🛡️ Proxy (antigo middleware) universal
 ├── config/
 │   └── routing.ts                  # 🛣️ Configure suas rotas específicas
 ├── components/

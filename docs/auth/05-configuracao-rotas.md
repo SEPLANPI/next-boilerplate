@@ -307,4 +307,4 @@ O middleware carrega esta configuração e:
 4. **Valida roles necessários** contra roles do usuário
 5. **Redireciona conforme** configuração de redirects
 
-> **Importante**: Esta configuração é carregada pelo middleware em `@/middleware.ts`. Mudanças aqui afetam toda a proteção de rotas da aplicação.
+> **Importante**: Esta configuração é carregada pelo proxy em `src/proxy.ts`. Mudanças aqui afetam toda a proteção de rotas da aplicação.
