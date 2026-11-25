@@ -16,7 +16,7 @@ Guia oficial: https://nextjs.org/docs/app/guides/upgrading/version-16
 
    Requisitos: Node 20.9+ e TypeScript 5.1+.
 
-   Não precisam de nova versão: Storybook 9.1 (`@storybook/nextjs-vite`), next-auth 5.0.0-beta.32 e nuqs 2.x, que já aceitam o Next 16.
+   Não precisam de nova versão: next-auth 5.0.0-beta.32 e nuqs 2.x, que já aceitam o Next 16. O **Storybook precisa**: ver o passo 9.
 
 2. **`JSX` global → `React.JSX`.** Os tipos do React 19 não têm mais o namespace `JSX` global.
 
@@ -74,6 +74,26 @@ Guia oficial: https://nextjs.org/docs/app/guides/upgrading/version-16
 
 8. **`pnpm start`** deve ser `next start`. O boilerplate chamava um `server.js` que não existia.
 
+9. **Storybook 9.1 → 10.6 e Vitest 3 → 4.**
+   - Com o Next 16.4, **todas as stories quebram** no Storybook 9.1 (`Cannot read properties of undefined (reading 'data')` em `RedirectBoundary`). O roteador simulado do Storybook não tem o `parentRenderTree` que o Next 16.4 passou a ler.
+   - O `@storybook/nextjs-vite` 9.1 declara aceitar o Next 16, mas não funciona com o 16.4.
+   - A correção só existe a partir do **Storybook 10.6.3**, cujo `@storybook/addon-vitest` exige **Vitest 4**.
+
+   ```bash
+   pnpm add -D storybook@10.6.9 @storybook/nextjs-vite@10.6.9 @storybook/addon-a11y@10.6.9 \
+     @storybook/addon-docs@10.6.9 @storybook/addon-onboarding@10.6.9 @storybook/addon-vitest@10.6.9 \
+     eslint-plugin-storybook@10.6.9 @chromatic-com/storybook@^5.6.0 \
+     vitest@^4.1.12 @vitest/browser@^4.1.12 @vitest/browser-playwright@^4.1.12 @vitest/coverage-v8@^4.1.12
+   ```
+
+   - **`vitest.config.ts`:** no projeto do navegador, trocar `provider: "playwright"` por `provider: playwright()` (`import { playwright } from "@vitest/browser-playwright"`).
+   - **`vitest.shims.d.ts`:** `/// <reference types="@vitest/browser-playwright" />`.
+   - **`.mdx`:** trocar `from '@storybook/blocks'` por `from '@storybook/addon-docs/blocks'` e remover o pacote `@storybook/blocks`. A 8.6 pedia Storybook 8 e gerava aviso de peer.
+
+10. **`AGENTS.md` criado pelo `next dev`.** No 16.4, quando o `next dev` detecta um agente de IA (Claude Code, Cursor…), ele cria um `AGENTS.md` na raiz, apontando para a documentação do Next em `node_modules`. Para quem não usa agente, nada acontece.
+    - O boilerplate **não** versiona esse arquivo.
+    - Para desligar, use `agentRules: false` no `next.config`.
+
 ## O que conferir no projeto
 
 | Mudança do Next 16 | Como achar | O que fazer |
@@ -93,7 +113,10 @@ Guia oficial: https://nextjs.org/docs/app/guides/upgrading/version-16
 ## Resultado no boilerplate
 
 - Capturas de tela: **nenhuma diferença** nas 7 páginas. O `next/image` com imagens locais de `public/` não mudou nada.
-- Quebras encontradas: o `JSX` global (14 pontos, em tipos de filtros) e o `component={Link}` em 2 Server Components (`/acesso-negado` e `/erro-autenticacao` davam 500). As duas foram pegas pelos testes: a primeira pelo `typecheck`, a segunda pelo ponta a ponta.
+- Quebras encontradas, todas pegas pelos testes:
+  - o `JSX` global (14 pontos, em tipos de filtros), pego pelo `typecheck`;
+  - o `component={Link}` em 2 Server Components (`/acesso-negado` e `/erro-autenticacao` davam 500), pego pelo ponta a ponta;
+  - as 29 stories no Storybook 9.1, pegas pelos testes das stories.
 - Novo teste: `tests/e2e/proxy.spec.ts` confere que o build registrou o proxy em Node com o matcher de `src/proxy.ts`. Sem ele, um proxy com nome ou lugar errado simplesmente não rodaria, sem erro. Checagem de mutação: renomeando o arquivo, o teste falha.
 
 ## Recursos novos (não usados nesta etapa)
