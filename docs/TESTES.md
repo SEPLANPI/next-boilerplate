@@ -4,8 +4,8 @@ Quatro camadas, da mais barata para a mais cara. O CI (`.github/workflows/verifi
 
 | Comando | O quê | Onde |
 |---|---|---|
-| `pnpm typecheck` | `tsc --noEmit` | — |
-| `pnpm lint` | ESLint + Prettier | — |
+| `pnpm typecheck` | `next typegen` (tipos de rota) + `tsc --noEmit` | — |
+| `pnpm lint` | ESLint + Prettier em `src` | — |
 | `pnpm test` | unitários (Vitest, Node) | `src/**/*.test.ts` |
 | `pnpm test:storybook` | cada story renderiza; `play()` testa interação | `src/**/*.stories.tsx` |
 | `pnpm test:e2e` | ponta a ponta + capturas de tela (Playwright) | `tests/e2e/` |
@@ -14,7 +14,7 @@ Quatro camadas, da mais barata para a mais cara. O CI (`.github/workflows/verifi
 
 Lógica pura: controle de acesso por rota (`lib/routes`), renovação do token e verificação de sessão (`lib/auth`, com o Keycloak simulado por `fetch`), nova tentativa de chamadas HTTP (`lib/retry`) e utilitários.
 
-O boilerplate vem com **todas as rotas públicas**. A proteção por rota e role é testada em `src/lib/routes/matcher.test.ts` com uma configuração simulada; ao definir rotas protegidas no projeto, acrescente casos lá.
+O boilerplate vem com **todas as rotas públicas**. A proteção por rota e role é testada em `src/lib/routes/matcher.test.ts` com uma configuração simulada; ao definir rotas protegidas no projeto, acrescente casos lá. Que o proxy (`src/proxy.ts`) entrou no build, em Node e com o matcher do arquivo, é conferido em `tests/e2e/proxy.spec.ts`.
 
 ## Stories
 
