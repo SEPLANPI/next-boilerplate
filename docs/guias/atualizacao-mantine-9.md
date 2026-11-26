@@ -100,7 +100,7 @@ Guias oficiais:
 | `useHeadroom` retorna objeto | `git grep -n useHeadroom -- src` | `const { pinned } = useHeadroom(…)` |
 | `useLocalStorage`/`useSessionStorage` sem `defaultValue` | `git grep -nE "use(Local\|Session)Storage" -- src` | passar `defaultValue` ou tratar `undefined` |
 | Tipos renomeados em `@mantine/hooks` | `git grep -nE "UseScrollSpyReturnType\|StateHistory\|\bOS\b" -- src` | `UseScrollSpyReturnValue`, `UseStateHistoryValue`, `UseOSReturnValue` |
-| `zodResolver` saiu de `@mantine/form` | `git grep -n zodResolver -- src` | `schemaResolver(schema, { sync: true })` com Zod 4 |
+| `zodResolver` saiu de `@mantine/form` | `git grep -n zodResolver -- src` | `schemaResolver(schema, { sync: true })`. Funciona com Zod 3.24+ ou 4 (Standard Schema): os schemas não mudam e o Zod não precisa ser atualizado |
 | Segundo genérico de `useForm` | `git grep -n "useForm<" -- src` | é o tipo dos valores transformados, não o da função |
 | `createPolymorphicComponent` | `git grep -n createPolymorphicComponent -- src` | `polymorphic` |
 | Raio padrão `sm` → `md` | `git grep -n defaultRadius -- src` | sem `defaultRadius` no tema, o raio muda: fixe `"sm"` para manter o visual do 8 |
