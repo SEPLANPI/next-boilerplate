@@ -1,4 +1,4 @@
-import { createTheme } from "@mantine/core"
+import { createTheme, v8CssVariablesResolver } from "@mantine/core"
 import { colors } from "./colors"
 import { fontFamilies, headings, fontSizes, lineHeights } from "./typography"
 import { spacing, radius, breakpoints } from "./layout"
@@ -45,7 +45,9 @@ export const theme = createTheme({
 
   // Interaction and animation
   respectReducedMotion: false,
-  cursorType: "default",
+  // Mantine 9: botões, selects, abas e links usam este cursor (no 8 era
+  // sempre pointer). Checkbox, Radio e Switch voltam ao default no globals.css.
+  cursorType: "pointer",
 
   // Default styling
   defaultGradient: {
@@ -63,6 +65,15 @@ export const theme = createTheme({
   // Custom variant resolver
   variantColorResolver,
 })
+
+/**
+ * Variáveis CSS no formato do Mantine 8.
+ *
+ * No Mantine 9, a variante `light` usa cores sólidas em vez de transparência.
+ * Este resolver mantém o visual do 8 até a revisão do tema. Passe em todo
+ * `MantineProvider`: `<MantineProvider theme={theme} cssVariablesResolver={cssVariablesResolver}>`.
+ */
+export const cssVariablesResolver = v8CssVariablesResolver
 
 // Re-export all modules for direct access if needed
 export * from "./colors"

@@ -7,7 +7,7 @@ import { MantineProvider } from "@mantine/core"
 import { DatesProvider } from "@mantine/dates"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { NuqsTestingAdapter } from "nuqs/adapters/testing"
-import { theme } from "../src/lib/mantine"
+import { cssVariablesResolver, theme } from "../src/lib/mantine"
 import React from "react"
 
 // Create a query client for Storybook
@@ -50,7 +50,10 @@ const preview: Preview = {
         <QueryClientProvider client={queryClient}>
           <NuqsTestingAdapter searchParams={searchParams}>
             <DatesProvider settings={{ locale: "pt-br" }}>
-              <MantineProvider theme={theme}>
+              <MantineProvider
+                theme={theme}
+                cssVariablesResolver={cssVariablesResolver}
+              >
                 <Story />
               </MantineProvider>
             </DatesProvider>

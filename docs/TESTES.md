@@ -18,7 +18,7 @@ O boilerplate vem com **todas as rotas públicas**. A proteção por rota e role
 
 ## Stories
 
-Toda story vira um teste de renderização. Para testar comportamento, use `play()` (exemplo: `FiltroEstatico` em `filters.stories.tsx`). O dropdown do Mantine abre num portal: busque com `within(canvasElement.ownerDocument.body)`.
+Toda story vira um teste de renderização. Para testar comportamento, use `play()` (exemplo: `FiltroEstatico` em `filters.stories.tsx`). O dropdown do Mantine abre num portal: busque com `within(canvasElement.ownerDocument.body)`. A story `Design System/Compatibilidade Mantine 8` mede no navegador pesos de fonte e cor da variante `light` e falha se o tema perder o visual do Mantine 8.
 
 ## Ponta a ponta (Playwright)
 

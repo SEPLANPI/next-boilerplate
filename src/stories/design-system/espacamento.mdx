@@ -251,13 +251,13 @@ export const SemanticSpacingTokensData = [
 import { Stack, Group } from '@mantine/core'
 
 // Espaçamento vertical usando token md (16px)
-<Stack spacing="md">
+<Stack gap="md">
   <div>Item 1</div>
   <div>Item 2</div>
 </Stack>
 
 // Espaçamento horizontal usando token sm (12px)
-<Group spacing="sm">
+<Group gap="sm">
   <Button>Ação 1</Button>
   <Button>Ação 2</Button>
 </Group>
@@ -273,20 +273,20 @@ Os tokens de espaçamento podem ser aplicados em diversos componentes do Mantine
 import { Stack, Group, Grid } from '@mantine/core'
 
 // Espaçamento vertical (Stack)
-<Stack spacing="xs">Espaçamento compacto</Stack>
-<Stack spacing="sm">Espaçamento pequeno</Stack>
-<Stack spacing="md">Espaçamento médio</Stack>
-<Stack spacing="lg">Espaçamento grande</Stack>
+<Stack gap="xs">Espaçamento compacto</Stack>
+<Stack gap="sm">Espaçamento pequeno</Stack>
+<Stack gap="md">Espaçamento médio</Stack>
+<Stack gap="lg">Espaçamento grande</Stack>
 
 // Espaçamento horizontal (Group)
-<Group spacing="xs">Itens próximos</Group>
-<Group spacing="sm">Itens com espaço pequeno</Group>
-<Group spacing="md">Itens com espaço médio</Group>
-<Group spacing="lg">Itens com espaço grande</Group>
+<Group gap="xs">Itens próximos</Group>
+<Group gap="sm">Itens com espaço pequeno</Group>
+<Group gap="md">Itens com espaço médio</Group>
+<Group gap="lg">Itens com espaço grande</Group>
 
 // Grid
-<Grid gutter="sm">Grade com espaço pequeno</Grid>
-<Grid gutter="md">Grade com espaço médio</Grid>
+<Grid gap="sm">Grade com espaço pequeno</Grid>
+<Grid gap="md">Grade com espaço médio</Grid>
 
 // Padding em componentes
 <Card p="sm">Card com padding pequeno</Card>

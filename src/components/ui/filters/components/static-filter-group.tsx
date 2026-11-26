@@ -95,7 +95,7 @@ export function StaticFilterGroup<T extends object>({
         )}
       </Button>
 
-      <Collapse in={isOpen}>
+      <Collapse expanded={isOpen}>
         <div>
           {children || (
             <FilterGroupContent
