@@ -29,6 +29,22 @@
   }
 }
 
+/*
+ * Cursor: no Mantine 9 o theme.cursorType (pointer) vale para botões, selects,
+ * abas e links. No Mantine 8 ele só valia para Checkbox, Radio e Switch, que
+ * usavam o default; aqui eles voltam ao default.
+ * Ver docs/guias/atualizacao-mantine-9.md.
+ */
+@layer mantine {
+  .mantine-Checkbox-root,
+  .mantine-CheckboxIndicator-indicator,
+  .mantine-Radio-root,
+  .mantine-RadioIndicator-indicator,
+  .mantine-Switch-root {
+    --mantine-cursor-type: default;
+  }
+}
+
 @layer mantine {
   html {
     @apply scroll-smooth;

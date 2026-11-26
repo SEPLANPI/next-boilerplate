@@ -45,7 +45,9 @@ export const theme = createTheme({
 
   // Interaction and animation
   respectReducedMotion: false,
-  cursorType: "default",
+  // Mantine 9: botões, selects, abas e links usam este cursor (no 8 era
+  // sempre pointer). Checkbox, Radio e Switch voltam ao default no globals.css.
+  cursorType: "pointer",
 
   // Default styling
   defaultGradient: {
