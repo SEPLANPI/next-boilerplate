@@ -20,9 +20,10 @@ Guias oficiais:
    - Não precisam de nova versão: `embla-carousel` 8 (o carrossel 9 aceita `>=8`), `dayjs` e `postcss-preset-mantine`.
    - O `@ui/mantine-config` `v1.3.0` já aceita o Mantine 9.
 
-2. **Manter o visual do Mantine 8.** O Mantine 9 muda a aparência em dois pontos:
+2. **Manter o visual do Mantine 8.** O Mantine 9 muda a aparência em três pontos:
    - a variante `light` (Badge, Button, ActionIcon, Alert…) passa a usar cor sólida, em vez de cor com transparência;
-   - os pesos de fonte. No 8, os rótulos usavam peso 500 e os botões 600. No 9, todos usam `var(--mantine-font-weight-medium)`, que vale 600. Os rótulos ficam mais grossos.
+   - os pesos de fonte. No 8, os rótulos usavam peso 500 e os botões 600. No 9, todos usam `var(--mantine-font-weight-medium)`, que vale 600. Os rótulos ficam mais grossos;
+   - o cursor. No 8, botões, selects, abas e links tinham `cursor: pointer` fixo, e o `theme.cursorType` só valia para Checkbox, Radio e Switch. No 9, cerca de 35 componentes usam o `theme.cursorType`. Com `cursorType: "default"` no tema, como estava no boilerplate, todos eles mostram a seta.
 
    O boilerplate mantém o visual do 8 até a revisão do tema.
 
@@ -53,7 +54,23 @@ Guias oficiais:
 
    - Como a regra troca a variável, e não o `font-weight`, classes do projeto como `font-semibold` continuam valendo.
    - A lista vem da comparação do `styles.css` do `@mantine/core` 8.3.18 com o do 9.8.2. No 8, `Button`, `ActionIcon` e o trilho do `Switch` eram 600; esses ficam com o padrão do 9.
-   - A story `Design System/Compatibilidade Mantine 8` mede no navegador o peso de botão, rótulo de campo, título de notificação, rótulo do `SegmentedControl` e cabeçalho de tabela, e a cor do Badge `light`. Os valores esperados foram medidos com o Mantine 8. Se um dia o tema adotar o visual do 9, tire o resolver e o bloco do CSS e atualize a story.
+   **Cursor:** em `src/lib/mantine/index.ts`, `cursorType: "pointer"`. O `globals.css` devolve o `default` a quem já o usava no 8:
+
+   ```css
+   @layer mantine {
+     .mantine-Checkbox-root,
+     .mantine-CheckboxIndicator-indicator,
+     .mantine-Radio-root,
+     .mantine-RadioIndicator-indicator,
+     .mantine-Switch-root {
+       --mantine-cursor-type: default;
+     }
+   }
+   ```
+
+   Se o projeto tem `cursorType` no tema, procure com `git grep -n cursorType -- src`.
+
+   - A story `Design System/Compatibilidade Mantine 8` mede no navegador o peso de botão, rótulo de campo, título de notificação, rótulo do `SegmentedControl` e cabeçalho de tabela, a cor do Badge `light` e o cursor de botão, `Select`, aba, `NavLink`, `Checkbox` e `Switch`. Os valores esperados foram medidos com o Mantine 8. Se um dia o tema adotar o visual do 9, tire o resolver e os blocos do CSS e atualize a story.
 
 3. **`<Collapse in>` → `<Collapse expanded>`.** O `typecheck` aponta cada caso.
 
@@ -119,6 +136,7 @@ O `@mantine/charts` (`BarChart`, `LineChart`, `DonutChart`…) esconde a maior p
 - **Cores e pesos iguais aos do Mantine 8**, medidos no navegador pela story de compatibilidade, com os mesmos valores do Mantine 8.3.18 (B3).
   - As variáveis CSS geradas pelo tema batem com as do 8 em claro e escuro, e também as cores de 9 variantes × 6 cores. A única diferença são as variáveis que não existiam no 8 (`--mantine-font-weight-*` e `--mantine-color-success`).
   - Checagem de mutação: sem o `v8CssVariablesResolver`, o Badge `light` passa de `rgba(3, 82, 170, 0.1)` para `rgb(208, 231, 255)`. Sem o bloco do CSS, o rótulo do `SegmentedControl` e o título da notificação vão para 600. Nos dois casos, a story falha.
+- **Cursor:** achado no teste manual do SAPO. Com o Mantine 9 e `cursorType: "default"`, botões, selects, abas e links perdiam o pointer. As capturas de tela não pegam isso, porque não mostram o cursor. A story pega: no 8.3.18 ela passa, na B4 sem a correção falha nos 4 cursores, e sem o bloco do CSS falha no `Checkbox` e no `Switch`, que viram pointer.
 - **Primeira tentativa, descartada:** `fontWeights.medium: "500"` no tema. As 4 páginas de erro mudaram nas capturas, porque os botões, que no 8 eram 600, ficaram com 500. Sem nenhum ajuste de peso, as capturas não mudam, já que elas não têm rótulos. Ou seja, as capturas sozinhas não pegam a mudança dos rótulos; quem pega é a story.
 - **Quebras encontradas:**
   - `Collapse in` em 4 componentes, pego pelo `typecheck`;
